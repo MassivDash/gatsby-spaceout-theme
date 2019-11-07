@@ -1,0 +1,9 @@
+- name: Jan Śpiewak
+  bio: |
+    Jan Śpiewak jest socjologiem, aktywistą miejskim i publicystą. Założył ruch miejski Miasto Jest Nasze i Wolne Miasto Warszawa. Jest wiceprzewodniczącym stowarzyszenia Energia Miast. Pisał felietony dla Krytyki Politycznej, Kultury Liberalnej a ostatnio we Wprost. Jest autorem książki „Ukradzione Miasto”, która ukazała kulisy wybuchu afery reprywatyzacyjnej. Za swoją walkę z deweloperami i układem reprywatyzacyjnym był wielokrotnie pozywany. W swojej działalności naukowej i publicznej koncentruje się na tematach związanych z kryzysem demokracji liberalnej, przemianami zachodzącymi w światowej gospodarce, nierównościami społecznymi, globalnym ociepleniem i ochroną środowiska. Ma psa Felka.
+  avatar: ./avatars/janSpiewak.jpg
+  featured: true
+  social:
+    - url: https://www.facebook.com/JanDawidSpiewak/
+    - url: https://twitter.com/JanSpiewak
+    - url: https://www.instagram.com/janek_spiewak/
