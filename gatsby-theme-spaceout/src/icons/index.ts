@@ -25,6 +25,8 @@ import ToggleOpen from './ui/ToggleOpen.Icon';
 import ToggleClose from './ui/ToggleClose.Icon';
 import Rows from './ui/Rows.Icon';
 import Tiles from './ui/Tiles.Icon';
+import FullScreenEnter from './ui/FullScreenEnter.Icon';
+import FullScreenExit from './ui/FullScreenExit.Icon';
 
 export default {
   Behance,
@@ -51,4 +53,6 @@ export default {
   ToggleOpen,
   Rows,
   Tiles,
+  FullScreenExit,
+  FullScreenEnter
 };

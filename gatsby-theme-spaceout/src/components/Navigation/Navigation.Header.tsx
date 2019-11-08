@@ -140,8 +140,7 @@ const NavContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-right: 1px solid ${p => p.theme.colors.horizontalRule};
-
+  
   ${mediaqueries.desktop_medium`
     padding-top: 5px;
   `};

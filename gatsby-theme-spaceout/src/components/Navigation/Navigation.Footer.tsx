@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-import Section from "@components/Section";
 import mediaqueries from "@styles/media";
 import Icons from "@icons";
 import { useColorMode } from "theme-ui";
+import screenfull from "screenfull";
 import {
   copyToClipboard,
   getWindowDimensions,
@@ -11,16 +11,56 @@ import {
 } from "@utils";
 
 function Footer() {
+  
   return (
       <ActionsBar>
-
-<SharePageButton />
-              <DarkModeToggle />
-        </ActionsBar>
+      <SharePageButton />
+      <DarkModeToggle />
+      <FullScreenToggle />
+      </ActionsBar>
   );
 }
 
 export default Footer;
+
+
+function FullScreenToggle() {
+  const [fullscreen, setFullScreen] = useState<boolean>(false);
+  const [colorMode] = useColorMode();
+  const isDark = colorMode === `dark`;
+  const fill = isDark ? "#fff" : "#000";
+
+  useEffect(() => {
+      screenfull.on("change", () => {
+        setFullScreen(!fullscreen);
+      });
+    })
+
+  function fullscreenToogle(){
+    console.log(screenfull, screenfull.isEnabled)
+    if (screenfull.isEnabled) {
+      screenfull.toggle();
+    }
+  }
+
+  return(
+    <>
+     {screenfull.isEnabled && (
+    <IconWrapper
+    isDark={isDark}
+    onClick={fullscreenToogle}
+    data-a11y="false"
+    aria-label={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+    title={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+    
+    >
+      {fullscreen ? <Icons.FullScreenExit fill={fill} width={32} height={32}/> : <Icons.FullScreenEnter fill={fill} width={32} height={32}/>}
+    </IconWrapper>
+  )}
+    </>
+  )
+  
+}
 
 
 function DarkModeToggle() {

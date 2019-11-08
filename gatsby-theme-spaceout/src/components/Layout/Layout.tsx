@@ -41,9 +41,9 @@ function Layout({ children }: LayoutProps) {
           return <span {...restProps} ref={elementRef} style={{ position: "absolute",
             overflow: "hidden",
             borderRadius: "4px",
-            background: isDark ? "rgba(226, 226, 226, 0.2)" : "rgb(226, 226, 226)",
+            background: isDark ? "rgb(17, 18, 22)" : "rgb(250, 250, 250)",
             userSelect: "none",
-            width: "4px",
+            width: "6px",
             height: "calc(100% - 20px)",
             top: "10px",
             right: "0px"}} />;
@@ -70,12 +70,6 @@ const Container = styled.div`
   width: 100vw;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 2fr 9fr 1fr;
+  grid-template-columns: 300px 1fr 60px;
 `;
 
-const InnerContainer = styled.div`
-  position: relative;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  width: 100%;
-  `;
