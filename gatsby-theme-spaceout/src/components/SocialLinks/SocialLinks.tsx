@@ -56,7 +56,7 @@ function SocialLinks({ links, fill = '#73737D' }: SocialLinksProps) {
             aria-label={`Link to ${option.url}`}
             href={option.url}
           >
-            <Icon fill={fill} size={27} />
+            <Icon fill={fill} size={22} />
             <Hidden>Link to ${option.url}</Hidden>
           </SocialIconContainer>
         );

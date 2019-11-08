@@ -1,4 +1,4 @@
-require("dotenv").config();
+require('dotenv').config();
 
 const siteMetadata = {
   title: `Spaceout`,
@@ -9,10 +9,24 @@ const siteMetadata = {
     heading: `Intersetellar web design`,
     maxWidth: 652,
   },
+  menuLinks: [
+    {
+      title: 'about me',
+      slug: 'about',
+    },
+    {
+      title: "How it's done",
+      slug: 'howitsdone',
+    },
+    {
+      title: 'Contact',
+      slug: 'contact',
+    },
+  ],
   social: [
     {
       name: `facebook`,
-      url: `https://www.facebook.com/spaeout/`,
+      url: `https://www.facebook.com/spaceout/`,
     },
     {
       name: `twitter`,
@@ -24,31 +38,31 @@ const siteMetadata = {
     },
     {
       name: `spaceout`,
-      url: `https://blog.spaceout.pl/`
+      url: `https://blog.spaceout.pl/`,
     },
     {
       name: `dribbble`,
-      url: `https://dribbble.com/spaceout`
+      url: `https://dribbble.com/spaceout`,
     },
     {
       name: `behance`,
-      url: `https://behance.com/spaceout`
+      url: `https://behance.com/spaceout`,
     },
     {
       name: `github`,
-      url: `https://github.com/massivDash/`
-    }
+      url: `https://github.com/massivDash/`,
+    },
   ],
 };
 
 const plugins = [
   {
-    resolve: "gatsby-theme-spaceout",
+    resolve: 'gatsby-theme-spaceout',
     options: {
-      contentPosts: "content/posts",
-      contentAuthors: "content/authors",
-      rootPath: "/",
-      basePath: "/",
+      contentPosts: 'content/posts',
+      contentAuthors: 'content/authors',
+      rootPath: '/',
+      basePath: '/',
       authorsPage: true,
       mailchimp: false,
       sources: {
@@ -72,7 +86,7 @@ const plugins = [
   {
     resolve: `gatsby-plugin-google-analytics`,
     options: {
-      trackingId: "UA-150852074-1",
+      trackingId: 'UA-150852074-1',
     },
   },
 ];
@@ -85,7 +99,7 @@ const plugins = [
  */
 if (process.env.CONTENTFUL_SPACE_ID && process.env.CONTENTFUL_ACCESS_TOKEN) {
   plugins.push({
-    resolve: "gatsby-source-contentful",
+    resolve: 'gatsby-source-contentful',
     options: {
       spaceId: process.env.CONTENTFUL_SPACE_ID,
       accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
