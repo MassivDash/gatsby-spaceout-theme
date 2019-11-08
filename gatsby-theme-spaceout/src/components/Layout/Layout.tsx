@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Global } from '@emotion/core';
 import styled from '@emotion/styled';
 import { useColorMode } from 'theme-ui';
+import Scrollbar from 'react-scrollbars-custom';
 
 import NavigationFooter from '@components/Navigation/Navigation.Footer';
 import NavigationHeader from '@components/Navigation/Navigation.Header';
@@ -25,14 +26,34 @@ function Layout({ children }: LayoutProps) {
     parent.postMessage({ theme: colorMode }, '*');
   }, [colorMode]);
 
+
+  const isDark = colorMode === "dark";
+
   return (
     <ArticlesContextProvider>
       <Container>
       <NavigationHeader />
-      <InnerContainer>
+      <Scrollbar 
+      
+      trackYProps={{
+        renderer: props => {
+          const { elementRef, ...restProps } = props;
+          return <span {...restProps} ref={elementRef} style={{ position: "absolute",
+            overflow: "hidden",
+            borderRadius: "4px",
+            background: isDark ? "rgba(226, 226, 226, 0.2)" : "rgb(226, 226, 226)",
+            userSelect: "none",
+            width: "4px",
+            height: "calc(100% - 20px)",
+            top: "10px",
+            right: "0px"}} />;
+        }
+      }}
+
+      >
         <Global styles={globalStyles} />
         {children}
-      </InnerContainer>
+      </Scrollbar>
         <NavigationFooter />
       </Container>
     </ArticlesContextProvider>
@@ -49,7 +70,7 @@ const Container = styled.div`
   width: 100vw;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 280px 1fr 80px;
+  grid-template-columns: 2fr 9fr 1fr;
 `;
 
 const InnerContainer = styled.div`
