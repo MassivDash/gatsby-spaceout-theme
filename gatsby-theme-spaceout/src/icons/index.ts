@@ -27,6 +27,8 @@ import Rows from './ui/Rows.Icon';
 import Tiles from './ui/Tiles.Icon';
 import FullScreenEnter from './ui/FullScreenEnter.Icon';
 import FullScreenExit from './ui/FullScreenExit.Icon';
+import FontSetter from './ui/FontSetter.Icon';
+import ArrowUp from './ui/ArrowUp.Icon';
 
 export default {
   Behance,
@@ -54,5 +56,7 @@ export default {
   Rows,
   Tiles,
   FullScreenExit,
-  FullScreenEnter
+  FullScreenEnter,
+  FontSetter,
+  ArrowUp
 };

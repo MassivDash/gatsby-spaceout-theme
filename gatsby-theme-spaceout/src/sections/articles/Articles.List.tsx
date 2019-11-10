@@ -10,6 +10,23 @@ import mediaqueries from "@styles/media";
 import { IArticle } from "@types";
 
 import { GridLayoutContext } from "./Articles.List.Context";
+import { graphql, useStaticQuery } from "gatsby";
+
+const siteQuery = graphql`
+  {
+    allSite {
+      edges {
+        node {
+          siteMetadata {
+            name
+            siteUrl
+            readingTime
+          }
+        }
+      }
+    }
+  }
+`;
 
 /**
  * Tiles
@@ -43,7 +60,7 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
     GridLayoutContext,
   );
 
-  /**
+  /**readingTime
    * We're taking the flat array of articles [{}, {}, {}...]
    * and turning it into an array of pairs of articles [[{}, {}], [{}, {}], [{}, {}]...]
    * This makes it simpler to create the grid we want
@@ -85,6 +102,10 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
 export default ArticlesList;
 
 const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
+  
+  const results = useStaticQuery(siteQuery);
+  const { readingTime } = results.allSite.edges[0].node.siteMetadata;
+  
   if (!article) return null;
 
   const { gridLayout } = useContext(GridLayoutContext);
@@ -109,10 +130,12 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
             gridLayout={gridLayout}
           >
             {article.excerpt}
-          </Excerpt>
-          <MetaData>
+          </Excerpt>{
+            readingTime &&
+            <MetaData>
             {article.timeToRead} min czytania
           </MetaData>
+          }
         </div>
       </Item>
     </ArticleLink>
@@ -155,7 +178,7 @@ const listTile = p => css`
   position: relative;
   display: grid;
   grid-template-columns: ${p.reverse
-    ? `${narrow} ${wide}`
+    ? `${wide} ${wide}`
     : `${wide} ${wide}`};
   grid-template-rows: 2;
   column-gap: 30px;
@@ -273,7 +296,7 @@ const ImageContainer = styled.div<{ narrow: boolean; gridLayout: string }>`
 
 const Title = styled(Headings.h2)`
   font-size: 21px;
-  font-family: ${p => p.theme.fonts.serif};
+  font-family: ${p => p.theme.fonts.sansSerif};
   margin-bottom: ${p =>
     p.hasOverflow && p.gridLayout === "tiles" ? "35px" : "10px"};
   transition: color 0.3s ease-in-out;

@@ -1,9 +1,9 @@
-- name: Jan Śpiewak
+- name: Luke Celitan
   bio: |
-    Jan Śpiewak jest socjologiem, aktywistą miejskim i publicystą. Założył ruch miejski Miasto Jest Nasze i Wolne Miasto Warszawa. Jest wiceprzewodniczącym stowarzyszenia Energia Miast. Pisał felietony dla Krytyki Politycznej, Kultury Liberalnej a ostatnio we Wprost. Jest autorem książki „Ukradzione Miasto”, która ukazała kulisy wybuchu afery reprywatyzacyjnej. Za swoją walkę z deweloperami i układem reprywatyzacyjnym był wielokrotnie pozywany. W swojej działalności naukowej i publicznej koncentruje się na tematach związanych z kryzysem demokracji liberalnej, przemianami zachodzącymi w światowej gospodarce, nierównościami społecznymi, globalnym ociepleniem i ochroną środowiska. Ma psa Felka.
-  avatar: ./avatars/janSpiewak.jpg
+    Personally, I am a big geek with huge love for Star Wars, Marvel and DC comic books, Funk and 80s music. I take most of my design inspiration from offline experiences like going to art museums, galleries and working with other creative people on various projects. I also work with various Activist and NGO groups as a pro-bono designer and developer.
+  avatar: ./avatars/spaceghost.jpg
   featured: true
   social:
-    - url: https://www.facebook.com/JanDawidSpiewak/
-    - url: https://twitter.com/JanSpiewak
-    - url: https://www.instagram.com/janek_spiewak/
+    - url: https://www.facebook.com/spaceout/
+    - url: https://twitter.com/spaceout.pl
+    - url: https://www.instagram.com/spaceout.pl/

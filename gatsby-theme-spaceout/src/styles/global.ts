@@ -37,11 +37,12 @@ export const globalStyles = css`
   }
 
   body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans';
     font-size: 1.6rem;
     margin: 0;
     font-weight: 400;
     height: 100%;
+    scroll-behavior: smooth;
   }
 
   button,
@@ -67,7 +68,7 @@ export const globalStyles = css`
   textarea,
   select,
   button {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans';
   }
 
   .underline {
@@ -126,4 +127,13 @@ export const globalStyles = css`
   img.Image__Zoom ~ div {
     background: transparent !important;
   }
+
+  .ScrollbarsCustom-Scroller {
+    scroll-behavior: smooth;
+  }
+
+  tspan {
+    font-size: 165px;
+  }
+
 `;

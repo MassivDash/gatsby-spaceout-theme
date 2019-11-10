@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Link, navigate, graphql, useStaticQuery } from "gatsby";
 import { useColorMode } from "theme-ui";
-
-
+import { connect } from "react-redux";
 import Logo from "@components/Logo";
 import SocialLinks from "@components/SocialLinks";
 import Icons from "@icons";
@@ -13,6 +12,14 @@ import {
   getWindowDimensions,
   getBreakpointFromTheme,
 } from "@utils";
+
+import {
+  setNavigatorPosition,
+  setNavigatorShape,
+  setScrollToTop,
+  setFontSizeIncrease,
+  setCategoryFilter
+} from "../../state/createStore";
 
 const siteQuery = graphql`
   {
@@ -48,7 +55,7 @@ function NavigationHeader() {
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false);
   const [previousPath, setPreviousPath] = useState<string>("/");
   const { sitePlugin, allSite } = useStaticQuery(siteQuery);
-  const { title, name, social, menuLinks } = allSite.edges[0].node.siteMetadata;
+  const { title, name, description, social, menuLinks } = allSite.edges[0].node.siteMetadata;
 
   const [colorMode] = useColorMode();
   const fill = colorMode === "dark" ? "#fff" : "#000";
@@ -89,6 +96,7 @@ function NavigationHeader() {
         </LogoLink>
         <Title>{title}</Title>
         <Subtitle>{name}</Subtitle>
+        <Description>{description}</Description>
         </NavInfoContainer>
         <NavControls>
           {showBackArrow ? (
@@ -112,7 +120,29 @@ function NavigationHeader() {
   );
 }
 
-export default NavigationHeader;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    navigatorPosition: state.navigatorPosition,
+    navigatorShape: state.navigatorShape,
+    navigatorScroll: state.navigatorScroll,
+    isWideScreen: state.isWideScreen,
+    categoryFilter: state.categoryFilter
+  };
+};
+
+const mapDispatchToProps = {
+  setNavigatorPosition,
+  setNavigatorShape,
+  setScrollToTop,
+  setFontSizeIncrease,
+  setCategoryFilter
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NavigationHeader);
+
 const BackArrowIconContainer = styled.div`
   transition: 0.2s transform var(--ease-out-quad);
   opacity: 0;
@@ -135,12 +165,21 @@ const NavContainer = styled.div`
   right: 0;
   width: 100%;
   margin: 20px 0;
-  padding: 20px 40px;
+  padding: 0 40px;
   flex-direction: column;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+
+  &::after{
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    right: 0px;
+    background: ${p => p.theme.colors.secondary};
+  }
+
   ${mediaqueries.desktop_medium`
     padding-top: 5px;
   `};
@@ -159,7 +198,7 @@ const NavInfoContainer = styled.div`
 const Title = styled.h1`
   font-weight: 300;
   font-size: 28px;
-  margin: 20px auto;
+  margin: 5px auto;
   color: ${p => p.theme.colors.primary};
   transition: 0.3s ease-in-out;
   text-align: center;
@@ -167,13 +206,23 @@ const Title = styled.h1`
 
 const Subtitle = styled.h2`
   font-weight: 400;
-  font-size: 18px;
-  margin: 20px auto;
+  font-size: 16px;
+  margin: auto;
+  max-width: 80px;
   color: ${p => p.theme.colors.primary};
   transition: 0.3s ease-in-out;
   text-align: center;
   `;
 
+
+const Description = styled.h3`
+  font-weight: 400;
+  font-size: 15px;
+  margin: 20px auto;
+  color: ${p => p.theme.colors.secondary};
+  transition: 0.3s ease-in-out;
+  text-align: center;
+  `;
 
 const NavSocialContainer = styled.div`
  position: relative;
@@ -181,8 +230,8 @@ const NavSocialContainer = styled.div`
  bottom: 0;
  left: 0;
  display: grid;
- grid-template-columns: 1fr 1fr 1fr;
- grid-template-rows: 1fr 1fr 1fr;
+ grid-template-columns: 1fr 1fr 1fr 1fr;
+ grid-template-rows: 1fr 1fr;
  justify-content: space-between;
  align-items: center;
  `;

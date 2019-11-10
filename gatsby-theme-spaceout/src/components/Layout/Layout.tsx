@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Global } from '@emotion/core';
 import styled from '@emotion/styled';
 import { useColorMode } from 'theme-ui';
@@ -26,15 +26,20 @@ function Layout({ children }: LayoutProps) {
     parent.postMessage({ theme: colorMode }, '*');
   }, [colorMode]);
 
+  const scroller = useRef(null);
 
   const isDark = colorMode === "dark";
+  
+  function ScrolltoTop(){
+    scroller.current.scrollToTop();
+  }
 
   return (
     <ArticlesContextProvider>
       <Container>
       <NavigationHeader />
       <Scrollbar 
-      
+       ref={scroller}
       trackYProps={{
         renderer: props => {
           const { elementRef, ...restProps } = props;
@@ -49,12 +54,27 @@ function Layout({ children }: LayoutProps) {
             right: "0px"}} />;
         }
       }}
-
+      thumbYProps={{
+        renderer: props => {
+          const { elementRef, ...restProps } = props;
+          return <span {...restProps} ref={elementRef} className="tHuMbY" 
+          style={{
+            position: "absolute",
+            touchAction: "none",
+            cursor: "pointer",
+            borderRadius: "4px",
+            background: isDark ? "rgb(250, 250, 250)" : "rgba(124, 124, 124, 0.5)",
+            width: "100%"
+          }}
+          />;
+          
+        }
+      }}
       >
         <Global styles={globalStyles} />
         {children}
       </Scrollbar>
-        <NavigationFooter />
+        <NavigationFooter ScrolltoTop={ScrolltoTop} />
       </Container>
     </ArticlesContextProvider>
   );

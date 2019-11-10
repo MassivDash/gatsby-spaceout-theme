@@ -42,7 +42,7 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
       throw new Error(`
           We could not find the value for: "${key}".
           Please verify the articlePermalinkFormat format in theme options.
-          https://github.com/narative/gatsby-theme-novela#theme-options
+          https://github.com/massivDash/gatsby-theme-spaceouta#theme-options
         `);
     });
 

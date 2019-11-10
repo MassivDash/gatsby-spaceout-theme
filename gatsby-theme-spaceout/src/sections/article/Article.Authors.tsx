@@ -10,7 +10,7 @@ import mediaqueries from "@styles/media";
 import { IAuthor } from "@types";
 
 /**
- * Novela supports multiple authors and therefore we need to ensure
+ * Spaceout supports multiple authors and therefore we need to ensure
  * we render the right UI when there are varying amount of authors.
  */
 function ArticleAuthors({ authors }: { authors: IAuthor[] }) {

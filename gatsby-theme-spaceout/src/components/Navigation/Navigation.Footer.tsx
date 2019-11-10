@@ -4,24 +4,51 @@ import mediaqueries from "@styles/media";
 import Icons from "@icons";
 import { useColorMode } from "theme-ui";
 import screenfull from "screenfull";
+import { connect } from "react-redux";
+import {
+  setFontSizeIncrease,
+} from "../../state/createStore";
 import {
   copyToClipboard,
-  getWindowDimensions,
-  getBreakpointFromTheme,
 } from "@utils";
 
-function Footer() {
+function Footer({...props}) {
   
   return (
       <ActionsBar>
+        <ActionBarDivider>
+        <DarkModeToggle />
       <SharePageButton />
-      <DarkModeToggle />
+      </ActionBarDivider>
+      <ActionBarDivider>
+      
+      <GoToTop {...props} />
+      <ToggleFont {...props} />
       <FullScreenToggle />
+      </ActionBarDivider> 
       </ActionsBar>
   );
 }
 
-export default Footer;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    navigatorPosition: state.navigatorPosition,
+    navigatorShape: state.navigatorShape,
+    navigatorScroll: state.navigatorScroll,
+    isWideScreen: state.isWideScreen,
+    categoryFilter: state.categoryFilter,
+    fontSizeIncrease: state.fontSizeIncrease
+  };
+};
+
+const mapDispatchToProps = {
+  setFontSizeIncrease,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Footer);
 
 
 function FullScreenToggle() {
@@ -119,6 +146,71 @@ function SharePageButton() {
   );
 }
 
+function ToggleFont({fontSizeIncrease, setFontSizeIncrease}) {
+  const [colorMode] = useColorMode();
+  const [text, setText] = useState<string>("100%")
+  const [hasCopied, setHasCopied] = useState<boolean>(false);
+  const isDark = colorMode === `dark`;
+  const fill = isDark ? "#fff" : "#000";
+  console.log(fontSizeIncrease, setFontSizeIncrease)
+  function switchThroughFontSizes(){
+    if(fontSizeIncrease === 1){
+      setFontSizeIncrease(1.5);
+      setText("150%")
+    }
+    if(fontSizeIncrease === 1.5){
+      setFontSizeIncrease(2);
+      setText("200%");
+    }
+    if(fontSizeIncrease === 2){
+      setFontSizeIncrease(1)
+      setText("100%");
+    }
+    setHasCopied(true);
+
+    setTimeout(() => {
+      setHasCopied(false);
+    }, 1000);
+  }
+
+  return (
+    <IconWrapper
+      isDark={isDark}
+      onClick={() => switchThroughFontSizes()}
+      data-a11y="false"
+      aria-label="Increase font size"
+      title="Increase font size"
+    >
+      <Icons.FontSetter fill={fill} />
+      <ToolTip isDark={isDark} hasCopied={hasCopied}>
+        {text}
+      </ToolTip>
+    </IconWrapper>
+  );
+}
+
+function GoToTop({ScrolltoTop}) {
+  const [colorMode] = useColorMode();
+  const isDark = colorMode === `dark`;
+  const fill = isDark ? "#fff" : "#000";
+  function scrolltoTop(){
+    ScrolltoTop()
+  }
+
+  return (
+    <IconWrapper
+      isDark={isDark}
+      onClick={() => scrolltoTop()}
+      data-a11y="false"
+      aria-label="Scroll to the top"
+      title="Scroll to the top"
+    >
+      <Icons.ArrowUp fill={fill} />
+    </IconWrapper>
+  );
+}
+
+
 
 const ActionsBar = styled.div`
   position: relative;
@@ -127,18 +219,35 @@ const ActionsBar = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 80px;
+  padding-bottom: 10px;
   color: ${p => p.theme.colors.grey};
 
   ${mediaqueries.tablet`
     flex-direction: column;
-    padding-bottom: 100px;
+    padding-bottom: 10px;
   `}
 
   ${mediaqueries.phablet`
-    padding-bottom: 50px;
+    padding-bottom: 10px;
   `}
+
+
+&::after{
+    content: "";
+    position: absolute;
+    height: calc(100% - 40px);
+    margin-top: 20px;
+    width: 1px;
+    left: 5px;
+    background: ${p => p.theme.colors.secondary};
+  }
 `;
+
+const ActionBarDivider = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  `;
 
 const IconWrapper = styled.button<{ isDark: boolean }>`
   opacity: 0.5;
@@ -150,7 +259,7 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
   align-items: center;
   justify-content: center;
   transition: opacity 0.3s ease;
-  margin: auto;
+  margin: 15px auto;
 
   &:hover {
     opacity: 1;
@@ -252,7 +361,7 @@ const MoonMask = styled.div<{ isDark: boolean }>`
 const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
   position: absolute;
   padding: 4px 13px;
-  background: ${p => (p.isDark ? "#000" : "rgba(0,0,0,0.1)")};
+  background: ${p => (p.isDark ? "#000" : "#fff")};
   color: ${p => (p.isDark ? "#fff" : "#000")};
   border-radius: 5px;
   font-size: 14px;
@@ -260,7 +369,7 @@ const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
   opacity: ${p => (p.hasCopied ? 1 : 0)};
   transform: ${p => (p.hasCopied ? "translateY(-3px)" : "none")};
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-
+  z-index: 99;
   &::after {
     content: "";
     position: absolute;

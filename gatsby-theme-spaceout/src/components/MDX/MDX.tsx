@@ -67,7 +67,7 @@ const IMAGE_WIDTHS = {
 
 const ARTICLE_WIDTH = css`
   width: 100%;
-  max-width: 680px;
+  max-width: 940px;
 
   ${mediaqueries.desktop`
     max-width: 507px;

@@ -14,7 +14,28 @@ interface ArticleHeroProps {
   authors: IAuthor[];
 }
 
+import { graphql, useStaticQuery } from "gatsby";
+
+const siteQuery = graphql`
+  {
+    allSite {
+      edges {
+        node {
+          siteMetadata {
+            name
+            siteUrl
+            readingTime 
+          }
+        }
+      }
+    }
+  }
+`;
+
 const ArticleHero = ({ article, authors }: ArticleHeroProps) => {
+
+  const { allSite } = useStaticQuery(siteQuery);
+  const { readingTime } = allSite.edges[0].node.siteMetadata;
   const hasCoAUthors = authors.length > 1;
   const hasHeroImage =
     Object.keys(article.hero.full).length !== 0 &&
@@ -26,9 +47,11 @@ const ArticleHero = ({ article, authors }: ArticleHeroProps) => {
         <HeroHeading>{article.title}</HeroHeading>
         <HeroSubtitle hasCoAUthors={hasCoAUthors}>
           <ArticleAuthors authors={authors} />
+{ readingTime && 
           <ArticleMeta hasCoAUthors={hasCoAUthors}>
             {article.timeToRead} min czytania
           </ArticleMeta>
+}
         </HeroSubtitle>
       </Header>
       <HeroImage id="ArticleImage__Hero">
@@ -164,7 +187,7 @@ const HeroImage = styled.div`
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 944px;
+  max-width: 1440px;
   overflow: hidden;
   margin: 0 auto;
   box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.2),

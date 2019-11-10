@@ -2,9 +2,11 @@ require('dotenv').config();
 
 const siteMetadata = {
   title: `Spaceout`,
-  name: `Intersetellar web design`,
+  name: `Interstellar design`,
   siteUrl: `https://spaceout.pl`,
-  description: `Intersetellar web design`,
+  description: `UX/UI design, Web and Native App develeopement.`,
+  readingTime: false,
+  similarPosts: false,
   hero: {
     heading: `Intersetellar web design`,
     maxWidth: 652,
@@ -74,8 +76,8 @@ const plugins = [
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
-      name: `Nieprawdopodobne przygody psa Felka`,
-      short_name: `Felek`,
+      name: `Spaceout.p`,
+      short_name: `spaceout`,
       start_url: `/`,
       background_color: `#fff`,
       theme_color: `#fff`,
@@ -86,7 +88,13 @@ const plugins = [
   {
     resolve: `gatsby-plugin-google-analytics`,
     options: {
-      trackingId: 'UA-150852074-1',
+      trackingId: 'UA-100685543-1',
+      head: false,
+      // Setting this parameter is optional
+      anonymize: true,
+      // Setting this parameter is also optional
+      respectDNT: true,
+      cookieDomain: 'spaceout.pl',
     },
   },
 ];

@@ -85,7 +85,7 @@ function SEO({
   const fullURL = (path: string) =>
     path ? `${site.siteUrl}${path}` : site.siteUrl;
 
-  // If no image is provided lets looks for a default novela static image
+  // If no image is provided lets looks for a default spaceout static image
   image = image ? image : '/janifelek.jpg';
 
   const metaTags = [

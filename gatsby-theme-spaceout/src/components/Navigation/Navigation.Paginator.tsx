@@ -22,7 +22,7 @@ import { IPaginator } from "@types";
  */
 
 class Paginator extends Component<IPaginator, {}> {
-  maxPages = 3;
+  maxPages = 2;
   count = this.props.pageCount;
   current = this.props.index;
   pageRoot = this.props.pathPrefix;

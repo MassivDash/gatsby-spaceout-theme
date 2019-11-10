@@ -1,17 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled from "@emotion/styled";
+import { css } from '@emotion/core'
 import throttle from "lodash/throttle";
 import { graphql, useStaticQuery } from "gatsby";
 
 import Layout from "@components/Layout";
 import MDXRenderer from "@components/MDX";
-import Progress from "@components/Progress";
 import Section from "@components/Section";
+import { connect } from "react-redux";
 
 import mediaqueries from "@styles/media";
 import { debounce } from "@utils";
 
-import ArticleAside from "../sections/article/Article.Aside";
 import ArticleHero from "../sections/article/Article.Hero";
 import ArticleControls from "../sections/article/Article.Controls";
 import ArticlesNext from "../sections/article/Article.Next";
@@ -24,7 +24,8 @@ const siteQuery = graphql`
       edges {
         node {
           siteMetadata {
-            name
+            readingTime
+            similarPosts
           }
         }
       }
@@ -32,14 +33,14 @@ const siteQuery = graphql`
   }
 `;
 
-function Article({ pageContext, location }) {
+function Article({ pageContext, location, fontSizeIncrease }) {
   const contentSectionRef = useRef<HTMLElement>(null);
 
   const [hasCalculated, setHasCalculated] = useState<boolean>(false);
   const [contentHeight, setContentHeight] = useState<number>(0);
 
   const results = useStaticQuery(siteQuery);
-  const name = results.allSite.edges[0].node.siteMetadata.name;
+  const { similarPosts } = results.allSite.edges[0].node.siteMetadata;
 
   const { article, authors, mailchimp, next } = pageContext;
 
@@ -81,18 +82,15 @@ function Article({ pageContext, location }) {
     <Layout>
       <ArticleSEO article={article} authors={authors} location={location} />
       <ArticleHero article={article} authors={authors} />
-      <ArticleAside contentHeight={contentHeight}>
-        <Progress contentHeight={contentHeight} />
-      </ArticleAside>
       <MobileControls>
         <ArticleControls />
       </MobileControls>
-      <ArticleBody ref={contentSectionRef}>
+      <ArticleBody fontSizeIncrease={fontSizeIncrease} ref={contentSectionRef}>
         <MDXRenderer content={article.body}>
           <ArticleShare />
         </MDXRenderer>
       </ArticleBody>
-      {next.length > 0 && (
+      {next.length > 0 && similarPosts && (
         <NextArticle >
           <FooterNext>Sprawdź dalsze przygody felka</FooterNext>
           <ArticlesNext articles={next} />
@@ -101,26 +99,25 @@ function Article({ pageContext, location }) {
       )}
     </Layout>
   );
-  display: block;}
+}
 
-export default Article;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    fontSizeIncrease: state.fontSizeIncrease
+  };
+};
 
-const MobileControls = styled.div`
-  position: relative;
-  padding-top: 60px;
-  transition: background 0.2s linear;
-  text-align: center;
+export default connect(
+  mapStateToProps,
+)(Article);
 
-  ${mediaqueries.tablet_up`
-    display: none;
-  `}
-`;
-
-const ArticleBody = styled.article`
-  position: relative;
-  padding: 160px 0 35px;
-  padding-left: 68px;
-  transition: background 0.2s linear;
+const articleFontDynamicStyle = props =>
+  css`
+    font-size: ${18 * props.fontSizeIncrease}px;
+    position: relative;
+    padding: 160px 0 35px;
+    padding-left: 68px;
+    transition: background 0.2s linear;
 
   ${mediaqueries.desktop`
     padding-left: 53px;
@@ -134,6 +131,20 @@ const ArticleBody = styled.article`
     padding: 60px 0;
   `}
 `;
+
+const MobileControls = styled.div`
+  position: relative;
+  padding-top: 60px;
+  transition: background 0.2s linear;
+  text-align: center;
+
+  ${mediaqueries.tablet_up`
+    display: none;
+  `}
+`;
+
+const ArticleBody = styled.article`${articleFontDynamicStyle}`
+  
 
 const NextArticle = styled(Section)`
   display: block;

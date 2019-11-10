@@ -2,7 +2,7 @@
 
 // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sharp/src/fragments.js
 
-const GatsbyFluid_withWebp = `
+const GatsbyFluid_withWebp_tracedSVG = `
   base64
   aspectRatio
   src
@@ -10,6 +10,7 @@ const GatsbyFluid_withWebp = `
   srcWebp
   srcSetWebp
   sizes
+  tracedSVG
 `;
 
 module.exports.local = {
@@ -33,18 +34,30 @@ module.exports.local = {
           body
           hero {
             full: childImageSharp {
-              fluid(maxWidth: 944, quality: 100) {
-                ${GatsbyFluid_withWebp}
+              fluid(maxWidth: 944, quality: 100, traceSVG: {
+                color: "#0c0c0c"
+                turnPolicy: TURNPOLICY_MAJORITY
+                blackOnWhite: true
+              }) {
+                ${GatsbyFluid_withWebp_tracedSVG}
               }
             }
             regular: childImageSharp {
-              fluid(maxWidth: 653, quality: 100) {
-                ${GatsbyFluid_withWebp}
+              fluid(maxWidth: 653, quality: 100, traceSVG: {
+                color: "#0c0c0c"
+                turnPolicy: TURNPOLICY_MAJORITY
+                blackOnWhite: true
+              }) {
+                ${GatsbyFluid_withWebp_tracedSVG}
               }
             }
             narrow: childImageSharp {
-              fluid(maxWidth: 457, quality: 100) {
-                ${GatsbyFluid_withWebp}
+              fluid(maxWidth: 457, quality: 100traceSVG: {
+                color: "#0c0c0c"
+                turnPolicy: TURNPOLICY_MAJORITY
+                blackOnWhite: true
+              }) {
+                ${GatsbyFluid_withWebp_tracedSVG}
               }
             }
             seo: childImageSharp {
@@ -72,18 +85,30 @@ module.exports.local = {
           slug
           avatar {
             small: childImageSharp {
-              fluid(maxWidth: 50, quality: 100) {
-                ${GatsbyFluid_withWebp}
+              fluid(maxWidth: 50, quality: 100, traceSVG: {
+                color: "#0c0c0c"
+                turnPolicy: TURNPOLICY_MAJORITY
+                blackOnWhite: true
+              }) {
+                ${GatsbyFluid_withWebp_tracedSVG}
               }
             }
             medium: childImageSharp {
-              fluid(maxWidth: 100, quality: 100) {
-                ${GatsbyFluid_withWebp}
+              fluid(maxWidth: 100, quality: 100, traceSVG: {
+                color: "#0c0c0c"
+                turnPolicy: TURNPOLICY_MAJORITY
+                blackOnWhite: true
+              }) {
+                ${GatsbyFluid_withWebp_tracedSVG}
               }
             }
             large: childImageSharp {
-              fluid(maxWidth: 328, quality: 100) {
-                ${GatsbyFluid_withWebp}
+              fluid(maxWidth: 328, quality: 100, traceSVG: {
+                color: "#0c0c0c"
+                turnPolicy: TURNPOLICY_MAJORITY
+                blackOnWhite: true
+              }) {
+                ${GatsbyFluid_withWebp_tracedSVG}
               }
             }
           }
@@ -112,13 +137,13 @@ module.exports.contentful = {
           dateForSEO: date
           hero {
             full: fluid(maxWidth: 944, quality: 100) {
-              ${GatsbyFluid_withWebp}
+              ${GatsbyFluid_withWebp_tracedSVG}
             }
             regular: fluid(maxWidth: 653, quality: 100) {
-              ${GatsbyFluid_withWebp}
+              ${GatsbyFluid_withWebp_tracedSVG}
             }
             narrow: fluid(maxWidth: 457, quality: 100) {
-              ${GatsbyFluid_withWebp}
+              ${GatsbyFluid_withWebp_tracedSVG}
             }
             seo: fixed(width: 1200, quality: 100) {
               src
@@ -139,13 +164,13 @@ module.exports.contentful = {
         node {
           avatar {
             small: fluid(maxWidth: 50, quality: 100) {
-              ${GatsbyFluid_withWebp}
+              ${GatsbyFluid_withWebp_tracedSVG}
             }
             medium: fluid(maxWidth: 100, quality: 100) {
-              ${GatsbyFluid_withWebp}
+              ${GatsbyFluid_withWebp_tracedSVG}
             }
             large: fluid(maxWidth: 328, quality: 100) {
-              ${GatsbyFluid_withWebp}
+              ${GatsbyFluid_withWebp_tracedSVG}
             }
           }
           fields {

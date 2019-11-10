@@ -20,6 +20,12 @@ module.exports = ({
       `gatsby-transformer-yaml`,
       `gatsby-plugin-theme-ui`,
       {
+        resolve: `gatsby-plugin-react-redux`,
+        options: {
+          pathToCreateStoreModule: '../gatsby-theme-spaceout/src/state/createStore',
+          },
+        },
+      {
         resolve: `gatsby-plugin-prefetch-google-fonts`,
         options: {
           fonts: [

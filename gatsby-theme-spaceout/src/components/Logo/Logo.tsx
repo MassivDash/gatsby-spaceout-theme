@@ -480,7 +480,7 @@ const Logo = ({ fill = "#fff" }: { fill?: string }) => {
   console.log(fill);
   return (
     <LogoContainer>
-      <LogoSvg width={80} height={80} className="Logo__Desktop" fill={fill}/>
+      <LogoSvg width={50} height={50} className="Logo__Desktop" fill={fill}/>
 
       <LogoSvg width={30} height={30} className="Logo__Mobile" fill={fill}/>
     </LogoContainer>
