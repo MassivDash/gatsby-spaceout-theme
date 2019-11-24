@@ -19,35 +19,35 @@ const SET_CATEGORY_FILTER = 'SET_CATEGORY_FILTER';
  */
 
 export function setNavigatorPosition(value) {
-  return { type: SET_NAVIGATOR_POSITION, value: value };
+  return { type: SET_NAVIGATOR_POSITION, value };
 }
 
 export function setNavigatorScroll(value) {
-  return { type: SET_NAVIGATOR_SCROLL, value: value };
+  return { type: SET_NAVIGATOR_SCROLL, value };
 }
 
 export function setNavigatorShape(value) {
-  return { type: SET_NAVIGATOR_SHAPE, value: value };
+  return { type: SET_NAVIGATOR_SHAPE, value };
 }
 
 export function setNavigatorFilter(value) {
-  return { type: SET_NAVIGATOR_FILTER, value: value };
+  return { type: SET_NAVIGATOR_FILTER, value };
 }
 
 export function setIsWideScreen(value) {
-  return { type: SET_IS_WIDE_SCREEN, value: value };
+  return { type: SET_IS_WIDE_SCREEN, value };
 }
 
 export function setScrollToTop(value) {
-  return { type: SET_SCROLL_TO_TOP, value: value };
+  return { type: SET_SCROLL_TO_TOP, value };
 }
 
 export function setFontSizeIncrease(value) {
-  return { type: SET_FONT_SIZE_INCREASE, value: value };
+  return { type: SET_FONT_SIZE_INCREASE, value };
 }
 
 export function setCategoryFilter(value) {
-  return { type: SET_CATEGORY_FILTER, value: value };
+  return { type: SET_CATEGORY_FILTER, value };
 }
 
 /*
