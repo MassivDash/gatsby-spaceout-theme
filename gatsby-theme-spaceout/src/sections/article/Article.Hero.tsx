@@ -43,6 +43,13 @@ const ArticleHero = ({ article, authors }: ArticleHeroProps) => {
 
   return (
     <Hero>
+      <HeroImage id="ArticleImage__Hero">
+        {hasHeroImage ? (
+          <Image src={article.hero.full} />
+        ) : (
+          <ImagePlaceholder />
+        )}
+      </HeroImage>
       <Header>
         <HeroHeading>{article.title}</HeroHeading>
         <HeroSubtitle hasCoAUthors={hasCoAUthors}>
@@ -54,13 +61,6 @@ const ArticleHero = ({ article, authors }: ArticleHeroProps) => {
 }
         </HeroSubtitle>
       </Header>
-      <HeroImage id="ArticleImage__Hero">
-        {hasHeroImage ? (
-          <Image src={article.hero.full} />
-        ) : (
-          <ImagePlaceholder />
-        )}
-      </HeroImage>
     </Hero>
   );
 };

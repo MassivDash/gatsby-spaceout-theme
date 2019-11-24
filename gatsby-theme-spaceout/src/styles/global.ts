@@ -132,6 +132,10 @@ export const globalStyles = css`
     scroll-behavior: smooth;
   }
 
+  .ScrollbarsCustom.trackYVisible {
+	min-height: 100vh;
+  }
+
   tspan {
     font-size: 165px;
   }

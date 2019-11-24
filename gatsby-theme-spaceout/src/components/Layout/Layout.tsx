@@ -3,7 +3,6 @@ import { Global } from '@emotion/core';
 import styled from '@emotion/styled';
 import { useColorMode } from 'theme-ui';
 import Scrollbar from 'react-scrollbars-custom';
-
 import NavigationFooter from '@components/Navigation/Navigation.Footer';
 import NavigationHeader from '@components/Navigation/Navigation.Header';
 import ArticlesContextProvider from '../../sections/articles/Articles.List.Context';
@@ -17,64 +16,28 @@ interface LayoutProps {
 /**
  * <Layout /> needs to wrap every page as it provides styles, navigation,
  * and the main structure of each page. Within Layout we have the <Container />
- * which hides a lot of the mess we need to create our Desktop and Mobile experiences.
+ * which hides a lot of the mess wimport { Transition } from "react-transition-group";
+import { TweenMax } from "gsap/all";e need to create our Desktop and Mobile experiences.
  */
-function Layout({ children }: LayoutProps) {
+function Layout({ children, location }: LayoutProps) {
   const [colorMode] = useColorMode();
-
   useEffect(() => {
     parent.postMessage({ theme: colorMode }, '*');
   }, [colorMode]);
 
-  const scroller = useRef(null);
-
-  const isDark = colorMode === "dark";
   
-  function ScrolltoTop(){
-    scroller.current.scrollToTop();
-  }
+
+
+  
 
   return (
     <ArticlesContextProvider>
       <Container>
       <NavigationHeader />
-      <Scrollbar 
-       ref={scroller}
-      trackYProps={{
-        renderer: props => {
-          const { elementRef, ...restProps } = props;
-          return <span {...restProps} ref={elementRef} style={{ position: "absolute",
-            overflow: "hidden",
-            borderRadius: "4px",
-            background: isDark ? "rgb(17, 18, 22)" : "rgb(250, 250, 250)",
-            userSelect: "none",
-            width: "6px",
-            height: "calc(100% - 20px)",
-            top: "10px",
-            right: "0px"}} />;
-        }
-      }}
-      thumbYProps={{
-        renderer: props => {
-          const { elementRef, ...restProps } = props;
-          return <span {...restProps} ref={elementRef} className="tHuMbY" 
-          style={{
-            position: "absolute",
-            touchAction: "none",
-            cursor: "pointer",
-            borderRadius: "4px",
-            background: isDark ? "rgb(250, 250, 250)" : "rgba(124, 124, 124, 0.5)",
-            width: "100%"
-          }}
-          />;
-          
-        }
-      }}
-      >
+      
         <Global styles={globalStyles} />
         {children}
-      </Scrollbar>
-        <NavigationFooter ScrolltoTop={ScrolltoTop} />
+        <NavigationFooter />
       </Container>
     </ArticlesContextProvider>
   );

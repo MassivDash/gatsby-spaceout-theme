@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-import { Link, navigate, graphql, useStaticQuery } from "gatsby";
+import { navigate, graphql, useStaticQuery } from "gatsby";
+import AniLink from "gatsby-plugin-transition-link/AniLink";
 import { useColorMode } from "theme-ui";
 import { connect } from "react-redux";
 import Logo from "@components/Logo";
@@ -80,6 +81,7 @@ function NavigationHeader() {
       <NavContainer>
         <NavInfoContainer>
         <LogoLink
+          fade
           to={rootPath || basePath}
           data-a11y="false"
           title="Navigate back to the homepage"
@@ -110,7 +112,7 @@ function NavigationHeader() {
           ) : (
             null
           )}
-          {menuLinks && menuLinks.map(item => <NavLink to={`/${item.slug}`}>{item.title}</NavLink>)}
+          {menuLinks && menuLinks.map(item => <NavLink fade to={`/${item.slug}`}>{item.title}</NavLink>)}
 
         </NavControls>
         <NavSocialContainer>
@@ -236,7 +238,7 @@ const NavSocialContainer = styled.div`
  align-items: center;
  `;
 
-const LogoLink = styled(Link)<{ back: string }>`
+const LogoLink = styled(AniLink)<{ back: string }>`
   position: relative;
   display: flex;
   align-items: center;
@@ -276,7 +278,7 @@ const NavControls = styled.div`
   `}
 `;
 
-const NavLink = styled(props => <Link {...props} />)`
+const NavLink = styled(props => <AniLink {...props} />)`
 color: ${p => p.theme.colors.secondary};
 margin: 10px auto;
 font-size: 18px;

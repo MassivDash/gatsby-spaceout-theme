@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import styled from "@emotion/styled";
 import { css } from "@emotion/core";
-import { Link } from "gatsby";
-
+import AniLink from "gatsby-plugin-transition-link/AniLink";
 import Headings from "@components/Headings";
 import Image, { ImagePlaceholder } from "@components/Image";
 
@@ -115,7 +114,7 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
     Object.keys(imageSource).length !== 0 && imageSource.constructor === Object;
 
   return (
-    <ArticleLink to={article.slug} data-a11y="false">
+    <ArticleLink fade top="entry" to={article.slug} data-a11y="false">
       <Item gridLayout={gridLayout}>
         <ImageContainer narrow={narrow} gridLayout={gridLayout}>
           {hasHeroImage ? <Image src={imageSource} /> : <ImagePlaceholder />}
@@ -354,11 +353,11 @@ const MetaData = styled.div`
 
   ${mediaqueries.phablet`
     max-width: 100%;
-    padding:  0 20px 30px;
+    padding:  0 20px 30px;Link
   `}
 `;
 
-const ArticleLink = styled(Link)`
+const ArticleLink = styled(AniLink)`
   position: relative;
   display: block;
   width: 100%;

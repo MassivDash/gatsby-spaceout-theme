@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prevent-abbreviations */
 import { createStore as reduxCreateStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -20,35 +19,35 @@ const SET_CATEGORY_FILTER = 'SET_CATEGORY_FILTER';
  */
 
 export function setNavigatorPosition(value) {
-  return { type: SET_NAVIGATOR_POSITION, val: value };
+  return { type: SET_NAVIGATOR_POSITION, value: value };
 }
 
 export function setNavigatorScroll(value) {
-  return { type: SET_NAVIGATOR_SCROLL, val: value };
+  return { type: SET_NAVIGATOR_SCROLL, value: value };
 }
 
 export function setNavigatorShape(value) {
-  return { type: SET_NAVIGATOR_SHAPE, val: value };
+  return { type: SET_NAVIGATOR_SHAPE, value: value };
 }
 
 export function setNavigatorFilter(value) {
-  return { type: SET_NAVIGATOR_FILTER, val: value };
+  return { type: SET_NAVIGATOR_FILTER, value: value };
 }
 
 export function setIsWideScreen(value) {
-  return { type: SET_IS_WIDE_SCREEN, val: value };
+  return { type: SET_IS_WIDE_SCREEN, value: value };
 }
 
 export function setScrollToTop(value) {
-  return { type: SET_SCROLL_TO_TOP, val: value };
+  return { type: SET_SCROLL_TO_TOP, value: value };
 }
 
 export function setFontSizeIncrease(value) {
-  return { type: SET_FONT_SIZE_INCREASE, val: value };
+  return { type: SET_FONT_SIZE_INCREASE, value: value };
 }
 
 export function setCategoryFilter(value) {
-  return { type: SET_CATEGORY_FILTER, val: value };
+  return { type: SET_CATEGORY_FILTER, value: value };
 }
 
 /*
@@ -59,48 +58,48 @@ const reducer = (state, action) => {
     case SET_NAVIGATOR_POSITION:
       return {
         ...state,
-        navigatorPosition: action.val,
+        navigatorPosition: action.value,
       };
     case SET_NAVIGATOR_SCROLL:
       return {
         ...state,
-        navigatorScroll: action.val,
+        navigatorScroll: action.value,
       };
 
     case SET_NAVIGATOR_SHAPE:
       return {
         ...state,
-        navigatorShape: action.val,
+        navigatorShape: action.value,
       };
 
     case SET_NAVIGATOR_FILTER:
       return {
         ...state,
-        navigatorFilter: action.val,
+        navigatorFilter: action.value,
       };
 
     case SET_IS_WIDE_SCREEN:
       return {
         ...state,
-        isWideScreen: action.val,
+        isWideScreen: action.value,
       };
 
     case SET_SCROLL_TO_TOP:
       return {
         ...state,
-        scrollToTop: action.val,
+        scrollToTop: action.value,
       };
 
     case SET_FONT_SIZE_INCREASE:
       return {
         ...state,
-        fontSizeIncrease: action.val,
+        fontSizeIncrease: action.value,
       };
 
     case SET_CATEGORY_FILTER:
       return {
         ...state,
-        categoryFilter: action.val,
+        categoryFilter: action.value,
       };
 
     default:

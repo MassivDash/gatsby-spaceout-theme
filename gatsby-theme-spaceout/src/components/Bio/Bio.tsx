@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'gatsby';
+import Link from "gatsby-plugin-transition-link";
 import styled from '@emotion/styled';
 
 import Image from '@components/Image';

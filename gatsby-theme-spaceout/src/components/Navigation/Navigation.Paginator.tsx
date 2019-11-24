@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "@emotion/styled";
 import { css } from "@emotion/core";
-import { Link } from "gatsby";
+import Link from "gatsby-plugin-transition-link";
 import { Helmet } from "react-helmet";
 
 import mediaqueries from "@styles/media";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useColorMode } from "theme-ui";
-import { Link } from "gatsby";
+import Link from "gatsby-plugin-transition-link";
 
 import Image from "@components/Image";
 import Icons from "@icons";

@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 import Section from '@components/Section';
 import Bio from '@components/Bio';
+import SpaceHero from '@components/SpaceHero';
 import Icons from '@icons';
 import mediaqueries from '@styles/media';
 import { IAuthor } from '@types';
@@ -24,8 +25,72 @@ const authorQuery = graphql`
         }
       }
     }
+    back: imageSharp(original: { src: { regex: "/heroBack/" } } ) {
+      id
+      sizes(maxWidth: 1920, quality: 90, traceSVG: { color: "#121f28" }) {
+        aspectRatio
+        src
+        srcSet
+        srcWebp
+        srcSetWebp
+        sizes
+        tracedSVG
+      }
+      resize(width: 1920) {
+        src
+      }
+    }
+    earth: imageSharp(original: { src: { regex: "/earth/" } } ) {
+      id
+      sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
+        base64
+        aspectRatio
+        src
+        srcSet
+        srcWebp
+        srcSetWebp
+        sizes
+        tracedSVG
+      }
+      resize(width: 1920) {
+        src
+      }
+    }
+    spaceman: imageSharp(original: { src: { regex: "/spaceman/" } } ) {
+      id
+      sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
+        base64
+        aspectRatio
+        src
+        srcSet
+        srcWebp
+        srcSetWebp
+        sizes
+        tracedSVG
+      }
+      resize(width: 1920) {
+        src
+      }
+    }
+    shuttle: imageSharp(original: { src: { regex: "/shuttle/" } } ) {
+      id
+      sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
+        base64
+        aspectRatio
+        src
+        srcSet
+        srcWebp
+        srcSetWebp
+        sizes
+        tracedSVG
+      }
+      resize(width: 1920) {
+        src
+      }
+    }
   }
 `;
+
 
 function ArticlesHero({ authors, top, bottom }: IAuthor) {
   const { gridLayout = 'tiles', hasSetGridLayout, setGridLayout } = useContext(
@@ -36,6 +101,8 @@ function ArticlesHero({ authors, top, bottom }: IAuthor) {
   const hero = results.site.edges[0].node.siteMetadata.hero;
   const tilesIsActive = hasSetGridLayout && gridLayout === 'tiles';
   const featuredAuthor = authors.find(author => author.featured);
+
+  const {earth, spaceman, back, shuttle } = results;
 
   if (!featuredAuthor) {
     throw new Error(`
@@ -49,10 +116,7 @@ function ArticlesHero({ authors, top, bottom }: IAuthor) {
       { top && (
         <>
         <HeadingContainer style={{ maxWidth: `${hero.maxWidth}px` }}>
-        <HeroHeading dangerouslySetInnerHTML={{ __html: hero.heading }} />
-        <HeroSubHeading>
-          Z okazji międzynarodowego dnia kundelka publikuję bajkę o moim psie. Zachęcam wszystkich do lektury na stronie lub <a href="/nieprawdopodobne-przygody-psa-felka.pdf" download>ściągnięcia pdf.</a> Niech psy będą z Wami!
-        </HeroSubHeading>
+       
       </HeadingContainer>
       <SubheadingContainer>
       <GridControlsContainer>

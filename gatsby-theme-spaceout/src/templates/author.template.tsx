@@ -14,7 +14,7 @@ function ArticlesPage({ location, pageContext }) {
   const articles = pageContext.group;
 
   return (
-    <Layout>
+    <>
       <SEO 
         pathname={location.pathname}
         title={author.name}
@@ -27,7 +27,7 @@ function ArticlesPage({ location, pageContext }) {
           <Paginator {...pageContext} />
         </AuthorPaginator>
       </Section>
-    </Layout>
+    </>
   );
 }
 

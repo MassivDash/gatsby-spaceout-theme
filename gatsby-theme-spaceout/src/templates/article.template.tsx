@@ -3,8 +3,6 @@ import styled from "@emotion/styled";
 import { css } from '@emotion/core'
 import throttle from "lodash/throttle";
 import { graphql, useStaticQuery } from "gatsby";
-
-import Layout from "@components/Layout";
 import MDXRenderer from "@components/MDX";
 import Section from "@components/Section";
 import { connect } from "react-redux";
@@ -17,6 +15,8 @@ import ArticleControls from "../sections/article/Article.Controls";
 import ArticlesNext from "../sections/article/Article.Next";
 import ArticleSEO from "../sections/article/Article.SEO";
 import ArticleShare from "../sections/article/Article.Share";
+import { useColorMode } from 'theme-ui';
+import Scrollbar from 'react-scrollbars-custom';
 
 const siteQuery = graphql`
   {
@@ -35,6 +35,9 @@ const siteQuery = graphql`
 
 function Article({ pageContext, location, fontSizeIncrease }) {
   const contentSectionRef = useRef<HTMLElement>(null);
+  const [colorMode] = useColorMode();
+  const scroller = useRef(null);
+  const isDark = colorMode === "dark";
 
   const [hasCalculated, setHasCalculated] = useState<boolean>(false);
   const [contentHeight, setContentHeight] = useState<number>(0);
@@ -79,7 +82,39 @@ function Article({ pageContext, location, fontSizeIncrease }) {
   }, []);
 
   return (
-    <Layout>
+    <Scrollbar 
+    ref={scroller}
+   trackYProps={{
+     renderer: props => {
+       const { elementRef, ...restProps } = props;
+       return <span {...restProps} ref={elementRef} style={{ position: "absolute",
+         overflow: "hidden",
+         borderRadius: "4px",
+         background: isDark ? "rgb(17, 18, 22)" : "rgb(250, 250, 250)",
+         userSelect: "none",
+         width: "6px",
+         height: "calc(100% - 20px)",
+         top: "10px",
+         right: "0px"}} />;
+     }
+   }}
+   thumbYProps={{
+     renderer: props => {
+       const { elementRef, ...restProps } = props;
+       return <span {...restProps} ref={elementRef} className="tHuMbY" 
+       style={{
+         position: "absolute",
+         touchAction: "none",
+         cursor: "pointer",
+         borderRadius: "4px",
+         background: isDark ? "rgb(250, 250, 250)" : "rgba(124, 124, 124, 0.5)",
+         width: "100%"
+       }}
+       />;
+       
+     }
+   }}
+   ><Background>
       <ArticleSEO article={article} authors={authors} location={location} />
       <ArticleHero article={article} authors={authors} />
       <MobileControls>
@@ -97,7 +132,8 @@ function Article({ pageContext, location, fontSizeIncrease }) {
           <FooterSpacer />
         </NextArticle>
       )}
-    </Layout>
+      </Background>
+    </Scrollbar>
   );
 }
 
@@ -148,6 +184,11 @@ const ArticleBody = styled.article`${articleFontDynamicStyle}`
 
 const NextArticle = styled(Section)`
   display: block;
+`;
+
+const Background = styled.div`
+background-color: #fafafa;
+padding-top: 20px;
 `;
 
 const FooterNext = styled.h3`

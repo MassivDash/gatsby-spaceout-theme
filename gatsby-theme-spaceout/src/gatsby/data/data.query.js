@@ -35,7 +35,7 @@ module.exports.local = {
           hero {
             full: childImageSharp {
               fluid(maxWidth: 944, quality: 100, traceSVG: {
-                color: "#0c0c0c"
+                color: "#fafafa"
                 turnPolicy: TURNPOLICY_MAJORITY
                 blackOnWhite: true
               }) {
@@ -44,7 +44,7 @@ module.exports.local = {
             }
             regular: childImageSharp {
               fluid(maxWidth: 653, quality: 100, traceSVG: {
-                color: "#0c0c0c"
+                color: "#fafafa"
                 turnPolicy: TURNPOLICY_MAJORITY
                 blackOnWhite: true
               }) {
@@ -53,9 +53,8 @@ module.exports.local = {
             }
             narrow: childImageSharp {
               fluid(maxWidth: 457, quality: 100traceSVG: {
-                color: "#0c0c0c"
+                color: "#fafafa"
                 turnPolicy: TURNPOLICY_MAJORITY
-                blackOnWhite: true
               }) {
                 ${GatsbyFluid_withWebp_tracedSVG}
               }
@@ -86,7 +85,7 @@ module.exports.local = {
           avatar {
             small: childImageSharp {
               fluid(maxWidth: 50, quality: 100, traceSVG: {
-                color: "#0c0c0c"
+                color: "#fafafa"
                 turnPolicy: TURNPOLICY_MAJORITY
                 blackOnWhite: true
               }) {
@@ -95,7 +94,7 @@ module.exports.local = {
             }
             medium: childImageSharp {
               fluid(maxWidth: 100, quality: 100, traceSVG: {
-                color: "#0c0c0c"
+                color: "#fafafa"
                 turnPolicy: TURNPOLICY_MAJORITY
                 blackOnWhite: true
               }) {
@@ -104,7 +103,7 @@ module.exports.local = {
             }
             large: childImageSharp {
               fluid(maxWidth: 328, quality: 100, traceSVG: {
-                color: "#0c0c0c"
+                color: "#fafafa"
                 turnPolicy: TURNPOLICY_MAJORITY
                 blackOnWhite: true
               }) {

@@ -20,6 +20,12 @@ module.exports = ({
       `gatsby-transformer-yaml`,
       `gatsby-plugin-theme-ui`,
       {
+        resolve: "gatsby-plugin-transition-link",
+        options: {
+            layout: require.resolve(`./src/components/Layout/Layout.tsx`)
+          }
+     },
+      {
         resolve: `gatsby-plugin-react-redux`,
         options: {
           pathToCreateStoreModule: '../gatsby-theme-spaceout/src/state/createStore',
@@ -209,6 +215,13 @@ module.exports = ({
         options: {
           path: contentAuthors,
           name: contentAuthors,
+        },
+      },
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          path: "content/images/",
+          name: "images",
         },
       },
       {
