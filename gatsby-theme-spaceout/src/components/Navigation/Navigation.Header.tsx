@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "@emotion/styled";
 import { navigate, graphql, useStaticQuery } from "gatsby";
 import AniLink from "gatsby-plugin-transition-link/AniLink";
+import Image from "gatsby-image";
+import Scrollbar from '@components/Scroller';
+import useScrollManager from '@components/Scroller';
 import { useColorMode } from "theme-ui";
 import { connect } from "react-redux";
 import Logo from "@components/Logo";
@@ -49,19 +52,49 @@ const siteQuery = graphql`
         }
       }
     }
+    allArticles: allArticle {
+    totalCount
+    edges {
+      node {
+        id
+        title
+        slug
+        hero {
+          childImageSharp {
+            id
+            fluid(maxWidth: 653, quality: 100, traceSVG: {
+                color: "#fafafa"
+                turnPolicy: TURNPOLICY_MAJORITY
+                blackOnWhite: true
+              }) {
+                base64
+                aspectRatio
+                src
+                srcSet
+                srcWebp
+                srcSetWebp
+                sizes
+                tracedSVG
+              }
+          }
+        }
+      }
+    }
+  }
   }
 `;
 
-function NavigationHeader() {
+const NavigationHeader = ({ navigatorPosition }) => {
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false);
   const [previousPath, setPreviousPath] = useState<string>("/");
-  const { sitePlugin, allSite } = useStaticQuery(siteQuery);
+  
+  const { sitePlugin, allSite, allArticles } = useStaticQuery(siteQuery);
   const { title, name, description, social, menuLinks } = allSite.edges[0].node.siteMetadata;
 
   const [colorMode] = useColorMode();
   const fill = colorMode === "dark" ? "#fff" : "#000";
+  const isDark = colorMode === "dark";
   const { rootPath, basePath } = sitePlugin.pluginOptions;
-
   useEffect(() => {
     const { width } = getWindowDimensions();
     const phablet = getBreakpointFromTheme("phablet");
@@ -75,13 +108,19 @@ function NavigationHeader() {
       previousPathWasHomepage && isNotPaginated && width <= phablet,
     );
     setPreviousPath(prev);
+    
+
   }, []);
 
+  const scroller = useScrollManager()
+  const ArticleNavigator = navigatorPosition === 'article' ? true : false
+  
   return (
       <NavContainer>
         <NavInfoContainer>
         <LogoLink
           fade
+          articlePosition={ArticleNavigator}
           to={rootPath || basePath}
           data-a11y="false"
           title="Navigate back to the homepage"
@@ -96,9 +135,9 @@ function NavigationHeader() {
           <Logo fill={fill} />
           <Hidden>Navigate back to the homepage</Hidden>
         </LogoLink>
-        <Title>{title}</Title>
-        <Subtitle>{name}</Subtitle>
-        <Description>{description}</Description>
+        <Title articlePosition={ArticleNavigator} >{title}</Title>
+        <Subtitle articlePosition={ArticleNavigator} >{name}</Subtitle>
+        <Description articlePosition={ArticleNavigator} >{description}</Description>
         </NavInfoContainer>
         <NavControls>
           {showBackArrow ? (
@@ -118,6 +157,15 @@ function NavigationHeader() {
         <NavSocialContainer>
           <SocialLinks links={social} />
         </NavSocialContainer>
+        <ArticleViewer articlePosition={ArticleNavigator} isDark={isDark}>
+        <Scrollbar>
+          <ArticlesHolder>
+            {allArticles.edges.map(item => <AniLink to={item.node.slug}> <Image key={item.id}   fluid={item.node.hero.childImageSharp.fluid} /></AniLink>)}
+            </ArticlesHolder>
+      </Scrollbar>
+        
+        
+        </ArticleViewer>
       </NavContainer>
   );
 }
@@ -197,23 +245,25 @@ const NavInfoContainer = styled.div`
   flex-direction: column;
   `;
 
-const Title = styled.h1`
+const Title = styled.h1`height: 80%;
   font-weight: 300;
-  font-size: 28px;
+  font-size: ${p => p.articlePosition ? '22px'  : '28px' };
   margin: 5px auto;
   color: ${p => p.theme.colors.primary};
   transition: 0.3s ease-in-out;
   text-align: center;
+  transform: ${p => p.articlePosition ? `translateY(-55px) translateX(20px)` : `translateY(0)` };
   `;
 
 const Subtitle = styled.h2`
   font-weight: 400;
   font-size: 16px;
   margin: auto;
-  max-width: 80px;
+  max-width: ${p => p.articlePosition ? '160px' : '80px'};
   color: ${p => p.theme.colors.primary};
   transition: 0.3s ease-in-out;
   text-align: center;
+  transform: ${p => p.articlePosition ? `translateY(-55px) translateX(20px)` : `translateY(0px) translateX(0px)` };
   `;
 
 
@@ -221,7 +271,7 @@ const Description = styled.h3`
   font-weight: 400;
   font-size: 15px;
   margin: 20px auto;
-  color: ${p => p.theme.colors.secondary};
+  color: ${p => p.theme.colors.accent};
   transition: 0.3s ease-in-out;
   text-align: center;
   `;
@@ -243,7 +293,8 @@ const LogoLink = styled(AniLink)<{ back: string }>`
   display: flex;
   align-items: center;
   margin: auto;
-
+  transition: 0.5s ease-in-out;
+  transform: ${p => p.articlePosition ? 'translateX(-90px)' : 'translateX(0px)' };
   ${mediaqueries.desktop_medium`
     left: 0
   `}
@@ -279,7 +330,7 @@ const NavControls = styled.div`
 `;
 
 const NavLink = styled(props => <AniLink {...props} />)`
-color: ${p => p.theme.colors.secondary};
+color: ${p => p.theme.colors.accent};
 margin: 10px auto;
 font-size: 18px;
 text-transform: Capitalize;
@@ -324,4 +375,39 @@ const Hidden = styled.span`
   height: 0px;
   visibility: hidden;
   overflow: hidden;
+`;
+
+
+  
+const ArticlesHolder = styled.div`
+  display: grid;
+  width: 250px;
+  grid-template-rows: 260px;
+  grid-row-gap: 10px;
+  margin: auto 5px auto 20px;
+  padding: 10px 0px;
+`
+
+
+const ArticleViewer = styled.aside`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 100px;
+  width: 300px;
+  margin: 0 10px 0px -5px;
+  padding: 10px 0;
+  background-color: ${p => p.theme.colors.background};
+  transition: 1.2s ease-in-out;
+  transform: ${p => p.articlePosition ? `translateY(0)` : `translateY(100vh)`};
+  &::before {
+    content: "";
+    position: absolute;
+    width: 83%;
+    border-top: 1px ${p => p.isDark ? "rgb(250, 250, 250)" : "#eeeeee"} solid;
+    height: 40px;
+    top: 0;
+    background: ${p => p.isDark ? "#000" : "#fafafa"};
+    margin: -15px 20px;
+  }
 `;

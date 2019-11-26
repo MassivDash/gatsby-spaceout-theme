@@ -16,7 +16,15 @@ import ArticlesNext from "../sections/article/Article.Next";
 import ArticleSEO from "../sections/article/Article.SEO";
 import ArticleShare from "../sections/article/Article.Share";
 import { useColorMode } from 'theme-ui';
-import Scrollbar from 'react-scrollbars-custom';
+import Scrollbar from '@components/Scroller';
+
+import {
+  setNavigatorPosition,
+  setNavigatorShape,
+  setScrollToTop,
+  setFontSizeIncrease,
+  setCategoryFilter
+} from "../state/createStore";
 
 const siteQuery = graphql`
   {
@@ -33,7 +41,7 @@ const siteQuery = graphql`
   }
 `;
 
-function Article({ pageContext, location, fontSizeIncrease }) {
+function Article({ pageContext, location, fontSizeIncrease, setNavigatorPosition, navigatorPosition }) {
   const contentSectionRef = useRef<HTMLElement>(null);
   const [colorMode] = useColorMode();
   const scroller = useRef(null);
@@ -77,44 +85,18 @@ function Article({ pageContext, location, fontSizeIncrease }) {
 
     calculateBodySize();
     window.addEventListener("resize", calculateBodySize);
+    setNavigatorPosition('article');
 
     return () => window.removeEventListener("resize", calculateBodySize);
   }, []);
 
+  useEffect(() => {
+    setNavigatorPosition('article')
+  })
+
   return (
-    <Scrollbar 
-    ref={scroller}
-   trackYProps={{
-     renderer: props => {
-       const { elementRef, ...restProps } = props;
-       return <span {...restProps} ref={elementRef} style={{ position: "absolute",
-         overflow: "hidden",
-         borderRadius: "4px",
-         background: isDark ? "rgb(17, 18, 22)" : "rgb(250, 250, 250)",
-         userSelect: "none",
-         width: "6px",
-         height: "calc(100% - 20px)",
-         top: "10px",
-         right: "0px"}} />;
-     }
-   }}
-   thumbYProps={{
-     renderer: props => {
-       const { elementRef, ...restProps } = props;
-       return <span {...restProps} ref={elementRef} className="tHuMbY" 
-       style={{
-         position: "absolute",
-         touchAction: "none",
-         cursor: "pointer",
-         borderRadius: "4px",
-         background: isDark ? "rgb(250, 250, 250)" : "rgba(124, 124, 124, 0.5)",
-         width: "100%"
-       }}
-       />;
-       
-     }
-   }}
-   ><Background>
+    <Scrollbar>
+      <Background>
       <ArticleSEO article={article} authors={authors} location={location} />
       <ArticleHero article={article} authors={authors} />
       <MobileControls>
@@ -127,7 +109,7 @@ function Article({ pageContext, location, fontSizeIncrease }) {
       </ArticleBody>
       {next.length > 0 && similarPosts && (
         <NextArticle >
-          <FooterNext>Sprawdź dalsze przygody felka</FooterNext>
+          <FooterNext></FooterNext>
           <ArticlesNext articles={next} />
           <FooterSpacer />
         </NextArticle>
@@ -139,12 +121,22 @@ function Article({ pageContext, location, fontSizeIncrease }) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    fontSizeIncrease: state.fontSizeIncrease
+    fontSizeIncrease: state.fontSizeIncrease,
+    navigatorPosition: state.navigatorPosition
   };
+};
+
+const mapDispatchToProps = {
+  setNavigatorPosition,
+  setNavigatorShape,
+  setScrollToTop,
+  setFontSizeIncrease,
+  setCategoryFilter
 };
 
 export default connect(
   mapStateToProps,
+  mapDispatchToProps
 )(Article);
 
 const articleFontDynamicStyle = props =>
@@ -187,7 +179,7 @@ const NextArticle = styled(Section)`
 `;
 
 const Background = styled.div`
-background-color: #fafafa;
+background-color: ${p => p.theme.colors.background};
 padding-top: 20px;
 `;
 

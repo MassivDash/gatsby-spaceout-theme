@@ -108,7 +108,7 @@ const reducer = (state, action) => {
 };
 
 const initialState = {
-  navigatorPosition: 'is-aside',
+  navigatorPosition: 'main',
   navigatorScroll: false,
   navigatorShape: 'open',
   navigatorFilter: '',

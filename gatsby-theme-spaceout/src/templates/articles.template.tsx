@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "@emotion/styled";
-
+import { connect } from "react-redux";
 import Section from "@components/Section";
 import SEO from "@components/SEO";
 import Paginator from "@components/Navigation/Navigation.Paginator";
@@ -8,13 +8,20 @@ import { useColorMode } from 'theme-ui';
 import Scrollbar from 'react-scrollbars-custom';
 import ArticlesHero from "../sections/articles/Articles.Hero";
 import ArticlesList from "../sections/articles/Articles.List";
+import {
+  setNavigatorPosition,
+} from "../state/createStore";
 
-function ArticlesPage({ location, pageContext }) {
+function ArticlesPage({ location, pageContext, setNavigatorPosition }) {
   const articles = pageContext.group;
   const authors = pageContext.additionalContext.authors;
   const [colorMode] = useColorMode();
   const scroller = useRef(null);
   const isDark = colorMode === "dark";
+
+  useEffect(() => {
+    setNavigatorPosition('main')
+  })
   
   return (
     <Scrollbar 
@@ -67,7 +74,20 @@ function ArticlesPage({ location, pageContext }) {
   );
 }
 
-export default ArticlesPage;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    navigatorPosition: state.navigatorPosition
+  };
+};
+
+const mapDispatchToProps = {
+  setNavigatorPosition,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ArticlesPage);
 
 const ArticlesGradient = styled.div`
   position: absolute;
