@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import mediaqueries from "@styles/media";
+import styled from '@emotion/styled'
+import mediaqueries from '@styles/media'
 
 const Paragraph = styled.p`
   line-height: 1.756;
@@ -26,6 +26,6 @@ const Paragraph = styled.p`
   ${mediaqueries.phablet`
     padding: 0 20px;
   `};
-`;
+`
 
-export default Paragraph;
+export default Paragraph

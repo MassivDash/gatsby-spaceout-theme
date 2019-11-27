@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
-import throttle from "lodash/throttle";
+import React, { useEffect, useState } from 'react'
+import styled from '@emotion/styled'
+import throttle from 'lodash/throttle'
 
-import { clamp } from "@utils";
+import { clamp } from '@utils'
 
 export interface IProgress {
-  contentHeight: number;
+  contentHeight: number
 }
 
 function Progress({ contentHeight }: IProgress) {
-  const [progress, setProgress] = useState<number>(0);
+  const [progress, setProgress] = useState<number>(0)
 
   useEffect(() => {
     const handleScroll = throttle(() => {
-      const percentComplete = (window.scrollY / contentHeight) * 100;
+      const percentComplete = (window.scrollY / contentHeight) * 100
 
-      setProgress(clamp(+percentComplete.toFixed(2), -2, 104));
-    }, 20);
+      setProgress(clamp(+percentComplete.toFixed(2), -2, 104))
+    }, 20)
 
     if (contentHeight) {
-      window.addEventListener("scroll", handleScroll);
-      window.addEventListener("resize", handleScroll);
+      window.addEventListener('scroll', handleScroll)
+      window.addEventListener('resize', handleScroll)
       return () => {
-        window.removeEventListener("scroll", handleScroll);
-        window.removeEventListener("resize", handleScroll);
-      };
+        window.removeEventListener('scroll', handleScroll)
+        window.removeEventListener('resize', handleScroll)
+      }
     }
-  }, [contentHeight]);
+  }, [contentHeight])
 
   return (
     <ProgressContainer tabIndex={-1}>
@@ -34,16 +34,16 @@ function Progress({ contentHeight }: IProgress) {
         <ProgressLine style={{ transform: `translateY(${progress}%)` }} />
       </Trackline>
     </ProgressContainer>
-  );
+  )
 }
 
-export default Progress;
+export default Progress
 
 const ProgressContainer = styled.div`
   position: relative;
   outline: none;
   user-select: none;
-`;
+`
 
 const Trackline = styled.div`
   position: relative;
@@ -55,7 +55,7 @@ const Trackline = styled.div`
   background-color: ${p => p.theme.colors.track};
   opacity: 0.6;
   overflow: hidden;
-`;
+`
 
 const ProgressLine = styled.div`
   position: absolute;
@@ -64,4 +64,4 @@ const ProgressLine = styled.div`
   width: 1px;
   background-color: ${p => p.theme.colors.progress};
   left: 0;
-`;
+`

@@ -1,41 +1,41 @@
-import addToMailchimp from "gatsby-plugin-mailchimp";
-import React, { useState } from "react";
+import addToMailchimp from 'gatsby-plugin-mailchimp'
+import React, { useState } from 'react'
 
-import Section from "@components/Section";
-import Headings from "@components/Headings";
+import Section from '@components/Section'
+import Headings from '@components/Headings'
 
-import styled from "@emotion/styled";
-import mediaqueries from "@styles/media";
+import styled from '@emotion/styled'
+import mediaqueries from '@styles/media'
 
 const Subscription: React.FunctionComponent<{}> = () => {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
+  const [email, setEmail] = useState('')
+  const [error, setError] = useState('')
+  const [subscribed, setSubscribed] = useState(false)
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+    event.preventDefault()
 
     addToMailchimp(email)
       .then(data => {
-        if (data.result === "error") {
-          throw data;
+        if (data.result === 'error') {
+          throw data
         }
 
-        setSubscribed(true);
-        setEmail("");
+        setSubscribed(true)
+        setEmail('')
 
         setTimeout(() => {
-          setSubscribed(false);
-        }, 6000);
+          setSubscribed(false)
+        }, 6000)
       })
       .catch(error => {
-        setError(error.msg);
-      });
+        setError(error.msg)
+      })
   }
 
   function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setEmail(event.currentTarget.value);
-    setError("");
+    setEmail(event.currentTarget.value)
+    setError('')
   }
 
   return (
@@ -65,17 +65,17 @@ const Subscription: React.FunctionComponent<{}> = () => {
               subscribed={subscribed}
               disabled={subscribed}
             >
-              {subscribed ? <CheckMarkIcon /> : "Subscribe"}
+              {subscribed ? <CheckMarkIcon /> : 'Subscribe'}
             </Button>
             {error && <Error dangerouslySetInnerHTML={{ __html: error }} />}
           </Form>
         </Content>
       </SubscriptionContainer>
     </Section>
-  );
-};
+  )
+}
 
-export default Subscription;
+export default Subscription
 
 const SubscriptionContainer = styled.div`
   position: relative;
@@ -95,7 +95,7 @@ const SubscriptionContainer = styled.div`
   ${mediaqueries.phablet`
     margin: -20px auto 80px;
   `}
-`;
+`
 
 const Content = styled.div`
   margin: 0 auto;
@@ -113,7 +113,7 @@ const Content = styled.div`
       padding: 0 24px;
     }
   `}
-`;
+`
 
 const Heading = styled(Headings.h3)`
   margin-bottom: 20px;
@@ -121,7 +121,7 @@ const Heading = styled(Headings.h3)`
   ${mediaqueries.tablet`
     margin-bottom: 15px;
   `}
-`;
+`
 
 const Text = styled.p`
   margin: 0 auto 30px;
@@ -132,13 +132,13 @@ const Text = styled.p`
     padding: 0 26px;
     margin: 0 auto 25px;
   `}
-`;
+`
 
 const Form = styled.form<{ hasError: string }>`
   position: relative;
 
   &::after {
-    content: ">";
+    content: '>';
     position: absolute;
     left: 21px;
     top: 10px;
@@ -149,7 +149,7 @@ const Form = styled.form<{ hasError: string }>`
     top: 11px;
   `}
   }
-`;
+`
 
 const Input = styled.input<{ hasError: string }>`
   position: relative;
@@ -182,7 +182,7 @@ const Input = styled.input<{ hasError: string }>`
     padding: 14px 14px 14px 30px;
     margin-bottom: 30px;
   `}
-`;
+`
 
 const Button = styled.button<{ hasError: string; subscribed: boolean }>`
   position: absolute;
@@ -196,7 +196,7 @@ const Button = styled.button<{ hasError: string; subscribed: boolean }>`
   border: 1px solid
     ${p => (p.hasError ? p.theme.colors.error : p.theme.colors.accent)};
   color: ${p => (p.hasError ? p.theme.colors.error : p.theme.colors.accent)};
-  background: ${p => (p.subscribed ? p.theme.colors.accent : "transparent")};
+  background: ${p => (p.subscribed ? p.theme.colors.accent : 'transparent')};
   font-weight: 600;
   border-radius: 35px;
   letter-spacing: 0.42px;
@@ -232,7 +232,7 @@ const Button = styled.button<{ hasError: string; subscribed: boolean }>`
       background: initial;
     }
   `}
-`;
+`
 
 const Error = styled.div`
   position: absolute;
@@ -250,7 +250,7 @@ const Error = styled.div`
     left: 50px;
     top: 50px;
   `}
-`;
+`
 
 const CheckMarkIcon = () => (
   <svg
@@ -265,4 +265,4 @@ const CheckMarkIcon = () => (
       fill="#08080B"
     />
   </svg>
-);
+)

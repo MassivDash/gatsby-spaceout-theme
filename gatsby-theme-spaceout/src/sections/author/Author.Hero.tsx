@@ -1,15 +1,15 @@
-import React from "react";
-import styled from "@emotion/styled";
+import React from 'react'
+import styled from '@emotion/styled'
 
-import Image from "@components/Image";
+import Image from '@components/Image'
 
-import mediaqueries from "@styles/media";
-import { IAuthor } from "@types";
+import mediaqueries from '@styles/media'
+import { IAuthor } from '@types'
 
-import SocialLinks from "@components/SocialLinks";
+import SocialLinks from '@components/SocialLinks'
 
 interface AuthorHeroProps {
-  author: IAuthor;
+  author: IAuthor
 }
 
 const AuthorHero = ({ author }: AuthorHeroProps) => {
@@ -24,10 +24,10 @@ const AuthorHero = ({ author }: AuthorHeroProps) => {
         <SocialLinks links={author.social} />
       </Social>
     </Hero>
-  );
-};
+  )
+}
 
-export default AuthorHero;
+export default AuthorHero
 
 const Hero = styled.div`
   position: relative;
@@ -37,7 +37,7 @@ const Hero = styled.div`
   align-items: center;
   justify-content: center;
   margin: 35px auto 110px;
-`;
+`
 
 const HeroImage = styled.div`
   position: relative;
@@ -60,7 +60,7 @@ const HeroImage = styled.div`
     height: 136px;
     margin-bottom: 25px;
   `}
-`;
+`
 
 const Heading = styled.h1`
   font-size: 38px;
@@ -74,7 +74,7 @@ const Heading = styled.h1`
 
   ${mediaqueries.phablet`
   `}
-`;
+`
 
 const Subheading = styled.p`
   margin: 0 auto;
@@ -88,7 +88,7 @@ const Subheading = styled.p`
   ${mediaqueries.phablet`
     font-size: 14px;
   `}
-`;
+`
 
 const Social = styled.div`
   display: flex;
@@ -98,4 +98,4 @@ const Social = styled.div`
   ${mediaqueries.phablet`
     font-size: 14px;
   `}
-`;
+`

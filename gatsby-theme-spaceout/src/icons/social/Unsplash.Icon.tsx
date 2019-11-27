@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react'
 
-const UnsplashIcon = ({ fill = "white" }) => (
+const UnsplashIcon = ({ fill = 'white' }) => (
   <svg
     width="15"
     height="15"
@@ -10,6 +10,6 @@ const UnsplashIcon = ({ fill = "white" }) => (
   >
     <path d="M10 9V0H22V9H10ZM22 14H32V32H0V14H10V23H22V14Z" fill={fill} />
   </svg>
-);
+)
 
-export default UnsplashIcon;
+export default UnsplashIcon

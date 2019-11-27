@@ -1,15 +1,15 @@
-import React from 'react';
-import styled from '@emotion/styled';
+import React from 'react'
+import styled from '@emotion/styled'
 
-import Icons from '@icons';
-import mediaqueries from '@styles/media';
+import Icons from '@icons'
+import mediaqueries from '@styles/media'
 
 interface SocialLinksProps {
   links: {
-    name: string;
-    url: string;
-  }[];
-  fill: string;
+    name: string
+    url: string
+  }[]
+  fill: string
 }
 
 const icons = {
@@ -27,25 +27,25 @@ const icons = {
   patreon: Icons.Patreon,
   paypal: Icons.Paypal,
   digitalocean: Icons.DigitalOcean,
-  spaceout: Icons.Spaceout
-};
+  spaceout: Icons.Spaceout,
+}
 
 const getHostname = url => {
-  return new URL(url.toLowerCase()).hostname.replace('www.', '').split('.')[0];
-};
+  return new URL(url.toLowerCase()).hostname.replace('www.', '').split('.')[0]
+}
 
 function SocialLinks({ links, fill = '#73737D' }: SocialLinksProps) {
-  if (!links) return null;
+  if (!links) return null
 
   return (
     <>
       {links.map(option => {
-        const name = option.name || getHostname(option.url);
-        const Icon = icons[name];
+        const name = option.name || getHostname(option.url)
+        const Icon = icons[name]
         if (!Icon) {
           throw new Error(
-            `unsupported social link name=${name} / url=${option.url}`,
-          );
+            `unsupported social link name=${name} / url=${option.url}`
+          )
         }
         return (
           <SocialIconContainer
@@ -59,13 +59,13 @@ function SocialLinks({ links, fill = '#73737D' }: SocialLinksProps) {
             <Icon fill={fill} size={22} />
             <Hidden>Link to ${option.url}</Hidden>
           </SocialIconContainer>
-        );
+        )
       })}
     </>
-  );
+  )
 }
 
-export default SocialLinks;
+export default SocialLinks
 
 const SocialIconContainer = styled.a`
   position: relative;
@@ -101,7 +101,7 @@ const SocialIconContainer = styled.a`
   ${mediaqueries.tablet`
     margin: 0 2.2rem;
   `};
-`;
+`
 
 const Hidden = styled.span`
   width: 0px;
@@ -110,4 +110,4 @@ const Hidden = styled.span`
   opacity: 0;
   overflow: hidden;
   display: inline-block;
-`;
+`

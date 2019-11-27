@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
-import styled from "@emotion/styled";
+import React, { useRef, useEffect, useState } from 'react'
+import styled from '@emotion/styled'
 
-import mediaqueries from "@styles/media";
+import mediaqueries from '@styles/media'
 
 const Container = styled.div`
   display: flex;
@@ -17,21 +17,21 @@ const Container = styled.div`
   ${mediaqueries.phablet`
     font-size: 28px;
   `}
-`;
+`
 
 function ImagePlaceholder(props) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
   useEffect(() => {
-    setDimensions(containerRef.current.getBoundingClientRect());
+    setDimensions(containerRef.current.getBoundingClientRect())
 
     const handleResize = () =>
-      setDimensions(containerRef.current.getBoundingClientRect());
+      setDimensions(containerRef.current.getBoundingClientRect())
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
     <Container ref={containerRef} {...props}>
@@ -39,7 +39,7 @@ function ImagePlaceholder(props) {
         {dimensions.width} x {dimensions.height}
       </div>
     </Container>
-  );
+  )
 }
 
-export default ImagePlaceholder;
+export default ImagePlaceholder

@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from "react";
-import styled from "@emotion/styled";
-import { css } from "@emotion/core";
-import AniLink from "gatsby-plugin-transition-link/AniLink";
-import Headings from "@components/Headings";
-import Image, { ImagePlaceholder } from "@components/Image";
+import React, { useContext, useEffect } from 'react'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
+import AniLink from 'gatsby-plugin-transition-link/AniLink'
+import Headings from '@components/Headings'
+import Image, { ImagePlaceholder } from '@components/Image'
 
-import mediaqueries from "@styles/media";
-import { IArticle } from "@types";
+import mediaqueries from '@styles/media'
+import { IArticle } from '@types'
 
-import { GridLayoutContext } from "./Articles.List.Context";
-import { graphql, useStaticQuery } from "gatsby";
+import { GridLayoutContext } from './Articles.List.Context'
+import { graphql, useStaticQuery } from 'gatsby'
 
 const siteQuery = graphql`
   {
@@ -25,7 +25,7 @@ const siteQuery = graphql`
       }
     }
   }
-`;
+`
 
 /**
  * Tiles
@@ -42,22 +42,22 @@ const siteQuery = graphql`
  */
 
 interface ArticlesListProps {
-  articles: IArticle[];
-  alwaysShowAllDetails?: boolean;
+  articles: IArticle[]
+  alwaysShowAllDetails?: boolean
 }
 
 interface ArticlesListItemProps {
-  article: IArticle;
-  narrow?: boolean;
+  article: IArticle
+  narrow?: boolean
 }
 
 function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
-  if (!articles) return null;
+  if (!articles) return null
 
-  const hasOnlyOneArticle = articles.length === 1;
-  const { gridLayout = "tiles", hasSetGridLayout, getGridLayout } = useContext(
-    GridLayoutContext,
-  );
+  const hasOnlyOneArticle = articles.length === 1
+  const { gridLayout = 'tiles', hasSetGridLayout, getGridLayout } = useContext(
+    GridLayoutContext
+  )
 
   /**readingTime
    * We're taking the flat array of articles [{}, {}, {}...]
@@ -66,12 +66,12 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
    */
   const articlePairs = articles.reduce((result, value, index, array) => {
     if (index % 2 === 0) {
-      result.push(array.slice(index, index + 2));
+      result.push(array.slice(index, index + 2))
     }
-    return result;
-  }, []);
+    return result
+  }, [])
 
-  useEffect(() => getGridLayout(), []);
+  useEffect(() => getGridLayout(), [])
 
   return (
     <ArticlesListContainer
@@ -79,8 +79,8 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
       alwaysShowAllDetails={alwaysShowAllDetails}
     >
       {articlePairs.map((ap, index) => {
-        const isEven = index % 2 !== 0;
-        const isOdd = index % 2 !== 1;
+        const isEven = index % 2 !== 0
+        const isOdd = index % 2 !== 1
 
         return (
           <List
@@ -92,26 +92,25 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
             <ListItem article={ap[0]} narrow={isEven} />
             <ListItem article={ap[1]} narrow={isOdd} />
           </List>
-        );
+        )
       })}
     </ArticlesListContainer>
-  );
+  )
 }
 
-export default ArticlesList;
+export default ArticlesList
 
 const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
-  
-  const results = useStaticQuery(siteQuery);
-  const { readingTime } = results.allSite.edges[0].node.siteMetadata;
-  
-  if (!article) return null;
+  const results = useStaticQuery(siteQuery)
+  const { readingTime } = results.allSite.edges[0].node.siteMetadata
 
-  const { gridLayout } = useContext(GridLayoutContext);
-  const hasOverflow = narrow && article.title.length > 35;
-  const imageSource = narrow ? article.hero.narrow : article.hero.regular;
+  if (!article) return null
+
+  const { gridLayout } = useContext(GridLayoutContext)
+  const hasOverflow = narrow && article.title.length > 35
+  const imageSource = narrow ? article.hero.narrow : article.hero.regular
   const hasHeroImage =
-    Object.keys(imageSource).length !== 0 && imageSource.constructor === Object;
+    Object.keys(imageSource).length !== 0 && imageSource.constructor === Object
 
   return (
     <ArticleLink fade top="entry" to={article.slug} data-a11y="false">
@@ -129,20 +128,18 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
             gridLayout={gridLayout}
           >
             {article.excerpt}
-          </Excerpt>{
-            readingTime &&
-            <MetaData>
-            {article.timeToRead} min czytania
-          </MetaData>
-          }
+          </Excerpt>
+          {readingTime && (
+            <MetaData>{article.timeToRead} min czytania</MetaData>
+          )}
         </div>
       </Item>
     </ArticleLink>
-  );
-};
+  )
+}
 
-const wide = "1fr";
-const narrow = "457px";
+const wide = '1fr'
+const narrow = '457px'
 
 const limitToTwoLines = css`
   text-overflow: ellipsis;
@@ -156,7 +153,7 @@ const limitToTwoLines = css`
   ${mediaqueries.phablet`
     -webkit-line-clamp: 3;
   `}
-`;
+`
 
 const showDetails = css`
   p {
@@ -166,19 +163,17 @@ const showDetails = css`
   h2 {
     margin-bottom: 10px;
   }
-`;
+`
 
 const ArticlesListContainer = styled.div<{ alwaysShowAllDetails?: boolean }>`
   transition: opacity 0.25s;
   ${p => p.alwaysShowAllDetails && showDetails}
-`;
+`
 
 const listTile = p => css`
   position: relative;
   display: grid;
-  grid-template-columns: ${p.reverse
-    ? `${wide} ${wide}`
-    : `${wide} ${wide}`};
+  grid-template-columns: ${p.reverse ? `${wide} ${wide}` : `${wide} ${wide}`};
   grid-template-rows: 2;
   column-gap: 30px;
 
@@ -197,7 +192,7 @@ const listTile = p => css`
       margin-bottom: 0;
     }
   `}
-`;
+`
 
 const listItemRow = p => css`
   display: grid;
@@ -227,7 +222,7 @@ const listItemRow = p => css`
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
   `}
-`;
+`
 
 const listItemTile = p => css`
   position: relative;
@@ -246,32 +241,32 @@ const listItemTile = p => css`
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
   `}
-`;
+`
 
 // If only 1 article, dont create 2 rows.
 const listRow = p => css`
   display: grid;
-  grid-template-rows: ${p.hasOnlyOneArticle ? "1fr" : "1fr"};
-`;
+  grid-template-rows: ${p.hasOnlyOneArticle ? '1fr' : '1fr'};
+`
 
 const List = styled.div<{
-  reverse: boolean;
-  gridLayout: string;
-  hasOnlyOneArticle: boolean;
+  reverse: boolean
+  gridLayout: string
+  hasOnlyOneArticle: boolean
 }>`
-  ${p => (p.gridLayout === "tiles" ? listTile : listRow)}
-`;
+  ${p => (p.gridLayout === 'tiles' ? listTile : listRow)}
+`
 
 const Item = styled.div<{ gridLayout: string }>`
-  ${p => (p.gridLayout === "rows" ? listItemRow : listItemTile)}
-`;
+  ${p => (p.gridLayout === 'rows' ? listItemRow : listItemTile)}
+`
 
 const ImageContainer = styled.div<{ narrow: boolean; gridLayout: string }>`
   position: relative;
-  height: ${p => (p.gridLayout === "tiles" ? "100%" : "100%")};
+  height: ${p => (p.gridLayout === 'tiles' ? '100%' : '100%')};
   box-shadow: 0 30px 60px -10px rgba(0, 0, 0, ${p => (p.narrow ? 0.22 : 0.3)}),
     0 18px 36px -18px rgba(0, 0, 0, ${p => (p.narrow ? 0.25 : 0.33)});
-  margin-bottom: ${p => (p.gridLayout === "tiles" ? "30px" : 0)};
+  margin-bottom: ${p => (p.gridLayout === 'tiles' ? '30px' : 0)};
   transition: transform 0.3s var(--ease-out-quad),
     box-shadow 0.3s var(--ease-out-quad);
 
@@ -291,13 +286,13 @@ const ImageContainer = styled.div<{ narrow: boolean; gridLayout: string }>`
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
   `}
-`;
+`
 
 const Title = styled(Headings.h2)`
   font-size: 21px;
   font-family: ${p => p.theme.fonts.sansSerif};
   margin-bottom: ${p =>
-    p.hasOverflow && p.gridLayout === "tiles" ? "35px" : "10px"};
+    p.hasOverflow && p.gridLayout === 'tiles' ? '35px' : '10px'};
   transition: color 0.3s ease-in-out;
   ${limitToTwoLines};
 
@@ -315,19 +310,19 @@ const Title = styled(Headings.h2)`
     margin-bottom: 10px;
     -webkit-line-clamp: 3;
   `}
-`;
+`
 
 const Excerpt = styled.p<{
-  hasOverflow: boolean;
-  narrow: boolean;
-  gridLayout: string;
+  hasOverflow: boolean
+  narrow: boolean
+  gridLayout: string
 }>`
   ${limitToTwoLines};
   font-size: 16px;
   margin-bottom: 10px;
   color: ${p => p.theme.colors.grey};
-  display: ${p => (p.hasOverflow && p.gridLayout === "tiles" ? "none" : "box")};
-  max-width: ${p => (p.narrow ? "415px" : "515px")};
+  display: ${p => (p.hasOverflow && p.gridLayout === 'tiles' ? 'none' : 'box')};
+  max-width: ${p => (p.narrow ? '415px' : '515px')};
 
   ${mediaqueries.desktop`
     display: -webkit-box;
@@ -343,7 +338,7 @@ const Excerpt = styled.p<{
     margin-bottom: 20px;
     -webkit-line-clamp: 3;
   `}
-`;
+`
 
 const MetaData = styled.div`
   font-weight: 600;
@@ -355,7 +350,7 @@ const MetaData = styled.div`
     max-width: 100%;
     padding:  0 20px 30px;Link
   `}
-`;
+`
 
 const ArticleLink = styled(AniLink)`
   position: relative;
@@ -380,8 +375,8 @@ const ArticleLink = styled(AniLink)`
     color: ${p => p.theme.colors.accent};
   }
 
-  &[data-a11y="true"]:focus::after {
-    content: "";
+  &[data-a11y='true']:focus::after {
+    content: '';
     position: absolute;
     left: -1.5%;
     top: -2%;
@@ -402,4 +397,4 @@ const ArticleLink = styled(AniLink)`
       transform: scale(0.97) translateY(3px);
     }
   `}
-`;
+`

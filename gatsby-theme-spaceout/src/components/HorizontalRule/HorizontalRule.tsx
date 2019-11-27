@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import mediaqueries from "@styles/media";
+import styled from '@emotion/styled'
+import mediaqueries from '@styles/media'
 
 const HorizontalRule = styled.hr`
   position: relative;
@@ -32,6 +32,6 @@ const HorizontalRule = styled.hr`
     width: calc(100vw - 40px);
     margin: 0px auto 50px;
   `};
-`;
+`
 
-export default HorizontalRule;
+export default HorizontalRule

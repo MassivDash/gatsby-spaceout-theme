@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import styled from "@emotion/styled";
-import { useColorMode } from "theme-ui";
+import React, { useState } from 'react'
+import styled from '@emotion/styled'
+import { useColorMode } from 'theme-ui'
 
-import mediaqueries from "@styles/media";
-import { copyToClipboard } from "@utils";
+import mediaqueries from '@styles/media'
+import { copyToClipboard } from '@utils'
 
 function ArticleControls() {
   return (
@@ -11,18 +11,18 @@ function ArticleControls() {
       <SharePageButton />
       <DarkModeToggle />
     </NavControls>
-  );
+  )
 }
 
-export default ArticleControls;
+export default ArticleControls
 
 function DarkModeToggle() {
-  const [colorMode, setColorMode] = useColorMode();
-  const isDark = colorMode === `dark`;
+  const [colorMode, setColorMode] = useColorMode()
+  const isDark = colorMode === `dark`
 
   function toggleColorMode(event) {
-    event.preventDefault();
-    setColorMode(isDark ? `light` : `dark`);
+    event.preventDefault()
+    setColorMode(isDark ? `light` : `dark`)
   }
 
   return (
@@ -33,26 +33,26 @@ function DarkModeToggle() {
       <MoonOrSun isDark={isDark} />
       <MoonMask isDark={isDark} />
     </IconWrapper>
-  );
+  )
 }
 
 function SharePageButton() {
-  const [hasCopied, setHasCopied] = useState<boolean>(false);
-  const [colorMode] = useColorMode();
-  const isDark = colorMode === `dark`;
+  const [hasCopied, setHasCopied] = useState<boolean>(false)
+  const [colorMode] = useColorMode()
+  const isDark = colorMode === `dark`
 
   function copyToClipboardOnClick() {
-    if (hasCopied) return;
+    if (hasCopied) return
 
-    copyToClipboard(window.location.href);
-    setHasCopied(true);
+    copyToClipboard(window.location.href)
+    setHasCopied(true)
 
     setTimeout(() => {
-      setHasCopied(false);
-    }, 1000);
+      setHasCopied(false)
+    }, 1000)
   }
 
-  const Icon = isDark ? ShareDarkModeOffIcon : ShareDarkModeOnIcon;
+  const Icon = isDark ? ShareDarkModeOffIcon : ShareDarkModeOnIcon
 
   return (
     <IconWrapper
@@ -65,7 +65,7 @@ function SharePageButton() {
         Copied
       </ToolTip>
     </IconWrapper>
-  );
+  )
 }
 
 const ShareDarkModeOffIcon = () => (
@@ -83,7 +83,7 @@ const ShareDarkModeOffIcon = () => (
       fill="white"
     />
   </svg>
-);
+)
 
 const ShareDarkModeOnIcon = () => (
   <svg
@@ -100,28 +100,28 @@ const ShareDarkModeOnIcon = () => (
       fill="black"
     />
   </svg>
-);
+)
 
 const NavControls = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
+`
 
 const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
   position: absolute;
   padding: 4px 13px;
-  background: ${p => (p.isDark ? "#000" : "rgba(0,0,0,0.1)")};
-  color: ${p => (p.isDark ? "#fff" : "#000")};
+  background: ${p => (p.isDark ? '#000' : 'rgba(0,0,0,0.1)')};
+  color: ${p => (p.isDark ? '#fff' : '#000')};
   border-radius: 5px;
   font-size: 14px;
   top: -35px;
   opacity: ${p => (p.hasCopied ? 1 : 0)};
-  transform: ${p => (p.hasCopied ? "translateY(-3px)" : "none")};
+  transform: ${p => (p.hasCopied ? 'translateY(-3px)' : 'none')};
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     right: 0;
@@ -131,9 +131,9 @@ const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 6px solid ${p => (p.isDark ? "#000" : "rgba(0,0,0,0.1)")};
+    border-top: 6px solid ${p => (p.isDark ? '#000' : 'rgba(0,0,0,0.1)')};
   }
-`;
+`
 
 const IconWrapper = styled.button`
   opacity: 0.5;
@@ -162,7 +162,7 @@ const IconWrapper = styled.button`
       opacity: 0.5;
     }
   `}
-`;
+`
 
 // This is based off a codepen! Much appreciated to: https://codepen.io/aaroniker/pen/KGpXZo
 const MoonOrSun = styled.div<{ isDark: boolean }>`
@@ -170,15 +170,15 @@ const MoonOrSun = styled.div<{ isDark: boolean }>`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border: ${p => (p.isDark ? "4px" : "2px")} solid
+  border: ${p => (p.isDark ? '4px' : '2px')} solid
     ${p => p.theme.colors.primary};
   background: ${p => p.theme.colors.primary};
   transform: scale(${p => (p.isDark ? 0.55 : 1)});
   transition: all 0.45s ease;
-  overflow: ${p => (p.isDark ? "visible" : "hidden")};
+  overflow: ${p => (p.isDark ? 'visible' : 'hidden')};
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     right: -9px;
     top: -9px;
@@ -186,13 +186,13 @@ const MoonOrSun = styled.div<{ isDark: boolean }>`
     width: 24px;
     border: 2px solid ${p => p.theme.colors.primary};
     border-radius: 50%;
-    transform: translate(${p => (p.isDark ? "14px, -14px" : "0, 0")});
+    transform: translate(${p => (p.isDark ? '14px, -14px' : '0, 0')});
     opacity: ${p => (p.isDark ? 0 : 1)};
     transition: transform 0.45s ease;
   }
 
   &::after {
-    content: "";
+    content: '';
     width: 8px;
     height: 8px;
     border-radius: 50%;
@@ -215,7 +215,7 @@ const MoonOrSun = styled.div<{ isDark: boolean }>`
       transform: scale(${p.isDark ? 0.92 : 0});
     `}
   }
-`;
+`
 
 const MoonMask = styled.div<{ isDark: boolean }>`
   position: absolute;
@@ -226,7 +226,7 @@ const MoonMask = styled.div<{ isDark: boolean }>`
   border-radius: 50%;
   border: 0;
   background: ${p => p.theme.colors.background};
-  transform: translate(${p => (p.isDark ? "14px, -14px" : "0, 0")});
+  transform: translate(${p => (p.isDark ? '14px, -14px' : '0, 0')});
   opacity: ${p => (p.isDark ? 0 : 1)};
   transition: transform 0.45s ease, ${p => p.theme.colorModeTransition};
-`;
+`

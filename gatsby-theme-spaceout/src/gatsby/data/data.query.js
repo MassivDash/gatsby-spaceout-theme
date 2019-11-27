@@ -11,7 +11,7 @@ const GatsbyFluid_withWebp_tracedSVG = `
   srcSetWebp
   sizes
   tracedSVG
-`;
+`
 
 module.exports.local = {
   articles: `{
@@ -115,7 +115,7 @@ module.exports.local = {
       }
     }
   }`,
-};
+}
 
 module.exports.contentful = {
   articles: `{
@@ -185,4 +185,4 @@ module.exports.contentful = {
       }
     }
   }`,
-};
+}

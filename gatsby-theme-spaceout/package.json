@@ -22,6 +22,7 @@
     "contentful:export": "contentful space export --config contentful.json --skip-content --skip-roles --skip-webhooks",
     "contentful:export:model": "contentful space export --config contentful.json",
     "contentful:import": "contentful space import --config contentful.json",
+    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"{*.tsx,src/**/*.tsx}\"",
     "develop": "gatsby develop",
     "publish": "npm publish --access public"
   },

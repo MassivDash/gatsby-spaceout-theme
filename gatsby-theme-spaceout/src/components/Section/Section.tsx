@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled'
 
-import mediaqueries from "@styles/media";
+import mediaqueries from '@styles/media'
 
 const Section = styled.section<{ narrow?: boolean }>`
   width: 100%;
@@ -26,6 +26,6 @@ const Section = styled.section<{ narrow?: boolean }>`
   ${mediaqueries.phablet`
     max-width: 100%;
   `};
-`;
+`
 
-export default Section;
+export default Section

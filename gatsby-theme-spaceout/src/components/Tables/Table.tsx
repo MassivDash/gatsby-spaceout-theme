@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import mediaqueries from "@styles/media";
+import styled from '@emotion/styled'
+import mediaqueries from '@styles/media'
 
 const StyledTable = styled.table`
   position: relative;
@@ -27,14 +27,14 @@ const StyledTable = styled.table`
   ${mediaqueries.phablet`
     margin: 15px auto 55px;
   `};
-`;
+`
 
 function Table({ children }) {
   return (
-    <div style={{ overflowX: "auto", padding: "0 20px" }}>
+    <div style={{ overflowX: 'auto', padding: '0 20px' }}>
       <StyledTable>{children}</StyledTable>
     </div>
-  );
+  )
 }
 
-export default Table;
+export default Table

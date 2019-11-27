@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const ToggleOpen = ({ fill }) => (
   <svg
@@ -17,6 +17,6 @@ const ToggleOpen = ({ fill }) => (
       fill={fill}
     />
   </svg>
-);
+)
 
-export default ToggleOpen;
+export default ToggleOpen

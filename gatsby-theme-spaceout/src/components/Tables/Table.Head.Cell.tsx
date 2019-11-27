@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import mediaqueries from "@styles/media";
+import styled from '@emotion/styled'
+import mediaqueries from '@styles/media'
 
 const Cell = styled.td`
   padding: 18px 30px;
@@ -13,6 +13,6 @@ const Cell = styled.td`
   ${mediaqueries.tablet`
     font-size: 14px;
   `}
-`;
+`
 
-export default Cell;
+export default Cell

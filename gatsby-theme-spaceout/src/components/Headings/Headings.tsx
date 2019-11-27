@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
-import { css } from "@emotion/core";
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 
-import mediaqueries from "@styles/media";
+import mediaqueries from '@styles/media'
 
 /**
  * Example:
@@ -11,7 +11,7 @@ import mediaqueries from "@styles/media";
 const commonStyles = p => css`
   font-weight: bold;
   color: ${p.theme.colors.accent};
-`;
+`
 
 const h1 = styled.h1`
   font-size: 52px;
@@ -27,7 +27,7 @@ const h1 = styled.h1`
     font-size: 32px;
     line-height: 1.3;
   `};
-`;
+`
 
 const h2 = styled.h2`
   font-size: 32px;
@@ -46,7 +46,7 @@ const h2 = styled.h2`
   ${mediaqueries.phablet`
     font-size: 22px;
   `};
-`;
+`
 
 const h3 = styled.h3`
   font-size: 24px;
@@ -60,7 +60,7 @@ const h3 = styled.h3`
   ${mediaqueries.phablet`
     font-size: 20px;
   `};
-`;
+`
 
 const h4 = styled.h4`
   font-size: 18px;
@@ -70,7 +70,7 @@ const h4 = styled.h4`
   ${mediaqueries.phablet`
     font-size: 16px;
   `};
-`;
+`
 
 const h5 = styled.h5`
   font-size: 18px;
@@ -80,7 +80,7 @@ const h5 = styled.h5`
   ${mediaqueries.phablet`
     font-size: 16px;
   `};
-`;
+`
 
 const h6 = styled.h6`
   font-size: 16px;
@@ -90,7 +90,7 @@ const h6 = styled.h6`
   ${mediaqueries.phablet`
     font-size: 14px;
   `};
-`;
+`
 
 export default {
   h1,
@@ -99,4 +99,4 @@ export default {
   h4,
   h5,
   h6,
-};
+}

@@ -1,24 +1,24 @@
-import React from "react";
-import styled from "@emotion/styled";
+import React from 'react'
+import styled from '@emotion/styled'
 
-import Section from "@components/Section";
-import SEO from "@components/SEO";
-import Layout from "@components/Layout";
-import Paginator from "@components/Navigation/Navigation.Paginator";
+import Section from '@components/Section'
+import SEO from '@components/SEO'
+import Layout from '@components/Layout'
+import Paginator from '@components/Navigation/Navigation.Paginator'
 
-import AuthorHero from "../sections/author/Author.Hero";
-import AuthorArticles from "../sections/author/Author.Articles";
+import AuthorHero from '../sections/author/Author.Hero'
+import AuthorArticles from '../sections/author/Author.Articles'
 
 function ArticlesPage({ location, pageContext }) {
-  const author = pageContext.additionalContext.author;
-  const articles = pageContext.group;
+  const author = pageContext.additionalContext.author
+  const articles = pageContext.group
 
   return (
     <>
-      <SEO 
+      <SEO
         pathname={location.pathname}
         title={author.name}
-        description={author.bio} 
+        description={author.bio}
       />
       <Section narrow>
         <AuthorHero author={author} />
@@ -28,10 +28,10 @@ function ArticlesPage({ location, pageContext }) {
         </AuthorPaginator>
       </Section>
     </>
-  );
+  )
 }
 
-export default ArticlesPage;
+export default ArticlesPage
 
 const AuthorsGradient = styled.div`
   position: absolute;
@@ -43,8 +43,8 @@ const AuthorsGradient = styled.div`
   pointer-events: none;
   background: ${p => p.theme.colors.gradient};
   transition: ${p => p.theme.colorModeTransition};
-`;
+`
 
 const AuthorPaginator = styled.div`
   text-align: center;
-`;
+`

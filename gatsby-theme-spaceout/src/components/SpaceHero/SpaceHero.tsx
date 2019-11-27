@@ -1,204 +1,207 @@
-import React, {useState} from "react";
-import { graphql, useStaticQuery } from 'gatsby';
-import logo from "./logo.png";
-import Image from "gatsby-image";
-import styled from "@emotion/styled";
-import mediaqueries from "@styles/media";
+import React, { useState } from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
+import logo from './logo.png'
+import Image from 'gatsby-image'
+import styled from '@emotion/styled'
+import mediaqueries from '@styles/media'
 
 const SpaceHero = () => {
-  const [animating, toggleToPosition] = useState("positionOne") 
+  const [animating, toggleToPosition] = useState('positionOne')
 
-    const spaceHeroQuery = graphql`
-  {
-    site: allSite {
-      edges {
-        node {
-          siteMetadata {
-            hero {
-              heading
-              maxWidth
+  const spaceHeroQuery = graphql`
+    {
+      site: allSite {
+        edges {
+          node {
+            siteMetadata {
+              hero {
+                heading
+                maxWidth
+              }
             }
           }
         }
       }
+      back: imageSharp(original: { src: { regex: "/heroBack/" } }) {
+        id
+        sizes(maxWidth: 1920, quality: 90, traceSVG: { color: "#121f28" }) {
+          aspectRatio
+          src
+          srcSet
+          srcWebp
+          srcSetWebp
+          sizes
+          tracedSVG
+        }
+        resize(width: 1920) {
+          src
+        }
+      }
+      earth: imageSharp(original: { src: { regex: "/earth/" } }) {
+        id
+        sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
+          base64
+          aspectRatio
+          src
+          srcSet
+          srcWebp
+          srcSetWebp
+          sizes
+          tracedSVG
+        }
+        resize(width: 1920) {
+          src
+        }
+      }
+      spaceman: imageSharp(original: { src: { regex: "/spaceman/" } }) {
+        id
+        sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
+          base64
+          aspectRatio
+          src
+          srcSet
+          srcWebp
+          srcSetWebp
+          sizes
+          tracedSVG
+        }
+        resize(width: 1920) {
+          src
+        }
+      }
+      shuttle: imageSharp(original: { src: { regex: "/shuttle/" } }) {
+        id
+        sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
+          base64
+          aspectRatio
+          src
+          srcSet
+          srcWebp
+          srcSetWebp
+          sizes
+          tracedSVG
+        }
+        resize(width: 1920) {
+          src
+        }
+      }
     }
-    back: imageSharp(original: { src: { regex: "/heroBack/" } } ) {
-      id
-      sizes(maxWidth: 1920, quality: 90, traceSVG: { color: "#121f28" }) {
-        aspectRatio
-        src
-        srcSet
-        srcWebp
-        srcSetWebp
-        sizes
-        tracedSVG
-      }
-      resize(width: 1920) {
-        src
-      }
-    }
-    earth: imageSharp(original: { src: { regex: "/earth/" } } ) {
-      id
-      sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
-        base64
-        aspectRatio
-        src
-        srcSet
-        srcWebp
-        srcSetWebp
-        sizes
-        tracedSVG
-      }
-      resize(width: 1920) {
-        src
-      }
-    }
-    spaceman: imageSharp(original: { src: { regex: "/spaceman/" } } ) {
-      id
-      sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
-        base64
-        aspectRatio
-        src
-        srcSet
-        srcWebp
-        srcSetWebp
-        sizes
-        tracedSVG
-      }
-      resize(width: 1920) {
-        src
-      }
-    }
-    shuttle: imageSharp(original: { src: { regex: "/shuttle/" } } ) {
-      id
-      sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
-        base64
-        aspectRatio
-        src
-        srcSet
-        srcWebp
-        srcSetWebp
-        sizes
-        tracedSVG
-      }
-      resize(width: 1920) {
-        src
-      }
-    }
-  }
-`;
+  `
 
-const results = useStaticQuery(spaceHeroQuery);
-const {earth, spaceman, back, shuttle } = results;
-    
-    return (
+  const results = useStaticQuery(spaceHeroQuery)
+  const { earth, spaceman, back, shuttle } = results
 
-      <Hero>
-        <Blackie>
-          <Image sizes={back.sizes}  />
-        </Blackie>
-        <div >
-          <SpaceoutBox onClick={() => toggleToPosition("positionTwo")} position={animating}>
-            <City src={logo} alt="" />
-            <Spaceout>spaceout</Spaceout>
-            <Interstellar>interstellar design </Interstellar>
-            <button
-              style={{ alignSelf: "flex-start" }}
-              type="button"
-              onClick={() => toggleToPosition("positionTwo")}
-            >
-              Lets start!
-            </button>
-          </SpaceoutBox>
-          <UxBox position={animating}>
-            <Spaceout right>ux/ui</Spaceout>
-            <Interstellar>modern and inspiring design</Interstellar>
-            <Text>Creating unique user expirences with clear and modern design in mind.</Text>
-            <Text>
-              Custom animations and motion design that will help your app standout from the crowd
-            </Text>
-            <button
-              type="button"
-              onClick={() => toggleToPosition("positionThree")}
-            >
-              Lets build it together!
-            </button>
-          </UxBox>
-          <StackBox position={animating}>
-            <Spaceout >build up</Spaceout>
-            <Interstellar left>All platforms</Interstellar>
-            <Text> 
-              Building custom apps for all major platforms, Web, iOS and Android. Commercial
-              systems, shops, publishing platforms, websites, landing pages tailored to your needs.
-            </Text>
-            <button
-              type="button"
-              onClick={() => toggleToPosition("positionFour")}
-            >
-              Lets deploy
-            </button>
-          </StackBox>
-          <DeployBox position={animating}>
-            <Spaceout >serv Up</Spaceout>
-            <Interstellar left>To all major platforms!</Interstellar >
-            <Text> 
-              Amazon Web Services and all major server deployment for your apps. Systems that are
-              build for the future.
-            </Text>
-            <button
-              type="button"
-              onClick={() => toggleToPosition("positionOne")}
-            >
-              Lets roll
-            </button>
-          </DeployBox>
-          <Earth position={animating}>
-            <Image
-              sizes={earth.sizes}
-              style={{
-                position: "aboslute",
-                width: "100%",
-                height: "100%",
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0
-              }}
-            />
-          </Earth>
-          <Spaceman position={animating}>
-            <Image
-              sizes={spaceman.sizes}
-              style={{
-                position: "aboslute",
-                width: "100%",
-                height: "100%",
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0
-              }}
-            />
-          </Spaceman>
-          <Shuttle position={animating}>
-            <Image
-              sizes={shuttle.sizes}
-              style={{
-                position: "aboslute",
-                width: "100%",
-                height: "100%",
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0
-              }}
-            />
-          </Shuttle>
-        </div>
-      </Hero>
-
-    );
-  }
+  return (
+    <Hero>
+      <Blackie>
+        <Image sizes={back.sizes} />
+      </Blackie>
+      <div>
+        <SpaceoutBox
+          onClick={() => toggleToPosition('positionTwo')}
+          position={animating}
+        >
+          <City src={logo} alt="" />
+          <Spaceout>spaceout</Spaceout>
+          <Interstellar>interstellar design </Interstellar>
+          <button
+            style={{ alignSelf: 'flex-start' }}
+            type="button"
+            onClick={() => toggleToPosition('positionTwo')}
+          >
+            Lets start!
+          </button>
+        </SpaceoutBox>
+        <UxBox position={animating}>
+          <Spaceout right>ux/ui</Spaceout>
+          <Interstellar>modern and inspiring design</Interstellar>
+          <Text>
+            Creating unique user expirences with clear and modern design in
+            mind.
+          </Text>
+          <Text>
+            Custom animations and motion design that will help your app standout
+            from the crowd
+          </Text>
+          <button
+            type="button"
+            onClick={() => toggleToPosition('positionThree')}
+          >
+            Lets build it together!
+          </button>
+        </UxBox>
+        <StackBox position={animating}>
+          <Spaceout>build up</Spaceout>
+          <Interstellar left>All platforms</Interstellar>
+          <Text>
+            Building custom apps for all major platforms, Web, iOS and Android.
+            Commercial systems, shops, publishing platforms, websites, landing
+            pages tailored to your needs.
+          </Text>
+          <button
+            type="button"
+            onClick={() => toggleToPosition('positionFour')}
+          >
+            Lets deploy
+          </button>
+        </StackBox>
+        <DeployBox position={animating}>
+          <Spaceout>serv Up</Spaceout>
+          <Interstellar left>To all major platforms!</Interstellar>
+          <Text>
+            Amazon Web Services and all major server deployment for your apps.
+            Systems that are build for the future.
+          </Text>
+          <button type="button" onClick={() => toggleToPosition('positionOne')}>
+            Lets roll
+          </button>
+        </DeployBox>
+        <Earth position={animating}>
+          <Image
+            sizes={earth.sizes}
+            style={{
+              position: 'aboslute',
+              width: '100%',
+              height: '100%',
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
+          />
+        </Earth>
+        <Spaceman position={animating}>
+          <Image
+            sizes={spaceman.sizes}
+            style={{
+              position: 'aboslute',
+              width: '100%',
+              height: '100%',
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
+          />
+        </Spaceman>
+        <Shuttle position={animating}>
+          <Image
+            sizes={shuttle.sizes}
+            style={{
+              position: 'aboslute',
+              width: '100%',
+              height: '100%',
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
+          />
+        </Shuttle>
+      </div>
+    </Hero>
+  )
+}
 
 const Hero = styled.div`
   overflow: hidden;
@@ -225,7 +228,7 @@ const Hero = styled.div`
   ${mediaqueries.desktop`
     margin: 0 22px 0 10px;
     `}
-`;
+`
 
 const Blackie = styled.div`
 z-index: 0;
@@ -253,7 +256,7 @@ ${mediaqueries.phone`
     right: 0;
     bottom: 0;
     `}
-`;
+`
 
 const SpaceoutBox = styled.div`
  display: flex;
@@ -267,8 +270,8 @@ const SpaceoutBox = styled.div`
    margin-left: 20px;
    margin-top: 0px;
   `}
- opacity: ${p => p.position === "positionOne" ? 1 : 0 }
-`;
+ opacity: ${p => (p.position === 'positionOne' ? 1 : 0)}
+`
 
 const UxBox = styled.div`
     display: flex;
@@ -301,17 +304,17 @@ const UxBox = styled.div`
     right: 100px;
     max-width: 396px;
     `}
-`;
+`
 
 const Text = styled.p`
- ${mediaqueries.tablet`
+  ${mediaqueries.tablet`
     font-size: 26px
     `}
 
-    ${mediaqueries.desktop`
+  ${mediaqueries.desktop`
     font-size: 36px
     `}
-`;
+`
 
 const StackBox = styled.div`
     display: flex;
@@ -343,7 +346,7 @@ const StackBox = styled.div`
     right: 100px;
     max-width: 396px;
     `}
-    `;
+    `
 
 const DeployBox = styled.div`
     display: flex;
@@ -375,7 +378,7 @@ const DeployBox = styled.div`
     right: 100px;
     max-width: 396px;
     `}
-    `;
+    `
 
 const Spaceout = styled.p`
  font-family: Paytone One;
@@ -398,7 +401,7 @@ const Spaceout = styled.p`
     `}
 
   
-    `;
+    `
 
 const City = styled.img`
 align-self: flex-start;
@@ -423,7 +426,7 @@ ${mediaqueries.phablet`
     max-width: 100%
     max-height: 100%
     `}
-    `;
+    `
 
 const Interstellar = styled.p`
  font-family: Satisfy, cursive;
@@ -445,52 +448,50 @@ const Interstellar = styled.p`
     margin-top: -50px;
     font-size: 34px;
     `}
-    `;
+    `
 
 const Earth = styled.div`
-position: absolute;
-z-index: 0;
-transition: 3s ease-in-out;
-width: 1500px;
-transform: ${props => {
-    const { position } = props;
+  position: absolute;
+  z-index: 0;
+  transition: 3s ease-in-out;
+  width: 1500px;
+  transform: ${props => {
+    const { position } = props
     console.log(position)
-        switch(true) {
-        case position === "positionOne":
-            return 'rotate(120deg) translate(-300px, 1493px)'
-        case position === "positionTwo":
-            return 'rotate(153deg) translate(-0px, 1177px)'
-        case position === "positionThree":
-            return 'rotate(155deg) translate(-600px, 1523px)'
+    switch (true) {
+      case position === 'positionOne':
+        return 'rotate(120deg) translate(-300px, 1493px)'
+      case position === 'positionTwo':
+        return 'rotate(153deg) translate(-0px, 1177px)'
+      case position === 'positionThree':
+        return 'rotate(155deg) translate(-600px, 1523px)'
     }
-}};
-`;
-
+  }};
+`
 
 const Spaceman = styled.div`
-    position: absolute;
-    transition: 1.9s ease-in-out;
-    z-index: 3;
-    width: 1250px;
-    transform: ${props => {
-    const { position } = props;
-        switch(true) {
-        case position === "positionOne":
-            return 'rotate(11deg) scale(0.9) translate(165px,-802px)'
-        case position === "positionTwo":
-            return 'rotate(0deg) translate(-0px,1177px)'
-        case position === "positionThree":
-            return 'rotate(155deg) translate(-600px, 1523px)'
-    }}};
-`;
+  position: absolute;
+  transition: 1.9s ease-in-out;
+  z-index: 3;
+  width: 1250px;
+  transform: ${props => {
+    const { position } = props
+    switch (true) {
+      case position === 'positionOne':
+        return 'rotate(11deg) scale(0.9) translate(165px,-802px)'
+      case position === 'positionTwo':
+        return 'rotate(0deg) translate(-0px,1177px)'
+      case position === 'positionThree':
+        return 'rotate(155deg) translate(-600px, 1523px)'
+    }
+  }};
+`
 
 const Shuttle = styled.div`
 position: absolute;
 transition: 1.4s ease-in-out
 z-index: 3;
 width: 1250px;
-`;
+`
 
-
-
-export default SpaceHero;
+export default SpaceHero

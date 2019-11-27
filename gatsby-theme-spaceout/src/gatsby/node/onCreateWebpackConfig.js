@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = ({ actions }) => {
   actions.setWebpackConfig({
@@ -12,5 +12,5 @@ module.exports = ({ actions }) => {
       },
       extensions: ['.js', '.json', '.ts', '.tsx'],
     },
-  });
-};
+  })
+}

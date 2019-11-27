@@ -1,33 +1,28 @@
-import React, { useState, useEffect } from "react";
-import styled from "@emotion/styled";
-import mediaqueries from "@styles/media";
-import Icons from "@icons";
-import useScrollManager from '@components/Scroller';
-import { useColorMode } from "theme-ui";
-import screenfull from "screenfull";
-import { connect } from "react-redux";
-import {
-  setFontSizeIncrease,
-} from "../../state/createStore";
-import {
-  copyToClipboard,
-} from "@utils";
+import React, { useState, useEffect } from 'react'
+import styled from '@emotion/styled'
+import mediaqueries from '@styles/media'
+import Icons from '@icons'
+import { useColorMode } from 'theme-ui'
+import screenfull from 'screenfull'
+import { connect } from 'react-redux'
+import { setFontSizeIncrease } from '../../state/createStore'
+import { copyToClipboard } from '@utils'
 
-function Footer({...props}) {
+function Footer({ ...props }) {
   console.log(props)
   return (
-      <ActionsBar>
-        <ActionBarDivider>
+    <ActionsBar>
+      <ActionBarDivider>
         <DarkModeToggle />
-      <SharePageButton />
+        <SharePageButton />
       </ActionBarDivider>
       <ActionBarDivider>
-      <GoToTop {...props} />
-      <ToggleFont {...props} />
-      <FullScreenToggle />
-      </ActionBarDivider> 
-      </ActionsBar>
-  );
+        <GoToTop {...props} />
+        <ToggleFont {...props} />
+        <FullScreenToggle />
+      </ActionBarDivider>
+    </ActionsBar>
+  )
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -37,66 +32,66 @@ const mapStateToProps = (state, ownProps) => {
     navigatorScroll: state.navigatorScroll,
     isWideScreen: state.isWideScreen,
     categoryFilter: state.categoryFilter,
-    fontSizeIncrease: state.fontSizeIncrease
-  };
-};
+    fontSizeIncrease: state.fontSizeIncrease,
+  }
+}
 
 const mapDispatchToProps = {
   setFontSizeIncrease,
-};
+}
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Footer);
-
+)(Footer)
 
 function FullScreenToggle() {
-  const [fullscreen, setFullScreen] = useState<boolean>(false);
-  const [colorMode] = useColorMode();
-  const isDark = colorMode === `dark`;
-  const fill = isDark ? "#fff" : "#000";
+  const [fullscreen, setFullScreen] = useState<boolean>(false)
+  const [colorMode] = useColorMode()
+  const isDark = colorMode === `dark`
+  const fill = isDark ? '#fff' : '#000'
 
   useEffect(() => {
-      screenfull.on("change", () => {
-        setFullScreen(!fullscreen);
-      });
+    screenfull.on('change', () => {
+      setFullScreen(!fullscreen)
     })
+  })
 
-  function fullscreenToogle(){
+  function fullscreenToogle() {
     console.log(screenfull, screenfull.isEnabled)
     if (screenfull.isEnabled) {
-      screenfull.toggle();
+      screenfull.toggle()
     }
   }
 
-  return(
+  return (
     <>
-     {screenfull.isEnabled && (
-    <IconWrapper
-    isDark={isDark}
-    onClick={fullscreenToogle}
-    data-a11y="false"
-    aria-label={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-    title={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-    
-    >
-      {fullscreen ? <Icons.FullScreenExit fill={fill} width={32} height={32}/> : <Icons.FullScreenEnter fill={fill} width={32} height={32}/>}
-    </IconWrapper>
-  )}
+      {screenfull.isEnabled && (
+        <IconWrapper
+          isDark={isDark}
+          onClick={fullscreenToogle}
+          data-a11y="false"
+          aria-label={fullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+          title={fullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+        >
+          {fullscreen ? (
+            <Icons.FullScreenExit fill={fill} width={32} height={32} />
+          ) : (
+            <Icons.FullScreenEnter fill={fill} width={32} height={32} />
+          )}
+        </IconWrapper>
+      )}
     </>
   )
-  
 }
 
-
 function DarkModeToggle() {
-  const [colorMode, setColorMode] = useColorMode();
-  const isDark = colorMode === `dark`;
+  const [colorMode, setColorMode] = useColorMode()
+  const isDark = colorMode === `dark`
 
   function toggleColorMode(event) {
-    event.preventDefault();
-    setColorMode(isDark ? `light` : `dark`);
+    event.preventDefault()
+    setColorMode(isDark ? `light` : `dark`)
   }
 
   return (
@@ -104,30 +99,30 @@ function DarkModeToggle() {
       isDark={isDark}
       onClick={toggleColorMode}
       data-a11y="false"
-      aria-label={isDark ? "Activate light mode" : "Activate dark mode"}
-      title={isDark ? "Activate light mode" : "Activate dark mode"}
+      aria-label={isDark ? 'Activate light mode' : 'Activate dark mode'}
+      title={isDark ? 'Activate light mode' : 'Activate dark mode'}
     >
       <MoonOrSun isDark={isDark} />
       <MoonMask isDark={isDark} />
     </IconWrapper>
-  );
+  )
 }
 
 function SharePageButton() {
-  const [hasCopied, setHasCopied] = useState<boolean>(false);
-  const [colorMode] = useColorMode();
-  const isDark = colorMode === `dark`;
-  const fill = isDark ? "#fff" : "#000";
+  const [hasCopied, setHasCopied] = useState<boolean>(false)
+  const [colorMode] = useColorMode()
+  const isDark = colorMode === `dark`
+  const fill = isDark ? '#fff' : '#000'
 
   function copyToClipboardOnClick() {
-    if (hasCopied) return;
+    if (hasCopied) return
 
-    copyToClipboard(window.location.href);
-    setHasCopied(true);
+    copyToClipboard(window.location.href)
+    setHasCopied(true)
 
     setTimeout(() => {
-      setHasCopied(false);
-    }, 1000);
+      setHasCopied(false)
+    }, 1000)
   }
 
   return (
@@ -143,86 +138,93 @@ function SharePageButton() {
         Copied
       </ToolTip>
     </IconWrapper>
-  ); 
+  )
 }
 
-function ToggleFont({fontSizeIncrease, setFontSizeIncrease, navigatorPosition}) {
-  const [colorMode] = useColorMode();
-  const [text, setText] = useState<string>("100%")
-  const [hasCopied, setHasCopied] = useState<boolean>(false);
-  const isDark = colorMode === `dark`;
-  const fill = isDark ? "#fff" : "#000";
+function ToggleFont({
+  fontSizeIncrease,
+  setFontSizeIncrease,
+  navigatorPosition,
+}) {
+  const [colorMode] = useColorMode()
+  const [text, setText] = useState<string>('100%')
+  const [hasCopied, setHasCopied] = useState<boolean>(false)
+  const isDark = colorMode === `dark`
+  const fill = isDark ? '#fff' : '#000'
   console.log(fontSizeIncrease, setFontSizeIncrease)
-  function switchThroughFontSizes(){
-    if(fontSizeIncrease === 1){
-      setFontSizeIncrease(1.5);
-      setText("150%")
+  function switchThroughFontSizes() {
+    if (fontSizeIncrease === 1) {
+      setFontSizeIncrease(1.5)
+      setText('150%')
     }
-    if(fontSizeIncrease === 1.5){
-      setFontSizeIncrease(2);
-      setText("200%");
+    if (fontSizeIncrease === 1.5) {
+      setFontSizeIncrease(2)
+      setText('200%')
     }
-    if(fontSizeIncrease === 2){
+    if (fontSizeIncrease === 2) {
       setFontSizeIncrease(1)
-      setText("100%");
+      setText('100%')
     }
-    setHasCopied(true);
+    setHasCopied(true)
 
     setTimeout(() => {
-      setHasCopied(false);
-    }, 1000);
+      setHasCopied(false)
+    }, 1000)
   }
 
   return (
     <FadeArticleAnimationFont navigatorPosition={navigatorPosition}>
-    <IconWrapper
-      isDark={isDark}
-      onClick={() => switchThroughFontSizes()}
-      data-a11y="false"
-      aria-label="Increase font size"
-      title="Increase font size"
-    >
-      <Icons.FontSetter fill={fill} />
-      <ToolTip isDark={isDark} hasCopied={hasCopied}>
-        {text}
-      </ToolTip>
-    </IconWrapper>
+      <IconWrapper
+        isDark={isDark}
+        onClick={() => switchThroughFontSizes()}
+        data-a11y="false"
+        aria-label="Increase font size"
+        title="Increase font size"
+      >
+        <Icons.FontSetter fill={fill} />
+        <ToolTip isDark={isDark} hasCopied={hasCopied}>
+          {text}
+        </ToolTip>
+      </IconWrapper>
     </FadeArticleAnimationFont>
-  );
+  )
 }
 
 function GoToTop({ ScrollToTop, navigatorPosition }) {
-  const [colorMode] = useColorMode();
-  const isDark = colorMode === `dark`;
-  const fill = isDark ? "#fff" : "#000";
-  function scrolltoTop(){
+  const [colorMode] = useColorMode()
+  const isDark = colorMode === `dark`
+  const fill = isDark ? '#fff' : '#000'
+  function scrolltoTop() {
     ScrollToTop()
   }
 
   return (
     <FadeArticleAnimationArrow navigatorPosition={navigatorPosition}>
-    <IconWrapper
-      isDark={isDark}
-      onClick={() => scrolltoTop()}
-      data-a11y="false"
-      aria-label="Scroll to the top"
-      title="Scroll to the top"
-    >
-      <Icons.ArrowUp fill={fill} />
-    </IconWrapper>
+      <IconWrapper
+        isDark={isDark}
+        onClick={() => scrolltoTop()}
+        data-a11y="false"
+        aria-label="Scroll to the top"
+        title="Scroll to the top"
+      >
+        <Icons.ArrowUp fill={fill} />
+      </IconWrapper>
     </FadeArticleAnimationArrow>
-  );
+  )
 }
 
-
 const FadeArticleAnimationFont = styled.div`
-  opacity: ${p => p.navigatorPosition === 'article' ? 1 : 0};
-  transform: ${p => p.navigatorPosition === 'article' ? "scale(1) translateX(1px)" : "scale(0.2) translateX(40px)" };
+  opacity: ${p => (p.navigatorPosition === 'article' ? 1 : 0)};
+  transform: ${p =>
+    p.navigatorPosition === 'article'
+      ? 'scale(1) translateX(1px)'
+      : 'scale(0.2) translateX(40px)'};
   transition: 0.4s ease-in-out;
 `
 
 const FadeArticleAnimationArrow = styled.div`
-  transform: ${p => p.navigatorPosition === 'article' ? "translateY(1px)" : "translateY(60px)" };
+  transform: ${p =>
+    p.navigatorPosition === 'article' ? 'translateY(1px)' : 'translateY(60px)'};
   transition: 0.4s ease-in-out;
 `
 
@@ -246,8 +248,8 @@ const ActionsBar = styled.div`
   `}
 
 
-&::after{
-    content: "";
+&::after {
+    content: '';
     position: absolute;
     height: calc(100% - 40px);
     margin-top: 20px;
@@ -255,13 +257,13 @@ const ActionsBar = styled.div`
     left: 5px;
     background: ${p => p.theme.colors.secondary};
   }
-`;
+`
 
 const ActionBarDivider = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  `;
+`
 
 const IconWrapper = styled.button<{ isDark: boolean }>`
   opacity: 0.5;
@@ -279,8 +281,8 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
     opacity: 1;
   }
 
-  &[data-a11y="true"]:focus::after {
-    content: "";
+  &[data-a11y='true']:focus::after {
+    content: '';
     position: absolute;
     left: 0;
     top: -30%;
@@ -301,7 +303,7 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
       opacity: 0.5;
     }
   `}
-`;
+`
 
 // This is based off a codepen! Much appreciated to: https://codepen.io/aaroniker/pen/KGpXZo
 const MoonOrSun = styled.div<{ isDark: boolean }>`
@@ -309,15 +311,15 @@ const MoonOrSun = styled.div<{ isDark: boolean }>`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border: ${p => (p.isDark ? "4px" : "2px")} solid
+  border: ${p => (p.isDark ? '4px' : '2px')} solid
     ${p => p.theme.colors.primary};
   background: ${p => p.theme.colors.primary};
   transform: scale(${p => (p.isDark ? 0.55 : 1)});
   transition: all 0.45s ease;
-  overflow: ${p => (p.isDark ? "visible" : "hidden")};
+  overflow: ${p => (p.isDark ? 'visible' : 'hidden')};
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     right: -9px;
     top: -9px;
@@ -325,13 +327,13 @@ const MoonOrSun = styled.div<{ isDark: boolean }>`
     width: 24px;
     border: 2px solid ${p => p.theme.colors.primary};
     border-radius: 50%;
-    transform: translate(${p => (p.isDark ? "14px, -14px" : "0, 0")});
+    transform: translate(${p => (p.isDark ? '14px, -14px' : '0, 0')});
     opacity: ${p => (p.isDark ? 0 : 1)};
     transition: transform 0.45s ease;
   }
 
   &::after {
-    content: "";
+    content: '';
     width: 8px;
     height: 8px;
     border-radius: 50%;
@@ -354,7 +356,7 @@ const MoonOrSun = styled.div<{ isDark: boolean }>`
       transform: scale(${p.isDark ? 0.92 : 0});
     `}
   }
-`;
+`
 
 const MoonMask = styled.div<{ isDark: boolean }>`
   position: absolute;
@@ -365,27 +367,25 @@ const MoonMask = styled.div<{ isDark: boolean }>`
   border-radius: 50%;
   border: 0;
   background: ${p => p.theme.colors.background};
-  transform: translate(${p => (p.isDark ? "14px, -14px" : "0, 0")});
+  transform: translate(${p => (p.isDark ? '14px, -14px' : '0, 0')});
   opacity: ${p => (p.isDark ? 0 : 1)};
   transition: ${p => p.theme.colorModeTransition}, transform 0.45s ease;
-`;
-
-
+`
 
 const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
   position: absolute;
   padding: 4px 13px;
-  background: ${p => (p.isDark ? "#000" : "#fff")};
-  color: ${p => (p.isDark ? "#fff" : "#000")};
+  background: ${p => (p.isDark ? '#000' : '#fff')};
+  color: ${p => (p.isDark ? '#fff' : '#000')};
   border-radius: 5px;
   font-size: 14px;
   top: -35px;
   opacity: ${p => (p.hasCopied ? 1 : 0)};
-  transform: ${p => (p.hasCopied ? "translateY(-3px)" : "none")};
+  transform: ${p => (p.hasCopied ? 'translateY(-3px)' : 'none')};
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   z-index: 99;
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     right: 0;
@@ -395,7 +395,6 @@ const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 6px solid ${p => (p.isDark ? "#000" : "rgba(0,0,0,0.1)")};
+    border-top: 6px solid ${p => (p.isDark ? '#000' : 'rgba(0,0,0,0.1)')};
   }
-`;
-
+`

@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
-import styled from '@emotion/styled';
+import React, { useContext } from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
+import styled from '@emotion/styled'
 
-import Section from '@components/Section';
-import Bio from '@components/Bio';
-import SpaceHero from '@components/SpaceHero';
-import Icons from '@icons';
-import mediaqueries from '@styles/media';
-import { IAuthor } from '@types';
+import Section from '@components/Section'
+import Bio from '@components/Bio'
+import SpaceHero from '@components/SpaceHero'
+import Icons from '@icons'
+import mediaqueries from '@styles/media'
+import { IAuthor } from '@types'
 
-import { GridLayoutContext } from './Articles.List.Context';
+import { GridLayoutContext } from './Articles.List.Context'
 
 const authorQuery = graphql`
   {
@@ -25,7 +25,7 @@ const authorQuery = graphql`
         }
       }
     }
-    back: imageSharp(original: { src: { regex: "/heroBack/" } } ) {
+    back: imageSharp(original: { src: { regex: "/heroBack/" } }) {
       id
       sizes(maxWidth: 1920, quality: 90, traceSVG: { color: "#121f28" }) {
         aspectRatio
@@ -40,7 +40,7 @@ const authorQuery = graphql`
         src
       }
     }
-    earth: imageSharp(original: { src: { regex: "/earth/" } } ) {
+    earth: imageSharp(original: { src: { regex: "/earth/" } }) {
       id
       sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
         base64
@@ -56,7 +56,7 @@ const authorQuery = graphql`
         src
       }
     }
-    spaceman: imageSharp(original: { src: { regex: "/spaceman/" } } ) {
+    spaceman: imageSharp(original: { src: { regex: "/spaceman/" } }) {
       id
       sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
         base64
@@ -72,7 +72,7 @@ const authorQuery = graphql`
         src
       }
     }
-    shuttle: imageSharp(original: { src: { regex: "/shuttle/" } } ) {
+    shuttle: imageSharp(original: { src: { regex: "/shuttle/" } }) {
       id
       sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
         base64
@@ -89,72 +89,68 @@ const authorQuery = graphql`
       }
     }
   }
-`;
-
+`
 
 function ArticlesHero({ authors, top, bottom }: IAuthor) {
   const { gridLayout = 'tiles', hasSetGridLayout, setGridLayout } = useContext(
-    GridLayoutContext,
-  );
+    GridLayoutContext
+  )
 
-  const results = useStaticQuery(authorQuery);
-  const hero = results.site.edges[0].node.siteMetadata.hero;
-  const tilesIsActive = hasSetGridLayout && gridLayout === 'tiles';
-  const featuredAuthor = authors.find(author => author.featured);
+  const results = useStaticQuery(authorQuery)
+  const hero = results.site.edges[0].node.siteMetadata.hero
+  const tilesIsActive = hasSetGridLayout && gridLayout === 'tiles'
+  const featuredAuthor = authors.find(author => author.featured)
 
-  const {earth, spaceman, back, shuttle } = results;
+  const { earth, spaceman, back, shuttle } = results
 
   if (!featuredAuthor) {
     throw new Error(`
       No featured Author found.
       Please ensure you have at least featured Author.
-  `);
+  `)
   }
 
   return (
     <Section relative id="Articles__Hero">
-      { top && (
+      {top && (
         <>
-        <HeadingContainer style={{ maxWidth: `${hero.maxWidth}px` }}>
-       
-      </HeadingContainer>
-      <SubheadingContainer>
-      <GridControlsContainer>
-          <GridButton
-            onClick={() => setGridLayout('tiles')}
-            active={tilesIsActive}
-            data-a11y="false"
-            title="Show articles in Tile grid"
-            aria-label="Show articles in Tile grid"
-          >
-            <Icons.Tiles />
-          </GridButton>
-          <GridButton
-            onClick={() => setGridLayout('rows')}
-            active={!tilesIsActive}
-            data-a11y="false"
-            title="Show articles in Row grid"
-            aria-label="Show articles in Row grid"
-          >
-            <Icons.Rows />
-          </GridButton>
-        </GridControlsContainer>
-      </SubheadingContainer>
-      </>
-      )}
-      {
-        bottom && (
+          <HeadingContainer
+            style={{ maxWidth: `${hero.maxWidth}px` }}
+          ></HeadingContainer>
           <SubheadingContainer>
-        <Bio author={featuredAuthor} />
-      </SubheadingContainer>
-        )
-      }
-      
+            <GridControlsContainer>
+              <GridButton
+                onClick={() => setGridLayout('tiles')}
+                active={tilesIsActive}
+                data-a11y="false"
+                title="Show articles in Tile grid"
+                aria-label="Show articles in Tile grid"
+              >
+                <Icons.Tiles />
+              </GridButton>
+              <GridButton
+                onClick={() => setGridLayout('rows')}
+                active={!tilesIsActive}
+                data-a11y="false"
+                title="Show articles in Row grid"
+                aria-label="Show articles in Row grid"
+              >
+                <Icons.Rows />
+              </GridButton>
+            </GridControlsContainer>
+          </SubheadingContainer>
+        </>
+      )}
+      {bottom && (
+        <SubheadingContainer>
+          <Bio author={featuredAuthor} />
+        </SubheadingContainer>
+      )}
     </Section>
-  );
+  )
 }
 
-export default ArticlesHero;
+export default ArticlesHero
 
 const SubheadingContainer = styled.div`
   display: flex;
@@ -174,7 +170,7 @@ const SubheadingContainer = styled.div`
     display: flex;
     flex-direction: column;
   `};
-`;
+`
 
 const GridControlsContainer = styled.div`
   display: flex;
@@ -184,7 +180,7 @@ const GridControlsContainer = styled.div`
     display: flex;
     flex-direction: 'column'
   `};
-`;
+`
 
 const HeadingContainer = styled.div`
   margin: 100px 0;
@@ -196,7 +192,7 @@ const HeadingContainer = styled.div`
   ${mediaqueries.tablet`
     width: 100%;
   `}
-`;
+`
 
 const HeroHeading = styled.h1`
   font-style: normal;
@@ -217,7 +213,7 @@ const HeroHeading = styled.h1`
   ${mediaqueries.phablet`
     font-size: 32px;
   `}
-`;
+`
 
 const HeroSubHeading = styled.h2`
   font-style: normal;
@@ -237,7 +233,7 @@ const HeroSubHeading = styled.h2`
   ${mediaqueries.phablet`
     font-size: 22px;
   `}
-`;
+`
 
 const GridButton = styled.button<{ active: boolean }>`
   position: relative;
@@ -278,4 +274,4 @@ const GridButton = styled.button<{ active: boolean }>`
       fill: ${p => p.theme.colors.primary};
     }
   }
-`;
+`

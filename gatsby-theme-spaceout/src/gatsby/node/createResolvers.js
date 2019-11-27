@@ -3,18 +3,18 @@ const mdxResolverPassthrough = fieldName => async (
   source,
   arguments_,
   context,
-  info,
+  info
 ) => {
-  const type = info.schema.getType(`Mdx`);
+  const type = info.schema.getType(`Mdx`)
   const mdxNode = context.nodeModel.getNodeById({
     id: source.parent,
-  });
-  const resolver = type.getFields()[fieldName].resolve;
+  })
+  const resolver = type.getFields()[fieldName].resolve
   const result = await resolver(mdxNode, arguments_, context, {
     fieldName,
-  });
-  return result;
-};
+  })
+  return result
+}
 
 // Define resolvers for custom fields
 module.exports = ({ createResolvers }) => {
@@ -30,5 +30,5 @@ module.exports = ({ createResolvers }) => {
         resolve: mdxResolverPassthrough(`timeToRead`),
       },
     },
-  });
-};
+  })
+}

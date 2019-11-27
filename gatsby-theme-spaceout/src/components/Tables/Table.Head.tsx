@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled'
 
 const Head = styled.thead`
   text-align: left;
@@ -9,6 +9,6 @@ const Head = styled.thead`
   color: ${p => p.theme.colors.primary};
   font-family: ${p => p.theme.fonts.serif};
   transition: ${p => p.theme.colorModeTransition};
-`;
+`
 
-export default Head;
+export default Head

@@ -1,14 +1,14 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { css } from "@emotion/core";
-import Link from "gatsby-plugin-transition-link";
+import React from 'react'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
+import Link from 'gatsby-plugin-transition-link'
 
-import Headings from "@components/Headings";
-import Image from "@components/Image";
+import Headings from '@components/Headings'
+import Image from '@components/Image'
 
-import mediaqueries from "@styles/media";
+import mediaqueries from '@styles/media'
 
-import { IArticle } from "@types";
+import { IArticle } from '@types'
 
 /**
  * Sits at the bottom of our Article page. Shows the next 2 on desktop and the
@@ -23,35 +23,35 @@ import { IArticle } from "@types";
  * mix into the generic list component.
  */
 const ArticlesNext = ({ articles }: { articles: IArticle[] }) => {
-  if (!articles) return null;
-  const numberOfArticles = articles.length;
+  if (!articles) return null
+  const numberOfArticles = articles.length
   return (
     <Grid numberOfArticles={numberOfArticles}>
       <GridItem article={articles[0]} />
       <GridItem article={articles[1]} narrow />
     </Grid>
-  );
-};
+  )
+}
 
-export default ArticlesNext;
+export default ArticlesNext
 
 const GridItem = ({
   article,
   narrow,
 }: {
-  article: IArticle;
-  narrow?: boolean;
+  article: IArticle
+  narrow?: boolean
 }) => {
-  if (!article) return null;
+  if (!article) return null
 
-  const hasOverflow = narrow && article.title.length > 35;
-  const imageSource = narrow ? article.hero.narrow : article.hero.regular;
+  const hasOverflow = narrow && article.title.length > 35
+  const imageSource = narrow ? article.hero.narrow : article.hero.regular
 
   return (
     <ArticleLink
       to={article.slug}
       data-a11y="false"
-      narrow={narrow ? "true" : "false"}
+      narrow={narrow ? 'true' : 'false'}
     >
       <Item>
         <ImageContainer>
@@ -61,16 +61,14 @@ const GridItem = ({
           {article.title}
         </Title>
         <Excerpt hasOverflow={hasOverflow}>{article.excerpt}</Excerpt>
-        <MetaData>
-          {article.timeToRead} min czytania
-        </MetaData>{" "}
+        <MetaData>{article.timeToRead} min czytania</MetaData>{' '}
       </Item>
     </ArticleLink>
-  );
-};
+  )
+}
 
-const wide = "1fr";
-const narrow = "1fr";
+const wide = '1fr'
+const narrow = '1fr'
 
 const limitToTwoLines = css`
   text-overflow: ellipsis;
@@ -84,7 +82,7 @@ const limitToTwoLines = css`
   ${mediaqueries.phablet`
     -webkit-line-clamp: 3;
   `}
-`;
+`
 const Grid = styled.div<{ numberOfArticles: number }>`
   position: relative;
   display: grid;
@@ -93,17 +91,17 @@ const Grid = styled.div<{ numberOfArticles: number }>`
       return `
       grid-template-columns: 1fr;
       grid-template-rows: 1
-    `;
+    `
     } else {
       return `
       grid-template-columns: ${wide} ${narrow};
       grid-template-rows: 2;
-      `;
+      `
     }
   }}
   column-gap: 30px;
   margin: 0 auto;
-  max-width: ${p => (p.numberOfArticles === 1 ? "680px" : "100%")};
+  max-width: ${p => (p.numberOfArticles === 1 ? '680px' : '100%')};
 
   ${mediaqueries.desktop`
     grid-template-columns: 1fr 1fr;
@@ -112,7 +110,7 @@ const Grid = styled.div<{ numberOfArticles: number }>`
   ${mediaqueries.tablet`
     grid-template-columns: 1fr;
   `}
-`;
+`
 
 const ImageContainer = styled.div`
   position: relative;
@@ -140,7 +138,7 @@ const ImageContainer = styled.div`
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
   `}
-`;
+`
 
 const Item = styled.div`
   position: relative;
@@ -151,12 +149,12 @@ const Item = styled.div`
     border-bottom-left-radius: 5px;
     background: ${p => p.theme.colors.card};
   }
-`;
+`
 
 const Title = styled(Headings.h3)`
   font-size: 22px;
   line-height: 1.4;
-  margin-bottom: ${p => (p.hasOverflow ? "45px" : "10px")};
+  margin-bottom: ${p => (p.hasOverflow ? '45px' : '10px')};
   color: ${p => p.theme.colors.primary};
   font-family: ${p => p.theme.fonts.serif};
   transition: color 0.3s ease-in-out;
@@ -170,15 +168,15 @@ const Title = styled(Headings.h3)`
     margin-bottom: 10px;
     -webkit-line-clamp: 3;
   `}
-`;
+`
 
 const Excerpt = styled.p<{ narrow: boolean; hasOverflow: boolean }>`
   ${limitToTwoLines};
   font-size: 16px;
   margin-bottom: 10px;
   color: ${p => p.theme.colors.grey};
-  display: ${p => (p.hasOverflow ? "none" : "box")};
-  max-width: ${p => (p.narrow ? "100%" : "100%")};
+  display: ${p => (p.hasOverflow ? 'none' : 'box')};
+  max-width: ${p => (p.narrow ? '100%' : '100%')};
 
   ${mediaqueries.desktop`
     display: -webkit-box;
@@ -194,7 +192,7 @@ const Excerpt = styled.p<{ narrow: boolean; hasOverflow: boolean }>`
     margin-bottom: 20px;
     -webkit-line-clamp: 3;
   `}
-`;
+`
 
 const MetaData = styled.div`
   font-weight: 600;
@@ -206,7 +204,7 @@ const MetaData = styled.div`
     max-width: 100%;
     padding:  0 20px 30px;
   `}
-`;
+`
 
 const ArticleLink = styled(Link)<{ narrow: string }>`
   position: relative;
@@ -230,8 +228,8 @@ const ArticleLink = styled(Link)<{ narrow: string }>`
     color: ${p => p.theme.colors.accent};
   }
 
-  &[data-a11y="true"]:focus::after {
-    content: "";
+  &[data-a11y='true']:focus::after {
+    content: '';
     position: absolute;
     left: -2%;
     top: -2%;
@@ -241,7 +239,7 @@ const ArticleLink = styled(Link)<{ narrow: string }>`
     background: rgba(255, 255, 255, 0.01);
   }
 
-  ${p => p.narrow === "true" && mediaqueries.tablet`display: none;`}
+  ${p => p.narrow === 'true' && mediaqueries.tablet`display: none;`}
 
   ${mediaqueries.phablet`
     &:hover ${ImageContainer} {
@@ -253,4 +251,4 @@ const ArticleLink = styled(Link)<{ narrow: string }>`
       transform: scale(0.97) translateY(3px);
     }
   `}
-`;
+`

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const ChevronLeft = ({ fill }) => (
   <svg
@@ -13,6 +13,6 @@ const ChevronLeft = ({ fill }) => (
       fill={fill}
     />
   </svg>
-);
+)
 
-export default ChevronLeft;
+export default ChevronLeft
