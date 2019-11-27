@@ -3,11 +3,12 @@ import ReactScrollbarsCustom, {
     ScrollbarContext
   } from 'react-scrollbars-custom';
 
-export function ScrollManager({ ...props }) {
+export const ScrollManager = React.forwardRef((props, ref) => {
   const [isScrolling, setIsScrolling] = useState(false);
   const [isMouseOver, setIsMouseOver] = useState(false);
   const isShow = isScrolling || isMouseOver;
   const isDark = props.isDark
+
 
   const onScrollStart = useCallback(() => {
     setIsScrolling(true);
@@ -21,6 +22,7 @@ export function ScrollManager({ ...props }) {
   const onMouseLeave = useCallback(() => {
     setIsMouseOver(false);
   }, []);
+
 
   const trackProps = useMemo(() => ({
     renderer: ({ elementRef, style, ...restProps }) => (
@@ -51,7 +53,7 @@ export function ScrollManager({ ...props }) {
         onMouseLeave={onMouseLeave}
       />
     )
-  }), [isShow, onMouseEnter, onMouseLeave]);
+  }), [isShow, onMouseEnter, onMouseLeave, isDark]);
 
   const trackYProps = useMemo(() => ({
     renderer: ({ elementRef, style, ...restProps }) => (
@@ -72,19 +74,14 @@ export function ScrollManager({ ...props }) {
         onMouseLeave={onMouseLeave}
       />
     )
-  }), [isShow, onMouseEnter, onMouseLeave]);
+  }), [isShow, onMouseEnter, onMouseLeave, isDark]);
 
   return (
     <ReactScrollbarsCustom
+      style={{minHeight: "100vh" }}
+      ref={ref}
       {...props}
-      wrapperProps={{
-        renderer: ({ elementRef, style, ...restProps }) => (
-          <div {...restProps} ref={elementRef} 
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
-          style={{ ...style, right: 0 }} />
-        ),
-      }}
+      noScrollX={true}
       createContext={true}
       trackXProps={trackProps}
       trackYProps={trackYProps}
@@ -94,13 +91,14 @@ export function ScrollManager({ ...props }) {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       scrollDetectionThreshold={500} // ms
+
     >
       {props.children}
     </ReactScrollbarsCustom>
   );
-}
+});
 
-export const useScrollManager = () => {
+export function useScrollManager(){
     return useContext(ScrollbarContext).parentScrollbar;
   };
 

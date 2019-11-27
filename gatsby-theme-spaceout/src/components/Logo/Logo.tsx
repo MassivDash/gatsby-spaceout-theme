@@ -487,7 +487,7 @@ const Logo = ({ fill = "#fff" }: { fill?: string }) => {
   );
 };
 
-export default Logo;
+export default React.memo(Logo);
 
 const LogoContainer = styled.div`
   .Logo__Mobile {

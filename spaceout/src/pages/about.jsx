@@ -1,19 +1,25 @@
 import React from "react";
+import Scroller from "gatsby-theme-spaceout/src/components/Scroller";
 import Section from "gatsby-theme-spaceout/src/components/Section";
 import SEO from "gatsby-theme-spaceout/src/components/SEO";
 import Headings from "gatsby-theme-spaceout/src/components/Headings";
 
-const About = () =>  {
+const HowItsDone = () =>  {
   return (
   <>
       <SEO />
+      <Scroller style={{minHeight: "100vh" }}>
       <Section>
         <div style={{ marginTop: "100px" }}>
-          <Headings.h1>About us</Headings.h1>
+          <Headings.h1>How its done</Headings.h1>
+          <div>
+            <p>gsahjgshjadgasjhgjhsagjhadsgjhdsagadsjhgsadjhgj</p>
+          </div>
         </div>
       </Section>
+      </Scroller>
     </>
   );
 }
 
-export default About;
+export default HowItsDone;

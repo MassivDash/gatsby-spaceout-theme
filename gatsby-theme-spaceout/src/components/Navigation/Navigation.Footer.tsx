@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import mediaqueries from "@styles/media";
 import Icons from "@icons";
+import useScrollManager from '@components/Scroller';
 import { useColorMode } from "theme-ui";
 import screenfull from "screenfull";
 import { connect } from "react-redux";
@@ -13,7 +14,7 @@ import {
 } from "@utils";
 
 function Footer({...props}) {
-  
+  console.log(props)
   return (
       <ActionsBar>
         <ActionBarDivider>
@@ -21,7 +22,6 @@ function Footer({...props}) {
       <SharePageButton />
       </ActionBarDivider>
       <ActionBarDivider>
-      
       <GoToTop {...props} />
       <ToggleFont {...props} />
       <FullScreenToggle />
@@ -143,10 +143,10 @@ function SharePageButton() {
         Copied
       </ToolTip>
     </IconWrapper>
-  );
+  ); 
 }
 
-function ToggleFont({fontSizeIncrease, setFontSizeIncrease}) {
+function ToggleFont({fontSizeIncrease, setFontSizeIncrease, navigatorPosition}) {
   const [colorMode] = useColorMode();
   const [text, setText] = useState<string>("100%")
   const [hasCopied, setHasCopied] = useState<boolean>(false);
@@ -174,6 +174,7 @@ function ToggleFont({fontSizeIncrease, setFontSizeIncrease}) {
   }
 
   return (
+    <FadeArticleAnimationFont navigatorPosition={navigatorPosition}>
     <IconWrapper
       isDark={isDark}
       onClick={() => switchThroughFontSizes()}
@@ -186,18 +187,20 @@ function ToggleFont({fontSizeIncrease, setFontSizeIncrease}) {
         {text}
       </ToolTip>
     </IconWrapper>
+    </FadeArticleAnimationFont>
   );
 }
 
-function GoToTop({ScrolltoTop}) {
+function GoToTop({ ScrollToTop, navigatorPosition }) {
   const [colorMode] = useColorMode();
   const isDark = colorMode === `dark`;
   const fill = isDark ? "#fff" : "#000";
   function scrolltoTop(){
-    ScrolltoTop()
+    ScrollToTop()
   }
 
   return (
+    <FadeArticleAnimationArrow navigatorPosition={navigatorPosition}>
     <IconWrapper
       isDark={isDark}
       onClick={() => scrolltoTop()}
@@ -207,10 +210,21 @@ function GoToTop({ScrolltoTop}) {
     >
       <Icons.ArrowUp fill={fill} />
     </IconWrapper>
+    </FadeArticleAnimationArrow>
   );
 }
 
 
+const FadeArticleAnimationFont = styled.div`
+  opacity: ${p => p.navigatorPosition === 'article' ? 1 : 0};
+  transform: ${p => p.navigatorPosition === 'article' ? "scale(1) translateX(1px)" : "scale(0.2) translateX(40px)" };
+  transition: 0.4s ease-in-out;
+`
+
+const FadeArticleAnimationArrow = styled.div`
+  transform: ${p => p.navigatorPosition === 'article' ? "translateY(1px)" : "translateY(60px)" };
+  transition: 0.4s ease-in-out;
+`
 
 const ActionsBar = styled.div`
   position: relative;

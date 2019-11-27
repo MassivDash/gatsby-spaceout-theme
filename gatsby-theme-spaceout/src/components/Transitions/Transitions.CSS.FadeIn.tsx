@@ -20,5 +20,5 @@ const fadein = keyframes`
 
 const Transition = styled.div`
   opacity: 0;
-  animation: ${fadein} 0.3s linear forwards;
+  animation: ${fadein} 0.5s linear forwards;
 `;

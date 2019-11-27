@@ -1,21 +1,25 @@
 import React from "react";
-
-import Layout from "gatsby-theme-spaceout/src/components/Layout";
+import Scroller from "gatsby-theme-spaceout/src/components/Scroller";
 import Section from "gatsby-theme-spaceout/src/components/Section";
 import SEO from "gatsby-theme-spaceout/src/components/SEO";
 import Headings from "gatsby-theme-spaceout/src/components/Headings";
 
-const NotFoundPage = () =>  {
+const HowItsDone = () =>  {
   return (
-  <Layout>
+  <>
       <SEO />
+      <Scroller style={{minHeight: "100vh" }}>
       <Section>
         <div style={{ marginTop: "100px" }}>
-          <Headings.h1>404: Page Not Found</Headings.h1>
+          <Headings.h1>How its done</Headings.h1>
+          <div>
+            <p>gsahjgshjadgasjhgjhsagjhadsgjhdsagadsjhgsadjhgj</p>
+          </div>
         </div>
       </Section>
-    </Layout>
+      </Scroller>
+    </>
   );
 }
 
-export default NotFoundPage;
+export default HowItsDone;

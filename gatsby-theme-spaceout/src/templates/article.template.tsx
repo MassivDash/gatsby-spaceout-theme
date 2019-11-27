@@ -5,7 +5,6 @@ import throttle from "lodash/throttle";
 import { graphql, useStaticQuery } from "gatsby";
 import MDXRenderer from "@components/MDX";
 import Section from "@components/Section";
-import { connect } from "react-redux";
 
 import mediaqueries from "@styles/media";
 import { debounce } from "@utils";
@@ -15,17 +14,9 @@ import ArticleControls from "../sections/article/Article.Controls";
 import ArticlesNext from "../sections/article/Article.Next";
 import ArticleSEO from "../sections/article/Article.SEO";
 import ArticleShare from "../sections/article/Article.Share";
-import { useColorMode } from 'theme-ui';
-import Scrollbar from '@components/Scroller';
 
-import {
-  setNavigatorPosition,
-  setNavigatorShape,
-  setScrollToTop,
-  setFontSizeIncrease,
-  setCategoryFilter
-} from "../state/createStore";
 
+import CSSFadeIn from "@components/Transitions/Transitions.CSS.FadeIn";
 const siteQuery = graphql`
   {
     allSite {
@@ -43,10 +34,7 @@ const siteQuery = graphql`
 
 function Article({ pageContext, location, fontSizeIncrease, setNavigatorPosition, navigatorPosition }) {
   const contentSectionRef = useRef<HTMLElement>(null);
-  const [colorMode] = useColorMode();
-  const scroller = useRef(null);
-  const isDark = colorMode === "dark";
-
+  
   const [hasCalculated, setHasCalculated] = useState<boolean>(false);
   const [contentHeight, setContentHeight] = useState<number>(0);
 
@@ -85,17 +73,13 @@ function Article({ pageContext, location, fontSizeIncrease, setNavigatorPosition
 
     calculateBodySize();
     window.addEventListener("resize", calculateBodySize);
-    setNavigatorPosition('article');
 
     return () => window.removeEventListener("resize", calculateBodySize);
   }, []);
 
-  useEffect(() => {
-    setNavigatorPosition('article')
-  })
 
   return (
-    <Scrollbar>
+    <CSSFadeIn>
       <Background>
       <ArticleSEO article={article} authors={authors} location={location} />
       <ArticleHero article={article} authors={authors} />
@@ -115,29 +99,10 @@ function Article({ pageContext, location, fontSizeIncrease, setNavigatorPosition
         </NextArticle>
       )}
       </Background>
-    </Scrollbar>
+    </CSSFadeIn>
   );
 }
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-    fontSizeIncrease: state.fontSizeIncrease,
-    navigatorPosition: state.navigatorPosition
-  };
-};
-
-const mapDispatchToProps = {
-  setNavigatorPosition,
-  setNavigatorShape,
-  setScrollToTop,
-  setFontSizeIncrease,
-  setCategoryFilter
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Article);
+export default Article;
 
 const articleFontDynamicStyle = props =>
   css`

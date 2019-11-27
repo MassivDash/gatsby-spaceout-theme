@@ -42,7 +42,6 @@ export const globalStyles = css`
     margin: 0;
     font-weight: 400;
     height: 100%;
-    scroll-behavior: smooth;
   }
 
   button,
@@ -133,7 +132,7 @@ export const globalStyles = css`
   }
 
   .ScrollbarsCustom.trackYVisible {
-	min-height: 100vh;
+	min-height: 98vh;
   }
 
   tspan {
