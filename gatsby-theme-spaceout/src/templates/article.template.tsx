@@ -5,7 +5,7 @@ import throttle from "lodash/throttle";
 import { graphql, useStaticQuery } from "gatsby";
 import MDXRenderer from "@components/MDX";
 import Section from "@components/Section";
-
+import { connect } from 'react-redux'
 import mediaqueries from "@styles/media";
 import { debounce } from "@utils";
 
@@ -14,7 +14,11 @@ import ArticleControls from "../sections/article/Article.Controls";
 import ArticlesNext from "../sections/article/Article.Next";
 import ArticleSEO from "../sections/article/Article.SEO";
 import ArticleShare from "../sections/article/Article.Share";
- 
+
+
+import {
+  setFontSizeIncrease,
+} from '../state/createStore'
 
 import CSSFadeIn from "@components/Transitions/Transitions.CSS.FadeIn";
 const siteQuery = graphql`
@@ -102,7 +106,21 @@ function Article({ pageContext, location, fontSizeIncrease, theme }) {
     </CSSFadeIn>
   );
 }
-export default Article;
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    fontSizeIncrease: state.fontSizeIncrease
+  }
+}
+
+const mapDispatchToProps = {
+  setFontSizeIncrease,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Article);
 
 const articleFontDynamicStyle = props =>
   css`
