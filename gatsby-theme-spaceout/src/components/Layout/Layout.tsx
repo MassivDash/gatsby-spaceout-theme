@@ -11,7 +11,7 @@ import ArticlesContextProvider from '../../sections/articles/Articles.List.Conte
 
 import { globalStyles } from '@styles'
 
-import { setNavigatorPosition } from '../../state/createStore'
+import { setNavigatorPosition, setNavigatorShape } from '../../state/createStore'
 
 interface LayoutProps {
   children: React.ReactChild
@@ -41,7 +41,7 @@ const siteQuery = graphql`
   }
 `
 
-function Layout({ children, location, setNavigatorPosition }: LayoutProps) {
+function Layout({ children, location, setNavigatorPosition, setNavigatorShape }: LayoutProps) {
   const [colorMode] = useColorMode()
   useEffect(() => {
     parent.postMessage({ theme: colorMode }, '*')
@@ -67,8 +67,10 @@ function Layout({ children, location, setNavigatorPosition }: LayoutProps) {
       setNavigatorPosition('menu')
     } else if (isHomepage) {
       setNavigatorPosition('main')
+      setNavigatorShape('hidden')
     } else {
       setNavigatorPosition('article')
+      setNavigatorShape('visible')
     }
   }, [location])
 
@@ -95,6 +97,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = {
   setNavigatorPosition,
+  setNavigatorShape
 }
 
 export default connect(

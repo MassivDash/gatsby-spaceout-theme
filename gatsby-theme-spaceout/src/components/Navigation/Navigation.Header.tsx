@@ -84,7 +84,7 @@ const siteQuery = graphql`
   }
 `
 
-const NavigationHeader = ({ navigatorPosition }) => {
+const NavigationHeader = ({ navigatorPosition, setNavigatorShape, navigatorShape }) => {
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false)
   const [previousPath, setPreviousPath] = useState<string>('/')
 
@@ -118,10 +118,6 @@ const NavigationHeader = ({ navigatorPosition }) => {
 
   const scrollRef = useRef(null)
 
-  const click = () => {
-    console.log(scrollRef)
-    scrollRef.current.scrollToTop()
-  }
 
   const ArticleNavigator = navigatorPosition === 'article' ? true : false
 
@@ -130,7 +126,7 @@ const NavigationHeader = ({ navigatorPosition }) => {
       <NavInfoContainer>
         <LogoLink
           fade
-          articleposition={ArticleNavigator}
+          navigatorPosition={ArticleNavigator}
           to={rootPath || basePath}
           data-a11y="false"
           title="Navigate back to the homepage"
@@ -145,11 +141,11 @@ const NavigationHeader = ({ navigatorPosition }) => {
           <Logo fill={fill} />
           <Hidden>Navigate back to the homepage</Hidden>
         </LogoLink>
-        <Title articleposition={ArticleNavigator} onClick={() => click()}>
+        <Title navigatorPosition={ArticleNavigator}>
           {title}
         </Title>
-        <Subtitle articleposition={ArticleNavigator}>{name}</Subtitle>
-        <Description articleposition={ArticleNavigator}>
+        <Subtitle navigatorPosition={ArticleNavigator}>{name}</Subtitle>
+        <Description navigatorPosition={ArticleNavigator}>
           {description}
         </Description>
       </NavInfoContainer>
@@ -170,31 +166,35 @@ const NavigationHeader = ({ navigatorPosition }) => {
                 key={item.title}
                 fade
                 to={`/${item.slug}`}
-                articleposition={ArticleNavigator}
+                navigatorPosition={ArticleNavigator}
               >
                 {item.title}
               </NavLink>
             ))
           )}
       </NavControls>
-      <FadeArticleAnimation articleposition={ArticleNavigator}>
+      <FadeArticleAnimation navigatorPosition={navigatorPosition}>
         <NavSocialContainer>
           <SocialLinks links={social} />
         </NavSocialContainer>
       </FadeArticleAnimation>
-      <ArticleViewer articleposition={ArticleNavigator} isDark={isDark}>
+      <ArticleViewer navigatorPosition={navigatorPosition} navigatorShape={navigatorShape} isDark={isDark}>
+        <ArticlesControls>
+              <ArrowControl setNavigatorShape={setNavigatorShape} navigatorShape={navigatorShape}/>
+        </ArticlesControls>
         <Scrollbar ref={scrollRef}>
           <ArticlesHolder>
             {allArticles.edges
               .map(item =>
                 useMemo(() => (
-                  <AniLink
+                  <ArticleLink
                     key={item.node.id}
                     to={item.node.slug}
-                    articleposition={ArticleNavigator}
+                    navigatorPosition={ArticleNavigator}
                   >
                     <Image fluid={item.node.hero.childImageSharp.fluid} />
-                  </AniLink>
+                    <ArticleHover>{item.node.title.slice(0,1).toLowerCase()}</ArticleHover>
+                  </ArticleLink>
                 ))
               )
               .reverse()}
@@ -204,6 +204,38 @@ const NavigationHeader = ({ navigatorPosition }) => {
     </NavContainer>
   )
 }
+
+
+function ArrowControl({ setNavigatorShape, navigatorShape }) {
+  const [colorMode] = useColorMode()
+  const isDark = colorMode === `dark`
+  const fill = isDark ? '#fff' : '#000'
+  let navPosition = "hidden"
+  let navText = "Main Menu"
+   if(navigatorShape === "hidden"){
+    navText = "List of posts"
+    navPosition = "visible" 
+   } 
+
+  return (
+    <FadeArticleAnimationArrow navigatorShape={navigatorShape}>
+      <Description>
+        {navText}
+      </Description>
+      <IconWrapper
+        navigatorShape={navigatorShape}
+        isDark={isDark}
+        onClick={() => setNavigatorShape(navPosition)}
+        data-a11y="false"
+        aria-label="Scroll to the top"
+        title="Scroll to the top"
+      >
+        <Icons.ArrowUp fill={fill} />
+      </IconWrapper>
+    </FadeArticleAnimationArrow>
+  )
+}
+
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -275,26 +307,26 @@ const NavInfoContainer = styled.div`
 const Title = styled.h1`
   height: 80%;
   font-weight: 300;
-  font-size: ${p => (p.articleposition ? '22px' : '28px')};
+  font-size: ${p => (p.navigatorPosition ? '22px' : '28px')};
   margin: 5px auto;
   color: ${p => p.theme.colors.primary};
   transition: 0.3s ease-in-out;
   text-align: center;
   transform: ${p =>
-    p.articleposition ? `translateY(-55px) translateX(20px)` : `translateY(1)`};
+    p.navigatorPosition ? `translateY(-55px) translateX(20px)` : `translateY(1)`};
 `
 
 const Subtitle = styled.h2`
   font-weight: 400;
   font-size: 16px;
   margin: auto;
-  width: ${p => (p.articleposition ? '160px' : '80px')};
+  width: ${p => (p.navigatorPosition ? '160px' : '80px')};
   min-height: 50px;
   color: ${p => p.theme.colors.primary};
   transition: 0.3s ease-in-out;
   text-align: center;
   transform: ${p =>
-    p.articleposition
+    p.navigatorPosition
       ? `translateY(-55px) translateX(20px)`
       : `translateY(1px) translateX(1px)`};
 `
@@ -327,7 +359,7 @@ const LogoLink = styled(AniLink)<{ back: string }>`
   margin: auto;
   transition: 0.5s ease-in-out;
   transform: ${p =>
-    p.articleposition ? 'translateX(-90px)' : 'translateX(1px)'};
+    p.navigatorPosition ? 'translateX(-90px)' : 'translateX(1px)'};
   ${mediaqueries.desktop_medium`
     left: 0
   `}
@@ -367,7 +399,7 @@ const NavLink = styled(props => <AniLink {...props} />)`
   margin: 10px auto;
   font-size: 18px;
   text-transform: Capitalize;
-  opacity: ${p => (p.articleposition === 'article' ? 0 : 1)};
+  opacity: ${p => (p.navigatorPosition === 'article' ? 0 : 1)};
   transition: 0.4s ease-in-out;
   &:hover {
     color: ${p => p.theme.colors.hover};
@@ -423,28 +455,132 @@ const ArticlesHolder = styled.div`
 const ArticleViewer = styled.aside`
   position: absolute;
   display: flex;
+  flex-direction: column;
   align-items: center;
   top: 100px;
+ 
   width: 300px;
   margin: 0 10px 0px -5px;
   padding: 10px 0;
   transition: 0.9s ease-in-out;
-  background: ${p => (p.isDark ? '#000' : '#fafafa')};
+  background: ${p => p.theme.colors.background};
   transform: ${p =>
-    p.articleposition ? `translateY(1px)` : `translateY(100vh)`};
+    p.navigatorPosition !== "main"  ? (p.navigatorShape === 'hidden' ? `translateY(calc(100% - 250px))` : `translateY(1px)`) : `translateY(100vh)`};
   &::before {
     content: '';
     position: absolute;
     width: 83%;
     border-top: 1px ${p => (p.isDark ? 'rgb(250, 250, 250)' : '#eeeeee')} solid;
-    height: 40px;
-    top: 0;
-    background: ${p => (p.isDark ? '#000' : '#fafafa')};
+    height: 1px;
+    top: 10px;
+    left: 0;
+    background: ${p => p.theme.colors.background};
     margin: -15px 20px;
   }
 `
 
+const ArticleLink = styled(AniLink)`
+  position: relative;
+    transition: transform 0.3s var(--ease-out-quad),
+    box-shadow 0.3s var(--ease-out-quad);
+
+  & > div {
+    height: 100%;
+  }
+
+  ${mediaqueries.tablet`
+    height: 200px;
+    margin-bottom: 35px;
+  `}
+
+  ${mediaqueries.phablet`
+    overflow: hidden;
+    margin-bottom: 0;
+    box-shadow: none;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+  `}
+`
+
+const ArticleHover = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  top: 0;
+  font-size: 100px; 
+  color: ${p => p.theme.colors.accent};
+  background-color: ${p => p.theme.colors.background};
+  transition: 0.44s var(--ease-out-quart);
+  &:hover {
+    opacity: 1;
+  };
+`
+
+const ArticlesControls = styled.div`
+  height: 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  transition: 0.4s ease-in-out; 
+  margin-bottom: 20px;
+  `
+
 const FadeArticleAnimation = styled.div`
-  opacity: ${p => (p.articleposition === 'article' ? 0 : 1)};
+  transform: ${p => p.navigatorPosition !== 'main' ? 'translateY(-60px)' : 'translateY(1px)' };
+  transition: 0.74s ease-in-out;
+`
+const FadeArticleAnimationArrow = styled.div`
   transition: 0.4s ease-in-out;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+`
+
+
+const IconWrapper = styled.button<{ isDark: boolean }>`
+  opacity: 0.5;
+  position: relative;
+  border-radius: 5px;
+  width: 40px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
+  margin: 15px auto;
+  transform: ${p => p.navigatorShape === 'visible' ? 'rotate(180deg)' : 'rotate(0deg)'};
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &[data-a11y='true']:focus::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -30%;
+    width: 100%;
+    height: 160%;
+    border: 2px solid ${p => p.theme.colors.accent};
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: 5px;
+  }
+
+  ${mediaqueries.tablet`
+    display: inline-flex;
+    transform: scale(0.708);
+    margin-left: 10px;
+
+
+    &:hover {
+      opacity: 0.5;
+    }
+  `}
 `

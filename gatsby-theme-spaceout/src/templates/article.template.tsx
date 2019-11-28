@@ -1,21 +1,22 @@
-import React, { useRef, useState, useEffect } from 'react'
-import styled from '@emotion/styled'
+import React, { useRef, useState, useEffect } from "react";
+import styled from "@emotion/styled";
 import { css } from '@emotion/core'
-import throttle from 'lodash/throttle'
-import { graphql, useStaticQuery } from 'gatsby'
-import MDXRenderer from '@components/MDX'
-import Section from '@components/Section'
+import throttle from "lodash/throttle";
+import { graphql, useStaticQuery } from "gatsby";
+import MDXRenderer from "@components/MDX";
+import Section from "@components/Section";
 
-import mediaqueries from '@styles/media'
-import { debounce } from '@utils'
+import mediaqueries from "@styles/media";
+import { debounce } from "@utils";
 
-import ArticleHero from '../sections/article/Article.Hero'
-import ArticleControls from '../sections/article/Article.Controls'
-import ArticlesNext from '../sections/article/Article.Next'
-import ArticleSEO from '../sections/article/Article.SEO'
-import ArticleShare from '../sections/article/Article.Share'
+import ArticleHero from "../sections/article/Article.Hero";
+import ArticleControls from "../sections/article/Article.Controls";
+import ArticlesNext from "../sections/article/Article.Next";
+import ArticleSEO from "../sections/article/Article.SEO";
+import ArticleShare from "../sections/article/Article.Share";
+ 
 
-import CSSFadeIn from '@components/Transitions/Transitions.CSS.FadeIn'
+import CSSFadeIn from "@components/Transitions/Transitions.CSS.FadeIn";
 const siteQuery = graphql`
   {
     allSite {
@@ -29,24 +30,24 @@ const siteQuery = graphql`
       }
     }
   }
-`
+`;
 
 function Article({ pageContext, location, fontSizeIncrease, theme }) {
-  const contentSectionRef = useRef<HTMLElement>(null)
+  const contentSectionRef = useRef<HTMLElement>(null);
+  
+  const [hasCalculated, setHasCalculated] = useState<boolean>(false);
+  const [contentHeight, setContentHeight] = useState<number>(0);
 
-  const [hasCalculated, setHasCalculated] = useState<boolean>(false)
-  const [contentHeight, setContentHeight] = useState<number>(0)
+  const results = useStaticQuery(siteQuery);
+  const { similarPosts } = results.allSite.edges[0].node.siteMetadata;
 
-  const results = useStaticQuery(siteQuery)
-  const { similarPosts } = results.allSite.edges[0].node.siteMetadata
-
-  const { article, authors, mailchimp, next } = pageContext
+  const { article, authors, mailchimp, next } = pageContext;
 
   useEffect(() => {
     const calculateBodySize = throttle(() => {
-      const contentSection = contentSectionRef.current
+      const contentSection = contentSectionRef.current;
 
-      if (!contentSection) return
+      if (!contentSection) return;
 
       /**
        * If we haven't checked the content's height before,
@@ -54,56 +55,54 @@ function Article({ pageContext, location, fontSizeIncrease, theme }) {
        * imagery to recheck when it's loaded
        */
       if (!hasCalculated) {
-        const debouncedCalculation = debounce(calculateBodySize)
-        const $imgs = contentSection.querySelectorAll('img')
+        const debouncedCalculation = debounce(calculateBodySize);
+        const $imgs = contentSection.querySelectorAll("img");
 
         $imgs.forEach($img => {
           // If the image hasn't finished loading then add a listener
-          if (!$img.complete) $img.onload = debouncedCalculation
-        })
+          if (!$img.complete) $img.onload = debouncedCalculation;
+        });
 
         // Prevent rerun of the listener attachment
-        setHasCalculated(true)
+        setHasCalculated(true);
       }
 
       // Set the height and offset of the content area
-      setContentHeight(contentSection.getBoundingClientRect().height)
-    }, 20)
+      setContentHeight(contentSection.getBoundingClientRect().height);
+    }, 20);
 
-    calculateBodySize()
-    window.addEventListener('resize', calculateBodySize)
+    calculateBodySize();
+    window.addEventListener("resize", calculateBodySize);
 
-    return () => window.removeEventListener('resize', calculateBodySize)
-  }, [])
+    return () => window.removeEventListener("resize", calculateBodySize);
+  }, []);
+
 
   return (
     <CSSFadeIn>
       <BackgroundLayer theme={theme}>
-        <ArticleSEO article={article} authors={authors} location={location} />
-        <ArticleHero article={article} authors={authors} />
-        <MobileControls>
-          <ArticleControls />
-        </MobileControls>
-        <ArticleBody
-          fontSizeIncrease={fontSizeIncrease}
-          ref={contentSectionRef}
-        >
-          <MDXRenderer content={article.body}>
-            <ArticleShare />
-          </MDXRenderer>
-        </ArticleBody>
-        {next.length > 0 && similarPosts && (
-          <NextArticle>
-            <FooterNext></FooterNext>
-            <ArticlesNext articles={next} />
-            <FooterSpacer />
-          </NextArticle>
-        )}
+      <ArticleSEO article={article} authors={authors} location={location} />
+      <ArticleHero article={article} authors={authors} />
+      <MobileControls>
+        <ArticleControls />
+      </MobileControls>
+      <ArticleBody fontSizeIncrease={fontSizeIncrease} ref={contentSectionRef}>
+        <MDXRenderer content={article.body}>
+          <ArticleShare />
+        </MDXRenderer>
+      </ArticleBody>
+      {next.length > 0 && similarPosts && (
+        <NextArticle >
+          <FooterNext></FooterNext>
+          <ArticlesNext articles={next} />
+          <FooterSpacer />
+        </NextArticle>
+      )}
       </BackgroundLayer>
     </CSSFadeIn>
-  )
+  );
 }
-export default Article
+export default Article;
 
 const articleFontDynamicStyle = props =>
   css`
@@ -124,7 +123,7 @@ const articleFontDynamicStyle = props =>
   ${mediaqueries.phablet`
     padding: 60px 0;
   `}
-`
+`;
 
 const MobileControls = styled.div`
   position: relative;
@@ -135,20 +134,19 @@ const MobileControls = styled.div`
   ${mediaqueries.tablet_up`
     display: none;
   `}
-`
+`;
 
-const ArticleBody = styled.article`
-  ${articleFontDynamicStyle}
-`
+const ArticleBody = styled.article`${articleFontDynamicStyle}`
+  
 
-const NextArticle = styled(Section)`
+const NextArticle = styled(Section)`gatsby-
   display: block;
-`
+`;
 
 const BackgroundLayer = styled.div`
-  background-color: ${p => p.theme.colors.background};
-  padding-top: 20px;
-`
+background-color: ${p => p.theme.colors.background};
+padding-top: 20px;
+`;
 
 const FooterNext = styled.h3`
   position: relative;
@@ -182,8 +180,8 @@ const FooterNext = styled.h3`
       width: 90px
     `}
   }
-`
+`;
 
 const FooterSpacer = styled.div`
   margin-bottom: 65px;
-`
+`;

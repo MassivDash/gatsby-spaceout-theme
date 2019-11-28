@@ -117,6 +117,7 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
       <Item gridLayout={gridLayout}>
         <ImageContainer narrow={narrow} gridLayout={gridLayout}>
           {hasHeroImage ? <Image src={imageSource} /> : <ImagePlaceholder />}
+        <ArticleHover>{article.title.slice(0,1).toLowerCase()}</ArticleHover>
         </ImageContainer>
         <div>
           <Title dark hasOverflow={hasOverflow} gridLayout={gridLayout}>
@@ -350,6 +351,25 @@ const MetaData = styled.div`
     max-width: 100%;
     padding:  0 20px 30px;Link
   `}
+`
+
+const ArticleHover = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  top: 0;
+  font-size: 300px; 
+  color: ${p => p.theme.colors.accent};
+  background-color: ${p => p.theme.colors.background};
+  transition: 0.44s var(--ease-out-quart);
+  
+  &:hover {
+    opacity: 1;
+  };
 `
 
 const ArticleLink = styled(AniLink)`
