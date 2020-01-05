@@ -114,14 +114,7 @@ const SpaceHero = () => {
         fillRule="evenodd"
       >
         <tspan x={3} y={109}>
-          <tspan>{"s"}</tspan>
-          <tspan>{"p"}</tspan>
-          <tspan>{"a"}</tspan>
-          <tspan>{"c"}</tspan>
-          <tspan>{"e"}</tspan>
-          <tspan>{"o"}</tspan>
-          <tspan>{"u"}</tspan>
-          <tspan>{"t"}</tspan>
+        {[...'spaceout'].map(letter => <tspan key={letter}>{letter}</tspan>)}
         </tspan>
       </text>
     </svg>
@@ -137,26 +130,9 @@ const SpaceHero = () => {
         fontFamily="Satisfy"
         fillRule="evenodd"
       >
-        <tspan x={3} y={109}>
-          <tspan>{"i"}</tspan>
-          <tspan>{"n"}</tspan>
-          <tspan>{"t"}</tspan>
-          <tspan>{"e"}</tspan>
-          <tspan>{"r"}</tspan>
-          <tspan>{"s"}</tspan>
-          <tspan>{"t"}</tspan>
-          <tspan>{"e"}</tspan>
-          <tspan>{"l"}</tspan>
-          <tspan>{"l"}</tspan>
-          <tspan>{"a"}</tspan>
-          <tspan>{"r"}</tspan>
-          <tspan >{" "}</tspan>
-          <tspan>{"d"}</tspan>
-          <tspan>{"e"}</tspan>
-          <tspan>{"s"}</tspan>
-          <tspan>{"i"}</tspan>
-          <tspan>{"g"}</tspan>
-          <tspan>{"n"}</tspan>
+        <tspan x={3} y={109}>{
+          [...'interstellar design'].map(letter => <tspan key={letter}>{letter}</tspan>)
+        }
         </tspan>
       </text>
     </svg>
@@ -241,15 +217,18 @@ ${mediaqueries.phone`
 const draw = keyframes`
 	0% {
 		fill: none;
+    z-index: 5;
 	}
 	90% {
 		fill: #FFFFFF00;
+    z-index: 5;
 	}
 	
 	100% {
 		stroke-dashoffset: 0;
 		fill-opacity: 1;
 		fill: #FFFFFF;
+    z-index: 5;
 	}
 `
 
@@ -279,12 +258,40 @@ const moveCity = keyframes`
     transform: translate(134px, -83px)
 	}
 `
+const moveSpaceman = keyframes`
+	0% {
+
+    transform: translate(-345px,-502px)
+    	}
+      
+  25% {
+
+    transform: translate(-365px,-522px)
+  }
+
+	50% {
+
+    transform: translate(-375px,-532px)
+	}
+
+  75% {
+ 
+    transform: translate(-365px,-522px)
+  }
+	
+	100% {
+
+    transform: translate(-345px,-502px)
+	}
+`
+
 
 const AnimatedSpace = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
   position: absolute;
+  z-index: 5;
   left: 10vw;
   width: 100%;
   min-height: 300px;
@@ -335,6 +342,7 @@ const AnimatedStellar = styled.div`
 	justify-content: center;
   position: absolute;
   left: 30%;
+  z-index: 5;
   margin-top: 100px;
   width: 100%;
   min-height: 300px;
@@ -442,19 +450,9 @@ animation: ${moveCity} 38s linear infinite;
 const Spaceman = styled.div`
   position: absolute;
   transition: 3s ease-in-out;
-  z-index: 3;
+  z-index: 0;
   width: 1250px;
-  transform: ${props => {
-    const { position } = props
-    switch (true) {
-      case position === 'positionOne':
-        return 'rotate(11deg) scale(0.9) translate(-365px,-502px)'
-      case position === 'positionTwo':
-        return 'rotate(-1deg) scale(1.3) translate(852px,-802px)'
-      case position === 'positionThree':
-        return 'rotate(155deg) translate(0px, 1523px)'
-    }
-  }};
+  animation: ${moveSpaceman} 38s linear infinite;
 `
 
 

@@ -163,6 +163,7 @@ const NextArticle = styled(Section)`gatsby-
 
 const BackgroundLayer = styled.div`
 background-color: ${p => p.theme.colors.background};
+transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad); 
 padding-top: 20px;
 `;
 

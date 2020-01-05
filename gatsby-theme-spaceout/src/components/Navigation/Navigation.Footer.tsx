@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from '@emotion/styled'
 import mediaqueries from '@styles/media'
 import Icons from '@icons'
@@ -7,14 +7,37 @@ import screenfull from 'screenfull'
 import { connect } from 'react-redux'
 import { setFontSizeIncrease } from '../../state/createStore'
 import { copyToClipboard } from '@utils'
+import { GridLayoutContext } from '../../sections/articles/Articles.List.Context'
 
 function Footer({ ...props }) {
-  console.log(props)
+  const { gridLayout = 'tiles', hasSetGridLayout, setGridLayout } = useContext(
+    GridLayoutContext
+  )
+  const tilesIsActive = hasSetGridLayout && gridLayout === 'tiles'
   return (
     <ActionsBar>
       <ActionBarDivider>
         <DarkModeToggle />
-        <SharePageButton />
+        <GridButton
+                onClick={() => setGridLayout('tiles')}
+                active={tilesIsActive}
+                data-a11y="false"
+                title="Show articles in Tile grid"
+                aria-label="Show articles in Tile grid"
+                {...props}
+              >
+                <Icons.Tiles />
+              </GridButton>
+              <GridButton
+                onClick={() => setGridLayout('rows')}
+                active={!tilesIsActive}
+                data-a11y="false"
+                title="Show articles in Row grid"
+                aria-label="Show articles in Row grid"
+                {...props}
+              >
+                <Icons.Rows />
+              </GridButton>
       </ActionBarDivider>
       <ActionBarDivider>
         <GoToTop {...props} />
@@ -219,13 +242,13 @@ const FadeArticleAnimationFont = styled.div`
     p.navigatorPosition === 'article'
       ? 'scale(1) translateX(1px)'
       : 'scale(0.2) translateX(40px)'};
-  transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
+  transition: 0.5s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
 `
 
 const FadeArticleAnimationArrow = styled.div`
   transform: ${p =>
     p.navigatorPosition === 'article' ? 'translateY(1px)' : 'translateY(60px)'};
-  transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
+  transition: 0.5s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
 `
 
 const ActionsBar = styled.div`
@@ -396,5 +419,46 @@ const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     border-top: 6px solid ${p => (p.isDark ? '#000' : 'rgba(0,0,0,0.1)')};
+  }
+`
+const GridButton = styled.button<{ active: boolean }>`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  width: 36px;
+  margin: auto;
+  border-radius: 50%;
+  background: transparent;
+  transition: 0.45s ease;
+  transform: ${p =>
+    p.navigatorPosition === 'main' ? 'translateX(1px)' : 'translateX(60px)'};
+  opacity: ${p =>
+    p.navigatorPosition === 'main' ? 1 : 0};
+
+  &:hover {
+    background: ${p => p.theme.colors.hover};
+  }
+
+  &[data-a11y='true']:focus::after {
+    content: '';
+    position: absolute;
+    left: -10%;
+    top: -10%;
+    width: 120%;
+    height: 120%;
+    border: 2px solid ${p => p.theme.colors.accent};
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: 50%;
+  }
+
+  svg {
+    opacity: ${p => (p.active ? 1 : 0.25)};
+    transition: opacity 0.2s;
+
+    path {
+      fill: ${p => p.theme.colors.primary};
+    }
   }
 `
