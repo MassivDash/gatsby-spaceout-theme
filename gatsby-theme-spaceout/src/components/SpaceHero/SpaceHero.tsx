@@ -159,6 +159,18 @@ const SpaceHero = () => {
   )
 }
 
+const moveBlack = keyframes`
+	0% {
+		transform: scale(3) translate(-400px)
+	}
+	50% {
+		transform: scale(3) translate(0px)
+    	}
+	
+	100% {transform: scale(3) translate(-400px)
+	}
+`
+
 const Hero = styled.div`
   overflow: hidden;
   background-color: #121f28;
@@ -195,6 +207,7 @@ left: 0;
 top: 0;
 bottom: 0;
 display: grid;
+animation: ${moveBlack} 120s linear infinite;
 ${mediaqueries.phone`
    width: 100%;
    height: 100%;
@@ -206,7 +219,7 @@ ${mediaqueries.phone`
     `}
   ${mediaqueries.desktop`
     width: 100%;
-    height: "100%;$i
+    height: 100%;
     top: 0;
     left: 0;
     right: 0;
@@ -231,6 +244,7 @@ const draw = keyframes`
     z-index: 5;
 	}
 `
+
 
 const moveCity = keyframes`
 	0% {

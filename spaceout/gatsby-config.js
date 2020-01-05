@@ -76,7 +76,7 @@ const plugins = [
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
-      name: `Spaceout.p`,
+      name: `Spaceout.pl`,
       short_name: `spaceout`,
       start_url: `/`,
       background_color: `#fff`,
