@@ -219,13 +219,13 @@ const FadeArticleAnimationFont = styled.div`
     p.navigatorPosition === 'article'
       ? 'scale(1) translateX(1px)'
       : 'scale(0.2) translateX(40px)'};
-  transition: 0.4s ease-in-out;
+  transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
 `
 
 const FadeArticleAnimationArrow = styled.div`
   transform: ${p =>
     p.navigatorPosition === 'article' ? 'translateY(1px)' : 'translateY(60px)'};
-  transition: 0.4s ease-in-out;
+  transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
 `
 
 const ActionsBar = styled.div`

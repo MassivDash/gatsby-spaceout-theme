@@ -400,7 +400,7 @@ const NavLink = styled(props => <AniLink {...props} />)`
   font-size: 18px;
   text-transform: Capitalize;
   opacity: ${p => (p.navigatorPosition === 'article' ? 0 : 1)};
-  transition: 0.4s ease-in-out;
+  transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
   &:hover {
     color: ${p => p.theme.colors.hover};
   }
@@ -462,7 +462,7 @@ const ArticleViewer = styled.aside`
   width: 300px;
   margin: 0 10px 0px -5px;
   padding: 10px 0;
-  transition: 0.9s ease-in-out;
+  transition: 0.9s var(--ease-in-out-quad), background-color 0.25s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
   background: ${p => p.theme.colors.background};
   transform: ${p =>
     p.navigatorPosition !== "main"  ? (p.navigatorShape === 'hidden' ? `translateY(calc(100% - 250px))` : `translateY(1px)`) : `translateY(100vh)`};
@@ -527,7 +527,7 @@ const ArticlesControls = styled.div`
   align-items: center;
   width: 100%;
   overflow: hidden;
-  transition: 0.4s ease-in-out; 
+  transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad); 
   margin-bottom: 20px;
   `
 
@@ -536,7 +536,7 @@ const FadeArticleAnimation = styled.div`
   transition: 0.74s ease-in-out;
 `
 const FadeArticleAnimationArrow = styled.div`
-  transition: 0.4s ease-in-out;
+  transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
   display: flex;
   width: 100%;
   justify-content: space-evenly;

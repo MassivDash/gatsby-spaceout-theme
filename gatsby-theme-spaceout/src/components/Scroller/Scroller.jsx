@@ -29,7 +29,7 @@ export const ScrollManager = React.forwardRef((props, ref) => {
       <span
         {...restProps}
         ref={elementRef}
-        style={{ ...style, opacity: isShow ? 1 : 0, transition: "opacity 0.4s ease-in-out", }}
+        style={{ ...style, opacity: isShow ? 1 : 0, transition: "opacity 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad)", }}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       />
@@ -48,7 +48,7 @@ export const ScrollManager = React.forwardRef((props, ref) => {
             borderRadius: "4px",
             background: isDark ? "rgb(250, 250, 250)" : "rgba(124, 124, 124, 0.5)",
             width: "100%",
-            opacity: isShow ? 1 : 0, transition: "opacity 0.4s ease-in-out", }}
+            opacity: isShow ? 1 : 0, transition: "opacity 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad)", }}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       />
@@ -69,7 +69,7 @@ export const ScrollManager = React.forwardRef((props, ref) => {
             height: "calc(100% - 20px)",
             top: "10px",
             right: "0px",
-            opacity: isShow ? 1 : 0, transition: "opacity 0.4s ease-in-out", }}
+            opacity: isShow ? 1 : 0, transition: "opacity 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad)", }}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       />

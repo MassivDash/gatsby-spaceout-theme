@@ -6,7 +6,6 @@ const Section = styled.section<{ narrow?: boolean }>`
   width: 100%;
   margin: 0 auto;
   padding: 0 4rem;
-  background: ${p => p.theme.colors.background};
 
   ${mediaqueries.desktop`
     max-width: 850px;
