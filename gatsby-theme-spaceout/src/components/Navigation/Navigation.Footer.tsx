@@ -174,7 +174,6 @@ function ToggleFont({
   const [hasCopied, setHasCopied] = useState<boolean>(false)
   const isDark = colorMode === `dark`
   const fill = isDark ? '#fff' : '#000'
-  console.log(fontSizeIncrease, setFontSizeIncrease)
   function switchThroughFontSizes() {
     if (fontSizeIncrease === 1) {
       setFontSizeIncrease(1.5)

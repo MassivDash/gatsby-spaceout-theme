@@ -20,6 +20,15 @@ module.exports = ({
     `gatsby-transformer-yaml`,
     `gatsby-plugin-theme-ui`,
     {
+      resolve: `gatsby-plugin-nprogress`,
+      options: {
+        // Setting a color is optional.
+        color: `black`,
+        // Disable the loading spinner.
+        showSpinner: true,
+      },
+    },
+    {
       resolve: 'gatsby-plugin-transition-link',
       options: {
         layout: require.resolve(`./src/components/Layout/Layout.tsx`),

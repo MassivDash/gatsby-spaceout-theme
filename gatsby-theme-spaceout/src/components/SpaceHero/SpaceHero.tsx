@@ -227,6 +227,8 @@ ${mediaqueries.phone`
     `}
 `
 
+const animationDelayTime = 300;
+
 const draw = keyframes`
 	0% {
 		fill: none;
@@ -321,28 +323,28 @@ const AnimatedSpace = styled.div`
       fill: none;
       font-size: 160px;
       &:nth-of-type(1){
-        animation: ${draw} 600ms ${1 * 300}ms forwards;
+        animation: ${draw} 600ms ${1 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(2){
-        animation: ${draw} 600ms ${2 * 300}ms forwards;
+        animation: ${draw} 600ms ${2 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(3){
-        animation: ${draw} 600ms ${3 * 300}ms forwards;
+        animation: ${draw} 600ms ${3 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(4){
-        animation: ${draw} 600ms ${4 * 300}ms forwards;
+        animation: ${draw} 600ms ${4 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(5){
-        animation: ${draw} 600ms ${5 * 300}ms forwards;
+        animation: ${draw} 600ms ${5 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(6){
-        animation: ${draw} 600ms ${6 * 300}ms forwards;
+        animation: ${draw} 600ms ${6 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(7){
-        animation: ${draw} 600ms ${7 * 300}ms forwards;
+        animation: ${draw} 600ms ${7 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(8){
-        animation: ${draw} 600ms ${7 * 300}ms forwards;
+        animation: ${draw} 600ms ${7 * animationDelayTime}ms forwards;
       }		
 		}
 		
@@ -374,64 +376,64 @@ const AnimatedStellar = styled.div`
       font-weight: normal;
 
       &:nth-of-type(1){
-        animation: ${draw} 600ms ${8 * 300}ms forwards;
+        animation: ${draw} 600ms ${8 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(2){
-        animation: ${draw} 600ms ${9 * 300}ms forwards;
+        animation: ${draw} 600ms ${9 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(3){
-        animation: ${draw} 600ms ${10 * 300}ms forwards;
+        animation: ${draw} 600ms ${10 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(4){
-        animation: ${draw} 600ms ${11 * 300}ms forwards;
+        animation: ${draw} 600ms ${11 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(5){
-        animation: ${draw} 600ms ${12 * 300}ms forwards;
+        animation: ${draw} 600ms ${12 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(6){
-        animation: ${draw} 600ms ${13 * 300}ms forwards;
+        animation: ${draw} 600ms ${13 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(7){
-        animation: ${draw} 600ms ${14 * 300}ms forwards;
+        animation: ${draw} 600ms ${14 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(8){
-        animation: ${draw} 600ms ${15 * 300}ms forwards;
+        animation: ${draw} 600ms ${15 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(9){
-        animation: ${draw} 600ms ${16 * 300}ms forwards;
+        animation: ${draw} 600ms ${16 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(10){
-        animation: ${draw} 600ms ${17 * 300}ms forwards;
+        animation: ${draw} 600ms ${17 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(11){
-        animation: ${draw} 600ms ${18 * 300}ms forwards;
+        animation: ${draw} 600ms ${18 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(12){
-        animation: ${draw} 600ms ${19 * 300}ms forwards;
+        animation: ${draw} 600ms ${19 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(13){
-        animation: ${draw} 600ms ${20 * 300}ms forwards;
+        animation: ${draw} 600ms ${20 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(14){
-        animation: ${draw} 600ms ${21 * 300}ms forwards;
+        animation: ${draw} 600ms ${21 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(15){
-        animation: ${draw} 600ms ${22 * 300}ms forwards;
+        animation: ${draw} 600ms ${22 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(16){
-        animation: ${draw} 600ms ${23 * 300}ms forwards;
+        animation: ${draw} 600ms ${23 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(17){
-        animation: ${draw} 600ms ${24 * 300}ms forwards;
+        animation: ${draw} 600ms ${24 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(18){
-        animation: ${draw} 600ms ${25 * 300}ms forwards;
+        animation: ${draw} 600ms ${25 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(19){
-        animation: ${draw} 600ms ${26 * 300}ms forwards;
+        animation: ${draw} 600ms ${26 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(20){
-        animation: ${draw} 600ms ${27 * 300}ms forwards;
+        animation: ${draw} 600ms ${27 * animationDelayTime}ms forwards;
       }						
 		}
 		

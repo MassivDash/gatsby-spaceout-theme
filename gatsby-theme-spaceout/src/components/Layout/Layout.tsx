@@ -3,6 +3,7 @@ import { Global } from '@emotion/core'
 import { connect } from 'react-redux'
 import styled from '@emotion/styled'
 import { useColorMode } from 'theme-ui'
+import mediaqueries from '@styles/media'
 import { withPrefix, graphql, useStaticQuery } from 'gatsby'
 import Scrollbar from '@components/Scroller'
 import NavigationFooter from '@components/Navigation/Navigation.Footer'
@@ -113,7 +114,11 @@ const Container = styled.div`
   width: 100%;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 300px 1fr 60px;
+  grid-template-columns: 1fr;
+  
+    ${mediaqueries.desktop_up`
+    grid-template-columns: 300px 1fr 60px;
+  `}
 `
 
 const Infoscreen = styled.div`

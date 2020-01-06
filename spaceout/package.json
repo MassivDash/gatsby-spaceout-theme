@@ -5,7 +5,7 @@
  "author": "lukaszcelitan<info@spaceout.pl> (@spaceoutpl)",
   "license": "MIT",
   "scripts": {
-    "develop": "gatsby develop",
+    "develop": "gatsby develop -H 0.0.0.0",
     "build": "gatsby build",
     "develop": "rm -rf .cache && gatsby develop",
     "clean": "gatsby clean"

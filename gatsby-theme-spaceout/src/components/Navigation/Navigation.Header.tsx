@@ -87,6 +87,7 @@ const siteQuery = graphql`
 const NavigationHeader = ({ navigatorPosition, setNavigatorShape, navigatorShape }) => {
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false)
   const [previousPath, setPreviousPath] = useState<string>('/')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
 
   const { sitePlugin, allSite, allArticles } = useStaticQuery(siteQuery)
   const {
@@ -122,8 +123,31 @@ const NavigationHeader = ({ navigatorPosition, setNavigatorShape, navigatorShape
   const ArticleNavigator = navigatorPosition === 'article' ? true : false
 
   return (
-    <NavContainer>
-      <NavInfoContainer>
+    <>
+    <MobileNavContainer>
+    <LogoLink
+          fade
+          navigatorPosition={ArticleNavigator}
+          to={rootPath || basePath}
+          data-a11y="false"
+          title="Navigate back to the homepage"
+          aria-label="Navigate back to the homepage"
+          back={showBackArrow ? 'true' : 'false'}
+        >
+          {showBackArrow && (
+            <BackArrowIconContainer>
+              <Icons.ChevronLeft fill={fill} />
+            </BackArrowIconContainer>
+          )}
+          <Logo fill={fill} />
+          <Hidden>Navigate back to the homepage</Hidden>
+        </LogoLink>
+        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {title}
+        </button>
+    </MobileNavContainer>
+    <NavContainer mobileMenuOpen={mobileMenuOpen}>
+      <NavInfoContainer >
         <LogoLink
           fade
           navigatorPosition={ArticleNavigator}
@@ -170,7 +194,7 @@ const NavigationHeader = ({ navigatorPosition, setNavigatorShape, navigatorShape
               >
                 {item.title}
               </NavLink>
-            ))
+            ), [item])
           )}
       </NavControls>
       <FadeArticleAnimation navigatorPosition={navigatorPosition}>
@@ -195,13 +219,14 @@ const NavigationHeader = ({ navigatorPosition, setNavigatorShape, navigatorShape
                     <Image fluid={item.node.hero.childImageSharp.fluid} />
                     <ArticleHover>{item.node.title.slice(0,1).toLowerCase()}</ArticleHover>
                   </ArticleLink>
-                ))
+                ),[item])
               )
               .reverse()}
           </ArticlesHolder>
         </Scrollbar>
       </ArticleViewer>
     </NavContainer>
+    </>
   )
 }
 
@@ -277,6 +302,29 @@ const BackArrowIconContainer = styled.div`
   `}
 `
 
+const MobileNavContainer = styled.div`
+  display: none;
+  ${mediaqueries.tablet`
+    display: flex;
+    min-height: 50px;
+    z-index: 787;
+    background: white;
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+  `}
+
+  &::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    right: 0px;
+    background: ${p => p.theme.colors.secondary};
+  }
+`
+
 const NavContainer = styled.div`
   position: relative;
   right: 0;
@@ -287,6 +335,24 @@ const NavContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: 0.9s var(--ease-in-out-quad), background-color 0.25s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
+  
+  ${mediaqueries.tablet`
+    display: flex;
+    min-height: 101vh;
+    position: absolute;
+    z-index: 787;
+    background: white;
+    top: 0;
+    left: 0;
+    padding: 20px;
+  `}
+
+  @media (max-width: 1070px) {
+        transform: ${p => p.mobileMenuOpen ? 'translate(0px, 0px)' : 'translate(-100vw,0)'}
+      }
+  
+
 
   &::after {
     content: '';
@@ -310,7 +376,7 @@ const Title = styled.h1`
   font-size: ${p => (p.navigatorPosition ? '22px' : '28px')};
   margin: 5px auto;
   color: ${p => p.theme.colors.primary};
-  transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;  
   text-align: center;
   transform: ${p =>
     p.navigatorPosition ? `translateY(-55px) translateX(20px)` : `translateY(1)`};
