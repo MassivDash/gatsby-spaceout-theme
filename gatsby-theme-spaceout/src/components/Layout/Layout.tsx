@@ -12,7 +12,7 @@ import ArticlesContextProvider from '../../sections/articles/Articles.List.Conte
 
 import { globalStyles } from '@styles'
 
-import { setNavigatorPosition, setNavigatorShape } from '../../state/createStore'
+import { setnavigatorposition, setNavigatorShape } from '../../state/createStore'
 
 interface LayoutProps {
   children: React.ReactChild
@@ -42,7 +42,7 @@ const siteQuery = graphql`
   }
 `
 
-function Layout({ children, location, setNavigatorPosition, setNavigatorShape }: LayoutProps) {
+function Layout({ children, location, setnavigatorposition, setNavigatorShape }: LayoutProps) {
   const [colorMode] = useColorMode()
   useEffect(() => {
     parent.postMessage({ theme: colorMode }, '*')
@@ -65,12 +65,12 @@ function Layout({ children, location, setNavigatorPosition, setNavigatorShape }:
   useEffect(() => {
     scrollRef.current.scrollToTop()
     if (isMenuItem) {
-      setNavigatorPosition('menu')
+      setnavigatorposition('menu')
     } else if (isHomepage) {
-      setNavigatorPosition('main')
+      setnavigatorposition('main')
       setNavigatorShape('hidden')
     } else {
-      setNavigatorPosition('article')
+      setnavigatorposition('article')
       setNavigatorShape('visible')
     }
   }, [location])
@@ -92,12 +92,12 @@ function Layout({ children, location, setNavigatorPosition, setNavigatorShape }:
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    navigatorPosition: state.navigatorPosition,
+    navigatorposition: state.navigatorposition,
   }
 }
 
 const mapDispatchToProps = {
-  setNavigatorPosition,
+  setnavigatorposition,
   setNavigatorShape
 }
 

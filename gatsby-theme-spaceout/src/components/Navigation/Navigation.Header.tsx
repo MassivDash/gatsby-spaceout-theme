@@ -14,7 +14,7 @@ import mediaqueries from '@styles/media'
 import { getWindowDimensions, getBreakpointFromTheme } from '@utils'
 
 import {
-  setNavigatorPosition,
+  setnavigatorposition,
   setNavigatorShape,
   setScrollToTop,
   setFontSizeIncrease,
@@ -84,7 +84,7 @@ const siteQuery = graphql`
   }
 `
 
-const NavigationHeader = ({ navigatorPosition, setNavigatorShape, navigatorShape }) => {
+const NavigationHeader = ({ navigatorposition, setNavigatorShape, navigatorShape }) => {
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false)
   const [previousPath, setPreviousPath] = useState<string>('/')
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
@@ -120,14 +120,14 @@ const NavigationHeader = ({ navigatorPosition, setNavigatorShape, navigatorShape
   const scrollRef = useRef(null)
 
 
-  const ArticleNavigator = navigatorPosition === 'article' ? true : false
+  const ArticleNavigator = navigatorposition === 'article' ? true : false
 
   return (
     <>
     <MobileNavContainer>
     <LogoLink
           fade
-          navigatorPosition={ArticleNavigator}
+          navigatorposition={ArticleNavigator}
           to={rootPath || basePath}
           data-a11y="false"
           title="Navigate back to the homepage"
@@ -148,7 +148,7 @@ const NavigationHeader = ({ navigatorPosition, setNavigatorShape, navigatorShape
       <NavInfoContainer >
         <LogoLink
           fade
-          navigatorPosition={ArticleNavigator}
+          navigatorposition={ArticleNavigator}
           to={rootPath || basePath}
           data-a11y="false"
           title="Navigate back to the homepage"
@@ -163,11 +163,11 @@ const NavigationHeader = ({ navigatorPosition, setNavigatorShape, navigatorShape
           <Logo fill={fill} />
           <Hidden>Navigate back to the homepage</Hidden>
         </LogoLink>
-        <Title navigatorPosition={ArticleNavigator}>
+        <Title navigatorposition={ArticleNavigator}>
           {title}
         </Title>
-        <Subtitle navigatorPosition={ArticleNavigator}>{name}</Subtitle>
-        <Description navigatorPosition={ArticleNavigator}>
+        <Subtitle navigatorposition={ArticleNavigator}>{name}</Subtitle>
+        <Description navigatorposition={ArticleNavigator}>
           {description}
         </Description>
       </NavInfoContainer>
@@ -188,19 +188,19 @@ const NavigationHeader = ({ navigatorPosition, setNavigatorShape, navigatorShape
                 key={item.title}
                 fade
                 to={`/${item.slug}`}
-                navigatorPosition={ArticleNavigator}
+                navigatorposition={ArticleNavigator}
               >
                 {item.title}
               </NavLink>
             ), [item])
           )}
       </NavControls>
-      <FadeArticleAnimation navigatorPosition={navigatorPosition}>
+      <FadeArticleAnimation navigatorposition={navigatorposition}>
         <NavSocialContainer>
           <SocialLinks links={social} />
         </NavSocialContainer>
       </FadeArticleAnimation>
-      <ArticleViewer navigatorPosition={navigatorPosition} navigatorShape={navigatorShape} isDark={isDark}>
+      <ArticleViewer navigatorposition={navigatorposition} navigatorShape={navigatorShape} isDark={isDark}>
         <ArticlesControls>
               <ArrowControl setNavigatorShape={setNavigatorShape} navigatorShape={navigatorShape}/>
         </ArticlesControls>
@@ -212,7 +212,7 @@ const NavigationHeader = ({ navigatorPosition, setNavigatorShape, navigatorShape
                   <ArticleLink
                     key={item.node.id}
                     to={item.node.slug}
-                    navigatorPosition={ArticleNavigator}
+                    navigatorposition={ArticleNavigator}
                   >
                     <Image fluid={item.node.hero.childImageSharp.fluid} />
                     <ArticleHover>{item.node.title.slice(0,1).toLowerCase()}</ArticleHover>
@@ -262,7 +262,7 @@ function ArrowControl({ setNavigatorShape, navigatorShape }) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    navigatorPosition: state.navigatorPosition,
+    navigatorposition: state.navigatorposition,
     navigatorShape: state.navigatorShape,
     navigatorScroll: state.navigatorScroll,
     isWideScreen: state.isWideScreen,
@@ -271,7 +271,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = {
-  setNavigatorPosition,
+  setnavigatorposition,
   setNavigatorShape,
   setScrollToTop,
   setFontSizeIncrease,
@@ -371,26 +371,26 @@ const NavInfoContainer = styled.div`
 const Title = styled.h1`
   height: 80%;
   font-weight: 300;
-  font-size: ${p => (p.navigatorPosition ? '22px' : '28px')};
+  font-size: ${p => (p.navigatorposition ? '22px' : '28px')};
   margin: 5px auto;
   color: ${p => p.theme.colors.primary};
   transition: 0.3s ease-in-out;  
   text-align: center;
   transform: ${p =>
-    p.navigatorPosition ? `translateY(-55px) translateX(20px)` : `translateY(1)`};
+    p.navigatorposition ? `translateY(-55px) translateX(20px)` : `translateY(1)`};
 `
 
 const Subtitle = styled.h2`
   font-weight: 400;
   font-size: 16px;
   margin: auto;
-  width: ${p => (p.navigatorPosition ? '160px' : '80px')};
+  width: ${p => (p.navigatorposition ? '160px' : '80px')};
   min-height: 50px;
   color: ${p => p.theme.colors.primary};
   transition: 0.3s ease-in-out;
   text-align: center;
   transform: ${p =>
-    p.navigatorPosition
+    p.navigatorposition
       ? `translateY(-55px) translateX(20px)`
       : `translateY(1px) translateX(1px)`};
 `
@@ -423,7 +423,7 @@ const LogoLink = styled(AniLink)<{ back: string }>`
   margin: auto;
   transition: 0.5s ease-in-out;
   transform: ${p =>
-    p.navigatorPosition ? 'translateX(-90px)' : 'translateX(1px)'};
+    p.navigatorposition ? 'translateX(-90px)' : 'translateX(1px)'};
   ${mediaqueries.desktop_medium`
     left: 0
   `}
@@ -463,7 +463,7 @@ const NavLink = styled(props => <AniLink {...props} />)`
   margin: 10px auto;
   font-size: 18px;
   text-transform: Capitalize;
-  opacity: ${p => (p.navigatorPosition === 'article' ? 0 : 1)};
+  opacity: ${p => (p.navigatorposition === 'article' ? 0 : 1)};
   transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
   &:hover {
     color: ${p => p.theme.colors.hover};
@@ -529,7 +529,7 @@ const ArticleViewer = styled.aside`
   transition: 0.9s var(--ease-in-out-quad), background-color 0.25s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
   background: ${p => p.theme.colors.background};
   transform: ${p =>
-    p.navigatorPosition !== "main"  ? (p.navigatorShape === 'hidden' ? `translateY(calc(100% - 250px))` : `translateY(1px)`) : `translateY(100vh)`};
+    p.navigatorposition !== "main"  ? (p.navigatorShape === 'hidden' ? `translateY(calc(100% - 250px))` : `translateY(1px)`) : `translateY(100vh)`};
   &::before {
     content: '';
     position: absolute;
@@ -596,7 +596,7 @@ const ArticlesControls = styled.div`
   `
 
 const FadeArticleAnimation = styled.div`
-  transform: ${p => p.navigatorPosition !== 'main' ? 'translateY(-60px)' : 'translateY(1px)' };
+  transform: ${p => p.navigatorposition !== 'main' ? 'translateY(-60px)' : 'translateY(1px)' };
   transition: 0.74s ease-in-out;
 `
 const FadeArticleAnimationArrow = styled.div`
@@ -674,16 +674,16 @@ const StyledBurger = styled.button`
     position: relative;
     transform-origin: 1px;
 
-    :first-child {
+    :first-of-type {
       transform: ${({ mobileMenuOpen }) => mobileMenuOpen ? 'rotate(45deg)' : 'rotate(0)'};
     }
 
-    :nth-child(2) {
+    :nth-of-type(2) {
       opacity: ${({ mobileMenuOpen }) => mobileMenuOpen ? '0' : '1'};
       transform: ${({ mobileMenuOpen }) => mobileMenuOpen ? 'translateX(20px)' : 'translateX(0)'};
     }
 
-    :nth-child(3) {
+    :nth-of-type(3) {
       transform: ${({ mobileMenuOpen }) => mobileMenuOpen ? 'rotate(-45deg)' : 'rotate(0)'};
     }
   }

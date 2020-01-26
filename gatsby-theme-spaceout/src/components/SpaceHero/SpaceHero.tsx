@@ -9,6 +9,9 @@ import mediaqueries from '@styles/media'
 
 const SpaceHero = () => {
   const [position, toggleToPosition] = useState('positionOne')
+  const [backgroundLoaded, onBackgroundLoad] = useState(false);
+  const [spacemanLoaded, onSpacemanLoad] = useState(false);
+
   console.log(position);
 
   const spaceHeroQuery = graphql`
@@ -92,19 +95,20 @@ const SpaceHero = () => {
   `
 
   const results = useStaticQuery(spaceHeroQuery)
-  const { earth, spaceman, back, shuttle } = results
+  const {  spaceman, back } = results
 
   return (
     <Hero>
       <Blackie>
-        <Image sizes={back.sizes} />
+        <Image sizes={back.sizes} onLoad={() => onBackgroundLoad(true)} />
       </Blackie>
       <div>
+      { onBackgroundLoad && onSpacemanLoad && 
         <SpaceoutBox
           onClick={() => toggleToPosition('positionTwo')}
-          position={position}
         >
           <City src={logo} alt="" />
+          
           <AnimatedSpace>
           <svg  >
       <title>{"spaceout.pl"}</title>
@@ -121,6 +125,7 @@ const SpaceHero = () => {
     </svg>
 
           </AnimatedSpace>
+          
           <AnimatedStellar>
     <svg>
       <title>{"spaceout.pl"}</title>
@@ -139,8 +144,10 @@ const SpaceHero = () => {
     </svg>
 
           </AnimatedStellar>
+
           </SpaceoutBox>
-        <Spaceman position={position}>
+      }
+        <Spaceman>
 
         <Image
             sizes={spaceman.sizes}
@@ -153,6 +160,7 @@ const SpaceHero = () => {
               left: 0,
               right: 0,
             }}
+            onLoad={() => onSpacemanLoad(true)}
           />
           </Spaceman>
       </div>
@@ -454,7 +462,6 @@ const SpaceoutBox = styled.div`
    margin-left: 20px;
    margin-top: 0px;
   `}
- opacity: ${p => (p.position === 'positionOne' ? 1 : 0)}
 `
 
 

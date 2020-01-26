@@ -18,7 +18,7 @@ const SET_CATEGORY_FILTER = 'SET_CATEGORY_FILTER'
  * action creators
  */
 
-export function setNavigatorPosition(value) {
+export function setnavigatorposition(value) {
   return { type: SET_NAVIGATOR_POSITION, value }
 }
 
@@ -58,7 +58,7 @@ const reducer = (state, action) => {
     case SET_NAVIGATOR_POSITION:
       return {
         ...state,
-        navigatorPosition: action.value,
+        navigatorposition: action.value,
       }
     case SET_NAVIGATOR_SCROLL:
       return {
@@ -108,7 +108,7 @@ const reducer = (state, action) => {
 }
 
 const initialState = {
-  navigatorPosition: 'main',
+  navigatorposition: 'main',
   navigatorScroll: false,
   navigatorShape: 'hidden',
   navigatorFilter: '',
