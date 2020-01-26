@@ -134,17 +134,15 @@ const NavigationHeader = ({ navigatorPosition, setNavigatorShape, navigatorShape
           aria-label="Navigate back to the homepage"
           back={showBackArrow ? 'true' : 'false'}
         >
-          {showBackArrow && (
-            <BackArrowIconContainer>
-              <Icons.ChevronLeft fill={fill} />
-            </BackArrowIconContainer>
-          )}
           <Logo fill={fill} />
           <Hidden>Navigate back to the homepage</Hidden>
         </LogoLink>
-        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-          {title}
-        </button>
+
+        <StyledBurger mobileMenuOpen={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+      <div />
+      <div />
+      <div />
+    </StyledBurger>
     </MobileNavContainer>
     <NavContainer mobileMenuOpen={mobileMenuOpen}>
       <NavInfoContainer >
@@ -649,4 +647,44 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
       opacity: 0.5;
     }
   `}
+`
+
+const StyledBurger = styled.button`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+
+  &:focus {
+    outline: none;
+  }
+
+  div {
+    width: 2rem;
+    height: 0.25rem;
+    background: ${({ mobileMenuOpen, theme }) => mobileMenuOpen ? theme.colors.accent : theme.colors.accent};
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+
+    :first-child {
+      transform: ${({ mobileMenuOpen }) => mobileMenuOpen ? 'rotate(45deg)' : 'rotate(0)'};
+    }
+
+    :nth-child(2) {
+      opacity: ${({ mobileMenuOpen }) => mobileMenuOpen ? '0' : '1'};
+      transform: ${({ mobileMenuOpen }) => mobileMenuOpen ? 'translateX(20px)' : 'translateX(0)'};
+    }
+
+    :nth-child(3) {
+      transform: ${({ mobileMenuOpen }) => mobileMenuOpen ? 'rotate(-45deg)' : 'rotate(0)'};
+    }
+  }
 `

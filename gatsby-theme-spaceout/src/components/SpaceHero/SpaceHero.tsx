@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { graphql, useStaticQuery } from 'gatsby'
 import logo from './logo.png'
+import uuid from 'uuid';
 import Image from 'gatsby-image'
 import { keyframes } from '@emotion/core'
 import styled from '@emotion/styled'
@@ -114,7 +115,7 @@ const SpaceHero = () => {
         fillRule="evenodd"
       >
         <tspan x={3} y={109}>
-        {[...'spaceout'].map(letter => <tspan key={letter}>{letter}</tspan>)}
+        {[...'spaceout'].map(letter => <tspan key={letter+Math.random()}>{letter}</tspan>)}
         </tspan>
       </text>
     </svg>
@@ -124,14 +125,14 @@ const SpaceHero = () => {
     <svg>
       <title>{"spaceout.pl"}</title>
       <text
-        stroke-width="1"
+        strokeWidth="1"
         stroke="#fff"
         fill="#645F5A"
         fontFamily="Satisfy"
         fillRule="evenodd"
       >
         <tspan x={3} y={109}>{
-          [...'interstellar design'].map(letter => <tspan key={letter}>{letter}</tspan>)
+          [...'interstellar design'].map(letter => <tspan key={letter+Math.random()}>{letter}</tspan>)
         }
         </tspan>
       </text>
