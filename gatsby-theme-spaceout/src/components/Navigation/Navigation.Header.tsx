@@ -21,6 +21,20 @@ import {
   setCategoryFilter,
 } from '../../state/createStore'
 
+interface Props {
+  theme: any;
+  navigatorposition: any;
+  setNavigatorShape: Function;
+  navigatorShape: string;
+}
+
+interface NavLinksProps {
+  theme: any;
+  fade: boolean;
+  to: string;
+  navigatorposition: any;
+}
+
 const siteQuery = graphql`
   {
     sitePlugin: sitePlugin(name: { eq: "gatsby-theme-spaceout" }) {
@@ -84,10 +98,11 @@ const siteQuery = graphql`
   }
 `
 
-const NavigationHeader = ({ navigatorposition, setNavigatorShape, navigatorShape }) => {
+const NavigationHeader: React.FC<Props> = ({ navigatorposition, setNavigatorShape, navigatorShape, theme }) => {
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false)
   const [previousPath, setPreviousPath] = useState<string>('/')
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
+  
 
   const { sitePlugin, allSite, allArticles } = useStaticQuery(siteQuery)
   const {
@@ -124,7 +139,7 @@ const NavigationHeader = ({ navigatorposition, setNavigatorShape, navigatorShape
 
   return (
     <>
-    <MobileNavContainer>
+    <MobileNavContainer theme={theme}>
     <LogoLink
           fade
           navigatorposition={ArticleNavigator}
@@ -138,13 +153,13 @@ const NavigationHeader = ({ navigatorposition, setNavigatorShape, navigatorShape
           <Hidden>Navigate back to the homepage</Hidden>
         </LogoLink>
 
-        <StyledBurger mobileMenuOpen={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+        <StyledBurger theme={theme} mobileMenuOpen={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
       <div />
       <div />
       <div />
     </StyledBurger>
     </MobileNavContainer>
-    <NavContainer mobileMenuOpen={mobileMenuOpen}>
+    <NavContainer theme={theme} isDark={isDark} mobileMenuOpen={mobileMenuOpen}>
       <NavInfoContainer >
         <LogoLink
           fade
@@ -163,11 +178,11 @@ const NavigationHeader = ({ navigatorposition, setNavigatorShape, navigatorShape
           <Logo fill={fill} />
           <Hidden>Navigate back to the homepage</Hidden>
         </LogoLink>
-        <Title navigatorposition={ArticleNavigator}>
+        <Title theme={theme} navigatorposition={ArticleNavigator}>
           {title}
         </Title>
-        <Subtitle navigatorposition={ArticleNavigator}>{name}</Subtitle>
-        <Description navigatorposition={ArticleNavigator}>
+        <Subtitle theme={theme} navigatorposition={ArticleNavigator}>{name}</Subtitle>
+        <Description theme={theme}>
           {description}
         </Description>
       </NavInfoContainer>
@@ -185,6 +200,7 @@ const NavigationHeader = ({ navigatorposition, setNavigatorShape, navigatorShape
           menuLinks.map(item =>
             useMemo(() => (
               <NavLink
+              theme={theme}
                 key={item.title}
                 fade
                 to={`/${item.slug}`}
@@ -195,16 +211,16 @@ const NavigationHeader = ({ navigatorposition, setNavigatorShape, navigatorShape
             ), [item])
           )}
       </NavControls>
-      <FadeArticleAnimation navigatorposition={navigatorposition}>
+      <FadeArticleAnimation isDark={isDark} navigatorposition={navigatorposition}>
         <NavSocialContainer>
           <SocialLinks links={social} />
         </NavSocialContainer>
       </FadeArticleAnimation>
-      <ArticleViewer navigatorposition={navigatorposition} navigatorShape={navigatorShape} isDark={isDark}>
+      <ArticleViewer theme={theme} navigatorposition={navigatorposition} navigatorShape={navigatorShape} isDark={isDark}>
         <ArticlesControls>
-              <ArrowControl setNavigatorShape={setNavigatorShape} navigatorShape={navigatorShape}/>
+              <ArrowControl theme={theme} setNavigatorShape={setNavigatorShape} navigatorShape={navigatorShape}/>
         </ArticlesControls>
-        <Scrollbar ref={scrollRef}>
+        <Scrollbar ref={scrollRef} sideMenu={true} >
           <ArticlesHolder>
             {allArticles.edges
               .map(item =>
@@ -215,7 +231,7 @@ const NavigationHeader = ({ navigatorposition, setNavigatorShape, navigatorShape
                     navigatorposition={ArticleNavigator}
                   >
                     <Image fluid={item.node.hero.childImageSharp.fluid} />
-                    <ArticleHover>{item.node.title.slice(0,1).toLowerCase()}</ArticleHover>
+                    <ArticleHover theme={theme}>{item.node.title.slice(0,1).toLowerCase()}</ArticleHover>
                   </ArticleLink>
                 ),[item])
               )
@@ -229,7 +245,7 @@ const NavigationHeader = ({ navigatorposition, setNavigatorShape, navigatorShape
 }
 
 
-function ArrowControl({ setNavigatorShape, navigatorShape }) {
+function ArrowControl({ setNavigatorShape, navigatorShape, theme }) {
   const [colorMode] = useColorMode()
   const isDark = colorMode === `dark`
   const fill = isDark ? '#fff' : '#000'
@@ -241,11 +257,12 @@ function ArrowControl({ setNavigatorShape, navigatorShape }) {
    } 
 
   return (
-    <FadeArticleAnimationArrow navigatorShape={navigatorShape}>
-      <Description>
+    <FadeArticleAnimationArrow>
+      <Description theme={theme}>
         {navText}
       </Description>
       <IconWrapper
+      theme={theme}
         navigatorShape={navigatorShape}
         isDark={isDark}
         onClick={() => setNavigatorShape(navPosition)}
@@ -300,7 +317,7 @@ const BackArrowIconContainer = styled.div`
   `}
 `
 
-const MobileNavContainer = styled.div`
+const MobileNavContainer = styled.div<{theme: any}>`
   display: none;
   ${mediaqueries.tablet`
     display: flex;
@@ -323,7 +340,7 @@ const MobileNavContainer = styled.div`
   }
 `
 
-const NavContainer = styled.div`
+const NavContainer = styled.div<{ isDark: boolean; mobileMenuOpen: boolean; theme: any; }>`
   position: relative;
   right: 0;
   width: 100%;
@@ -368,7 +385,7 @@ const NavInfoContainer = styled.div`
   flex-direction: column;
 `
 
-const Title = styled.h1`
+const Title = styled.h1<{ navigatorposition: any; theme: any; }>`
   height: 80%;
   font-weight: 300;
   font-size: ${p => (p.navigatorposition ? '22px' : '28px')};
@@ -380,7 +397,7 @@ const Title = styled.h1`
     p.navigatorposition ? `translateY(-55px) translateX(20px)` : `translateY(1)`};
 `
 
-const Subtitle = styled.h2`
+const Subtitle = styled.h2<{ navigatorposition: any; theme: any; }>`
   font-weight: 400;
   font-size: 16px;
   margin: auto;
@@ -395,7 +412,7 @@ const Subtitle = styled.h2`
       : `translateY(1px) translateX(1px)`};
 `
 
-const Description = styled.h3`
+const Description = styled.h3<{theme: any}>`
   font-weight: 400;
   font-size: 15px;
   margin: 20px auto;
@@ -416,7 +433,7 @@ const NavSocialContainer = styled.div`
   align-items: center;
 `
 
-const LogoLink = styled(AniLink)<{ back: string }>`
+const LogoLink = styled(AniLink)<{ back: string, navigatorposition: boolean, theme: any; }>`
   position: relative;
   display: flex;
   align-items: center;
@@ -458,7 +475,7 @@ const NavControls = styled.div`
   `}
 `
 
-const NavLink = styled(props => <AniLink {...props} />)`
+const NavLink = styled((props: NavLinksProps) => <AniLink {...props} />)`
   color: ${p => p.theme.colors.accent};
   margin: 10px auto;
   font-size: 18px;
@@ -469,34 +486,6 @@ const NavLink = styled(props => <AniLink {...props} />)`
     color: ${p => p.theme.colors.hover};
   }
 `
-
-const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
-  position: absolute;
-  padding: 4px 13px;
-  background: ${p => (p.isDark ? '#000' : 'rgba(0,0,0,0.1)')};
-  color: ${p => (p.isDark ? '#fff' : '#000')};
-  border-radius: 5px;
-  font-size: 14px;
-  top: -35px;
-  opacity: ${p => (p.hasCopied ? 1 : 0)};
-  transform: ${p => (p.hasCopied ? 'translateY(-3px)' : 'none')};
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -6px;
-    margin: 0 auto;
-    width: 0;
-    height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 6px solid ${p => (p.isDark ? '#000' : 'rgba(0,0,0,0.1)')};
-  }
-`
-
 const Hidden = styled.span`
   position: absolute;
   display: inline-block;
@@ -516,7 +505,7 @@ const ArticlesHolder = styled.div`
   padding: 10px 0px 150px 0px;
 `
 
-const ArticleViewer = styled.aside`
+const ArticleViewer = styled.aside<{ isDark: boolean; navigatorposition: any; navigatorShape: string; theme: any }>`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -566,7 +555,7 @@ const ArticleLink = styled(AniLink)`
   `}
 `
 
-const ArticleHover = styled.div`
+const ArticleHover = styled.div<{theme: any}>`
   position: absolute;
   height: 100%;
   width: 100%;
@@ -595,7 +584,7 @@ const ArticlesControls = styled.div`
   margin-bottom: 20px;
   `
 
-const FadeArticleAnimation = styled.div`
+const FadeArticleAnimation = styled.div<{ isDark: boolean; navigatorposition: any }>`
   transform: ${p => p.navigatorposition !== 'main' ? 'translateY(-60px)' : 'translateY(1px)' };
   transition: 0.74s ease-in-out;
 `
@@ -608,7 +597,7 @@ const FadeArticleAnimationArrow = styled.div`
 `
 
 
-const IconWrapper = styled.button<{ isDark: boolean }>`
+const IconWrapper = styled.button<{ isDark: boolean; navigatorShape: string; theme: any }>`
   opacity: 0.5;
   position: relative;
   border-radius: 5px;
@@ -649,7 +638,7 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
   `}
 `
 
-const StyledBurger = styled.button`
+const StyledBurger = styled.button<{ mobileMenuOpen: boolean; theme: any; }>`
   display: flex;
   flex-direction: column;
   justify-content: space-around;

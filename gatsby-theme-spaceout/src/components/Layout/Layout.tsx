@@ -16,6 +16,9 @@ import { setnavigatorposition, setNavigatorShape } from '../../state/createStore
 
 interface LayoutProps {
   children: React.ReactChild
+  location: any
+  setnavigatorposition: Function
+  setNavigatorShape: Function
 }
 
 /**
@@ -75,11 +78,11 @@ function Layout({ children, location, setnavigatorposition, setNavigatorShape }:
 
   return (
     <ArticlesContextProvider>
-      <Container>
+      <Container >
         <NavigationHeader />
         <Global styles={globalStyles} />
         <Infoscreen>
-          <Scrollbar ref={scrollRef}>{children}</Scrollbar>
+          <Scrollbar sideMenu={false} ref={scrollRef}>{children}</Scrollbar>
         </Infoscreen>
 
         <NavigationFooter ScrollToTop={() => scrollRef.current.scrollToTop()} />

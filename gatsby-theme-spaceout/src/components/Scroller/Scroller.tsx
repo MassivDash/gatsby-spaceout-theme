@@ -1,18 +1,21 @@
-import React, { useCallback, useMemo, useState, useContext, useRef, useEffect } from "react";
+import React, { useCallback, useMemo, useState, useContext, useRef, useEffect, ReactChildren } from "react";
 import ReactScrollbarsCustom, {
     ScrollbarContext
   } from 'react-scrollbars-custom';
 
-export const ScrollManager = React.forwardRef((props, ref) => {
+  interface Props {
+    isDark: boolean;
+    sideMenu: boolean;
+    children: ReactChildren;
+  }
+
+export const ScrollManager = React.forwardRef((props: Props, ref: any) => {
   const [isScrolling, setIsScrolling] = useState(false);
   const [isMouseOver, setIsMouseOver] = useState(false);
   const isShow = isScrolling || isMouseOver;
   const isDark = props.isDark
   const infoScreenRef = useRef(null)
 
-  useEffect(() => {
-    infoScreenRef.current.focus()
-  }, [])
 
   const onScrollStart = useCallback(() => {
     setIsScrolling(true);
@@ -27,6 +30,14 @@ export const ScrollManager = React.forwardRef((props, ref) => {
     setIsMouseOver(false);
   }, []);
 
+
+
+
+  useEffect(() => {
+    if(!props.sideMenu){
+      infoScreenRef.current.focus()
+    }
+  }, [props.sideMenu, isShow, onMouseEnter, onMouseLeave, isDark])
 
   const trackProps = useMemo(() => ({
     renderer: ({ elementRef, style, ...restProps }) => (
@@ -97,7 +108,7 @@ export const ScrollManager = React.forwardRef((props, ref) => {
       scrollDetectionThreshold={500} // ms
 
     >
-      <div tabIndex="1" ref={infoScreenRef}>
+      <div tabIndex={0} ref={infoScreenRef}>
       {props.children}
       </div>
       
