@@ -55,12 +55,6 @@ function Layout({ children, location, setnavigatorposition, setNavigatorShape }:
   const isMenuItem = allSite.edges[0].node.siteMetadata.menuLinks.some(
     item => `/${item.slug}` === location.pathname
   )
-  console.log(
-    isHomepage,
-    location,
-    isMenuItem,
-    allSite.edges[0].node.siteMetadata.menuLinks
-  )
 
   useEffect(() => {
     scrollRef.current.scrollToTop()
@@ -74,6 +68,10 @@ function Layout({ children, location, setnavigatorposition, setNavigatorShape }:
       setNavigatorShape('visible')
     }
   }, [location])
+
+  
+
+  
 
   return (
     <ArticlesContextProvider>

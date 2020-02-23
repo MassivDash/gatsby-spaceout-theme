@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState, useContext } from "react";
+import React, { useCallback, useMemo, useState, useContext, useRef, useEffect } from "react";
 import ReactScrollbarsCustom, {
     ScrollbarContext
   } from 'react-scrollbars-custom';
@@ -8,7 +8,11 @@ export const ScrollManager = React.forwardRef((props, ref) => {
   const [isMouseOver, setIsMouseOver] = useState(false);
   const isShow = isScrolling || isMouseOver;
   const isDark = props.isDark
+  const infoScreenRef = useRef(null)
 
+  useEffect(() => {
+    infoScreenRef.current.focus()
+  }, [])
 
   const onScrollStart = useCallback(() => {
     setIsScrolling(true);
@@ -93,7 +97,10 @@ export const ScrollManager = React.forwardRef((props, ref) => {
       scrollDetectionThreshold={500} // ms
 
     >
+      <div tabIndex="1" ref={infoScreenRef}>
       {props.children}
+      </div>
+      
     </ReactScrollbarsCustom>
   );
 });
