@@ -50,7 +50,7 @@ function Footer({ ...props }) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    navigatorposition: state.navigatorposition,
+    navigatorPosition: state.navigatorPosition,
     navigatorShape: state.navigatorShape,
     navigatorScroll: state.navigatorScroll,
     isWideScreen: state.isWideScreen,
@@ -167,7 +167,7 @@ function SharePageButton() {
 function ToggleFont({
   fontSizeIncrease,
   setFontSizeIncrease,
-  navigatorposition,
+  navigatorPosition,
 }) {
   const [colorMode] = useColorMode()
   const [text, setText] = useState<string>('100%')
@@ -195,7 +195,7 @@ function ToggleFont({
   }
 
   return (
-    <FadeArticleAnimationFont navigatorposition={navigatorposition}>
+    <FadeArticleAnimationFont navigatorPosition={navigatorPosition}>
       <IconWrapper
         isDark={isDark}
         onClick={() => switchThroughFontSizes()}
@@ -212,7 +212,7 @@ function ToggleFont({
   )
 }
 
-function GoToTop({ ScrollToTop, navigatorposition }) {
+function GoToTop({ ScrollToTop, navigatorPosition }) {
   const [colorMode] = useColorMode()
   const isDark = colorMode === `dark`
   const fill = isDark ? '#fff' : '#000'
@@ -221,7 +221,7 @@ function GoToTop({ ScrollToTop, navigatorposition }) {
   }
 
   return (
-    <FadeArticleAnimationArrow navigatorposition={navigatorposition}>
+    <FadeArticleAnimationArrow navigatorPosition={navigatorPosition}>
       <IconWrapper
         isDark={isDark}
         onClick={() => scrolltoTop()}
@@ -236,9 +236,9 @@ function GoToTop({ ScrollToTop, navigatorposition }) {
 }
 
 const FadeArticleAnimationFont = styled.div`
-  opacity: ${p => (p.navigatorposition === 'article' ? 1 : 0)};
+  opacity: ${p => (p.navigatorPosition === 'article' ? 1 : 0)};
   transform: ${p =>
-    p.navigatorposition === 'article'
+    p.navigatorPosition === 'article'
       ? 'scale(1) translateX(1px)'
       : 'scale(0.2) translateX(40px)'};
   transition: 0.5s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
@@ -246,7 +246,7 @@ const FadeArticleAnimationFont = styled.div`
 
 const FadeArticleAnimationArrow = styled.div`
   transform: ${p =>
-    p.navigatorposition === 'article' ? 'translateY(1px)' : 'translateY(60px)'};
+    p.navigatorPosition === 'article' ? 'translateY(1px)' : 'translateY(60px)'};
   transition: 0.5s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
 `
 
@@ -268,24 +268,13 @@ const ActionsBar = styled.div`
   ${mediaqueries.phablet`
     padding-bottom: 10px;
   `}
-
-
-&::after {
-    content: '';
-    position: absolute;
-    height: calc(100% - 40px);
-    margin-top: 20px;
-    width: 1px;
-    left: 5px;
-    background: ${p => p.theme.colors.secondary};
-  }
 `
 
 const ActionBarDivider = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin-top: 5px;
+  margin-top: 20px;
 `
 
 const IconWrapper = styled.button<{ isDark: boolean }>`
@@ -433,9 +422,9 @@ const GridButton = styled.button<{ active: boolean }>`
   background: transparent;
   transition: 0.45s ease;
   transform: ${p =>
-    p.navigatorposition === 'main' ? 'translateX(1px)' : 'translateX(60px)'};
+    p.navigatorPosition === 'main' ? 'translateX(1px)' : 'translateX(60px)'};
   opacity: ${p =>
-    p.navigatorposition === 'main' ? 1 : 0};
+    p.navigatorPosition === 'main' ? 1 : 0};
 
   &:hover {
     background: ${p => p.theme.colors.hover};

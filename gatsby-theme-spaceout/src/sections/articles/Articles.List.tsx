@@ -4,7 +4,7 @@ import { css } from '@emotion/core'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Headings from '@components/Headings'
 import Image, { ImagePlaceholder } from '@components/Image'
-
+import CSSFadeIn from '@components/Transitions/Transitions.CSS.FadeIn'
 import mediaqueries from '@styles/media'
 import { IArticle } from '@types'
 
@@ -74,6 +74,7 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
   useEffect(() => getGridLayout(), [])
 
   return (
+    <CSSFadeIn>
     <ArticlesListContainer
       style={{ opacity: hasSetGridLayout ? 1 : 0 }}
       alwaysShowAllDetails={alwaysShowAllDetails}
@@ -95,6 +96,7 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
         )
       })}
     </ArticlesListContainer>
+    </CSSFadeIn>
   )
 }
 
@@ -113,6 +115,7 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
     Object.keys(imageSource).length !== 0 && imageSource.constructor === Object
 
   return (
+    <CSSFadeIn>
     <ArticleLink fade top="entry" to={article.slug} data-a11y="false">
       <Item gridLayout={gridLayout}>
         <ImageContainer narrow={narrow} gridLayout={gridLayout}>
@@ -136,6 +139,7 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
         </div>
       </Item>
     </ArticleLink>
+    </CSSFadeIn>
   )
 }
 

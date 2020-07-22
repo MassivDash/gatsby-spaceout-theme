@@ -14,7 +14,7 @@ import mediaqueries from '@styles/media'
 import { getWindowDimensions, getBreakpointFromTheme } from '@utils'
 
 import {
-  setnavigatorposition,
+  setNavigatorPosition,
   setNavigatorShape,
   setScrollToTop,
   setFontSizeIncrease,
@@ -23,7 +23,7 @@ import {
 
 interface Props {
   theme: any;
-  navigatorposition: any;
+  navigatorPosition: any;
   setNavigatorShape: Function;
   navigatorShape: string;
 }
@@ -32,7 +32,7 @@ interface NavLinksProps {
   theme: any;
   fade: boolean;
   to: string;
-  navigatorposition: any;
+  navigatorPosition: any;
 }
 
 const siteQuery = graphql`
@@ -98,7 +98,7 @@ const siteQuery = graphql`
   }
 `
 
-const NavigationHeader: React.FC<Props> = ({ navigatorposition, setNavigatorShape, navigatorShape, theme }) => {
+const NavigationHeader: React.FC<Props> = ({ navigatorPosition, setNavigatorShape, navigatorShape, theme }) => {
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false)
   const [previousPath, setPreviousPath] = useState<string>('/')
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
@@ -135,14 +135,14 @@ const NavigationHeader: React.FC<Props> = ({ navigatorposition, setNavigatorShap
   const scrollRef = useRef(null)
 
 
-  const ArticleNavigator = navigatorposition === 'article' ? true : false
+  const ArticleNavigator = navigatorPosition === 'article' ? true : false
 
   return (
     <>
     <MobileNavContainer theme={theme}>
     <LogoLink
           fade
-          navigatorposition={ArticleNavigator}
+          navigatorPosition={ArticleNavigator}
           to={rootPath || basePath}
           data-a11y="false"
           title="Navigate back to the homepage"
@@ -163,7 +163,7 @@ const NavigationHeader: React.FC<Props> = ({ navigatorposition, setNavigatorShap
       <NavInfoContainer >
         <LogoLink
           fade
-          navigatorposition={ArticleNavigator}
+          navigatorPosition={ArticleNavigator}
           to={rootPath || basePath}
           data-a11y="false"
           title="Navigate back to the homepage"
@@ -178,10 +178,10 @@ const NavigationHeader: React.FC<Props> = ({ navigatorposition, setNavigatorShap
           <Logo fill={fill} />
           <Hidden>Navigate back to the homepage</Hidden>
         </LogoLink>
-        <Title theme={theme} navigatorposition={ArticleNavigator}>
+        <Title theme={theme} navigatorPosition={ArticleNavigator}>
           {title}
         </Title>
-        <Subtitle theme={theme} navigatorposition={ArticleNavigator}>{name}</Subtitle>
+        <Subtitle theme={theme} navigatorPosition={ArticleNavigator}>{name}</Subtitle>
         <Description theme={theme}>
           {description}
         </Description>
@@ -204,19 +204,19 @@ const NavigationHeader: React.FC<Props> = ({ navigatorposition, setNavigatorShap
                 key={item.title}
                 fade
                 to={`/${item.slug}`}
-                navigatorposition={ArticleNavigator}
+                navigatorPosition={ArticleNavigator}
               >
                 {item.title}
               </NavLink>
             ), [item])
           )}
       </NavControls>
-      <FadeArticleAnimation isDark={isDark} navigatorposition={navigatorposition}>
+      <FadeArticleAnimation isDark={isDark} navigatorPosition={navigatorPosition}>
         <NavSocialContainer>
           <SocialLinks links={social} />
         </NavSocialContainer>
       </FadeArticleAnimation>
-      <ArticleViewer theme={theme} navigatorposition={navigatorposition} navigatorShape={navigatorShape} isDark={isDark}>
+      <ArticleViewer theme={theme} navigatorPosition={navigatorPosition} navigatorShape={navigatorShape} isDark={isDark}>
         <ArticlesControls>
               <ArrowControl theme={theme} setNavigatorShape={setNavigatorShape} navigatorShape={navigatorShape}/>
         </ArticlesControls>
@@ -228,7 +228,7 @@ const NavigationHeader: React.FC<Props> = ({ navigatorposition, setNavigatorShap
                   <ArticleLink
                     key={item.node.id}
                     to={item.node.slug}
-                    navigatorposition={ArticleNavigator}
+                    navigatorPosition={ArticleNavigator}
                   >
                     <Image fluid={item.node.hero.childImageSharp.fluid} />
                     <ArticleHover theme={theme}>{item.node.title.slice(0,1).toLowerCase()}</ArticleHover>
@@ -279,7 +279,7 @@ function ArrowControl({ setNavigatorShape, navigatorShape, theme }) {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    navigatorposition: state.navigatorposition,
+    navigatorPosition: state.navigatorPosition,
     navigatorShape: state.navigatorShape,
     navigatorScroll: state.navigatorScroll,
     isWideScreen: state.isWideScreen,
@@ -288,7 +288,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = {
-  setnavigatorposition,
+  setNavigatorPosition,
   setNavigatorShape,
   setScrollToTop,
   setFontSizeIncrease,
@@ -336,7 +336,8 @@ const MobileNavContainer = styled.div<{theme: any}>`
     height: 100%;
     width: 1px;
     right: 0px;
-    background: ${p => p.theme.colors.secondary};
+    background: rgb(255,255,255);
+    background: linear-gradient(3deg, ${p => p.theme.colors.secondary} 0%, ${p => p.theme.colors.primary} 100%);
   }
 `
 
@@ -344,7 +345,7 @@ const NavContainer = styled.div<{ isDark: boolean; mobileMenuOpen: boolean; them
   position: relative;
   right: 0;
   width: 100%;
-  margin: 20px 0;
+  margin: 40px 0;
   padding: 0 40px;
   flex-direction: column;
   display: flex;
@@ -367,16 +368,6 @@ const NavContainer = styled.div<{ isDark: boolean; mobileMenuOpen: boolean; them
         transform: ${p => p.mobileMenuOpen ? 'translate(0px, 0px)' : 'translate(-100vw,0)'}
       }
   
-
-
-  &::after {
-    content: '';
-    position: absolute;
-    height: 100%;
-    width: 1px;
-    right: 0px;
-    background: ${p => p.theme.colors.secondary};
-  }
 `
 
 const NavInfoContainer = styled.div`
@@ -385,29 +376,29 @@ const NavInfoContainer = styled.div`
   flex-direction: column;
 `
 
-const Title = styled.h1<{ navigatorposition: any; theme: any; }>`
+const Title = styled.h1<{ navigatorPosition: any; theme: any; }>`
   height: 80%;
   font-weight: 300;
-  font-size: ${p => (p.navigatorposition ? '22px' : '28px')};
+  font-size: ${p => (p.navigatorPosition ? '22px' : '28px')};
   margin: 5px auto;
   color: ${p => p.theme.colors.primary};
   transition: 0.3s ease-in-out;  
   text-align: center;
   transform: ${p =>
-    p.navigatorposition ? `translateY(-55px) translateX(20px)` : `translateY(1)`};
+    p.navigatorPosition ? `translateY(-55px) translateX(20px)` : `translateY(1)`};
 `
 
-const Subtitle = styled.h2<{ navigatorposition: any; theme: any; }>`
+const Subtitle = styled.h2<{ navigatorPosition: any; theme: any; }>`
   font-weight: 400;
   font-size: 16px;
   margin: auto;
-  width: ${p => (p.navigatorposition ? '160px' : '80px')};
+  width: ${p => (p.navigatorPosition ? '160px' : '80px')};
   min-height: 50px;
   color: ${p => p.theme.colors.primary};
   transition: 0.3s ease-in-out;
   text-align: center;
   transform: ${p =>
-    p.navigatorposition
+    p.navigatorPosition
       ? `translateY(-55px) translateX(20px)`
       : `translateY(1px) translateX(1px)`};
 `
@@ -433,14 +424,14 @@ const NavSocialContainer = styled.div`
   align-items: center;
 `
 
-const LogoLink = styled(AniLink)<{ back: string, navigatorposition: boolean, theme: any; }>`
+const LogoLink = styled(AniLink)<{ back: string, navigatorPosition: boolean, theme: any; }>`
   position: relative;
   display: flex;
   align-items: center;
   margin: auto;
   transition: 0.5s ease-in-out;
   transform: ${p =>
-    p.navigatorposition ? 'translateX(-90px)' : 'translateX(1px)'};
+    p.navigatorPosition ? 'translateX(-90px)' : 'translateX(1px)'};
   ${mediaqueries.desktop_medium`
     left: 0
   `}
@@ -480,7 +471,7 @@ const NavLink = styled((props: NavLinksProps) => <AniLink {...props} />)`
   margin: 10px auto;
   font-size: 18px;
   text-transform: Capitalize;
-  opacity: ${p => (p.navigatorposition === 'article' ? 0 : 1)};
+  opacity: ${p => (p.navigatorPosition === 'article' ? 0 : 1)};
   transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
   &:hover {
     color: ${p => p.theme.colors.hover};
@@ -505,7 +496,7 @@ const ArticlesHolder = styled.div`
   padding: 10px 0px 150px 0px;
 `
 
-const ArticleViewer = styled.aside<{ isDark: boolean; navigatorposition: any; navigatorShape: string; theme: any }>`
+const ArticleViewer = styled.aside<{ isDark: boolean; navigatorPosition: any; navigatorShape: string; theme: any }>`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -518,7 +509,7 @@ const ArticleViewer = styled.aside<{ isDark: boolean; navigatorposition: any; na
   transition: 0.9s var(--ease-in-out-quad), background-color 0.25s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
   background: ${p => p.theme.colors.background};
   transform: ${p =>
-    p.navigatorposition !== "main"  ? (p.navigatorShape === 'hidden' ? `translateY(calc(100% - 250px))` : `translateY(1px)`) : `translateY(100vh)`};
+    p.navigatorPosition !== "main"  ? (p.navigatorShape === 'hidden' ? `translateY(calc(100% - 250px))` : `translateY(1px)`) : `translateY(100vh)`};
   &::before {
     content: '';
     position: absolute;
@@ -584,8 +575,8 @@ const ArticlesControls = styled.div`
   margin-bottom: 20px;
   `
 
-const FadeArticleAnimation = styled.div<{ isDark: boolean; navigatorposition: any }>`
-  transform: ${p => p.navigatorposition !== 'main' ? 'translateY(-60px)' : 'translateY(1px)' };
+const FadeArticleAnimation = styled.div<{ isDark: boolean; navigatorPosition: any }>`
+  transform: ${p => p.navigatorPosition !== 'main' ? 'translateY(-60px)' : 'translateY(1px)' };
   transition: 0.74s ease-in-out;
 `
 const FadeArticleAnimationArrow = styled.div`

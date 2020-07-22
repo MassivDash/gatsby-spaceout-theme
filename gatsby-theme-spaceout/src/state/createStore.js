@@ -1,5 +1,4 @@
-import { createStore as reduxCreateStore, applyMiddleware } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { createStore as reduxCreateStore } from 'redux'
 
 /*
  * action types
@@ -18,7 +17,7 @@ const SET_CATEGORY_FILTER = 'SET_CATEGORY_FILTER'
  * action creators
  */
 
-export function setnavigatorposition(value) {
+export function setNavigatorPosition(value) {
   return { type: SET_NAVIGATOR_POSITION, value }
 }
 
@@ -58,7 +57,7 @@ const reducer = (state, action) => {
     case SET_NAVIGATOR_POSITION:
       return {
         ...state,
-        navigatorposition: action.value,
+        navigatorPosition: action.value,
       }
     case SET_NAVIGATOR_SCROLL:
       return {
@@ -108,7 +107,7 @@ const reducer = (state, action) => {
 }
 
 const initialState = {
-  navigatorposition: 'main',
+  navigatorPosition: 'main',
   navigatorScroll: false,
   navigatorShape: 'hidden',
   navigatorFilter: '',
@@ -123,5 +122,4 @@ export default preloadedState =>
     reducer,
     initialState,
     preloadedState,
-    composeWithDevTools(applyMiddleware())
   )

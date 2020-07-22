@@ -17,7 +17,7 @@ type ExtractSimpleAction<A> = A extends any
     : never
   : never
 
-declare namespace Store {
+namespace Store {
   // Type and payloads for all actions in the Redux framework
   // type Actions =
     // | import('../store/authentication/actions').Actions
@@ -37,7 +37,7 @@ declare namespace Store {
 
   // Global is just the entire state.
   type Global = NonNullable<
-    Parameters<typeof import('../state/createStore').default>[0]
+    Parameters<typeof import('../store/reducers').default>[0]
   >
 
   type GetGlobal = <S extends Global>() => S

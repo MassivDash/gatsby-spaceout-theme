@@ -12,12 +12,12 @@ import ArticlesContextProvider from '../../sections/articles/Articles.List.Conte
 
 import { globalStyles } from '@styles'
 
-import { setnavigatorposition, setNavigatorShape } from '../../state/createStore'
+import { setNavigatorPosition, setNavigatorShape } from '../../state/createStore'
 
 interface LayoutProps {
   children: React.ReactChild
   location: any
-  setnavigatorposition: Function
+  setNavigatorPosition: Function
   setNavigatorShape: Function
 }
 
@@ -45,7 +45,7 @@ const siteQuery = graphql`
   }
 `
 
-function Layout({ children, location, setnavigatorposition, setNavigatorShape }: LayoutProps) {
+function Layout({ children, location, setNavigatorPosition, setNavigatorShape, navigatorPosition }: LayoutProps) {
   const [colorMode] = useColorMode()
   useEffect(() => {
     parent.postMessage({ theme: colorMode }, '*')
@@ -60,18 +60,29 @@ function Layout({ children, location, setnavigatorposition, setNavigatorShape }:
   )
 
   useEffect(() => {
-    scrollRef.current.scrollToTop()
+    console.log(scrollRef.current)
+    
     if (isMenuItem) {
-      setnavigatorposition('menu')
+      setNavigatorPosition('menu')
     } else if (isHomepage) {
-      setnavigatorposition('main')
+      setNavigatorPosition('main')
       setNavigatorShape('hidden')
     } else {
-      setnavigatorposition('article')
+      setNavigatorPosition('article')
       setNavigatorShape('visible')
     }
   }, [location])
 
+  useEffect(() => {
+
+    async function promise1(){
+      setTimeout(() => {
+        scrollRef.current.scrollToTop();
+      }, 100);
+    };
+    
+    promise1();
+  },[location, navigatorPosition])
   
 
   
@@ -93,12 +104,12 @@ function Layout({ children, location, setnavigatorposition, setNavigatorShape }:
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    navigatorposition: state.navigatorposition,
+    navigatorPosition: state.navigatorPosition,
   }
 }
 
 const mapDispatchToProps = {
-  setnavigatorposition,
+  setNavigatorPosition,
   setNavigatorShape
 }
 
@@ -125,5 +136,5 @@ const Container = styled.div`
 const Infoscreen = styled.div`
   background: ${p => p.theme.colors.background};
   transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
-  padding-top: 10px;
+  padding-top: 25px;
 `

@@ -108,7 +108,7 @@ export const ScrollManager = React.forwardRef((props: Props, ref: any) => {
       scrollDetectionThreshold={500} // ms
 
     >
-      <div tabIndex={0} ref={infoScreenRef}>
+      <div tabIndex={0} ref={infoScreenRef} style={{outline: 'none'}}>
       {props.children}
       </div>
       

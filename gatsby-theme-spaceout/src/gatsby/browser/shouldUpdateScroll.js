@@ -1,14 +1,8 @@
 /* eslint-disable */
 
 module.exports = ({ routerProps, prevRouterProps, getSavedScrollPosition }) => {
-  const currentPosition = getSavedScrollPosition(routerProps.location)
-  const topOfPage = [0, 0]
 
-  if (routerProps.location.action === 'POP' && currentPosition) {
-    window.scrollTo(...currentPosition)
-  } else {
-    window.scrollTo(...topOfPage)
-  }
+  const topOfPage = [0, 0]
 
   // Handling previous path into local storage for "Back" arrow button
   if (prevRouterProps) {

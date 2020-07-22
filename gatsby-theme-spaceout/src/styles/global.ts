@@ -127,9 +127,9 @@ export const globalStyles = css`
     background: transparent !important;
   }
 
-  .ScrollbarsCustom-Scroller {
-    scroll-behavior: smooth;
-  }
+  // .ScrollbarsCustom-Scroller {
+  //   scroll-behavior: smooth;
+  // }
 
   .ScrollbarsCustom.trackYVisible {
 	min-height: 98vh;
