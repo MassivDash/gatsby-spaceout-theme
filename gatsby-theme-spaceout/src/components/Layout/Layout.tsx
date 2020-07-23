@@ -61,6 +61,12 @@ function Layout({ children, location, setNavigatorPosition, setNavigatorShape, n
 
   useEffect(() => {
     console.log(scrollRef.current)
+
+    async function timeOut(time){
+      setTimeout(() => {
+        scrollRef.current.scrollToTop();
+      }, time);
+    };
     
     if (isMenuItem) {
       setNavigatorPosition('menu')
@@ -69,15 +75,11 @@ function Layout({ children, location, setNavigatorPosition, setNavigatorShape, n
       setNavigatorShape('hidden')
     } else {
       setNavigatorPosition('article')
+      timeOut(900)
       setNavigatorShape('visible')
     }
-    async function promise1(){
-      setTimeout(() => {
-        scrollRef.current.scrollToTop();
-      }, 100);
-    };
-    
-    promise1();
+
+
   }, [location])
   
 

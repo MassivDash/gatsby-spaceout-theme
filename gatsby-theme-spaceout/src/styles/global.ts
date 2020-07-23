@@ -37,7 +37,7 @@ export const globalStyles = css`
   }
 
   body {
-    font-family: 'Open Sans';
+    font-family: 'Open Sans', sans-serif;
     font-size: 1.6rem;
     margin: 0;
     font-weight: 400;
@@ -67,7 +67,7 @@ export const globalStyles = css`
   textarea,
   select,
   button {
-    font-family: 'Open Sans';
+    font-family: 'Open Sans', sans-serif;
   }
 
   .underline {

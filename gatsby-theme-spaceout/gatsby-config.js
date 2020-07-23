@@ -54,6 +54,7 @@ module.exports = ({
           {
             family: `Open Sans`,
             variants: [`400`, `500`, `700`, `800`],
+            subsets: [`latin`],
           },
         ],
       },
