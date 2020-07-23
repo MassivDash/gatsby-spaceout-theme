@@ -120,6 +120,5 @@ const initialState = {
 export default preloadedState =>
   reduxCreateStore(
     reducer,
-    initialState,
-    preloadedState,
+    { ...initialState, ...preloadedState},
   )

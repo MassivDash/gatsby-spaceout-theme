@@ -19,6 +19,7 @@
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
+    "serve": "gatsby serve",
     "contentful:export": "contentful space export --config contentful.json --skip-content --skip-roles --skip-webhooks",
     "contentful:export:model": "contentful space export --config contentful.json",
     "contentful:import": "contentful space import --config contentful.json",

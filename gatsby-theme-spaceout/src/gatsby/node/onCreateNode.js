@@ -26,7 +26,8 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
   }
 
   function generateArticlePermalink(slug, date) {
-    const [year, month, day] = date.match(/\d{4}-\d{2}-\d{2}/)[0].split('-')
+    const newDate = date.toString()
+    const [year, month, day] = newDate.match(/\d{4}-\d{2}-\d{2}/)[0].split('-')
     const permalinkData = {
       year,
       month,
@@ -86,10 +87,12 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
     return
   }
 
+
   if (node.internal.type === `Mdx` && source === contentPath) {
     const fieldData = {
       author: node.frontmatter.author,
       date: node.frontmatter.date,
+      tech: node.frontmatter.tech,
       hero: node.frontmatter.hero,
       secret: node.frontmatter.secret || false,
       slug: generateSlug(
@@ -98,7 +101,7 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
           slugify(node.frontmatter.slug || node.frontmatter.title),
           node.frontmatter.date
         )
-      ),
+      ) || '',
       title: node.frontmatter.title,
       subscription: node.frontmatter.subscription !== false,
     }

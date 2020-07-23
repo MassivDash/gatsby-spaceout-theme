@@ -5,10 +5,10 @@
  "author": "lukaszcelitan<info@spaceout.pl> (@spaceoutpl)",
   "license": "MIT",
   "scripts": {
-    "develop": "gatsby develop -H 0.0.0.0",
     "build": "gatsby build",
-    "develop": "rm -rf .cache && gatsby develop",
-    "clean": "gatsby clean"
+    "develop": "rm -rf .cache && gatsby develop -H 0.0.0.0",
+    "clean": "gatsby clean",
+    "serve": "gatsby serve"
   },
   "dependencies": {
     "@emotion/core": "^10.0.14",

@@ -477,7 +477,6 @@ const LogoSvg = props => (
 )
 
 const Logo = ({ fill = '#fff' }: { fill?: string }) => {
-  console.log(fill)
   return (
     <LogoContainer>
       <LogoSvg width={50} height={50} className="Logo__Desktop" fill={fill} />

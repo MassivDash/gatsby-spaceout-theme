@@ -32,6 +32,7 @@ module.exports.local = {
           excerpt
           subscription
           body
+          tech
           hero {
             full: childImageSharp {
               fluid(maxWidth: 944, quality: 100, traceSVG: {
@@ -134,6 +135,7 @@ module.exports.contentful = {
           secret
           date(formatString: "MMMM Do, YYYY")
           dateForSEO: date
+          tech
           hero {
             full: fluid(maxWidth: 944, quality: 100) {
               ${GatsbyFluid_withWebp_tracedSVG}

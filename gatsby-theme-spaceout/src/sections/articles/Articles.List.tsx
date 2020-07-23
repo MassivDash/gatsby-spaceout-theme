@@ -113,14 +113,13 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
   const imageSource = narrow ? article.hero.narrow : article.hero.regular
   const hasHeroImage =
     Object.keys(imageSource).length !== 0 && imageSource.constructor === Object
-
   return (
     <CSSFadeIn>
     <ArticleLink fade top="entry" to={article.slug} data-a11y="false">
       <Item gridLayout={gridLayout}>
         <ImageContainer narrow={narrow} gridLayout={gridLayout}>
           {hasHeroImage ? <Image src={imageSource} /> : <ImagePlaceholder />}
-        <ArticleHover>{article.title.slice(0,1).toLowerCase()}</ArticleHover>
+        <ArticleHover>{article.tech.join(', ')}</ArticleHover>
         </ImageContainer>
         <div>
           <Title dark hasOverflow={hasOverflow} gridLayout={gridLayout}>

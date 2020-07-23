@@ -81,7 +81,6 @@ function FullScreenToggle() {
   })
 
   function fullscreenToogle() {
-    console.log(screenfull, screenfull.isEnabled)
     if (screenfull.isEnabled) {
       screenfull.toggle()
     }
