@@ -60,7 +60,6 @@ function Layout({ children, location, setNavigatorPosition, setNavigatorShape, n
   )
 
   useEffect(() => {
-    console.log(scrollRef.current)
 
     async function timeOut(time){
       setTimeout(() => {
@@ -73,10 +72,14 @@ function Layout({ children, location, setNavigatorPosition, setNavigatorShape, n
     } else if (isHomepage) {
       setNavigatorPosition('main')
       setNavigatorShape('hidden')
+      timeOut(730)
     } else {
+      navigatorPosition === 'article' && timeOut(350)
+      navigatorPosition === 'main' && timeOut(725)
       setNavigatorPosition('article')
-      timeOut(900)
       setNavigatorShape('visible')
+      console.log(location, 'now 2')
+      
     }
 
 

@@ -15,11 +15,11 @@ export default CSSFadeIn
 
 const fadein = keyframes`
   0% { opacity: 0; }
-  50% { opacity: 0; }
+  50% { opacity: 0 }
   100% { opacity: 1; }
 `
 
 const Transition = styled.div`
   opacity: 0;
-  animation: ${fadein} 0.8s linear forwards;
+  animation: ${fadein} 1.2s linear forwards;
 `
