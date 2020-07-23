@@ -366,7 +366,6 @@ const ArticleHover = styled.div`
   align-items: center;
   opacity: 0;
   top: 0;
-  font-size: 300px; 
   color: ${p => p.theme.colors.accent};
   background-color: ${p => p.theme.colors.background};
   transition: 0.44s var(--ease-out-quart);

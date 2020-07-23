@@ -186,7 +186,7 @@ const Hero = styled.div`
   min-height: 90vh;
   height: 900px;
   margin-top: 10px;
-  min-width: 77vw;
+  min-width: 73vw;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -368,6 +368,7 @@ const NavContainer = styled.div<{ isDark: boolean; mobileMenuOpen: boolean; them
         transform: ${p => p.mobileMenuOpen ? 'translate(0px, 0px)' : 'translate(-100vw,0)'}
       }
   
+
 `
 
 const NavInfoContainer = styled.div`
@@ -424,7 +425,7 @@ const NavSocialContainer = styled.div`
   align-items: center;
 `
 
-const LogoLink = styled(AniLink)<{ back: string, navigatorPosition: boolean, theme: any; }>`
+const LogoLink = styled(({ navigatorPosition, ...rest }) => <AniLink {...rest} />)`
   position: relative;
   display: flex;
   align-items: center;
@@ -466,7 +467,7 @@ const NavControls = styled.div`
   `}
 `
 
-const NavLink = styled((props: NavLinksProps) => <AniLink {...props} />)`
+const NavLink = styled(({navigatorPosition, ...rest}) => <AniLink {...rest} />)`
   color: ${p => p.theme.colors.accent};
   margin: 10px auto;
   font-size: 18px;
@@ -523,7 +524,7 @@ const ArticleViewer = styled.aside<{ isDark: boolean; navigatorPosition: any; na
   }
 `
 
-const ArticleLink = styled(AniLink)`
+const ArticleLink =  styled(({navigatorPosition, ...rest}) => <AniLink {...rest} />)`
   position: relative;
     transition: transform 0.3s var(--ease-out-quad),
     box-shadow 0.3s var(--ease-out-quad);

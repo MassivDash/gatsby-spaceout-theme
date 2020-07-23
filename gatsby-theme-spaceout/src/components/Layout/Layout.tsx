@@ -71,10 +71,6 @@ function Layout({ children, location, setNavigatorPosition, setNavigatorShape, n
       setNavigatorPosition('article')
       setNavigatorShape('visible')
     }
-  }, [location])
-
-  useEffect(() => {
-
     async function promise1(){
       setTimeout(() => {
         scrollRef.current.scrollToTop();
@@ -82,7 +78,7 @@ function Layout({ children, location, setNavigatorPosition, setNavigatorShape, n
     };
     
     promise1();
-  },[location, navigatorPosition])
+  }, [location])
   
 
   
