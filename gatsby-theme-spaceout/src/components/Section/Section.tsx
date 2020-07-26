@@ -3,7 +3,8 @@ import styled from '@emotion/styled'
 import mediaqueries from '@styles/media'
 
 const Section = styled.section<{ narrow?: boolean }>`
-  margin: 0 4rem;
+  margin: 35px 4rem 0 7rem;
+  padding: 0 1.8rem;
 
   ${mediaqueries.desktop`
     max-width: 850px;

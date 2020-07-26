@@ -92,6 +92,7 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
     const fieldData = {
       author: node.frontmatter.author,
       date: node.frontmatter.date,
+      appDescription: node.frontmatter.appDescription,
       tech: node.frontmatter.tech,
       hero: node.frontmatter.hero,
       secret: node.frontmatter.secret || false,

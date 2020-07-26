@@ -4,9 +4,10 @@ import { css } from '@emotion/core'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import Headings from '@components/Headings'
 import Image, { ImagePlaceholder } from '@components/Image'
-import CSSFadeIn from '@components/Transitions/Transitions.CSS.FadeIn'
 import mediaqueries from '@styles/media'
 import { IArticle } from '@types'
+import Icons from '@icons';
+import bg from './snow.png'
 
 import { GridLayoutContext } from './Articles.List.Context'
 import { graphql, useStaticQuery } from 'gatsby'
@@ -74,7 +75,6 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
   useEffect(() => getGridLayout(), [])
 
   return (
-    <CSSFadeIn>
     <ArticlesListContainer
       style={{ opacity: hasSetGridLayout ? 1 : 0 }}
       alwaysShowAllDetails={alwaysShowAllDetails}
@@ -84,6 +84,7 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
         const isOdd = index % 2 !== 1
 
         return (
+          
           <List
             key={index}
             gridLayout={gridLayout}
@@ -91,22 +92,33 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
             reverse={isEven}
           >
             <ListItem article={ap[0]} narrow={isEven} />
+           
             <ListItem article={ap[1]} narrow={isOdd} />
           </List>
         )
       })}
     </ArticlesListContainer>
-    </CSSFadeIn>
+
   )
 }
 
 export default ArticlesList
 
+
+
+
 const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
   const results = useStaticQuery(siteQuery)
   const { readingTime } = results.allSite.edges[0].node.siteMetadata
 
+  const TechIcons = ({ tech }) => {
+    const techItems = tech.map(tech => <img style={{ margin: '10px', zIndex: 1 }}key={tech} width="50px" src={Icons[tech]} alt={tech} ></img>)
+    return techItems  
+  }
+
   if (!article) return null
+
+  console.log(article)
 
   const { gridLayout } = useContext(GridLayoutContext)
   const hasOverflow = narrow && article.title.length > 35
@@ -114,12 +126,11 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
   const hasHeroImage =
     Object.keys(imageSource).length !== 0 && imageSource.constructor === Object
   return (
-    <CSSFadeIn>
     <ArticleLink fade top="entry" to={article.slug} data-a11y="false">
       <Item gridLayout={gridLayout}>
         <ImageContainer narrow={narrow} gridLayout={gridLayout}>
           {hasHeroImage ? <Image src={imageSource} /> : <ImagePlaceholder />}
-        <ArticleHover>{article.tech.join(', ')}</ArticleHover>
+        <ArticleHover><TechIcons tech={article.tech} /><ArticleHoverTextBG>{article.appDescription}</ArticleHoverTextBG><ReadMoreButton>&#8674;</ReadMoreButton></ArticleHover>
         </ImageContainer>
         <div>
           <Title dark hasOverflow={hasOverflow} gridLayout={gridLayout}>
@@ -138,7 +149,6 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
         </div>
       </Item>
     </ArticleLink>
-    </CSSFadeIn>
   )
 }
 
@@ -365,14 +375,45 @@ const ArticleHover = styled.div`
   align-items: center;
   opacity: 0;
   top: 0;
+  background-blend-mode: multiply;
+  background-image: url(${bg});
   color: ${p => p.theme.colors.accent};
   background-color: ${p => p.theme.colors.background};
   transition: 0.44s var(--ease-out-quart);
-  
+  overflow: hidden;
   &:hover {
     opacity: 1;
   };
 `
+
+const ArticleHoverTextBG = styled.div`
+top: 0;
+left: 0;
+position: absolute;
+font-size:5rem;
+color: ${p => p.theme.colors.articleHoverText};
+z-index: 0;
+margin: 25px;
+writing-mode: vertical-rl;
+text-orientation: mixed;
+word-break: break-word;
+font-family: helvetica;
+font-weight: 900;
+`
+
+const ReadMoreButton = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 2rem;
+  text-transform: lowercase;
+  font-family: helvetica;
+  color: ${p => p.theme.colors.articleHoverText};
+  padding: 50px;
+  font-weight: 900;
+
+`
+
 
 const ArticleLink = styled(AniLink)`
   position: relative;

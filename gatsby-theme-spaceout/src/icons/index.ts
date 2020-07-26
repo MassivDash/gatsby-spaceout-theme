@@ -30,6 +30,24 @@ import FullScreenExit from './ui/FullScreenExit.Icon';
 import FontSetter from './ui/FontSetter.Icon';
 import ArrowUp from './ui/ArrowUp.Icon';
 
+
+//DEV Icons
+
+import ReactIcon from './devIcons/react.svg';
+import Wordpress from './devIcons/wordpress.svg';
+import JS from './devIcons/js.svg';
+import Css from './devIcons/css.svg';
+import Express from './devIcons/express.svg';
+import HandleBars from './devIcons/handlebars.svg';
+import Html from './devIcons/html.svg';
+import MySQL from './devIcons/mysql.svg';
+import Netlify from './devIcons/netlify.svg';
+import Postgre from './devIcons/postgre.svg';
+import TS from './devIcons/ts.svg';
+import Gatsby from './devIcons/Gatsby-Monogram.svg';
+import Svelte from './devIcons/svelte.svg';
+import Ghostjs from './devIcons/ghostjs.svg'
+
 export default {
   Behance,
   Dribbble,
@@ -58,5 +76,19 @@ export default {
   FullScreenExit,
   FullScreenEnter,
   FontSetter,
-  ArrowUp
+  ArrowUp,
+  ReactIcon,
+  Wordpress,
+  JS,
+  Css,
+  Express,
+  HandleBars,
+  Html,
+  MySQL,
+  Netlify,
+  Postgre,
+  TS,
+  Gatsby,
+  Svelte,
+  Ghostjs
 };

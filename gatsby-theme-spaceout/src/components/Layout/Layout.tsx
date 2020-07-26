@@ -135,5 +135,5 @@ const Container = styled.div`
 const Infoscreen = styled.div`
   background: ${p => p.theme.colors.background};
   transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
-  padding-top: 25px;
+  scroll-behavior: smooth;
 `

@@ -12,7 +12,6 @@ const SpaceHero = () => {
   const [backgroundLoaded, onBackgroundLoad] = useState(false);
   const [spacemanLoaded, onSpacemanLoad] = useState(false);
 
-  console.log(position);
 
   const spaceHeroQuery = graphql`
     {
@@ -186,7 +185,7 @@ const Hero = styled.div`
   min-height: 90vh;
   height: 900px;
   margin-top: 10px;
-  min-width: 73vw;
+  min-width: 67vw;
   display: flex;
   justify-content: center;
   align-items: center;

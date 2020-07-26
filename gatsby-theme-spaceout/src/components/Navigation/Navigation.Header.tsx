@@ -10,7 +10,7 @@ import Logo from '@components/Logo'
 import SocialLinks from '@components/SocialLinks'
 import Icons from '@icons'
 import mediaqueries from '@styles/media'
-
+import bg from './snow.png'
 import { getWindowDimensions, getBreakpointFromTheme } from '@utils'
 
 import {
@@ -548,21 +548,23 @@ const ArticleLink =  styled(({navigatorPosition, ...rest}) => <AniLink {...rest}
 `
 
 const ArticleHover = styled.div<{theme: any}>`
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  top: 0;
-  font-size: 100px; 
-  color: ${p => p.theme.colors.accent};
-  background-color: ${p => p.theme.colors.background};
-  transition: 0.44s var(--ease-out-quart);
-  &:hover {
-    opacity: 1;
-  };
+position: absolute;
+height: 100%;
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+opacity: 0;
+top: 0;
+background-blend-mode: multiply;
+background-image: url(${bg});
+color: ${p => p.theme.colors.accent};
+background-color: ${p => p.theme.colors.background};
+transition: 0.44s var(--ease-out-quart);
+overflow: hidden;
+&:hover {
+  opacity: 1;
+};
 `
 
 const ArticlesControls = styled.div`

@@ -42,6 +42,7 @@ export const globalStyles = css`
     margin: 0;
     font-weight: 400;
     height: 100%;
+    
   }
 
   button,
@@ -127,9 +128,9 @@ export const globalStyles = css`
     background: transparent !important;
   }
 
-  // .ScrollbarsCustom-Scroller {
-  //   scroll-behavior: smooth;
-  // }
+  .ScrollbarsCustom-Scroller {
+    scroll-behavior: smooth;
+  }
 
   .ScrollbarsCustom.trackYVisible {
 	min-height: 98vh;
@@ -138,5 +139,42 @@ export const globalStyles = css`
   tspan {
     font-size: 165px;
   }
+
+
+.item-enter {
+  opacity: 0;
+}
+.item-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.item-exit {
+  opacity: 1;
+}
+.item-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+.fade-enter .btn {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.fade-enter-active{
+  opacity: 1;
+  transform: translateX(0%);
+}
+.fade-exit{
+  opacity: 1;
+  transform: translateX(0%);
+}
+.fade-exit-active{
+  opacity: 0;
+  transform: translateX(100%);
+}
+.fade-enter-active,
+.fade-exit-active {
+  transition: opacity 500ms, transform 500ms;
+}
 
 `;
