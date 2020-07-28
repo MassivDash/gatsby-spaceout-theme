@@ -1,0 +1,17 @@
+
+.uiuxHolder {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    max-width: 1150px;
+    margin: auto;
+    border: 5px solid whitesmoke;
+    padding: 10px 25px;
+}
+
+
+.gridGalleryHolder {
+    display: grid;
+    max-width: 1150px;
+    margin: 20px auto;
+    grid-column-gap: 10px;
+}

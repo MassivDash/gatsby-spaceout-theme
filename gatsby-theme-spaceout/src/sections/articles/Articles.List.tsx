@@ -104,17 +104,16 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
 
 export default ArticlesList
 
-
+export const TechIcons = ({ tech }) => {
+  const techItems = tech.map(tech => <img style={{ margin: '10px', zIndex: 1 }}key={tech} width="50px" src={Icons[tech]} alt={tech} ></img>)
+  return techItems  
+}
 
 
 const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
   const results = useStaticQuery(siteQuery)
   const { readingTime } = results.allSite.edges[0].node.siteMetadata
 
-  const TechIcons = ({ tech }) => {
-    const techItems = tech.map(tech => <img style={{ margin: '10px', zIndex: 1 }}key={tech} width="50px" src={Icons[tech]} alt={tech} ></img>)
-    return techItems  
-  }
 
   if (!article) return null
 

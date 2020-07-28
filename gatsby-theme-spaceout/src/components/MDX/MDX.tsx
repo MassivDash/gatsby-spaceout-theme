@@ -67,7 +67,7 @@ const IMAGE_WIDTHS = {
 
 const ARTICLE_WIDTH = css`
   width: 100%;
-  max-width: 940px;
+  max-width: 1150px;
 
   ${mediaqueries.desktop`
     max-width: 507px;
@@ -122,7 +122,7 @@ const PrismCSS = p => css`
   .prism-code {
     overflow: auto;
     width: 100%;
-    max-width: 744px;
+    max-width: 1150px;
     margin: 0 auto;
     padding: 32px;
     font-size: 13px;

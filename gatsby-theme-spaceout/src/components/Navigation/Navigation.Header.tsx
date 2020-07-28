@@ -68,6 +68,7 @@ const siteQuery = graphql`
         node {
           id
           title
+          appDescription
           slug
           hero {
             childImageSharp {
@@ -231,7 +232,7 @@ const NavigationHeader: React.FC<Props> = ({ navigatorPosition, setNavigatorShap
                     navigatorPosition={ArticleNavigator}
                   >
                     <Image fluid={item.node.hero.childImageSharp.fluid} />
-                    <ArticleHover theme={theme}>{item.node.title.slice(0,1).toLowerCase()}</ArticleHover>
+                    <ArticleHover theme={theme}><AppDescription>{item.node.appDescription}</AppDescription><HoverTitle>{item.node.title}</HoverTitle></ArticleHover>
                   </ArticleLink>
                 ),[item])
               )
@@ -502,7 +503,7 @@ const ArticleViewer = styled.aside<{ isDark: boolean; navigatorPosition: any; na
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 100px;
+  top: 80px;
  
   width: 300px;
   margin: 0 10px 0px -5px;
@@ -528,6 +529,7 @@ const ArticleLink =  styled(({navigatorPosition, ...rest}) => <AniLink {...rest}
   position: relative;
     transition: transform 0.3s var(--ease-out-quad),
     box-shadow 0.3s var(--ease-out-quad);
+    
 
   & > div {
     height: 100%;
@@ -548,23 +550,47 @@ const ArticleLink =  styled(({navigatorPosition, ...rest}) => <AniLink {...rest}
 `
 
 const ArticleHover = styled.div<{theme: any}>`
+top: 0;
+right: 0;
 position: absolute;
 height: 100%;
 width: 100%;
 display: flex;
-justify-content: center;
-align-items: center;
+justify-content: flex-end;
+align-items: flex-end;
 opacity: 0;
-top: 0;
-background-blend-mode: multiply;
 background-image: url(${bg});
-color: ${p => p.theme.colors.accent};
 background-color: ${p => p.theme.colors.background};
 transition: 0.44s var(--ease-out-quart);
+background-blend-mode: multiply;
 overflow: hidden;
 &:hover {
   opacity: 1;
 };
+`
+
+const AppDescription = styled.p`
+  top: 0;
+  left: 0;
+  position: absolute;
+  font-size:2rem;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  word-break: break-word;
+  font-family: helvetica;
+  font-weight: 900;
+  color: ${p => p.theme.colors.articleHoverText};
+`
+
+const HoverTitle = styled.p`
+  bottom: 0px;
+  right: 0px;
+  margin: 10px;
+  position: absolute;
+  font-size:2rem;
+  font-family: helvetica;
+  font-weight: 900;
+  color: ${p => p.theme.colors.accent};
 `
 
 const ArticlesControls = styled.div`

@@ -25,6 +25,7 @@ function ArticleAuthors({ authors }: { authors: IAuthor[] }) {
         as={authors[0].authorsPage ? Link : 'div'}
         to={authors[0].slug}
       >
+        <strong style={{ margin: 'auto 5px'}}> by </strong>
         <AuthorAvatar>
           <Image src={authors[0].avatar.small} />
         </AuthorAvatar>

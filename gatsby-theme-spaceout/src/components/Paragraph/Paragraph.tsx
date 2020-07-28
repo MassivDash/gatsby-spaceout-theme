@@ -8,7 +8,7 @@ const Paragraph = styled.p`
   transition: ${p => p.theme.colorModeTransition}, 0.25s var(--ease-in-out-quad);
   margin: 0 auto 35px;
   width: 100%;
-  max-width: 940px;
+  max-width: 1150px;
 
   b {
     font-weight: 800;

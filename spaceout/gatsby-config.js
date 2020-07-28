@@ -97,6 +97,14 @@ const plugins = [
       cookieDomain: 'spaceout.pl',
     },
   },
+  {
+    resolve: 'gatsby-plugin-web-font-loader',
+    options: {
+      google: {
+        families: ['Roboto:200,300,700,900', 'Playfair Display:200,300,700,900']
+      }
+    }
+  }
 ];
 
 /**
