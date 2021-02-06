@@ -34,7 +34,7 @@ function CodePrism({ codeString, language, metastring, ...props }) {
   if (props['live']) {
     return (
       <Container>
-        <LiveProvider code={codeString} noInline={true} theme={theme}>
+        <LiveProvider code={codeString} noInline={true} >
           <LiveEditor style={{ marginBottom: '3px', borderRadius: '2px' }} />
           <LivePreview style={{ fontSize: '18px', borderRadius: '2px' }} />
           <LiveError style={{ color: 'tomato' }} />

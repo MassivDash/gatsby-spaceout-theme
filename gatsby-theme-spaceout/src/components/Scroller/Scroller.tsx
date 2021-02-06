@@ -4,9 +4,9 @@ import ReactScrollbarsCustom, {
   } from 'react-scrollbars-custom';
 
   interface Props {
-    isDark: boolean;
-    sideMenu: boolean;
-    children: ReactChildren;
+    isDark?: boolean;
+    sideMenu?: boolean;
+    children?: ReactChildren;
   }
 
 export const ScrollManager = React.forwardRef((props: Props, ref: any) => {

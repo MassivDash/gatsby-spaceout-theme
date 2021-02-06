@@ -32,7 +32,7 @@ function slugify(string, base) {
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036F]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/[^\da-z]+/g, '-')
     .replace(/(^-|-$)+/g, '')
 
   return `${base}/${slug}`.replace(/\/\/+/g, '/')
@@ -85,11 +85,11 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
       const localArticles = await graphql(query.local.articles)
 
       dataSources.local.authors = localAuthors.data.authors.edges.map(
-        normalize.local.authors
+        (element) => normalize.local.authors(element)
       )
 
       dataSources.local.articles = localArticles.data.articles.edges.map(
-        normalize.local.articles
+        (element) => normalize.local.articles(element)
       )
     } catch (error) {
       console.error(error)
@@ -103,11 +103,11 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
       const contentfulArticles = await graphql(query.contentful.articles)
 
       dataSources.contentful.authors = contentfulAuthors.data.authors.edges.map(
-        normalize.contentful.authors
+        (element) => normalize.contentful.authors(element)
       )
 
       dataSources.contentful.articles = contentfulArticles.data.articles.edges.map(
-        normalize.contentful.articles
+        (element) => normalize.contentful.articles(element)
       )
     } catch (error) {
       console.error(error)
@@ -170,6 +170,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
    * To do this, we need to find the corresponding authors since we allow for co-authors.
    */
   log('Creating', 'article posts')
+  // eslint-disable-next-line unicorn/no-array-for-each
   articles.forEach((article, index) => {
     // Match the Author to the one specified in the article
     let authorsThatWroteTheArticle
@@ -228,6 +229,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
   if (authorsPage) {
     log('Creating', 'authors page')
 
+    // eslint-disable-next-line unicorn/no-array-for-each
     authors.forEach(author => {
       const articlesTheAuthorHasWritten = articlesThatArentSecret.filter(
         article =>

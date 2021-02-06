@@ -42,23 +42,13 @@ module.exports = ({
       },
     },
     {
-      resolve: `gatsby-plugin-prefetch-google-fonts`,
-      options: {
-        fonts: [
-          {
-            family: `Paytone One`,
-          },
-          {
-            family: `Satisfy`,
-          },
-          {
-            family: `Open Sans`,
-            variants: [`400`, `500`, `700`, `800`],
-            subsets: [`latin`],
-          },
-        ],
+        resolve: 'gatsby-plugin-web-font-loader',
+        options: {
+          google: {
+            families: ['Raleway:200,300,700,900', 'Oswad:200,300,700,900', 'Roboto:200,300,700,900', 'Playfair Display:200,300,700,900', 'Satisfy', 'Paytone One']
+          }
+        }
       },
-    },
     {
       resolve: `gatsby-plugin-feed`,
       options: {
@@ -249,6 +239,7 @@ module.exports = ({
               withWebp: true,
             },
           },
+          { resolve: 'gatsby-remark-lottie' },
           { resolve: `gatsby-remark-copy-linked-files` },
           { resolve: `gatsby-remark-numbered-footnotes` },
           { resolve: `gatsby-remark-smartypants` },

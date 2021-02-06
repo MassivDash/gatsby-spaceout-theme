@@ -574,6 +574,7 @@ const AppDescription = styled.p`
   left: 0;
   position: absolute;
   font-size:2rem;
+  margin: 10px;
   writing-mode: vertical-rl;
   text-orientation: mixed;
   word-break: break-word;

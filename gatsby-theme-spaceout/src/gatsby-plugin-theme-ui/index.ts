@@ -14,8 +14,8 @@ const breakpoints = [
 ];
 
 const fonts = {
-  serif: 'Open Sans',
-  sansSerif: `Open Sans`,
+  serif: 'Helvetica',
+  sansSerif: `'Open Sans', sans serif`,
   monospace: `"Operator Mono", Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace`,
 };
 

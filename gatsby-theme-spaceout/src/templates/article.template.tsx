@@ -2,13 +2,14 @@ import React, { useRef, useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { css } from '@emotion/core'
 import throttle from "lodash/throttle";
+import { useColorMode } from 'theme-ui'
 import { graphql, useStaticQuery } from "gatsby";
 import MDXRenderer from "@components/MDX";
 import Section from "@components/Section";
 import { connect } from 'react-redux'
 import mediaqueries from "@styles/media";
 import { debounce } from "@utils";
-
+import Logo from '@components/Logo'
 import ArticleHero from "../sections/article/Article.Hero";
 import ArticleControls from "../sections/article/Article.Controls";
 import ArticlesNext from "../sections/article/Article.Next";
@@ -38,6 +39,8 @@ const siteQuery = graphql`
 
 function Article({ pageContext, location, fontSizeIncrease, theme }) {
   const contentSectionRef = useRef<HTMLElement>(null);
+  const [colorMode] = useColorMode()
+  const fill = colorMode === 'dark' ? '#fff' : '#000'
   
   const [hasCalculated, setHasCalculated] = useState<boolean>(false);
   const [contentHeight, setContentHeight] = useState<number>(0);
@@ -92,8 +95,10 @@ function Article({ pageContext, location, fontSizeIncrease, theme }) {
       </MobileControls>
       <ArticleBody fontSizeIncrease={fontSizeIncrease} ref={contentSectionRef}>
         <MDXRenderer content={article.body}>
+        <GoBackLogo><Logo fill={fill} /></GoBackLogo>
           <ArticleShare />
         </MDXRenderer>
+        
       </ArticleBody>
       {next.length > 0 && similarPosts && (
         <NextArticle >
@@ -127,6 +132,7 @@ const articleFontDynamicStyle = props =>
     font-size: ${18 * props.fontSizeIncrease}px;
     position: relative;
     transition: background 0.2s linear;
+    margin-bottom: 100px;
 
   ${mediaqueries.desktop`
     padding-left: 53px;
@@ -151,6 +157,16 @@ const MobileControls = styled.div`
     display: none;
   `}
 `;
+
+const GoBackLogo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  min-width: 100px;
+  width: 100%;
+`
 
 const ArticleBody = styled.article`${articleFontDynamicStyle}`
   

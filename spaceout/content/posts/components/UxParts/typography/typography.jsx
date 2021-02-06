@@ -1,11 +1,11 @@
 import React from 'react';
 import './typography.css'
 
-const Typography = ({ primeFontFamily, hasPrimeLight, secondaryFontFamily, hasSecondaryLight, background = '#FFF', h1, h2, body, ...rest }) => {
+const Typography = ({ primeFontFamily, hasPrimeLight, secondaryFontFamily, hasSecondaryLight, background = '#FFF', h1, h2, body, color, ...rest }) => {
 
 
     return (
-        <div className="typographyHolder" style={{backgroundColor: background}}>
+        <div className="typographyHolder" style={{backgroundColor: background, color: color}}>
             <div className="typographyGrid" >
             <div className="typographyPrime bold" style={{ fontFamily: primeFontFamily }}> 
                 <p>Aa</p>

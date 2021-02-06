@@ -16,12 +16,13 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
 
   // ///////////////// Utility functions ///////////////////
 
+  // eslint-disable-next-line unicorn/consistent-function-scoping
   function slugify(string) {
     return string
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036F]/g, '')
-      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/[^\da-z]+/g, '-')
       .replace(/(^-|-$)+/g, '')
   }
 
@@ -35,8 +36,8 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
       slug,
     }
 
-    const permalink = articlePermalinkFormat.replace(/(:[a-z_]+)/g, match => {
-      const key = match.substr(1)
+    const permalink = articlePermalinkFormat.replace(/(:[_a-z]+)/g, match => {
+      const key = match.slice(1)
       if (permalinkData.hasOwnProperty(key)) {
         return permalinkData[key]
       }
@@ -50,6 +51,7 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
     return permalink
   }
 
+  // eslint-disable-next-line unicorn/consistent-function-scoping
   function generateSlug(...arguments_) {
     return `/${arguments_.join('/')}`.replace(/\/\/+/g, '/')
   }

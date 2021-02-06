@@ -72,6 +72,7 @@
     "gatsby-remark-numbered-footnotes": "^1.0.0",
     "gatsby-remark-prismjs": "^3.3.3",
     "gatsby-remark-smartypants": "^2.1.2",
+    "gatsby-remark-lottie": "^1.0.3",
     "gatsby-remark-typescript": "^0.0.12",
     "gatsby-source-filesystem": "^2.1.6",
     "gatsby-transformer-remark": "^2.6.9",

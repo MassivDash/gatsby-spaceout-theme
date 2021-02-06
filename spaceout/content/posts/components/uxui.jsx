@@ -3,11 +3,11 @@ import ColorPallete from './UxParts/colorPallete/colorPallete';
 import Typography from './UxParts/typography/typography';
 import './uiStyles.css'
 
-export const UI = ({ colors, primeFontFamily, secondaryFontFamily, background, h1, h2, body  }) => {
+export const UI = ({ colors, primeFontFamily, secondaryFontFamily, background, h1, h2, body, textColor = 'inherit'  }) => {
 
     return (<div className="uiuxHolder">
         <ColorPallete colors={colors} />
-        <Typography primeFontFamily={primeFontFamily} secondaryFontFamily={secondaryFontFamily} background={background} h1={h1} h2={h2} body={body} />
+        <Typography color={textColor} primeFontFamily={primeFontFamily} secondaryFontFamily={secondaryFontFamily} background={background} h1={h1} h2={h2} body={body} />
     </div>)
 
 }
