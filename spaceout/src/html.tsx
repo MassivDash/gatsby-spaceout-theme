@@ -1,9 +1,8 @@
-import React from "react";
+import React from 'react'
 
-export default props => (
+export default (props) => (
   <html {...props.htmlAttributes}>
     <head>
-
       <meta charSet="utf-8" />
       <meta httpEquiv="x-ua-compatible" content="ie=edge" />
       <meta
@@ -25,4 +24,4 @@ export default props => (
       {props.postBodyComponents}
     </body>
   </html>
-);
+)

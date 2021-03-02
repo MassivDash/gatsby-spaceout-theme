@@ -58,17 +58,20 @@ function Layout({ children, location, setNavigatorPosition, setNavigatorShape, n
   const isMenuItem = allSite.edges[0].node.siteMetadata.menuLinks.some(
     item => `/${item.slug}` === location.pathname
   )
+console.log(allSite.edges[0].node.siteMetadata.menuLinks)
 
   useEffect(() => {
 
     async function timeOut(time){
       setTimeout(() => {
-        scrollRef.current.scrollToTop();
+        scrollRef?.current?.scrollToTop();
       }, time);
     };
     
     if (isMenuItem) {
-      setNavigatorPosition('menu')
+      setNavigatorPosition('article')
+      setNavigatorShape('hidden')
+      timeOut(780)
     } else if (isHomepage) {
       setNavigatorPosition('main')
       setNavigatorShape('hidden')
@@ -94,7 +97,6 @@ function Layout({ children, location, setNavigatorPosition, setNavigatorShape, n
         <Infoscreen>
           <Scrollbar sideMenu={false} ref={scrollRef}>{children}</Scrollbar>
         </Infoscreen>
-
         <NavigationFooter ScrollToTop={() => scrollRef.current.scrollToTop()} />
       </Container>
     </ArticlesContextProvider>

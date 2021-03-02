@@ -176,7 +176,7 @@ const NextArticle = styled(Section)`gatsby-
 `;
 
 const BackgroundLayer = styled.div`
-background-color: ${p => p.theme.colors.background};
+background-color: ${(p: any) => p.theme.colors.background};
 transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad); 
 padding-top: 20px;
 `;
@@ -186,7 +186,7 @@ const FooterNext = styled.h3`
   opacity: 0.25;
   margin-bottom: 100px;
   font-weight: 400;
-  color: ${p => p.theme.colors.primary};
+  color: ${(p: any) => p.theme.colors.primary};
 
   ${mediaqueries.tablet`
     margin-bottom: 60px;
@@ -195,7 +195,7 @@ const FooterNext = styled.h3`
   &::after {
     content: '';
     position: absolute;
-    background: ${p => p.theme.colors.grey};
+    background: ${(p: any) => p.theme.colors.grey};
     width: ${(910 / 1140) * 100}%;
     height: 1px;
     right: 0;

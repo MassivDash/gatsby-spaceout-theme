@@ -151,7 +151,7 @@ const Item = styled.div`
   }
 `
 
-const Title = styled(Headings.h3)`
+const Title = styled(Headings.H3)`
   font-size: 22px;
   line-height: 1.4;
   margin-bottom: ${p => (p.hasOverflow ? '45px' : '10px')};

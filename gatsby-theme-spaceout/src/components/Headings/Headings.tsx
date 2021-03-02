@@ -13,7 +13,7 @@ const commonStyles = p => css`
   color: ${p.theme.colors.accent};
 `
 
-const h1 = styled.h1`
+const H1 = styled.h1`
   font-size: 52px;
   line-height: 1.15;
   ${commonStyles};
@@ -29,7 +29,7 @@ const h1 = styled.h1`
   `};
 `
 
-const h2 = styled.h2`
+const H2 = styled.h2`
   font-size: 32px;
   line-height: 1.333;
   ${commonStyles};
@@ -48,7 +48,7 @@ const h2 = styled.h2`
   `};
 `
 
-const h3 = styled.h3`
+const H3 = styled.h3`
   font-size: 24px;
   line-height: 1.45;
   ${commonStyles};
@@ -62,7 +62,7 @@ const h3 = styled.h3`
   `};
 `
 
-const h4 = styled.h4`
+const H4 = styled.h4`
   font-size: 18px;
   line-height: 1.45;
   ${commonStyles};
@@ -72,7 +72,7 @@ const h4 = styled.h4`
   `};
 `
 
-const h5 = styled.h5`
+const H5 = styled.h5`
   font-size: 18px;
   line-height: 1.45;
   ${commonStyles};
@@ -82,7 +82,7 @@ const h5 = styled.h5`
   `};
 `
 
-const h6 = styled.h6`
+const H6 = styled.h6`
   font-size: 16px;
   line-height: 1.45;
   ${commonStyles};
@@ -93,10 +93,10 @@ const h6 = styled.h6`
 `
 
 export default {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
+  H1,
+  H2,
+  H3,
+  H4,
+  H5,
+  H6,
 }

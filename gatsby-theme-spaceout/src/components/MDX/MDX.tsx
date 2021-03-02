@@ -24,12 +24,12 @@ const components = {
   img: ImageZoom,
   a: Anchor,
   blockquote: Blockquote,
-  h1: Headings.h2, // h1 reserved article title
-  h2: Headings.h2,
-  h3: Headings.h3,
-  h4: Headings.h4,
-  h5: Headings.h5,
-  h6: Headings.h6,
+  h1: Headings.H2, // h1 reserved article title
+  h2: Headings.H2,
+  h3: Headings.H3,
+  h4: Headings.H4,
+  h5: Headings.H5,
+  h6: Headings.H6,
   hr: HorizontalRule,
   ul: Lists.ul,
   ol: Lists.ol,

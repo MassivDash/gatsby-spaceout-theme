@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, memo } from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 import AniLink from 'gatsby-plugin-transition-link/AniLink'
@@ -74,6 +74,7 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
 
   useEffect(() => getGridLayout(), [])
 
+
   return (
     <ArticlesListContainer
       style={{ opacity: hasSetGridLayout ? 1 : 0 }}
@@ -117,7 +118,6 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
 
   if (!article) return null
 
-  console.log(article)
 
   const { gridLayout } = useContext(GridLayoutContext)
   const hasOverflow = narrow && article.title.length > 35
@@ -189,6 +189,7 @@ const listTile = p => css`
   grid-template-columns: ${p.reverse ? `${wide} ${wide}` : `${wide} ${wide}`};
   grid-template-rows: 2;
   column-gap: 30px;
+  min-width: 67vw;
 
   &:not(:last-child) {
     margin-bottom: 75px;
@@ -196,6 +197,7 @@ const listTile = p => css`
 
   ${mediaqueries.desktop_medium`
     grid-template-columns: 1fr 1fr;
+    
   `}
 
   ${mediaqueries.tablet`
@@ -216,6 +218,7 @@ const listItemRow = p => css`
   align-items: center;
   position: relative;
   margin-bottom: 50px;
+
 
   ${mediaqueries.desktop`
     grid-column-gap: 24px;
@@ -260,6 +263,7 @@ const listItemTile = p => css`
 const listRow = p => css`
   display: grid;
   grid-template-rows: ${p.hasOnlyOneArticle ? '1fr' : '1fr'};
+  
 `
 
 const List = styled.div<{
@@ -267,7 +271,8 @@ const List = styled.div<{
   gridLayout: string
   hasOnlyOneArticle: boolean
 }>`
-  ${p => (p.gridLayout === 'tiles' ? listTile : listRow)}
+  ${p => (p.gridLayout === 'tiles' ? listTile : listRow)};
+  transition: opacity .8s ease-in-out
 `
 
 const Item = styled.div<{ gridLayout: string }>`
@@ -301,16 +306,16 @@ const ImageContainer = styled.div<{ narrow: boolean; gridLayout: string }>`
   `}
 `
 
-const Title = styled(Headings.h2)`
+const Title = styled(Headings.H2)`
   font-size: 21px;
-  font-family: ${p => p.theme.fonts.sansSerif};
+  font-family: ${(p: any) => p.theme.fonts.sansSerif};
   margin-bottom: ${p =>
     p.hasOverflow && p.gridLayout === 'tiles' ? '35px' : '10px'};
   transition: color 0.3s ease-in-out;
   ${limitToTwoLines};
 
   ${mediaqueries.desktop`
-    margin-bottom: 15px;
+    margin-bottom: 15px
   `}
 
   ${mediaqueries.tablet`
@@ -333,7 +338,7 @@ const Excerpt = styled.p<{
   ${limitToTwoLines};
   font-size: 16px;
   margin-bottom: 10px;
-  color: ${p => p.theme.colors.grey};
+  color: ${(p: any) => p.theme.colors.grey};
   display: ${p => (p.hasOverflow && p.gridLayout === 'tiles' ? 'none' : 'box')};
   max-width: ${p => (p.narrow ? '415px' : '515px')};
 
@@ -356,7 +361,7 @@ const Excerpt = styled.p<{
 const MetaData = styled.div`
   font-weight: 600;
   font-size: 16px;
-  color: ${p => p.theme.colors.grey};
+  color: ${(p : any) => p.theme.colors.grey};
   opacity: 0.33;
 
   ${mediaqueries.phablet`
@@ -376,8 +381,8 @@ const ArticleHover = styled.div`
   top: 0;
   background-blend-mode: multiply;
   background-image: url(${bg});
-  color: ${p => p.theme.colors.accent};
-  background-color: ${p => p.theme.colors.background};
+  color: ${(p: any) => p.theme.colors.accent};
+  background-color: ${(p: any) => p.theme.colors.background};
   transition: 0.44s var(--ease-out-quart);
   overflow: hidden;
   &:hover {
@@ -390,7 +395,7 @@ top: 0;
 left: 0;
 position: absolute;
 font-size:5rem;
-color: ${p => p.theme.colors.articleHoverText};
+color: ${(p: any) => p.theme.colors.articleHoverText};
 z-index: 0;
 margin: 25px;
 writing-mode: vertical-rl;
@@ -407,7 +412,7 @@ const ReadMoreButton = styled.div`
   font-size: 2rem;
   text-transform: lowercase;
   font-family: helvetica;
-  color: ${p => p.theme.colors.articleHoverText};
+  color: ${(p: any) => p.theme.colors.articleHoverText};
   padding: 50px;
   font-weight: 900;
 
@@ -434,7 +439,7 @@ const ArticleLink = styled(AniLink)`
 
   &:hover h2,
   &:focus h2 {
-    color: ${p => p.theme.colors.accent};
+    color: ${(p: any) => p.theme.colors.accent};
   }
 
   &[data-a11y='true']:focus::after {
@@ -444,7 +449,7 @@ const ArticleLink = styled(AniLink)`
     top: -2%;
     width: 103%;
     height: 104%;
-    border: 3px solid ${p => p.theme.colors.accent};
+    border: 3px solid ${(p: any) => p.theme.colors.accent};
     background: rgba(255, 255, 255, 0.01);
     border-radius: 5px;
   }

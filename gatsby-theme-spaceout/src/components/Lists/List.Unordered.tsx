@@ -4,10 +4,10 @@ import mediaqueries from '@styles/media'
 const UnorderedList = styled.ul`
   list-style: none;
   counter-reset: list;
-  color: ${p => p.theme.colors.articleText};
+  color: ${(p: any) => p.theme.colors.articleText};
   position: relative;
   padding: 15px 0 30px 30px;
-  transition: ${p => p.theme.colorModeTransition};
+  transition: ${(p: any) => p.theme.colorModeTransition};
   margin: 0 auto;
   font-size: 18px;
 

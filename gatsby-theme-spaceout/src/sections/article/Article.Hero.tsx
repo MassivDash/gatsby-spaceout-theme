@@ -142,7 +142,7 @@ const Header = styled.header`
   }
 `
 
-const HeroHeading = styled(Headings.h1)`
+const HeroHeading = styled(Headings.H1)`
   font-size: 48px;
   font-family: ${p => p.theme.fonts.serif};
   margin-bottom: 25px;

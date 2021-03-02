@@ -6,7 +6,8 @@ import ReactScrollbarsCustom, {
   interface Props {
     isDark?: boolean;
     sideMenu?: boolean;
-    children?: ReactChildren;
+    children?: any;
+    style?: any;
   }
 
 export const ScrollManager = React.forwardRef((props: Props, ref: any) => {
@@ -99,9 +100,9 @@ export const ScrollManager = React.forwardRef((props: Props, ref: any) => {
       {...rest}
       noScrollX={true}
       createContext={true}
-      trackXProps={trackProps}
-      trackYProps={trackYProps}
-      thumbYProps={thumbYProps}
+      trackXProps={trackProps as any}
+      trackYProps={trackYProps as any}
+      thumbYProps={thumbYProps as any}
       onScrollStart={onScrollStart}
       onScrollStop={onScrollStop}
       onMouseEnter={onMouseEnter}

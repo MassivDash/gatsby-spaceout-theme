@@ -115,7 +115,7 @@ const Content = styled.div`
   `}
 `
 
-const Heading = styled(Headings.h3)`
+const Heading = styled(Headings.H3)`
   margin-bottom: 20px;
 
   ${mediaqueries.tablet`

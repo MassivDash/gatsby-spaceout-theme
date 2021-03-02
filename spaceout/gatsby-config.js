@@ -101,9 +101,12 @@ const plugins = [
     resolve: 'gatsby-plugin-web-font-loader',
     options: {
       google: {
-        families: ['Roboto:200,300,700,900', 'Playfair Display:200,300,700,900']
+        families: ['Open Sans:200,300,400,700,900', 'Roboto:200,300,700,900', 'Playfair Display:200,300,700,900']
       }
     }
+  },
+  {
+    resolve: `gatsby-plugin-emotion`,
   }
 ];
 

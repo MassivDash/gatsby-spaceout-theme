@@ -4,10 +4,12 @@ import mediaqueries from '@styles/media'
 
 const Section = styled.section<{ narrow?: boolean }>`
   margin: 35px 4rem 0 7rem;
-  padding: 0 1.8rem;
+  padding: 0 5.8vw;
+  position: relative;
 
   ${mediaqueries.desktop`
     max-width: 850px;
+    
   `};
 
   ${p =>
@@ -17,7 +19,8 @@ const Section = styled.section<{ narrow?: boolean }>`
           max-width: 527px;
         `
       : mediaqueries.tablet`
-          padding: 0 4rem;
+          margin: 0.4rem 0.5rem;
+          padding: 0;
           max-width: 567px;
         `}
 

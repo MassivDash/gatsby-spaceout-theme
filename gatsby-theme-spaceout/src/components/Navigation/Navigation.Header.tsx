@@ -140,26 +140,6 @@ const NavigationHeader: React.FC<Props> = ({ navigatorPosition, setNavigatorShap
 
   return (
     <>
-    <MobileNavContainer theme={theme}>
-    <LogoLink
-          fade
-          navigatorPosition={ArticleNavigator}
-          to={rootPath || basePath}
-          data-a11y="false"
-          title="Navigate back to the homepage"
-          aria-label="Navigate back to the homepage"
-          back={showBackArrow ? 'true' : 'false'}
-        >
-          <Logo fill={fill} />
-          <Hidden>Navigate back to the homepage</Hidden>
-        </LogoLink>
-
-        <StyledBurger theme={theme} mobileMenuOpen={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-      <div />
-      <div />
-      <div />
-    </StyledBurger>
-    </MobileNavContainer>
     <NavContainer theme={theme} isDark={isDark} mobileMenuOpen={mobileMenuOpen}>
       <NavInfoContainer >
         <LogoLink
@@ -186,6 +166,11 @@ const NavigationHeader: React.FC<Props> = ({ navigatorPosition, setNavigatorShap
         <Description theme={theme}>
           {description}
         </Description>
+        <StyledBurger theme={theme} mobileMenuOpen={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+      <div />
+      <div />
+      <div />
+    </StyledBurger>
       </NavInfoContainer>
       <NavControls>
         {showBackArrow ? (
@@ -318,29 +303,32 @@ const BackArrowIconContainer = styled.div`
   `}
 `
 
-const MobileNavContainer = styled.div<{theme: any}>`
-  display: none;
-  ${mediaqueries.tablet`
-    display: flex;
-    min-height: 50px;
-    z-index: 787;
-    background: white;
-    top: 0;
-    left: 0;
-    position: fixed;
-    width: 100%;
-  `}
+// const MobileNavContainer = styled.div<{theme: any, mobileMenuOpen: boolean}>`
+//   display: none;
+//   @media (max-width: 768px){
+//     display: flex;
+//     min-height: 80px;
+//     z-index: 787;
+//     background: white;
+//     bottom: 0;
+//     left: 0;
+//     position: fixed;
+//     width: 100%;
+//     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+//     transition: ease-in 0.4s;
+//     transform: ${(p => p.mobileMenuOpen ? 'translateY(-90vh)' : 'translateY(0px)')};
+//   }
 
-  &::after {
-    content: '';
-    position: absolute;
-    height: 100%;
-    width: 1px;
-    right: 0px;
-    background: rgb(255,255,255);
-    background: linear-gradient(3deg, ${p => p.theme.colors.secondary} 0%, ${p => p.theme.colors.primary} 100%);
-  }
-`
+//   &::after {
+//     content: '';
+//     position: absolute;
+//     height: 100%;
+//     width: 1px;
+//     right: 0px;
+//     background: rgb(255,255,255);
+//     background: linear-gradient(3deg, ${p => p.theme.colors.secondary} 0%, ${p => p.theme.colors.primary} 100%);
+//   }
+// `
 
 const NavContainer = styled.div<{ isDark: boolean; mobileMenuOpen: boolean; theme: any; }>`
   position: relative;
@@ -352,24 +340,25 @@ const NavContainer = styled.div<{ isDark: boolean; mobileMenuOpen: boolean; them
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: ${p => p.theme.colors.background};
   transition: 0.9s var(--ease-in-out-quad), background-color 0.25s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
   
-  ${mediaqueries.tablet`
+  @media (max-width: 768px){
     display: flex;
-    min-height: 101vh;
-    position: absolute;
+    min-height: 100vh;
+    position: fixed;
     z-index: 787;
-    background: white;
     top: 0;
+    bottom: 0;
     left: 0;
-    padding: 20px;
-  `}
+    right: 0;
+    padding: 10px 0 40px 0;
+    margin: 0;
+  }
 
   @media (max-width: 1070px) {
-        transform: ${p => p.mobileMenuOpen ? 'translate(0px, 0px)' : 'translate(-100vw,0)'}
+        transform: ${p => p.mobileMenuOpen ? 'translateY(0)' : 'translateY(calc(100vh - 50px))'}
       }
-  
-
 `
 
 const NavInfoContainer = styled.div`
@@ -388,6 +377,15 @@ const Title = styled.h1<{ navigatorPosition: any; theme: any; }>`
   text-align: center;
   transform: ${p =>
     p.navigatorPosition ? `translateY(-55px) translateX(20px)` : `translateY(1)`};
+
+    @media (max-width: 768px){
+      transform: ${p =>
+        p.navigatorPosition
+          ? `translateY(7px) translateX(-122px)`
+          : `translateY(1px) translateX(1px)`};
+      opacity: ${(p => p.navigatorPosition ? 0 : 1)};    
+    }
+
 `
 
 const Subtitle = styled.h2<{ navigatorPosition: any; theme: any; }>`
@@ -403,6 +401,14 @@ const Subtitle = styled.h2<{ navigatorPosition: any; theme: any; }>`
     p.navigatorPosition
       ? `translateY(-55px) translateX(20px)`
       : `translateY(1px) translateX(1px)`};
+
+  @media (max-width: 768px){
+    transform: ${p =>
+      p.navigatorPosition
+        ? `translateY(-55px) translateX(20px)`
+        : `translateY(1px) translateX(1px)`};
+      opacity: ${(p => p.navigatorPosition ? 0 : 1)};    
+  }
 `
 
 const Description = styled.h3<{theme: any}>`
@@ -432,11 +438,14 @@ const LogoLink = styled(({ navigatorPosition, ...rest }) => <AniLink {...rest} /
   align-items: center;
   margin: auto;
   transition: 0.5s ease-in-out;
-  transform: ${p =>
+  transform: ${(p: any) =>
     p.navigatorPosition ? 'translateX(-90px)' : 'translateX(1px)'};
-  ${mediaqueries.desktop_medium`
-    left: 0
-  `}
+    @media (max-width: 768px) {
+      flex-direction: column;
+      left: 0px;
+      transform: ${(p: any) =>
+      p.navigatorPosition ? 'translateX(-140px)' : 'translateX(0px)'};
+    }
 
   &[data-a11y="true"]:focus::after {
     content: '';
@@ -496,6 +505,11 @@ const ArticlesHolder = styled.div`
   grid-row-gap: 10px;
   margin: auto 5px auto 20px;
   padding: 10px 0px 150px 0px;
+
+  @media(max-width: 768px){
+    margin: auto;
+    width: 300px
+  }
 `
 
 const ArticleViewer = styled.aside<{ isDark: boolean; navigatorPosition: any; navigatorShape: string; theme: any }>`
@@ -522,6 +536,12 @@ const ArticleViewer = styled.aside<{ isDark: boolean; navigatorPosition: any; na
     left: 0;
     background: ${p => p.theme.colors.background};
     margin: -15px 20px;
+  }
+
+  @media (max-width: 786px){
+    width: 100vw;
+    transform: ${p =>
+      p.navigatorPosition !== "main"  ? (p.navigatorShape === 'hidden' ? `translateY(calc(100% - 250px))` : `translateY(1px)`) : `translateY(100vh)`};
   }
 `
 
@@ -660,6 +680,9 @@ const IconWrapper = styled.button<{ isDark: boolean; navigatorShape: string; the
 `
 
 const StyledBurger = styled.button<{ mobileMenuOpen: boolean; theme: any; }>`
+  display: node;
+  
+  @media (max-width: 768px){
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -670,6 +693,9 @@ const StyledBurger = styled.button<{ mobileMenuOpen: boolean; theme: any; }>`
   cursor: pointer;
   padding: 0;
   z-index: 10;
+  position: absolute;
+  top: 0;
+  right: 0;
 
   &:focus {
     outline: none;
@@ -697,4 +723,5 @@ const StyledBurger = styled.button<{ mobileMenuOpen: boolean; theme: any; }>`
       transform: ${({ mobileMenuOpen }) => mobileMenuOpen ? 'rotate(-45deg)' : 'rotate(0)'};
     }
   }
+}
 `

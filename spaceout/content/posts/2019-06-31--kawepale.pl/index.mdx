@@ -12,15 +12,55 @@ tech:
   - Css
 ---
 
-## KawePale coffepale and rostery
 
-KawePale are 2 passionate guys about importing, roasting and distributing the best coffee in Warsaw. They came to me with an idea for an international online shop, KawePale frontend is build upon gatsby.js framework with woocommerce solution as a backend.
+import { UI, GridGallery } from '../components/uxui.jsx';
 
-### Design
+## UX / UI
 
-The slick design is supposed focus customers on what's really important, which is coffee, guys and their passion. Special UX concern was put on quick and easy buying. This was possible thanks to custom add to basket buttons, ability to add and subtract items on each product page, open basket, and order page. Smooth customer checkout is always the most important element next to your product presentation.
+KawePale is a long supported project of mine I have been developing since 2018 now, 
+is is a full package combination, business website, blog and e-commerce solution. 
 
-### Gatsby.js and Woocommerce
-This time, I have decided to use gatsby.js with woocommerce backend, client had his already established server infrastructure that was needed to be used. Multi lang support woth i18n, custom shopping cart based on redux.
+The main business goal of the website is to promote and sell high end coffee and coffee related products.
+KawePale are 2 passionate guys about importing, roasting and distributing the best coffee in Warsaw.
+In the design I wanted to express that feeling of personal touch and combine it with clean and professional minimalistic look. 
 
-### Designed and developed by spaceout.pl
+This platform was and is in constant development with clear goal to increase conversion rates on actual shopping and brand build.
+Google analytics metrics with extended custom event e-commerce tracking is a good tool in refactoring UI to fit customer needs. 
+
+
+<UI colors={['#0c0c0c', '#373739', '#737373' ,'#aaa5a5', '#f90000']} 
+    primeFontFamily={'Barlow Condensed'} 
+    secondaryFontFamily={'Cutive'} 
+    background={'#FFF'}
+    textColor='#4a4a4a' 
+    h1={{
+          marginTop: '150px',
+          fontFamily: 'Barlow Condensed,sans-serif',
+          fontWeight: '700',
+          fontSize: '40px',
+          textTransform: 'uppercase',
+          color: '#000'
+        }} 
+    h2={{
+      fontSize: '26px',
+      fontWeight: '700',
+      fontFamily: 'Barlow Condensed, sans-serif',
+    }}
+    body={{
+      fontFamily: 'Cutive',
+      color: '#363636',
+      fontSize: '18px',
+    }}
+        />
+
+### Development
+
+kawepale.pl is one of the most demanding projects I have encountered so far, internationalization with 7 languages, multi lang blog 
+platform, shopping solution, custom payment integration and custom voucher creation was only a few of client's demands. 
+
+For the backend and blog side of things I have entrusted the good old wordpress to do the job for me, as it build in solutions have made 
+everything I needed to spawn quickly the requirements needed to fullfil the project. On the front-side I have chosen the battle tested gatbsy.js 
+framework that at this point always me to build any kind of UI I need in order to satisfy my clients needs.
+
+
+Designed and developed by spaceout.pl
