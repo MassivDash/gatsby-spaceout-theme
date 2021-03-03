@@ -11,5 +11,5 @@ module.exports = ({ actions }) => {
       hero: File @fileByRelativePath
       timeToRead: Int
     }
-  `)
-}
+  `);
+};

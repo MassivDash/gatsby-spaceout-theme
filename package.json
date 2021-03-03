@@ -7,7 +7,7 @@
   "scripts": {
     "build": "yarn workspace spaceout build",
     "dev": "yarn start",
-    "lint": "eslint --ignore-path .gitignore .",
+    "lint": "eslint --ignore-path .gitignore . --fix",
     "start": "yarn workspace spaceout develop",
     "serve": "yarn workspace spaceout serve",
     "bootstrap": "yarn lerna bootstrap",
