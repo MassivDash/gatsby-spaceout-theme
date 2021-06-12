@@ -1,6 +1,6 @@
 .typographyHolder {
     display: flex;
-    margin-top: 73px;
+    margin: 70px auto;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
@@ -10,8 +10,14 @@
 .typographyGrid {
     display: grid;
     margin: 0;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     min-height: 250px;
+}
+
+@media screen and (min-width: 500px){
+  .typographyGrid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .typographyHeadingsHolder {

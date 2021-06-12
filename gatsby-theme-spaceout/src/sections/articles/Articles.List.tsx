@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, memo } from 'react'
-import styled from '@emotion/styled'
-import { css } from '@emotion/core'
-import AniLink from 'gatsby-plugin-transition-link/AniLink'
-import Headings from '@components/Headings'
-import Image, { ImagePlaceholder } from '@components/Image'
-import mediaqueries from '@styles/media'
-import { IArticle } from '@types'
+import React, { useContext, useEffect, memo } from 'react';
+import styled from '@emotion/styled';
+import { css } from '@emotion/core';
+import AniLink from 'gatsby-plugin-transition-link/AniLink';
+import Headings from '@components/Headings';
+import Image, { ImagePlaceholder } from '@components/Image';
+import mediaqueries from '@styles/media';
+import { IArticle } from '@types';
 import Icons from '@icons';
-import bg from './snow.png'
+import bg from './snow.png';
 
-import { GridLayoutContext } from './Articles.List.Context'
-import { graphql, useStaticQuery } from 'gatsby'
+import { GridLayoutContext } from './Articles.List.Context';
+import { graphql, useStaticQuery } from 'gatsby';
 
 const siteQuery = graphql`
   {
@@ -26,7 +26,7 @@ const siteQuery = graphql`
       }
     }
   }
-`
+`;
 
 /**
  * Tiles
@@ -43,22 +43,22 @@ const siteQuery = graphql`
  */
 
 interface ArticlesListProps {
-  articles: IArticle[]
-  alwaysShowAllDetails?: boolean
+  articles: IArticle[];
+  alwaysShowAllDetails?: boolean;
 }
 
 interface ArticlesListItemProps {
-  article: IArticle
-  narrow?: boolean
+  article: IArticle;
+  narrow?: boolean;
 }
 
 function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
-  if (!articles) return null
+  if (!articles) return null;
 
-  const hasOnlyOneArticle = articles.length === 1
+  const hasOnlyOneArticle = articles.length === 1;
   const { gridLayout = 'tiles', hasSetGridLayout, getGridLayout } = useContext(
-    GridLayoutContext
-  )
+    GridLayoutContext,
+  );
 
   /**readingTime
    * We're taking the flat array of articles [{}, {}, {}...]
@@ -67,13 +67,12 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
    */
   const articlePairs = articles.reduce((result, value, index, array) => {
     if (index % 2 === 0) {
-      result.push(array.slice(index, index + 2))
+      result.push(array.slice(index, index + 2));
     }
-    return result
-  }, [])
+    return result;
+  }, []);
 
-  useEffect(() => getGridLayout(), [])
-
+  useEffect(() => getGridLayout(), []);
 
   return (
     <ArticlesListContainer
@@ -81,11 +80,10 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
       alwaysShowAllDetails={alwaysShowAllDetails}
     >
       {articlePairs.map((ap, index) => {
-        const isEven = index % 2 !== 0
-        const isOdd = index % 2 !== 1
+        const isEven = index % 2 !== 0;
+        const isOdd = index % 2 !== 1;
 
         return (
-          
           <List
             key={index}
             gridLayout={gridLayout}
@@ -93,45 +91,53 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
             reverse={isEven}
           >
             <ListItem article={ap[0]} narrow={isEven} />
-           
+
             <ListItem article={ap[1]} narrow={isOdd} />
           </List>
-        )
+        );
       })}
     </ArticlesListContainer>
-
-  )
+  );
 }
 
-export default ArticlesList
+export default ArticlesList;
 
 export const TechIcons = ({ tech }) => {
-  const techItems = tech.map(tech => <img style={{ margin: '10px', zIndex: 1 }}key={tech} width="50px" src={Icons[tech]} alt={tech} ></img>)
-  return techItems  
-}
-
+  const techItems = tech.map((tech) => (
+    <img
+      style={{ margin: '10px', zIndex: 1 }}
+      key={tech}
+      width="50px"
+      src={Icons[tech]}
+      alt={tech}
+    ></img>
+  ));
+  return techItems;
+};
 
 const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
-  const results = useStaticQuery(siteQuery)
-  const { readingTime } = results.allSite.edges[0].node.siteMetadata
+  const results = useStaticQuery(siteQuery);
+  const { readingTime } = results.allSite.edges[0].node.siteMetadata;
 
+  if (!article) return null;
 
-  if (!article) return null
-
-
-  const { gridLayout } = useContext(GridLayoutContext)
-  const hasOverflow = narrow && article.title.length > 35
-  const imageSource = narrow ? article.hero.narrow : article.hero.regular
+  const { gridLayout } = useContext(GridLayoutContext);
+  const hasOverflow = narrow && article.title.length > 35;
+  const imageSource = narrow ? article.hero.narrow : article.hero.regular;
   const hasHeroImage =
-    Object.keys(imageSource).length !== 0 && imageSource.constructor === Object
+    Object.keys(imageSource).length !== 0 && imageSource.constructor === Object;
   return (
     <ArticleLink fade top="entry" to={article.slug} data-a11y="false">
       <Item gridLayout={gridLayout}>
         <ImageContainer narrow={narrow} gridLayout={gridLayout}>
           {hasHeroImage ? <Image src={imageSource} /> : <ImagePlaceholder />}
-        <ArticleHover><TechIcons tech={article.tech} /><ArticleHoverTextBG>{article.appDescription}</ArticleHoverTextBG><ReadMoreButton>&#8674;</ReadMoreButton></ArticleHover>
+          <ArticleHover>
+            <TechIcons tech={article.tech} />
+            <ArticleHoverTextBG>{article.appDescription}</ArticleHoverTextBG>
+            <ReadMoreButton>&#8674;</ReadMoreButton>
+          </ArticleHover>
         </ImageContainer>
-        <div>
+        <ExcerptWrapper>
           <Title dark hasOverflow={hasOverflow} gridLayout={gridLayout}>
             {article.title}
           </Title>
@@ -145,14 +151,14 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
           {readingTime && (
             <MetaData>{article.timeToRead} min czytania</MetaData>
           )}
-        </div>
+        </ExcerptWrapper>
       </Item>
     </ArticleLink>
-  )
-}
+  );
+};
 
-const wide = '1fr'
-const narrow = '457px'
+const wide = '1fr';
+const narrow = '457px';
 
 const limitToTwoLines = css`
   text-overflow: ellipsis;
@@ -166,7 +172,7 @@ const limitToTwoLines = css`
   ${mediaqueries.phablet`
     -webkit-line-clamp: 3;
   `}
-`
+`;
 
 const showDetails = css`
   p {
@@ -176,14 +182,17 @@ const showDetails = css`
   h2 {
     margin-bottom: 10px;
   }
-`
+`;
 
 const ArticlesListContainer = styled.div<{ alwaysShowAllDetails?: boolean }>`
   transition: opacity 0.25s;
-  ${p => p.alwaysShowAllDetails && showDetails}
-`
+  ${(p) => p.alwaysShowAllDetails && showDetails};
+  ${mediaqueries.tablet`
+    padding: 0 1rem;
+  `}
+`;
 
-const listTile = p => css`
+const listTile = (p) => css`
   position: relative;
   display: grid;
   grid-template-columns: ${p.reverse ? `${wide} ${wide}` : `${wide} ${wide}`};
@@ -197,19 +206,19 @@ const listTile = p => css`
 
   ${mediaqueries.desktop_medium`
     grid-template-columns: 1fr 1fr;
-    
+
   `}
 
   ${mediaqueries.tablet`
     grid-template-columns: 1fr;
-    
+
     &:not(:last-child) {
       margin-bottom: 0;
     }
   `}
-`
+`;
 
-const listItemRow = p => css`
+const listItemRow = (p) => css`
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 488px;
@@ -218,7 +227,6 @@ const listItemRow = p => css`
   align-items: center;
   position: relative;
   margin-bottom: 50px;
-
 
   ${mediaqueries.desktop`
     grid-column-gap: 24px;
@@ -238,9 +246,9 @@ const listItemRow = p => css`
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
   `}
-`
+`;
 
-const listItemTile = p => css`
+const listItemTile = (p) => css`
   position: relative;
 
   ${mediaqueries.tablet`
@@ -257,34 +265,33 @@ const listItemTile = p => css`
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
   `}
-`
+`;
 
 // If only 1 article, dont create 2 rows.
-const listRow = p => css`
+const listRow = (p) => css`
   display: grid;
   grid-template-rows: ${p.hasOnlyOneArticle ? '1fr' : '1fr'};
-  
-`
+`;
 
 const List = styled.div<{
-  reverse: boolean
-  gridLayout: string
-  hasOnlyOneArticle: boolean
+  reverse: boolean;
+  gridLayout: string;
+  hasOnlyOneArticle: boolean;
 }>`
-  ${p => (p.gridLayout === 'tiles' ? listTile : listRow)};
-  transition: opacity .8s ease-in-out
-`
+  ${(p) => (p.gridLayout === 'tiles' ? listTile : listRow)};
+  transition: opacity 0.8s ease-in-out;
+`;
 
 const Item = styled.div<{ gridLayout: string }>`
-  ${p => (p.gridLayout === 'rows' ? listItemRow : listItemTile)}
-`
+  ${(p) => (p.gridLayout === 'rows' ? listItemRow : listItemTile)}
+`;
 
 const ImageContainer = styled.div<{ narrow: boolean; gridLayout: string }>`
   position: relative;
-  height: ${p => (p.gridLayout === 'tiles' ? '100%' : '100%')};
-  box-shadow: 0 30px 60px -10px rgba(0, 0, 0, ${p => (p.narrow ? 0.22 : 0.3)}),
-    0 18px 36px -18px rgba(0, 0, 0, ${p => (p.narrow ? 0.25 : 0.33)});
-  margin-bottom: ${p => (p.gridLayout === 'tiles' ? '30px' : 0)};
+  height: ${(p) => (p.gridLayout === 'tiles' ? '100%' : '100%')};
+  box-shadow: 0 30px 60px -10px rgba(0, 0, 0, ${(p) => (p.narrow ? 0.22 : 0.3)}),
+    0 18px 36px -18px rgba(0, 0, 0, ${(p) => (p.narrow ? 0.25 : 0.33)});
+  margin-bottom: ${(p) => (p.gridLayout === 'tiles' ? '30px' : 0)};
   transition: transform 0.3s var(--ease-out-quad),
     box-shadow 0.3s var(--ease-out-quad);
 
@@ -304,12 +311,12 @@ const ImageContainer = styled.div<{ narrow: boolean; gridLayout: string }>`
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
   `}
-`
+`;
 
 const Title = styled(Headings.H2)`
   font-size: 21px;
   font-family: ${(p: any) => p.theme.fonts.sansSerif};
-  margin-bottom: ${p =>
+  margin-bottom: ${(p) =>
     p.hasOverflow && p.gridLayout === 'tiles' ? '35px' : '10px'};
   transition: color 0.3s ease-in-out;
   ${limitToTwoLines};
@@ -319,28 +326,35 @@ const Title = styled(Headings.H2)`
   `}
 
   ${mediaqueries.tablet`
-    font-size: 24px;  
+    font-size: 24px;
   `}
 
   ${mediaqueries.phablet`
-    font-size: 22px;  
+    font-size: 22px;
     padding: 30px 20px 0;
     margin-bottom: 10px;
     -webkit-line-clamp: 3;
   `}
-`
+`;
+
+const ExcerptWrapper = styled.div`
+  ${mediaqueries.tablet`
+min-height: 150px;
+`}
+`;
 
 const Excerpt = styled.p<{
-  hasOverflow: boolean
-  narrow: boolean
-  gridLayout: string
+  hasOverflow: boolean;
+  narrow: boolean;
+  gridLayout: string;
 }>`
   ${limitToTwoLines};
   font-size: 16px;
   margin-bottom: 10px;
   color: ${(p: any) => p.theme.colors.grey};
-  display: ${p => (p.hasOverflow && p.gridLayout === 'tiles' ? 'none' : 'box')};
-  max-width: ${p => (p.narrow ? '415px' : '515px')};
+  display: ${(p) =>
+    p.hasOverflow && p.gridLayout === 'tiles' ? 'none' : 'box'};
+  max-width: ${(p) => (p.narrow ? '415px' : '515px')};
 
   ${mediaqueries.desktop`
     display: -webkit-box;
@@ -356,19 +370,19 @@ const Excerpt = styled.p<{
     margin-bottom: 20px;
     -webkit-line-clamp: 3;
   `}
-`
+`;
 
 const MetaData = styled.div`
   font-weight: 600;
   font-size: 16px;
-  color: ${(p : any) => p.theme.colors.grey};
+  color: ${(p: any) => p.theme.colors.grey};
   opacity: 0.33;
 
   ${mediaqueries.phablet`
     max-width: 100%;
     padding:  0 20px 30px;Link
   `}
-`
+`;
 
 const ArticleHover = styled.div`
   position: absolute;
@@ -387,23 +401,23 @@ const ArticleHover = styled.div`
   overflow: hidden;
   &:hover {
     opacity: 1;
-  };
-`
+  }
+`;
 
 const ArticleHoverTextBG = styled.div`
-top: 0;
-left: 0;
-position: absolute;
-font-size:5rem;
-color: ${(p: any) => p.theme.colors.articleHoverText};
-z-index: 0;
-margin: 25px;
-writing-mode: vertical-rl;
-text-orientation: mixed;
-word-break: break-word;
-font-family: helvetica;
-font-weight: 900;
-`
+  top: 0;
+  left: 0;
+  position: absolute;
+  font-size: 5rem;
+  color: ${(p: any) => p.theme.colors.articleHoverText};
+  z-index: 0;
+  margin: 25px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  word-break: break-word;
+  font-family: helvetica;
+  font-weight: 900;
+`;
 
 const ReadMoreButton = styled.div`
   position: absolute;
@@ -415,9 +429,7 @@ const ReadMoreButton = styled.div`
   color: ${(p: any) => p.theme.colors.articleHoverText};
   padding: 50px;
   font-weight: 900;
-
-`
-
+`;
 
 const ArticleLink = styled(AniLink)`
   position: relative;
@@ -464,4 +476,4 @@ const ArticleLink = styled(AniLink)`
       transform: scale(0.97) translateY(3px);
     }
   `}
-`
+`;

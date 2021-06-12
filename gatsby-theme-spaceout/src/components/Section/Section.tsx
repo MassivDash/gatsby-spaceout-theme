@@ -3,20 +3,19 @@ import styled from '@emotion/styled'
 import mediaqueries from '@styles/media'
 
 const Section = styled.section<{ narrow?: boolean }>`
-  margin: 35px 4rem 0 7rem;
-  padding: 0 5.8vw;
+  margin: 20px 4rem 0 7rem;
   position: relative;
 
   ${mediaqueries.desktop`
     max-width: 850px;
-    
+
   `};
 
   ${p =>
     p.narrow
       ? mediaqueries.tablet`
-          padding: 0 2rem;
-          max-width: 527px;
+          padding: 0;
+          margin: 10px auto;
         `
       : mediaqueries.tablet`
           margin: 0.4rem 0.5rem;
