@@ -7,29 +7,29 @@ const Typography = ({ primeFontFamily, hasPrimeLight, secondaryFontFamily, hasSe
     return (
         <div className="typographyHolder" style={{backgroundColor: background, color: color}}>
             <div className="typographyGrid" >
-            <div className="typographyPrime bold" style={{ fontFamily: primeFontFamily }}> 
+            <div className="typographyPrime bold" style={{ fontFamily: primeFontFamily }}>
                 <p>Aa</p>
                 <p>{primeFontFamily} Bold</p>
             </div>
-            <div className="typographyPrime" style={{ fontFamily: primeFontFamily }}> 
+            <div className="typographyPrime" style={{ fontFamily: primeFontFamily }}>
                 <p>Aa</p>
                 <p>{primeFontFamily} Normal</p>
             </div>
-            <div className="typographyPrime light" style={{ fontFamily: primeFontFamily }}> 
+            <div className="typographyPrime light" style={{ fontFamily: primeFontFamily }}>
                 <p>Aa</p>
                 <p>{primeFontFamily} Light</p>
             </div>
-            <div className="typographySecondary bold" style={{ fontFamily: secondaryFontFamily }}> 
+            <div className="typographySecondary bold" style={{ fontFamily: secondaryFontFamily }}>
                 <p>Aa</p>
                 <p>{secondaryFontFamily} Bold</p>
             </div>
-            <div className="typographySecondary" style={{ fontFamily: secondaryFontFamily }}> 
+            <div className="typographySecondary" style={{ fontFamily: secondaryFontFamily }}>
                 <p>Aa</p>
                 <p>{secondaryFontFamily} Normal</p>
             </div>
             {
                 hasSecondaryLight && (
-                    <div className="typographySecondary light" style={{ fontFamily: secondaryFontFamily }}> 
+                    <div className="typographySecondary light" style={{ fontFamily: secondaryFontFamily }}>
                     <p>Aa</p>
                     <p>{secondaryFontFamily} Light</p>
                     </div>

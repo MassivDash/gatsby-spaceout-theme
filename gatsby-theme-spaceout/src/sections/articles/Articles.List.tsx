@@ -188,7 +188,7 @@ const ArticlesListContainer = styled.div<{ alwaysShowAllDetails?: boolean }>`
   transition: opacity 0.25s;
   ${(p) => p.alwaysShowAllDetails && showDetails};
   ${mediaqueries.tablet`
-    padding: 0 1rem;
+    padding: 0 0 0 10px;
   `}
 `;
 
@@ -300,7 +300,7 @@ const ImageContainer = styled.div<{ narrow: boolean; gridLayout: string }>`
   }
 
   ${mediaqueries.tablet`
-    height: 200px;
+    height: 400px;
     margin-bottom: 35px;
   `}
 

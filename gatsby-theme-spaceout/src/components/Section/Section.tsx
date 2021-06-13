@@ -1,6 +1,6 @@
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
 
-import mediaqueries from '@styles/media'
+import mediaqueries from '@styles/media';
 
 const Section = styled.section<{ narrow?: boolean }>`
   margin: 20px 4rem 0 7rem;
@@ -11,7 +11,7 @@ const Section = styled.section<{ narrow?: boolean }>`
 
   `};
 
-  ${p =>
+  ${(p) =>
     p.narrow
       ? mediaqueries.tablet`
           padding: 0;
@@ -25,7 +25,8 @@ const Section = styled.section<{ narrow?: boolean }>`
 
   ${mediaqueries.phablet`
     max-width: 100%;
+    margin: 0 20px;
   `};
-`
+`;
 
-export default Section
+export default Section;

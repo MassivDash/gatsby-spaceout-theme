@@ -22,8 +22,8 @@ export default ShuttleTitle
 
 
 const moveBlack = keyframes`
-	100% { 
-        
+	100% {
+
         background-position: -100vw 0;
 	}
 `
@@ -36,11 +36,11 @@ const moveShuttle = keyframes`
     25% {
         transform: translate(0)
     }
-    
+
     45% {
         transform: translate(0)
     }
-	
+
     70% {
         transform: translateY(-200vh)
     }
@@ -53,8 +53,8 @@ const moveShuttle = keyframes`
         transform: translateY(100vh) translateX(200vw)
     }
 
-    100% { 
-        
+    100% {
+
         transform: translateY(100vh) translateX(200vw)
 	}
 `
@@ -69,8 +69,15 @@ display: flex;
 flexDirection: column;
 align-items: flex-end;
 justify-content: flex-end;
-clip-path: circle(25% at 70% 45%);
 animation: ${moveBlack} 65s linear infinite;
+clip-path: circle(43% at 70% 45%);
+transform: translate(25px, 40px);
+
+
+@media (min-width: 1024px){
+  clip-path: circle(25% at 70% 45%);
+  transform: translate(0);
+}
 
 `
 const ShuttleImg = styled.img`
@@ -83,7 +90,16 @@ const ShadowParent = styled.div`
 `
 
 export const NextToShuttleHolder = styled.div`
-margin: -400px calc(100% - 25vw) 150px 0;
+margin: 0px;
+
+@media (min-width: 1024px){
+
+  margin: -400px calc(100% - 25vw) 150px 0;
+
+}
+
+
+
 `
 export const FlexHolder = styled.div`
 display: flex;

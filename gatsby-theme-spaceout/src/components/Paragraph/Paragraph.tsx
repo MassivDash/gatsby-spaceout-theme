@@ -1,11 +1,12 @@
-import styled from '@emotion/styled'
-import mediaqueries from '@styles/media'
+import styled from '@emotion/styled';
+import mediaqueries from '@styles/media';
 
 const Paragraph = styled.p`
   line-height: 1.756;
   color: ${(p: any) => p.theme.colors.articleText};
   font-family: ${(p: any) => p.theme.fonts.sansSerif};
-  transition: ${(p: any) => p.theme.colorModeTransition}, 0.25s var(--ease-in-out-quad);
+  transition: ${(p: any) => p.theme.colorModeTransition},
+    0.25s var(--ease-in-out-quad);
   margin: 0 auto 35px;
   width: 100%;
   max-width: 1150px;
@@ -24,8 +25,8 @@ const Paragraph = styled.p`
   `};
 
   ${mediaqueries.phablet`
-    padding: 0 20px;
+    padding: 0 0;
   `};
-`
+`;
 
-export default Paragraph
+export default Paragraph;

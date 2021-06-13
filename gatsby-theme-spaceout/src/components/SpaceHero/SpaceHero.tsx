@@ -102,12 +102,12 @@ const SpaceHero = () => {
         <Image sizes={back.sizes} onLoad={() => onBackgroundLoad(true)} />
       </Blackie>
       <div>
-      { onBackgroundLoad && onSpacemanLoad && 
+      { onBackgroundLoad && onSpacemanLoad &&
         <SpaceoutBox
           onClick={() => toggleToPosition('positionTwo')}
         >
           <City src={logo} alt="" />
-          
+
           <AnimatedSpace>
           <svg  >
       <title>{"spaceout.pl"}</title>
@@ -124,7 +124,7 @@ const SpaceHero = () => {
     </svg>
 
           </AnimatedSpace>
-          
+
           <AnimatedStellar>
     <svg>
       <title>{"spaceout.pl"}</title>
@@ -174,7 +174,7 @@ const moveBlack = keyframes`
 	50% {
 		transform: scale(3) translate(0px)
     	}
-	
+
 	100% {transform: scale(3) translate(-400px)
 	}
 `
@@ -192,19 +192,10 @@ const Hero = styled.div`
   position: relative;
   z-index: 1;
 
-  ${mediaqueries.phone`
-   width: 100%;
-   height: 100%;
-   min-height: 650px;
-   margin: 0 15px 0 17px;
-  `}
-  ${mediaqueries.tablet`center
-    margin: 0 19px 0 13px;
-    `}
   ${mediaqueries.desktop`
-    margin: 0 22px 0 10px;
+    margin: 0 0 0 10px;
     `}
-`   
+`
 
 const Blackie = styled.div`
 z-index: 0;
@@ -246,7 +237,7 @@ const draw = keyframes`
 		fill: #FFFFFF00;
     z-index: 5;
 	}
-	
+
 	100% {
 		stroke-dashoffset: 0;
 		fill-opacity: 1;
@@ -261,7 +252,7 @@ const moveCity = keyframes`
 		z-index: 5;
     transform: translate(134px, -83px)
     	}
-      
+
   25% {
     z-index: 5;
     transform: translate(139px, -53px)
@@ -276,7 +267,7 @@ const moveCity = keyframes`
     z-index: 0;
     transform: translate(129px, -53px)
   }
-	
+
 	100% {
 		z-index: 0;
     transform: translate(134px, -83px)
@@ -287,7 +278,7 @@ const moveSpaceman = keyframes`
 
     transform: translate(-345px,-502px)
     	}
-      
+
   25% {
 
     transform: translate(-365px,-522px)
@@ -299,10 +290,10 @@ const moveSpaceman = keyframes`
 	}
 
   75% {
- 
+
     transform: translate(-365px,-522px)
   }
-	
+
 	100% {
 
     transform: translate(-345px,-502px)
@@ -353,9 +344,9 @@ const AnimatedSpace = styled.div`
       }
       &:nth-of-type(8){
         animation: ${draw} 600ms ${7 * animationDelayTime}ms forwards;
-      }		
+      }
 		}
-		
+
 	}
 `
 
@@ -442,9 +433,9 @@ const AnimatedStellar = styled.div`
       }
       &:nth-of-type(20){
         animation: ${draw} 600ms ${27 * animationDelayTime}ms forwards;
-      }						
+      }
 		}
-		
+
 	}
 `
 

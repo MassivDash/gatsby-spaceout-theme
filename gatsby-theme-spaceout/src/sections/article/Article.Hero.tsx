@@ -1,21 +1,21 @@
-import React from 'react'
-import styled from '@emotion/styled'
+import React from 'react';
+import styled from '@emotion/styled';
 
-import Headings from '@components/Headings'
-import Image, { ImagePlaceholder } from '@components/Image'
+import Headings from '@components/Headings';
+import Image, { ImagePlaceholder } from '@components/Image';
 
-import mediaqueries from '@styles/media'
-import { IArticle, IAuthor } from '@types'
+import mediaqueries from '@styles/media';
+import { IArticle, IAuthor } from '@types';
 
 import { TechIcons } from '../articles/Articles.List';
-import ArticleAuthors from './Article.Authors'
+import ArticleAuthors from './Article.Authors';
 
 interface ArticleHeroProps {
-  article: IArticle
-  authors: IAuthor[]
+  article: IArticle;
+  authors: IAuthor[];
 }
 
-import { graphql, useStaticQuery } from 'gatsby'
+import { graphql, useStaticQuery } from 'gatsby';
 
 const siteQuery = graphql`
   {
@@ -31,23 +31,23 @@ const siteQuery = graphql`
       }
     }
   }
-`
+`;
 
 const ArticleHero = ({ article, authors }: ArticleHeroProps) => {
-  const { allSite } = useStaticQuery(siteQuery)
-  const { readingTime } = allSite.edges[0].node.siteMetadata
-  const hasCoAUthors = authors.length > 1
+  const { allSite } = useStaticQuery(siteQuery);
+  const { readingTime } = allSite.edges[0].node.siteMetadata;
+  const hasCoAUthors = authors.length > 1;
   const hasHeroImage =
     Object.keys(article.hero.full).length !== 0 &&
-    article.hero.full.constructor === Object
+    article.hero.full.constructor === Object;
 
   return (
     <Hero>
       <Header>
-      <ArticleUberTitle>{article.appDescription}</ArticleUberTitle>
+        <ArticleUberTitle>{article.appDescription}</ArticleUberTitle>
         <HeroHeading>{article.title}</HeroHeading>
         <HeroSubtitle hasCoAUthors={hasCoAUthors}>
-          <TechIcons tech={article.tech} /> 
+          <TechIcons tech={article.tech} />
           <ArticleAuthors authors={authors} />
           {readingTime && (
             <ArticleMeta hasCoAUthors={hasCoAUthors}>
@@ -64,13 +64,13 @@ const ArticleHero = ({ article, authors }: ArticleHeroProps) => {
         )}
       </HeroImage>
     </Hero>
-  )
-}
+  );
+};
 
-export default ArticleHero
+export default ArticleHero;
 
 const Hero = styled.div`
-  ${p => mediaqueries.phablet`
+  ${(p) => mediaqueries.phablet`
     &::before {
       content: "";
       width: 100%;
@@ -95,30 +95,29 @@ const Hero = styled.div`
       transition: ${p.theme.colorModeTransition};
     }
   `}
-`
+`;
 
 const ArticleMeta = styled.div<{ hasCoAUthors: boolean }>`
-  margin-left: ${p => (p.hasCoAUthors ? '10px' : '0')};
+  margin-left: ${(p) => (p.hasCoAUthors ? '10px' : '0')};
 
   ${mediaqueries.phablet`
     margin-left: 0;
   `}
-`
+`;
 
 const ArticleUberTitle = styled.div`
-font-size: 3rem;
-color: ${p => p.theme.colors.articleHoverText};
-z-index: 0;
-word-break: break-word;
-font-family: helvetica;
-font-weight: 900;
-`
+  font-size: 3rem;
+  color: ${(p) => p.theme.colors.articleHoverText};
+  z-index: 0;
+  word-break: break-word;
+  font-family: helvetica;
+  font-weight: 900;
+`;
 
 const Header = styled.header`
   position: relative;
   z-index: 10;
   margin: 20px 10vw 120px;
-
 
   ${mediaqueries.desktop`
     padding-left: 53px;
@@ -133,18 +132,14 @@ const Header = styled.header`
   `}
 
   ${mediaqueries.phablet`
-    margin: 170px auto 180px;
-    padding: 0 40px;
+    margin: 50px auto;
+    padding: 0 20px;
   `}
-
-  @media screen and (max-height: 700px) {
-    margin: 100px auto;
-  }
-`
+`;
 
 const HeroHeading = styled(Headings.H1)`
   font-size: 48px;
-  font-family: ${p => p.theme.fonts.serif};
+  font-family: ${(p) => p.theme.fonts.serif};
   margin-bottom: 25px;
   font-weight: bold;
   line-height: 1.32;
@@ -157,19 +152,21 @@ const HeroHeading = styled(Headings.H1)`
   ${mediaqueries.phablet`
     font-size: 32px;
   `}
-`
+`;
 
 const HeroSubtitle = styled.div<{ hasCoAUthors: boolean }>`
   position: relative;
   display: flex;
   font-size: 18px;
-  color: ${p => p.theme.colors.grey};
+  color: ${(p) => p.theme.colors.grey};
 
-  ${p => mediaqueries.phablet`
+  ${(p) => mediaqueries.phablet`
     font-size: 14px;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
 
-    ${p.hasCoAUthors &&
+    ${
+      p.hasCoAUthors &&
       `
         &::before {
           content: '';
@@ -182,7 +179,8 @@ const HeroSubtitle = styled.div<{ hasCoAUthors: boolean }>`
           opacity: 0.5;
           border-radius: 5px;
         }
-    `}
+    `
+    }
 
 
     strong {
@@ -191,7 +189,7 @@ const HeroSubtitle = styled.div<{ hasCoAUthors: boolean }>`
       margin-bottom: 5px;
     }
   `}
-`
+`;
 
 const HeroImage = styled.div`
   position: relative;
@@ -216,4 +214,4 @@ const HeroImage = styled.div`
       height: 100%;
     }
 `}
-`
+`;
