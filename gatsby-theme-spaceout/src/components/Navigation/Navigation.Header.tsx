@@ -103,7 +103,7 @@ const NavigationHeader: React.FC<Props> = ({ navigatorPosition, setNavigatorShap
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false)
   const [previousPath, setPreviousPath] = useState<string>('/')
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
-  
+
 
   const { sitePlugin, allSite, allArticles } = useStaticQuery(siteQuery)
   const {
@@ -239,8 +239,8 @@ function ArrowControl({ setNavigatorShape, navigatorShape, theme }) {
   let navText = "Main Menu"
    if(navigatorShape === "hidden"){
     navText = "List of posts"
-    navPosition = "visible" 
-   } 
+    navPosition = "visible"
+   }
 
   return (
     <FadeArticleAnimationArrow>
@@ -342,7 +342,7 @@ const NavContainer = styled.div<{ isDark: boolean; mobileMenuOpen: boolean; them
   align-items: center;
   background: ${p => p.theme.colors.background};
   transition: 0.9s var(--ease-in-out-quad), background-color 0.25s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
-  
+
   @media (max-width: 768px){
     display: flex;
     min-height: 100vh;
@@ -373,7 +373,7 @@ const Title = styled.h1<{ navigatorPosition: any; theme: any; }>`
   font-size: ${p => (p.navigatorPosition ? '22px' : '28px')};
   margin: 5px auto;
   color: ${p => p.theme.colors.primary};
-  transition: 0.3s ease-in-out;  
+  transition: 0.3s ease-in-out;
   text-align: center;
   transform: ${p =>
     p.navigatorPosition ? `translateY(-55px) translateX(20px)` : `translateY(1)`};
@@ -383,7 +383,7 @@ const Title = styled.h1<{ navigatorPosition: any; theme: any; }>`
         p.navigatorPosition
           ? `translateY(7px) translateX(-122px)`
           : `translateY(1px) translateX(1px)`};
-      opacity: ${(p => p.navigatorPosition ? 0 : 1)};    
+      opacity: ${(p => p.navigatorPosition ? 0 : 1)};
     }
 
 `
@@ -407,7 +407,7 @@ const Subtitle = styled.h2<{ navigatorPosition: any; theme: any; }>`
       p.navigatorPosition
         ? `translateY(-55px) translateX(20px)`
         : `translateY(1px) translateX(1px)`};
-      opacity: ${(p => p.navigatorPosition ? 0 : 1)};    
+      opacity: ${(p => p.navigatorPosition ? 0 : 1)};
   }
 `
 
@@ -518,7 +518,7 @@ const ArticleViewer = styled.aside<{ isDark: boolean; navigatorPosition: any; na
   flex-direction: column;
   align-items: center;
   top: 80px;
- 
+
   width: 300px;
   margin: 0 10px 0px -5px;
   padding: 10px 0;
@@ -549,7 +549,7 @@ const ArticleLink =  styled(({navigatorPosition, ...rest}) => <AniLink {...rest}
   position: relative;
     transition: transform 0.3s var(--ease-out-quad),
     box-shadow 0.3s var(--ease-out-quad);
-    
+
 
   & > div {
     height: 100%;
@@ -621,7 +621,7 @@ const ArticlesControls = styled.div`
   align-items: center;
   width: 100%;
   overflow: hidden;
-  transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad); 
+  transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
   margin-bottom: 20px;
   `
 
@@ -681,7 +681,7 @@ const IconWrapper = styled.button<{ isDark: boolean; navigatorShape: string; the
 
 const StyledBurger = styled.button<{ mobileMenuOpen: boolean; theme: any; }>`
   display: node;
-  
+
   @media (max-width: 768px){
   display: flex;
   flex-direction: column;
@@ -694,8 +694,8 @@ const StyledBurger = styled.button<{ mobileMenuOpen: boolean; theme: any; }>`
   padding: 0;
   z-index: 10;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 20px;
+  right: 30px;
 
   &:focus {
     outline: none;

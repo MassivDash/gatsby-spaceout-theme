@@ -75,7 +75,7 @@ function FullScreenToggle() {
   const fill = isDark ? '#fff' : '#000'
 
   useEffect(() => {
-    screenfull.on('change', () => {
+    screenfull.isEnabled && screenfull.on('change', () => {
       setFullScreen(!fullscreen)
     })
   })
