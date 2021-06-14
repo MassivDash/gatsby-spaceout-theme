@@ -106,9 +106,10 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
         (element) => normalize.contentful.authors(element),
       );
 
-      dataSources.contentful.articles = contentfulArticles.data.articles.edges.map(
-        (element) => normalize.contentful.articles(element),
-      );
+      dataSources.contentful.articles =
+        contentfulArticles.data.articles.edges.map((element) =>
+          normalize.contentful.articles(element),
+        );
     } catch (error) {
       console.error(error);
     }

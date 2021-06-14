@@ -110,13 +110,8 @@ const NavigationHeader: React.FC<Props> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   const { sitePlugin, allSite, allArticles } = useStaticQuery(siteQuery);
-  const {
-    title,
-    name,
-    description,
-    social,
-    menuLinks,
-  } = allSite.edges[0].node.siteMetadata;
+  const { title, name, description, social, menuLinks } =
+    allSite.edges[0].node.siteMetadata;
 
   const [colorMode] = useColorMode();
   const fill = colorMode === 'dark' ? '#fff' : '#000';
@@ -380,7 +375,7 @@ const NavContainer = styled.div<{
 
   @media (max-width: 768px) {
     display: flex;
-    min-height: ${window && window.innerHeight}px;
+    min-height: ${typeof window !== 'undefined' && window.innerHeight}px;
     position: fixed;
     z-index: 787;
     top: 0;
@@ -395,7 +390,9 @@ const NavContainer = styled.div<{
     transform: ${(p) =>
       p.mobileMenuOpen
         ? 'translateY(0)'
-        : `translateY(calc(${window && window.innerHeight}px - 50px))`};
+        : `translateY(calc(${
+            typeof window !== 'undefined' && window.innerHeight
+          }px - 50px))`};
   }
 `;
 
@@ -598,7 +595,9 @@ const ArticleViewer = styled.aside<{
     transform: ${(p) =>
       p.navigatorPosition !== 'main'
         ? p.navigatorShape === 'hidden'
-          ? `translateY(calc(${window && window.innerHeight}px - 150px))`
+          ? `translateY(calc(${
+              typeof window !== 'undefined' && window.innerHeight
+            }px - 150px))`
           : `translateY(1px)`
         : `translateY(100vh)`};
   }
