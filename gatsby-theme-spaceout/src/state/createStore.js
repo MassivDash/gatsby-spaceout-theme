@@ -12,6 +12,7 @@ const SET_IS_WIDE_SCREEN = 'SET_IS_WIDE_SCREEN';
 const SET_SCROLL_TO_TOP = 'SET_SCROLL_TO_TOP';
 const SET_FONT_SIZE_INCREASE = 'SET_FONT_SIZE_INCREASE';
 const SET_CATEGORY_FILTER = 'SET_CATEGORY_FILTER';
+const SET_MOBILE_CONTROLS = 'SET_MOBILE_CONTROLS';
 
 /*
  * action creators
@@ -49,6 +50,10 @@ export function setCategoryFilter(value) {
   return { type: SET_CATEGORY_FILTER, value };
 }
 
+export function setMobileControls(value) {
+  return { type: SET_MOBILE_CONTROLS, value };
+}
+
 /*
  * reducer
  */
@@ -83,6 +88,12 @@ const reducer = (state, action) => {
         isWideScreen: action.value,
       };
 
+    case SET_MOBILE_CONTROLS:
+      return {
+        ...state,
+        mobileControlsOpen: action.value,
+      };
+
     case SET_SCROLL_TO_TOP:
       return {
         ...state,
@@ -115,6 +126,7 @@ const initialState = {
   scrollToTop: false,
   fontSizeIncrease: 1,
   categoryFilter: 'all posts',
+  mobileControlsOpen: false,
 };
 
 export default (preloadedState) =>

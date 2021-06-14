@@ -1,43 +1,45 @@
-import React, { useState, useEffect, useContext } from 'react'
-import styled from '@emotion/styled'
-import mediaqueries from '@styles/media'
-import Icons from '@icons'
-import { useColorMode } from 'theme-ui'
-import screenfull from 'screenfull'
-import { connect } from 'react-redux'
-import { setFontSizeIncrease } from '../../state/createStore'
-import { copyToClipboard } from '@utils'
-import { GridLayoutContext } from '../../sections/articles/Articles.List.Context'
+import React, { useState, useEffect, useContext } from 'react';
+import styled from '@emotion/styled';
+import mediaqueries from '@styles/media';
+import Icons from '@icons';
+import { useColorMode } from 'theme-ui';
+import screenfull from 'screenfull';
+import { connect } from 'react-redux';
+import { setFontSizeIncrease } from '../../state/createStore';
+import { copyToClipboard } from '@utils';
+import { GridLayoutContext } from '../../sections/articles/Articles.List.Context';
 
 function Footer({ ...props }) {
-  const { gridLayout = 'tiles', hasSetGridLayout, setGridLayout } = useContext(
-    GridLayoutContext
-  )
-  const tilesIsActive = hasSetGridLayout && gridLayout === 'tiles'
+  const {
+    gridLayout = 'tiles',
+    hasSetGridLayout,
+    setGridLayout,
+  } = useContext(GridLayoutContext);
+  const tilesIsActive = hasSetGridLayout && gridLayout === 'tiles';
   return (
-    <ActionsBar>
+    <ActionsBar mobileControlsOpen={props.mobileControlsOpen}>
       <ActionBarDivider>
         <DarkModeToggle />
         <GridButton
-                onClick={() => setGridLayout('tiles')}
-                active={tilesIsActive}
-                data-a11y="false"
-                title="Show articles in Tile grid"
-                aria-label="Show articles in Tile grid"
-                {...props}
-              >
-                <Icons.Tiles />
-              </GridButton>
-              <GridButton
-                onClick={() => setGridLayout('rows')}
-                active={!tilesIsActive}
-                data-a11y="false"
-                title="Show articles in Row grid"
-                aria-label="Show articles in Row grid"
-                {...props}
-              >
-                <Icons.Rows />
-              </GridButton>
+          onClick={() => setGridLayout('tiles')}
+          active={tilesIsActive}
+          data-a11y="false"
+          title="Show articles in Tile grid"
+          aria-label="Show articles in Tile grid"
+          {...props}
+        >
+          <Icons.Tiles />
+        </GridButton>
+        <GridButton
+          onClick={() => setGridLayout('rows')}
+          active={!tilesIsActive}
+          data-a11y="false"
+          title="Show articles in Row grid"
+          aria-label="Show articles in Row grid"
+          {...props}
+        >
+          <Icons.Rows />
+        </GridButton>
       </ActionBarDivider>
       <ActionBarDivider>
         <GoToTop {...props} />
@@ -45,7 +47,7 @@ function Footer({ ...props }) {
         <FullScreenToggle />
       </ActionBarDivider>
     </ActionsBar>
-  )
+  );
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -56,33 +58,32 @@ const mapStateToProps = (state, ownProps) => {
     isWideScreen: state.isWideScreen,
     categoryFilter: state.categoryFilter,
     fontSizeIncrease: state.fontSizeIncrease,
-  }
-}
+    mobileControlsOpen: state.mobileControlsOpen,
+  };
+};
 
 const mapDispatchToProps = {
   setFontSizeIncrease,
-}
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Footer)
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);
 
 function FullScreenToggle() {
-  const [fullscreen, setFullScreen] = useState<boolean>(false)
-  const [colorMode] = useColorMode()
-  const isDark = colorMode === `dark`
-  const fill = isDark ? '#fff' : '#000'
+  const [fullscreen, setFullScreen] = useState<boolean>(false);
+  const [colorMode] = useColorMode();
+  const isDark = colorMode === `dark`;
+  const fill = isDark ? '#fff' : '#000';
 
   useEffect(() => {
-    screenfull.isEnabled && screenfull.on('change', () => {
-      setFullScreen(!fullscreen)
-    })
-  })
+    screenfull.isEnabled &&
+      screenfull.on('change', () => {
+        setFullScreen(!fullscreen);
+      });
+  });
 
   function fullscreenToogle() {
     if (screenfull.isEnabled) {
-      screenfull.toggle()
+      screenfull.toggle();
     }
   }
 
@@ -104,16 +105,16 @@ function FullScreenToggle() {
         </IconWrapper>
       )}
     </>
-  )
+  );
 }
 
 function DarkModeToggle() {
-  const [colorMode, setColorMode] = useColorMode()
-  const isDark = colorMode === `dark`
+  const [colorMode, setColorMode] = useColorMode();
+  const isDark = colorMode === `dark`;
 
   function toggleColorMode(event) {
-    event.preventDefault()
-    setColorMode(isDark ? `light` : `dark`)
+    event.preventDefault();
+    setColorMode(isDark ? `light` : `dark`);
   }
 
   return (
@@ -127,24 +128,24 @@ function DarkModeToggle() {
       <MoonOrSun isDark={isDark} />
       <MoonMask isDark={isDark} />
     </IconWrapper>
-  )
+  );
 }
 
 function SharePageButton() {
-  const [hasCopied, setHasCopied] = useState<boolean>(false)
-  const [colorMode] = useColorMode()
-  const isDark = colorMode === `dark`
-  const fill = isDark ? '#fff' : '#000'
+  const [hasCopied, setHasCopied] = useState<boolean>(false);
+  const [colorMode] = useColorMode();
+  const isDark = colorMode === `dark`;
+  const fill = isDark ? '#fff' : '#000';
 
   function copyToClipboardOnClick() {
-    if (hasCopied) return
+    if (hasCopied) return;
 
-    copyToClipboard(window.location.href)
-    setHasCopied(true)
+    copyToClipboard(window.location.href);
+    setHasCopied(true);
 
     setTimeout(() => {
-      setHasCopied(false)
-    }, 1000)
+      setHasCopied(false);
+    }, 1000);
   }
 
   return (
@@ -160,7 +161,7 @@ function SharePageButton() {
         Copied
       </ToolTip>
     </IconWrapper>
-  )
+  );
 }
 
 function ToggleFont({
@@ -168,29 +169,29 @@ function ToggleFont({
   setFontSizeIncrease,
   navigatorPosition,
 }) {
-  const [colorMode] = useColorMode()
-  const [text, setText] = useState<string>('100%')
-  const [hasCopied, setHasCopied] = useState<boolean>(false)
-  const isDark = colorMode === `dark`
-  const fill = isDark ? '#fff' : '#000'
+  const [colorMode] = useColorMode();
+  const [text, setText] = useState<string>('100%');
+  const [hasCopied, setHasCopied] = useState<boolean>(false);
+  const isDark = colorMode === `dark`;
+  const fill = isDark ? '#fff' : '#000';
   function switchThroughFontSizes() {
     if (fontSizeIncrease === 1) {
-      setFontSizeIncrease(1.5)
-      setText('150%')
+      setFontSizeIncrease(1.5);
+      setText('150%');
     }
     if (fontSizeIncrease === 1.5) {
-      setFontSizeIncrease(2)
-      setText('200%')
+      setFontSizeIncrease(2);
+      setText('200%');
     }
     if (fontSizeIncrease === 2) {
-      setFontSizeIncrease(1)
-      setText('100%')
+      setFontSizeIncrease(1);
+      setText('100%');
     }
-    setHasCopied(true)
+    setHasCopied(true);
 
     setTimeout(() => {
-      setHasCopied(false)
-    }, 1000)
+      setHasCopied(false);
+    }, 1000);
   }
 
   return (
@@ -208,15 +209,15 @@ function ToggleFont({
         </ToolTip>
       </IconWrapper>
     </FadeArticleAnimationFont>
-  )
+  );
 }
 
 function GoToTop({ ScrollToTop, navigatorPosition }) {
-  const [colorMode] = useColorMode()
-  const isDark = colorMode === `dark`
-  const fill = isDark ? '#fff' : '#000'
+  const [colorMode] = useColorMode();
+  const isDark = colorMode === `dark`;
+  const fill = isDark ? '#fff' : '#000';
   function scrolltoTop() {
-    ScrollToTop()
+    ScrollToTop();
   }
 
   return (
@@ -231,23 +232,23 @@ function GoToTop({ ScrollToTop, navigatorPosition }) {
         <Icons.ArrowUp fill={fill} />
       </IconWrapper>
     </FadeArticleAnimationArrow>
-  )
+  );
 }
 
 const FadeArticleAnimationFont = styled.div`
-  opacity: ${p => (p.navigatorPosition === 'article' ? 1 : 0)};
-  transform: ${p =>
+  opacity: ${(p) => (p.navigatorPosition === 'article' ? 1 : 0)};
+  transform: ${(p) =>
     p.navigatorPosition === 'article'
       ? 'scale(1) translateX(1px)'
       : 'scale(0.2) translateX(40px)'};
-  transition: 0.5s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
-`
+  transition: 0.5s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
+`;
 
 const FadeArticleAnimationArrow = styled.div`
-  transform: ${p =>
+  transform: ${(p) =>
     p.navigatorPosition === 'article' ? 'translateY(1px)' : 'translateY(60px)'};
-  transition: 0.5s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad);
-`
+  transition: 0.5s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
+`;
 
 const ActionsBar = styled.div`
   position: relative;
@@ -257,24 +258,30 @@ const ActionsBar = styled.div`
   align-items: center;
   justify-content: space-between;
   padding-bottom: 10px;
-  color: ${p => p.theme.colors.grey};
+  color: ${(p) => p.theme.colors.grey};
 
-  ${mediaqueries.tablet`
+  @media (max-width: 986px) {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 40px;
+    bottom: 50px;
     flex-direction: column;
     padding-bottom: 10px;
-  `}
-
-  ${mediaqueries.phablet`
-    padding-bottom: 10px;
-  `}
-`
+    z-index: 1000;
+    background: ${(p) => p.theme.colors.background};
+    transform: ${(p) =>
+      p.mobileControlsOpen ? 'translateX(1px)' : 'translateX(60px)'};
+  }
+  transition: 0.5s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
+`;
 
 const ActionBarDivider = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   margin-top: 20px;
-`
+`;
 
 const IconWrapper = styled.button<{ isDark: boolean }>`
   opacity: 0.5;
@@ -299,7 +306,7 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
     top: -30%;
     width: 100%;
     height: 160%;
-    border: 2px solid ${p => p.theme.colors.accent};
+    border: 2px solid ${(p) => p.theme.colors.accent};
     background: rgba(255, 255, 255, 0.01);
     border-radius: 5px;
   }
@@ -307,14 +314,14 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
   ${mediaqueries.tablet`
     display: inline-flex;
     transform: scale(0.708);
-    margin-left: 10px;
+    margin: 15px 8px;
 
 
     &:hover {
       opacity: 0.5;
     }
   `}
-`
+`;
 
 // This is based off a codepen! Much appreciated to: https://codepen.io/aaroniker/pen/KGpXZo
 const MoonOrSun = styled.div<{ isDark: boolean }>`
@@ -322,12 +329,12 @@ const MoonOrSun = styled.div<{ isDark: boolean }>`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border: ${p => (p.isDark ? '4px' : '2px')} solid
-    ${p => p.theme.colors.primary};
-  background: ${p => p.theme.colors.primary};
-  transform: scale(${p => (p.isDark ? 0.55 : 1)});
+  border: ${(p) => (p.isDark ? '4px' : '2px')} solid
+    ${(p) => p.theme.colors.primary};
+  background: ${(p) => p.theme.colors.primary};
+  transform: scale(${(p) => (p.isDark ? 0.55 : 1)});
   transition: all 0.45s ease;
-  overflow: ${p => (p.isDark ? 'visible' : 'hidden')};
+  overflow: ${(p) => (p.isDark ? 'visible' : 'hidden')};
 
   &::before {
     content: '';
@@ -336,10 +343,10 @@ const MoonOrSun = styled.div<{ isDark: boolean }>`
     top: -9px;
     height: 24px;
     width: 24px;
-    border: 2px solid ${p => p.theme.colors.primary};
+    border: 2px solid ${(p) => p.theme.colors.primary};
     border-radius: 50%;
-    transform: translate(${p => (p.isDark ? '14px, -14px' : '0, 0')});
-    opacity: ${p => (p.isDark ? 0 : 1)};
+    transform: translate(${(p) => (p.isDark ? '14px, -14px' : '0, 0')});
+    opacity: ${(p) => (p.isDark ? 0 : 1)};
     transition: transform 0.45s ease;
   }
 
@@ -352,22 +359,22 @@ const MoonOrSun = styled.div<{ isDark: boolean }>`
     position: absolute;
     top: 50%;
     left: 50%;
-    box-shadow: 0 -23px 0 ${p => p.theme.colors.primary},
-      0 23px 0 ${p => p.theme.colors.primary},
-      23px 0 0 ${p => p.theme.colors.primary},
-      -23px 0 0 ${p => p.theme.colors.primary},
-      15px 15px 0 ${p => p.theme.colors.primary},
-      -15px 15px 0 ${p => p.theme.colors.primary},
-      15px -15px 0 ${p => p.theme.colors.primary},
-      -15px -15px 0 ${p => p.theme.colors.primary};
-    transform: scale(${p => (p.isDark ? 1 : 0)});
+    box-shadow: 0 -23px 0 ${(p) => p.theme.colors.primary},
+      0 23px 0 ${(p) => p.theme.colors.primary},
+      23px 0 0 ${(p) => p.theme.colors.primary},
+      -23px 0 0 ${(p) => p.theme.colors.primary},
+      15px 15px 0 ${(p) => p.theme.colors.primary},
+      -15px 15px 0 ${(p) => p.theme.colors.primary},
+      15px -15px 0 ${(p) => p.theme.colors.primary},
+      -15px -15px 0 ${(p) => p.theme.colors.primary};
+    transform: scale(${(p) => (p.isDark ? 1 : 0)});
     transition: all 0.35s ease;
 
-    ${p => mediaqueries.tablet`
+    ${(p) => mediaqueries.tablet`
       transform: scale(${p.isDark ? 0.92 : 0});
     `}
   }
-`
+`;
 
 const MoonMask = styled.div<{ isDark: boolean }>`
   position: absolute;
@@ -377,22 +384,22 @@ const MoonMask = styled.div<{ isDark: boolean }>`
   width: 24px;
   border-radius: 50%;
   border: 0;
-  background: ${p => p.theme.colors.background};
-  transform: translate(${p => (p.isDark ? '14px, -14px' : '0, 0')});
-  opacity: ${p => (p.isDark ? 0 : 1)};
-  transition: ${p => p.theme.colorModeTransition}, transform 0.45s ease;
-`
+  background: ${(p) => p.theme.colors.background};
+  transform: translate(${(p) => (p.isDark ? '14px, -14px' : '0, 0')});
+  opacity: ${(p) => (p.isDark ? 0 : 1)};
+  transition: ${(p) => p.theme.colorModeTransition}, transform 0.45s ease;
+`;
 
 const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
   position: absolute;
   padding: 4px 13px;
-  background: ${p => (p.isDark ? '#000' : '#fff')};
-  color: ${p => (p.isDark ? '#fff' : '#000')};
+  background: ${(p) => (p.isDark ? '#000' : '#fff')};
+  color: ${(p) => (p.isDark ? '#fff' : '#000')};
   border-radius: 5px;
   font-size: 14px;
   top: -35px;
-  opacity: ${p => (p.hasCopied ? 1 : 0)};
-  transform: ${p => (p.hasCopied ? 'translateY(-3px)' : 'none')};
+  opacity: ${(p) => (p.hasCopied ? 1 : 0)};
+  transform: ${(p) => (p.hasCopied ? 'translateY(-3px)' : 'none')};
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   z-index: 99;
   &::after {
@@ -406,9 +413,9 @@ const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 6px solid ${p => (p.isDark ? '#000' : 'rgba(0,0,0,0.1)')};
+    border-top: 6px solid ${(p) => (p.isDark ? '#000' : 'rgba(0,0,0,0.1)')};
   }
-`
+`;
 const GridButton = styled.button<{ active: boolean }>`
   position: relative;
   display: flex;
@@ -420,13 +427,12 @@ const GridButton = styled.button<{ active: boolean }>`
   border-radius: 50%;
   background: transparent;
   transition: 0.45s ease;
-  transform: ${p =>
+  transform: ${(p) =>
     p.navigatorPosition === 'main' ? 'translateX(1px)' : 'translateX(60px)'};
-  opacity: ${p =>
-    p.navigatorPosition === 'main' ? 1 : 0};
+  opacity: ${(p) => (p.navigatorPosition === 'main' ? 1 : 0)};
 
   &:hover {
-    background: ${p => p.theme.colors.hover};
+    background: ${(p) => p.theme.colors.hover};
   }
 
   &[data-a11y='true']:focus::after {
@@ -436,17 +442,17 @@ const GridButton = styled.button<{ active: boolean }>`
     top: -10%;
     width: 120%;
     height: 120%;
-    border: 2px solid ${p => p.theme.colors.accent};
+    border: 2px solid ${(p) => p.theme.colors.accent};
     background: rgba(255, 255, 255, 0.01);
     border-radius: 50%;
   }
 
   svg {
-    opacity: ${p => (p.active ? 1 : 0.25)};
+    opacity: ${(p) => (p.active ? 1 : 0.25)};
     transition: opacity 0.2s;
 
     path {
-      fill: ${p => p.theme.colors.primary};
+      fill: ${(p) => p.theme.colors.primary};
     }
   }
-`
+`;

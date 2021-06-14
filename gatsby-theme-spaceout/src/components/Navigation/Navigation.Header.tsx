@@ -11,6 +11,7 @@ import SocialLinks from '@components/SocialLinks';
 import Icons from '@icons';
 import mediaqueries from '@styles/media';
 import bg from './snow.png';
+import More from './More';
 import { getWindowDimensions, getBreakpointFromTheme } from '@utils';
 
 import {
@@ -19,6 +20,7 @@ import {
   setScrollToTop,
   setFontSizeIncrease,
   setCategoryFilter,
+  setMobileControls,
 } from '../../state/createStore';
 
 interface Props {
@@ -26,6 +28,8 @@ interface Props {
   navigatorPosition: any;
   setNavigatorShape: Function;
   navigatorShape: string;
+  setMobileControls: () => void;
+  mobileControlsOpen: boolean;
 }
 
 interface NavLinksProps {
@@ -104,6 +108,8 @@ const NavigationHeader: React.FC<Props> = ({
   setNavigatorShape,
   navigatorShape,
   theme,
+  setMobileControls,
+  mobileControlsOpen,
 }) => {
   const [showBackArrow, setShowBackArrow] = useState<boolean>(false);
   const [previousPath, setPreviousPath] = useState<string>('/');
@@ -115,6 +121,7 @@ const NavigationHeader: React.FC<Props> = ({
 
   const [colorMode] = useColorMode();
   const fill = colorMode === 'dark' ? '#fff' : '#000';
+  const fillMore = colorMode === 'dark' ? '#E9DAAC' : '#000';
   const isDark = colorMode === 'dark';
   const { rootPath, basePath } = sitePlugin.pluginOptions;
   useEffect(() => {
@@ -135,7 +142,7 @@ const NavigationHeader: React.FC<Props> = ({
   const scrollRef = useRef(null);
 
   const ArticleNavigator = navigatorPosition === 'article' ? true : false;
-
+  console.log(mobileControlsOpen);
   return (
     <>
       <NavContainer
@@ -171,12 +178,21 @@ const NavigationHeader: React.FC<Props> = ({
           <StyledBurger
             theme={theme}
             mobileMenuOpen={mobileMenuOpen}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => {
+              setMobileMenuOpen(!mobileMenuOpen);
+              setMobileControls(false);
+            }}
           >
             <div />
             <div />
             <div />
           </StyledBurger>
+          <StyledMoreButton
+            type="button"
+            onClick={() => setMobileControls(!mobileControlsOpen)}
+          >
+            <More fill={fillMore} />
+          </StyledMoreButton>
         </NavInfoContainer>
         <NavControls>
           {showBackArrow ? (
@@ -297,6 +313,7 @@ const mapStateToProps = (state, ownProps) => {
     navigatorScroll: state.navigatorScroll,
     isWideScreen: state.isWideScreen,
     categoryFilter: state.categoryFilter,
+    mobileControlsOpen: state.mobileControlsOpen,
   };
 };
 
@@ -306,6 +323,7 @@ const mapDispatchToProps = {
   setScrollToTop,
   setFontSizeIncrease,
   setCategoryFilter,
+  setMobileControls,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavigationHeader);
@@ -375,6 +393,7 @@ const NavContainer = styled.div<{
 
   @media (max-width: 768px) {
     display: flex;
+    box-shadow: 0px -2px 10px 2px #00000021;
     min-height: ${typeof window !== 'undefined' && window.innerHeight}px;
     position: fixed;
     z-index: 787;
@@ -760,8 +779,8 @@ const StyledBurger = styled.button<{ mobileMenuOpen: boolean; theme: any }>`
     padding: 0;
     z-index: 10;
     position: absolute;
-    top: 20px;
-    right: 30px;
+    top: 15px;
+    right: 50px;
 
     &:focus {
       outline: none;
@@ -769,7 +788,7 @@ const StyledBurger = styled.button<{ mobileMenuOpen: boolean; theme: any }>`
 
     div {
       width: 2rem;
-      height: 0.25rem;
+      height: 3px;
       background: ${({ mobileMenuOpen, theme }) =>
         mobileMenuOpen ? theme.colors.accent : theme.colors.accent};
       border-radius: 10px;
@@ -778,20 +797,29 @@ const StyledBurger = styled.button<{ mobileMenuOpen: boolean; theme: any }>`
       transform-origin: 1px;
 
       :first-of-type {
+        width: ${({ mobileMenuOpen }) => (mobileMenuOpen ? '100%' : '50%')};
         transform: ${({ mobileMenuOpen }) =>
           mobileMenuOpen ? 'rotate(45deg)' : 'rotate(0)'};
       }
 
       :nth-of-type(2) {
+        width: ${({ mobileMenuOpen }) => (mobileMenuOpen ? '100%' : '75%')};
         opacity: ${({ mobileMenuOpen }) => (mobileMenuOpen ? '0' : '1')};
         transform: ${({ mobileMenuOpen }) =>
           mobileMenuOpen ? 'translateX(20px)' : 'translateX(0)'};
       }
 
       :nth-of-type(3) {
+        width: ${({ mobileMenuOpen }) => (mobileMenuOpen ? '100%' : '50%')};
         transform: ${({ mobileMenuOpen }) =>
           mobileMenuOpen ? 'rotate(-45deg)' : 'rotate(0)'};
       }
     }
   }
+`;
+
+const StyledMoreButton = styled.button`
+  position: absolute;
+  top: 11px;
+  right: 10px;
 `;
