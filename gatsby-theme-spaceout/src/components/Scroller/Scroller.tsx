@@ -5,11 +5,13 @@ import React, {
   useContext,
   useRef,
   useEffect,
-  ReactChildren,
 } from 'react';
 import ReactScrollbarsCustom, {
   ScrollbarContext,
 } from 'react-scrollbars-custom';
+import styled from '@emotion/styled';
+
+import mediaqueries from '@styles/media';
 
 interface Props {
   isDark?: boolean;
@@ -122,23 +124,6 @@ export const ScrollManager = React.forwardRef((props: Props, ref: any) => {
     [isShow, onMouseEnter, onMouseLeave, isDark],
   );
 
-  const wrapperProps = () => ({
-    renderer: (props) => {
-      const { elementRef, ...restProps } = props;
-      return (
-        <div
-          {...restProps}
-          ref={elementRef}
-          style={{
-            position: 'absolute',
-            inset: '-30px 10px 0px 0px',
-            overflow: 'hidden',
-          }}
-        />
-      );
-    },
-  });
-
   return (
     <ReactScrollbarsCustom
       style={{ minHeight: '100vh' }}
@@ -149,23 +134,25 @@ export const ScrollManager = React.forwardRef((props: Props, ref: any) => {
       trackXProps={trackProps as any}
       trackYProps={trackYProps as any}
       thumbYProps={thumbYProps as any}
-      wrapperProps={wrapperProps as any}
       onScrollStart={onScrollStart}
       onScrollStop={onScrollStop}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       scrollDetectionThreshold={500} // ms
     >
-      <div
-        tabIndex={0}
-        ref={infoScreenRef}
-        style={{ outline: 'none', marginTop: '-30px' }}
-      >
+      <TabIndex tabIndex={0} ref={infoScreenRef}>
         {children}
-      </div>
+      </TabIndex>
     </ReactScrollbarsCustom>
   );
 });
+
+const TabIndex = styled.div`
+  outline: none;
+  margin-top: 0px;
+
+  ${mediaqueries.desktop`margin-top: -30px`}
+`;
 
 export function useScrollManager() {
   return useContext(ScrollbarContext).parentScrollbar;
