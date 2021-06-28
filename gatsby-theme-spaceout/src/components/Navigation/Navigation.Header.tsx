@@ -142,7 +142,7 @@ const NavigationHeader: React.FC<Props> = ({
   const scrollRef = useRef(null);
 
   const ArticleNavigator = navigatorPosition === 'article' ? true : false;
-  console.log(mobileControlsOpen);
+
   return (
     <>
       <NavContainer
@@ -297,8 +297,8 @@ function ArrowControl({ setNavigatorShape, navigatorShape, theme }) {
         isDark={isDark}
         onClick={() => setNavigatorShape(navPosition)}
         data-a11y="false"
-        aria-label="Scroll to the top"
-        title="Scroll to the top"
+        aria-label="Bring up post menu"
+        title="Bring up post menu"
       >
         <Icons.ArrowUp fill={fill} />
       </IconWrapper>
@@ -563,11 +563,13 @@ const ArticlesHolder = styled.div`
   grid-template-rows: 260px;
   grid-row-gap: 10px;
   margin: auto 5px auto 20px;
-  padding: 10px 0px 150px 0px;
+  padding: 10px 0px 220px 0px;
 
   @media (max-width: 768px) {
     margin: auto;
     width: 300px;
+    grid-template-rows: 300px;
+    padding: 10px 0px 300px 0px;
   }
 `;
 
@@ -633,18 +635,17 @@ const ArticleLink = styled(({ navigatorPosition, ...rest }) => (
     height: 100%;
   }
 
-  ${mediaqueries.tablet`
-    height: 200px;
-    margin-bottom: 35px;
-  `}
+  @media (max-width: 786px) {
+    height: 300px;
+  }
 
-  ${mediaqueries.phablet`
+  @media (min-width: 786px) {
     overflow: hidden;
     margin-bottom: 0;
     box-shadow: none;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
-  `}
+  }
 `;
 
 const ArticleHover = styled.div<{ theme: any }>`
@@ -752,16 +753,18 @@ const IconWrapper = styled.button<{
     border-radius: 5px;
   }
 
-  ${mediaqueries.tablet`
+  @media (max-width: 768px) {
     display: inline-flex;
-    transform: scale(0.708);
+    transform: ${(p) =>
+      p.navigatorShape === 'visible'
+        ? 'rotate(180deg) scale(0.708)'
+        : 'rotate(0deg) scale(0.708)'};
     margin-left: 10px;
-
 
     &:hover {
       opacity: 0.5;
     }
-  `}
+  }
 `;
 
 const StyledBurger = styled.button<{ mobileMenuOpen: boolean; theme: any }>`
@@ -822,4 +825,8 @@ const StyledMoreButton = styled.button`
   position: absolute;
   top: 11px;
   right: 10px;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;
