@@ -17,20 +17,20 @@
  *
  */
 
-import React from 'react'
-import Helmet from 'react-helmet'
-import { graphql, useStaticQuery } from 'gatsby'
+import React from 'react';
+import Helmet from 'react-helmet';
+import { graphql, useStaticQuery } from 'gatsby';
 
 interface HelmetProps {
-  children?: React.ReactChildren
-  title: string
-  description?: string
-  pathname: string
-  image?: string
-  url?: string
-  canonical?: string
-  published?: string
-  timeToRead?: string
+  children?: React.ReactChildren;
+  title: string;
+  description?: string;
+  pathname: string;
+  image?: string;
+  url?: string;
+  canonical?: string;
+  published?: string;
+  timeToRead?: string;
 }
 
 const seoQuery = graphql`
@@ -50,7 +50,7 @@ const seoQuery = graphql`
       }
     }
   }
-`
+`;
 
 const themeUIDarkModeWorkaroundScript = [
   {
@@ -66,7 +66,7 @@ const themeUIDarkModeWorkaroundScript = [
     })();
   `,
   },
-]
+];
 
 function SEO({
   title,
@@ -78,15 +78,15 @@ function SEO({
   pathname,
   timeToRead,
 }: HelmetProps) {
-  const results = useStaticQuery(seoQuery)
-  const site = results.allSite.edges[0].node.siteMetadata
-  const twitter = site.social.find(option => option.name === 'twitter') || {}
+  const results = useStaticQuery(seoQuery);
+  const site = results.allSite.edges[0].node.siteMetadata;
+  const twitter = site.social.find((option) => option.name === 'twitter') || {};
 
   const fullURL = (path: string) =>
-    path ? `${site.siteUrl}${path}` : site.siteUrl
+    path ? `${site.siteUrl}${path}` : site.siteUrl;
 
   // If no image is provided lets looks for a default spaceout static image
-  image = image ? image : '/janifelek.jpg'
+  image = image ? image : '/janifelek.jpg';
 
   const metaTags = [
     { charset: 'utf-8' },
@@ -126,18 +126,18 @@ function SEO({
     { property: 'og:image', content: fullURL(image) },
     { property: 'og:description', content: description || site.description },
     { property: 'og:site_name', content: site.name },
-  ]
+  ];
 
   if (published) {
-    metaTags.push({ name: 'article:published_time', content: published })
+    metaTags.push({ name: 'article:published_time', content: published });
   }
 
   if (timeToRead) {
-    metaTags.push({ name: 'twitter:label1', value: 'Czas czytania' })
+    metaTags.push({ name: 'twitter:label1', value: 'Czas czytania' });
     metaTags.push({
       name: 'twitter:data1',
       value: `${timeToRead} min czytania`,
-    })
+    });
   }
 
   return (
@@ -153,7 +153,7 @@ function SEO({
       />
       {children}
     </Helmet>
-  )
+  );
 }
 
-export default SEO
+export default SEO;

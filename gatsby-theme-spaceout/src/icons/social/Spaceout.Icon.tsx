@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Spaceout = ({ fill = 'white', size = 32 }) => {
   return (
@@ -48,6 +48,6 @@ const Spaceout = ({ fill = 'white', size = 32 }) => {
         ></path>
       </g>
     </svg>
-  )
-}
-export default Spaceout
+  );
+};
+export default Spaceout;

@@ -1,50 +1,50 @@
-import React, { useState } from 'react'
-import styled from '@emotion/styled'
-import OutsideClickHandler from 'react-outside-click-handler'
-import { useColorMode } from 'theme-ui'
-import Link from 'gatsby-plugin-transition-link'
+import React, { useState } from 'react';
+import styled from '@emotion/styled';
+import OutsideClickHandler from 'react-outside-click-handler';
+import { useColorMode } from 'theme-ui';
+import Link from 'gatsby-plugin-transition-link';
 
-import Image from '@components/Image'
-import Icons from '@icons'
-import mediaqueries from '@styles/media'
-import { IAuthor } from '@types'
+import Image from '@components/Image';
+import Icons from '@icons';
+import mediaqueries from '@styles/media';
+import { IAuthor } from '@types';
 
 /**
  * Spaceout supports multiple authors and therefore we need to ensure
  * we render the right UI when there are varying amount of authors.
  */
 function ArticleAuthors({ authors }: { authors: IAuthor[] }) {
-  const hasCoAuthors = authors.length > 1
+  const hasCoAuthors = authors.length > 1;
 
   // Special dropdown UI for multiple authors
   if (hasCoAuthors) {
-    return <CoAuthors authors={authors} />
+    return <CoAuthors authors={authors} />;
   } else {
     return (
       <AuthorLink
         as={authors[0].authorsPage ? Link : 'div'}
         to={authors[0].slug}
       >
-        <strong style={{ margin: 'auto 5px'}}> by </strong>
+        <strong style={{ margin: 'auto 5px' }}> by </strong>
         <AuthorAvatar>
           <Image src={authors[0].avatar.small} />
         </AuthorAvatar>
         <strong>{authors[0].name}</strong>
         <HideOnMobile>,&nbsp;</HideOnMobile>
       </AuthorLink>
-    )
+    );
   }
 }
 
-export default ArticleAuthors
+export default ArticleAuthors;
 
 function CoAuthors({ authors }: { authors: IAuthor[] }) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [colorMode] = useColorMode()
-  const names = generateAuthorNames(authors)
+  const [isOpen, setIsOpen] = useState(false);
+  const [colorMode] = useColorMode();
+  const names = generateAuthorNames(authors);
 
-  const fill = colorMode === 'dark' ? '#fff' : '#000'
-  const listWidth = { width: `${10 + authors.length * 15}px` }
+  const fill = colorMode === 'dark' ? '#fff' : '#000';
+  const listWidth = { width: `${10 + authors.length * 15}px` };
 
   return (
     <CoAuthorsContainer onClick={() => setIsOpen(!isOpen)} isOpen={isOpen}>
@@ -66,7 +66,7 @@ function CoAuthors({ authors }: { authors: IAuthor[] }) {
             <IconOpenContainer>
               <Icons.ToggleClose fill={fill} />
             </IconOpenContainer>
-            {authors.map(author => (
+            {authors.map((author) => (
               <CoAuthorsListItemOpen key={author.name}>
                 <AuthorLink
                   as={author.authorsPage ? Link : 'div'}
@@ -83,7 +83,7 @@ function CoAuthors({ authors }: { authors: IAuthor[] }) {
         </OutsideClickHandler>
       )}
     </CoAuthorsContainer>
-  )
+  );
 }
 
 /**
@@ -93,14 +93,14 @@ function CoAuthors({ authors }: { authors: IAuthor[] }) {
  */
 function generateAuthorNames(authors: IAuthor[]) {
   return authors
-    .map(author => {
+    .map((author) => {
       if (authors.length > 2) {
-        return author.name.split(' ')[0]
+        return author.name.split(' ')[0];
       } else {
-        return author.name
+        return author.name;
       }
     })
-    .join(', ')
+    .join(', ');
 }
 
 const AuthorAvatar = styled.div`
@@ -108,7 +108,7 @@ const AuthorAvatar = styled.div`
   width: 25px;
   border-radius: 50%;
   margin-right: 14px;
-  background: ${p => p.theme.colors.grey};
+  background: ${(p) => p.theme.colors.grey};
   overflow: hidden;
 
   .gatsby-image-wrapper > div {
@@ -118,7 +118,7 @@ const AuthorAvatar = styled.div`
   ${mediaqueries.phablet`
     display: none;
   `}
-`
+`;
 
 const AuthorLink = styled.div`
   display: flex;
@@ -126,13 +126,13 @@ const AuthorLink = styled.div`
   color: inherit;
 
   strong {
-    transition: ${p => p.theme.colorModeTransition};
+    transition: ${(p) => p.theme.colorModeTransition};
   }
 
   &:hover strong {
-    color: ${p => p.theme.colors.primary};
+    color: ${(p) => p.theme.colors.primary};
   }
-`
+`;
 
 const CoAuthorsList = styled.div`
   position: relative;
@@ -142,7 +142,7 @@ const CoAuthorsList = styled.div`
   ${mediaqueries.phablet`
     display: none;
   `}
-`
+`;
 
 const CoAuthorsListOpen = styled.ul`
   position: absolute;
@@ -151,13 +151,13 @@ const CoAuthorsListOpen = styled.ul`
   right: -21px;
   top: -19px;
   padding: 21px;
-  background: ${p => p.theme.colors.card};
+  background: ${(p) => p.theme.colors.card};
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   cursor: pointer;
   list-style: none;
   transform: translateY(-2px);
-`
+`;
 
 const CoAuthorsListItemOpen = styled.li`
   a {
@@ -167,14 +167,14 @@ const CoAuthorsListItemOpen = styled.li`
   &:not(:last-child) {
     margin-bottom: 10px;
   }
-`
+`;
 
 const CoAuthorAvatarOpen = styled.div`
   height: 25px;
   width: 25px;
   border-radius: 50%;
   margin-right: 15px;
-  background: ${p => p.theme.colors.grey};
+  background: ${(p) => p.theme.colors.grey};
   overflow: hidden;
   pointer-events: none;
 
@@ -182,7 +182,7 @@ const CoAuthorAvatarOpen = styled.div`
     padding-bottom: 100% !important;
     overflow: hidden;
   }
-`
+`;
 
 const CoAuthorAvatar = styled.div`
   position: absolute;
@@ -190,8 +190,8 @@ const CoAuthorAvatar = styled.div`
   width: 25px;
   border-radius: 50%;
   z-index: 1;
-  background: ${p => p.theme.colors.grey};
-  box-shadow: 0 0 0 2px ${p => p.theme.colors.background};
+  background: ${(p) => p.theme.colors.grey};
+  box-shadow: 0 0 0 2px ${(p) => p.theme.colors.background};
   transition: box-shadow 0.25s ease;
   overflow: hidden;
   pointer-events: none;
@@ -204,7 +204,7 @@ const CoAuthorAvatar = styled.div`
   ${mediaqueries.phablet`
     display: none;
   `}
-`
+`;
 
 const NameContainer = styled.strong`
   position: relative;
@@ -222,14 +222,14 @@ const NameContainer = styled.strong`
   ${mediaqueries.phablet`
     max-width: 200px;
   `}
-`
+`;
 
 const AuthorNameOpen = styled.strong`
   position: relative;
   cursor: pointer;
-  color: ${p => p.theme.colors.secondary};
+  color: ${(p) => p.theme.colors.secondary};
   font-weight: 600;
-`
+`;
 
 const IconContainer = styled.div`
   position: relative;
@@ -243,21 +243,21 @@ const IconContainer = styled.div`
     top: 10px;
     height: 100%;
   `}
-`
+`;
 
 const IconOpenContainer = styled.div`
   position: absolute;
   cursor: pointer;
   top: 20px;
   right: 21px;
-`
+`;
 
 const CoAuthorsContainer = styled.div<{ isOpen: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
   font-size: 18px;
-  color: ${p => p.theme.colors.grey};
+  color: ${(p) => p.theme.colors.grey};
   cursor: pointer;
 
   &::before {
@@ -267,8 +267,8 @@ const CoAuthorsContainer = styled.div<{ isOpen: boolean }>`
     right: -20px;
     top: -16px;
     bottom: -16px;
-    background: ${p => p.theme.colors.card};
-    box-shadow: ${p =>
+    background: ${(p) => p.theme.colors.card};
+    box-shadow: ${(p) =>
       p.isOpen ? 'none' : ' 0px 0px 15px rgba(0, 0, 0, 0.1)'};
     border-radius: 5px;
     z-index: 0;
@@ -298,10 +298,10 @@ const CoAuthorsContainer = styled.div<{ isOpen: boolean }>`
       margin-bottom: 5px;
     }
   `}
-`
+`;
 
 const HideOnMobile = styled.span`
   ${mediaqueries.phablet`
     display: none;
   `}
-`
+`;

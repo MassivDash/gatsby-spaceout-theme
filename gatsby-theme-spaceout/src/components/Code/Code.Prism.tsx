@@ -1,46 +1,45 @@
-import React, { useState } from 'react'
-import Highlight, { defaultProps } from 'prism-react-renderer'
-import styled from '@emotion/styled'
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
-import theme from 'prism-react-renderer/themes/oceanicNext'
+import React, { useState } from 'react';
+import Highlight, { defaultProps } from 'prism-react-renderer';
+import styled from '@emotion/styled';
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
-import Icons from '@icons'
-import mediaqueries from '@styles/media'
-import { copyToClipboard } from '@utils'
+import Icons from '@icons';
+import mediaqueries from '@styles/media';
+import { copyToClipboard } from '@utils';
 
-const RE = /{([\d,-]+)}/
+const RE = /{([\d,-]+)}/;
 
 function calculateLinesToHighlight(meta) {
   if (RE.test(meta)) {
     const lineNumbers = RE.exec(meta)[1]
       .split(',')
-      .map(v => v.split('-').map(y => parseInt(y, 10)))
+      .map((v) => v.split('-').map((y) => parseInt(y, 10)));
 
-    return index => {
-      const lineNumber = index + 1
+    return (index) => {
+      const lineNumber = index + 1;
       const inRange = lineNumbers.some(([start, end]) =>
-        end ? lineNumber >= start && lineNumber <= end : lineNumber === start
-      )
-      return inRange
-    }
+        end ? lineNumber >= start && lineNumber <= end : lineNumber === start,
+      );
+      return inRange;
+    };
   } else {
-    return () => false
+    return () => false;
   }
 }
 
 function CodePrism({ codeString, language, metastring, ...props }) {
-  const shouldHighlightLine = calculateLinesToHighlight(metastring)
+  const shouldHighlightLine = calculateLinesToHighlight(metastring);
 
   if (props['live']) {
     return (
       <Container>
-        <LiveProvider code={codeString} noInline={true} >
+        <LiveProvider code={codeString} noInline={true}>
           <LiveEditor style={{ marginBottom: '3px', borderRadius: '2px' }} />
           <LivePreview style={{ fontSize: '18px', borderRadius: '2px' }} />
           <LiveError style={{ color: 'tomato' }} />
         </LiveProvider>
       </Container>
-    )
+    );
   } else {
     return (
       <Highlight {...defaultProps} code={codeString} language={language}>
@@ -56,7 +55,7 @@ function CodePrism({ codeString, language, metastring, ...props }) {
                     className: shouldHighlightLine(index)
                       ? 'highlight-line'
                       : '',
-                  })
+                  });
 
                   return (
                     <div key={index} className={className}>
@@ -65,40 +64,40 @@ function CodePrism({ codeString, language, metastring, ...props }) {
                         const { className, children } = getTokenProps({
                           token,
                           key,
-                        })
+                        });
 
                         return (
                           <span key={key} className={className}>
                             {children}
                           </span>
-                        )
+                        );
                       })}
                     </div>
-                  )
+                  );
                 })}
               </pre>
             </div>
-          )
+          );
         }}
       </Highlight>
-    )
+    );
   }
 }
 
-export default CodePrism
+export default CodePrism;
 
 function Copy({ toCopy }: { toCopy: string }) {
-  const [hasCopied, setHasCopied] = useState<boolean>(false)
+  const [hasCopied, setHasCopied] = useState<boolean>(false);
 
   function copyToClipboardOnClick() {
-    if (hasCopied) return
+    if (hasCopied) return;
 
-    copyToClipboard(toCopy)
-    setHasCopied(true)
+    copyToClipboard(toCopy);
+    setHasCopied(true);
 
     setTimeout(() => {
-      setHasCopied(false)
-    }, 2000)
+      setHasCopied(false);
+    }, 2000);
   }
 
   return (
@@ -113,7 +112,7 @@ function Copy({ toCopy }: { toCopy: string }) {
         </>
       )}
     </CopyButton>
-  )
+  );
 }
 
 const CopyButton = styled.button`
@@ -136,7 +135,7 @@ const CopyButton = styled.button`
     top: -2%;
     width: 104%;
     height: 104%;
-    border: 2px solid ${p => p.theme.colors.accent};
+    border: 2px solid ${(p) => p.theme.colors.accent};
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.01);
   }
@@ -144,7 +143,7 @@ const CopyButton = styled.button`
   ${mediaqueries.tablet`
     display: none;
   `}
-`
+`;
 
 const Container = styled.div`
   overflow: scroll;
@@ -154,12 +153,12 @@ const Container = styled.div`
   font-size: 13px;
   margin: 15px auto 50px;
   border-radius: 5px;
-  font-family: ${p => p.theme.fonts.monospace} !important;
+  font-family: ${(p) => p.theme.fonts.monospace} !important;
 
   textarea,
   pre {
     padding: 32px !important;
-    font-family: ${p => p.theme.fonts.monospace} !important;
+    font-family: ${(p) => p.theme.fonts.monospace} !important;
   }
 
   ${mediaqueries.desktop`
@@ -187,4 +186,4 @@ const Container = styled.div`
     overflow: initial;
     position: relative;
   `};
-`
+`;

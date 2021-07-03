@@ -26,18 +26,18 @@ import {
 interface Props {
   theme: any;
   navigatorPosition: any;
-  setNavigatorShape: Function;
+  setNavigatorShape: () => void;
   navigatorShape: string;
   setMobileControls: () => void;
   mobileControlsOpen: boolean;
 }
 
-interface NavLinksProps {
-  theme: any;
-  fade: boolean;
-  to: string;
-  navigatorPosition: any;
-}
+// interface NavLinksProps {
+//   theme: any;
+//   fade: boolean;
+//   to: string;
+//   navigatorPosition: any;
+// }
 
 const siteQuery = graphql`
   {
@@ -306,7 +306,7 @@ function ArrowControl({ setNavigatorShape, navigatorShape, theme }) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     navigatorPosition: state.navigatorPosition,
     navigatorShape: state.navigatorShape,
@@ -487,6 +487,7 @@ const NavSocialContainer = styled.div`
   align-items: center;
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const LogoLink = styled(({ navigatorPosition, ...rest }) => (
   <AniLink {...rest} />
 ))`
@@ -534,6 +535,7 @@ const NavControls = styled.div`
   `}
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const NavLink = styled(({ navigatorPosition, ...rest }) => (
   <AniLink {...rest} />
 ))`
@@ -624,6 +626,7 @@ const ArticleViewer = styled.aside<{
   }
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ArticleLink = styled(({ navigatorPosition, ...rest }) => (
   <AniLink {...rest} />
 ))`

@@ -21,13 +21,14 @@
         ],
         "@components/*": ["src/components/*"],
         "@icons/*": ["src/icons/*"],
+        "@icons": ["src/icons/index.ts"],
         "@styles/*": ["src/styles/*"],
         "@utils/*": ["src/utils/*"],
         "@utils": ["src/utils/index.ts"],
         "@types/*": ["src/types/*"],
+        "@types": ["src/types/index.d.ts"]
         }
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "globals.ts"],
     "exclude": ["node_modules"]
   }
-  

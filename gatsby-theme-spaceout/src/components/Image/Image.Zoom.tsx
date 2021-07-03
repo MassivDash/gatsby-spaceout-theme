@@ -1,22 +1,22 @@
-import React from 'react'
-import ImageWithZoom from 'react-medium-image-zoom'
-import { useThemeUI } from 'theme-ui'
+import React from 'react';
+import ImageWithZoom from 'react-medium-image-zoom';
+import { useThemeUI } from 'theme-ui';
 
 function handleImageZoomBackground(background: string) {
-  const images = Array.from(document.getElementsByClassName('Image__Zoom'))
+  const images = Array.from(document.getElementsByClassName('Image__Zoom'));
 
-  images.map(img => {
+  images.map((img) => {
     if (
       img.previousElementSibling &&
       img.previousElementSibling.tagName === 'DIV'
     ) {
-      img.previousElementSibling.style.background = background
+      img.previousElementSibling.style.background = background;
     }
-  })
+  });
 }
 
 function ImageZoom(props) {
-  const { theme } = useThemeUI()
+  const { theme } = useThemeUI();
 
   const image = {
     ...props,
@@ -26,7 +26,7 @@ function ImageZoom(props) {
       margin: '0 auto',
       width: '100%',
     },
-  }
+  };
 
   return (
     <ImageWithZoom
@@ -39,7 +39,7 @@ function ImageZoom(props) {
         },
       }}
     />
-  )
+  );
 }
 
-export default ImageZoom
+export default ImageZoom;

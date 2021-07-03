@@ -30,7 +30,6 @@ import FullScreenExit from './ui/FullScreenExit.Icon';
 import FontSetter from './ui/FontSetter.Icon';
 import ArrowUp from './ui/ArrowUp.Icon';
 
-
 //DEV Icons
 
 import ReactIcon from './devIcons/react.svg';
@@ -46,7 +45,9 @@ import Postgre from './devIcons/postgre.svg';
 import TS from './devIcons/ts.svg';
 import Gatsby from './devIcons/Gatsby-Monogram.svg';
 import Svelte from './devIcons/svelte.svg';
-import Ghostjs from './devIcons/ghostjs.svg'
+import Ghostjs from './devIcons/ghostjs.svg';
+import Nextjs from './devIcons/nextjs.svg';
+import Tailwind from './devIcons/tailwind.svg';
 
 export default {
   Behance,
@@ -90,5 +91,7 @@ export default {
   TS,
   Gatsby,
   Svelte,
-  Ghostjs
+  Ghostjs,
+  Nextjs,
+  Tailwind,
 };

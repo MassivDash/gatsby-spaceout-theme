@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const ExIcon = ({ fill = '#08080B' }) => (
   <svg
@@ -23,6 +23,6 @@ const ExIcon = ({ fill = '#08080B' }) => (
       fill={fill}
     />
   </svg>
-)
+);
 
-export default ExIcon
+export default ExIcon;

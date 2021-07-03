@@ -1,16 +1,16 @@
-# Ignore everything:
-/*
+# # Ignore everything:
+# /*
 
-# Except these root files:
-!CONTRIBUTING.md
-!LICENSE
-!README.md
+# # Except these root files:
+# !CONTRIBUTING.md
+# !LICENSE
+# !README.md
 
-# Except these sources for the www workspace
-!/www/content
-!/www/public
-!/www/static
-!/www/gatsby-config.js
+# # Except these sources for the www workspace
+# !/spaceout/content/**
+# !/spaceout/src/**
+# !/spaceout/pages/**
+# !/spaceout/gatsby*.js
 
-# Ignore nothing for the theme workspace
-!/gatsby-theme-spaceout
+# # Ignore nothing for the theme workspace
+# !/gatsby-theme-spaceout

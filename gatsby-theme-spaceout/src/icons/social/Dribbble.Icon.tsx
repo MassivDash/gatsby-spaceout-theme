@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const DribbbleIcon = ({ fill = 'white', size = 32 }) => (
   <svg
@@ -13,6 +13,6 @@ const DribbbleIcon = ({ fill = 'white', size = 32 }) => (
       fill={fill}
     />
   </svg>
-)
+);
 
-export default DribbbleIcon
+export default DribbbleIcon;

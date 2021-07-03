@@ -1,4 +1,4 @@
-/* eslint-disable no-console, import/no-extraneous-dependencies, prefer-const, no-shadow */
+/* eslint-disable no-console*/
 
 require('dotenv').config();
 
@@ -171,7 +171,6 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
    * To do this, we need to find the corresponding authors since we allow for co-authors.
    */
   log('Creating', 'article posts');
-  // eslint-disable-next-line unicorn/no-array-for-each
   articles.forEach((article, index) => {
     // Match the Author to the one specified in the article
     let authorsThatWroteTheArticle;
@@ -229,8 +228,6 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
    */
   if (authorsPage) {
     log('Creating', 'authors page');
-
-    // eslint-disable-next-line unicorn/no-array-for-each
     authors.forEach((author) => {
       const articlesTheAuthorHasWritten = articlesThatArentSecret.filter(
         (article) =>

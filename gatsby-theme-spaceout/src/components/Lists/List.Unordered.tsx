@@ -1,5 +1,5 @@
-import styled from '@emotion/styled'
-import mediaqueries from '@styles/media'
+import styled from '@emotion/styled';
+import mediaqueries from '@styles/media';
 
 const UnorderedList = styled.ul`
   list-style: none;
@@ -54,7 +54,7 @@ const UnorderedList = styled.ul`
     width: 3rem;
     display: inline-block;
     position: absolute;
-    color: ${p => p.theme.colors.articleText};
+    color: ${(p) => p.theme.colors.articleText};
   }
 
   li::before {
@@ -64,12 +64,12 @@ const UnorderedList = styled.ul`
     top: 8px;
     height: 8px;
     width: 8px;
-    background: ${p => p.theme.colors.articleText};
+    background: ${(p) => p.theme.colors.articleText};
 
     ${mediaqueries.tablet`
       left: 0;
     `};
   }
-`
+`;
 
-export default UnorderedList
+export default UnorderedList;

@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from '@emotion/styled'
+import React from 'react';
+import styled from '@emotion/styled';
 
-import mediaqueries from '@styles/media'
+import mediaqueries from '@styles/media';
 
-const LogoSvg = props => (
+const LogoSvg = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={props.width}
@@ -474,7 +474,7 @@ const LogoSvg = props => (
       ></path>
     </g>
   </svg>
-)
+);
 
 const Logo = ({ fill = '#fff' }: { fill?: string }) => {
   return (
@@ -483,10 +483,10 @@ const Logo = ({ fill = '#fff' }: { fill?: string }) => {
 
       <LogoSvg width={30} height={30} className="Logo__Mobile" fill={fill} />
     </LogoContainer>
-  )
-}
+  );
+};
 
-export default React.memo(Logo)
+export default React.memo(Logo);
 
 const LogoContainer = styled.div`
   .Logo__Mobile {
@@ -502,4 +502,4 @@ const LogoContainer = styled.div`
       display: block;
     }
   `}
-`
+`;

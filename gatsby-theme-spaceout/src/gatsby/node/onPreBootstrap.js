@@ -1,4 +1,4 @@
-const fs = require('fs-extra'); // eslint-disable-line import/no-extraneous-dependencies
+const fs = require('fs-extra');
 
 module.exports = async ({ reporter }, themeOptions) => {
   const authorsPath = themeOptions.contentAuthors || 'content/authors';

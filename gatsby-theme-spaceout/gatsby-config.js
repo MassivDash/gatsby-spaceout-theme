@@ -42,13 +42,19 @@ module.exports = ({
       },
     },
     {
-        resolve: 'gatsby-plugin-web-font-loader',
-        options: {
-          google: {
-            families: ['Raleway:200,300,700,900', 'Oswad:200,300,700,900', 'Roboto:200,300,700,900', 'Playfair Display:200,300,700,900', 'Satisfy', 'Paytone One']
-          }
-        }
+      resolve: 'gatsby-plugin-web-font-loader',
+      options: {
+        google: {
+          families: [
+            'Open Sans:200,300,400,700,900',
+            'Roboto:200,300,700,900',
+            'Playfair Display:200,300,700,900',
+            'Satisfy',
+            'Paytone One',
+          ],
+        },
       },
+    },
     {
       resolve: `gatsby-plugin-feed`,
       options: {
@@ -70,25 +76,25 @@ module.exports = ({
           },
           ...rest
         }) => {
-          siteMetadata.feed_url = siteMetadata.siteUrl + '/rss.xml'
+          siteMetadata.feed_url = siteMetadata.siteUrl + '/rss.xml';
           siteMetadata.image_url =
-            siteMetadata.siteUrl + '/icons/icon-512x512.png'
-          const siteMetadataModified = siteMetadata
-          siteMetadataModified.feed_url = `${siteMetadata.siteUrl}/rss.xml`
-          siteMetadataModified.image_url = `${siteMetadata.siteUrl}/icons/icon-512x512.png`
+            siteMetadata.siteUrl + '/icons/icon-512x512.png';
+          const siteMetadataModified = siteMetadata;
+          siteMetadataModified.feed_url = `${siteMetadata.siteUrl}/rss.xml`;
+          siteMetadataModified.image_url = `${siteMetadata.siteUrl}/icons/icon-512x512.png`;
 
           return {
             ...siteMetadataModified,
             ...rest,
-          }
+          };
         },
         feeds: [
           {
             serialize: ({ query: { site, allArticle, allContentfulPost } }) => {
               if (local && !contentful) {
                 return allArticle.edges
-                  .filter(edge => !edge.node.secret)
-                  .map(edge => {
+                  .filter((edge) => !edge.node.secret)
+                  .map((edge) => {
                     return {
                       ...edge.node,
                       description: edge.node.excerpt,
@@ -97,12 +103,12 @@ module.exports = ({
                       guid: site.siteMetadata.siteUrl + edge.node.slug,
                       // custom_elements: [{ "content:encoded": edge.node.body }],
                       author: edge.node.author,
-                    }
-                  })
+                    };
+                  });
               } else if (!local && contentful) {
                 return allContentfulPost.edges
-                  .filter(edge => !edge.node.secret)
-                  .map(edge => {
+                  .filter((edge) => !edge.node.secret)
+                  .map((edge) => {
                     return {
                       ...edge.node,
                       description: edge.node.excerpt,
@@ -111,13 +117,13 @@ module.exports = ({
                       guid: site.siteMetadata.siteUrl + edge.node.slug,
                       // custom_elements: [{ "content:encoded": edge.node.body }],
                       author: edge.node.author,
-                    }
-                  })
+                    };
+                  });
               } else {
-                const allArticlesData = { ...allArticle, ...allContentfulPost }
+                const allArticlesData = { ...allArticle, ...allContentfulPost };
                 return allArticlesData.edges
-                  .filter(edge => !edge.node.secret)
-                  .map(edge => {
+                  .filter((edge) => !edge.node.secret)
+                  .map((edge) => {
                     return {
                       ...edge.node,
                       description: edge.node.excerpt,
@@ -126,8 +132,8 @@ module.exports = ({
                       guid: site.siteMetadata.siteUrl + edge.node.slug,
                       // custom_elements: [{ "content:encoded": edge.node.body }],
                       author: edge.node.author,
-                    }
-                  })
+                    };
+                  });
               }
             },
             query:
@@ -255,7 +261,7 @@ module.exports = ({
       },
     },
     {
-      resolve: `gatsby-plugin-emotion`
-    }
+      resolve: `gatsby-plugin-emotion`,
+    },
   ],
-})
+});

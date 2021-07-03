@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import styled from '@emotion/styled'
-import { keyframes } from '@emotion/core'
-import { useColorMode } from 'theme-ui'
+import React, { useState, useEffect } from 'react';
+import styled from '@emotion/styled';
+import { keyframes } from '@emotion/core';
+import { useColorMode } from 'theme-ui';
 
-import Icons from '@icons'
+import Icons from '@icons';
 
 import {
   getHighlightedTextPositioning,
@@ -11,37 +11,37 @@ import {
   getSelectionText,
   getWindowDimensions,
   getBreakpointFromTheme,
-} from '@utils'
+} from '@utils';
 
 interface MenuFloatState {
-  x: number
-  y: number
-  show: boolean
+  x: number;
+  y: number;
+  show: boolean;
 }
 
 /**
  * Values we get to be able to ensure the positionting context are correct!
  * Padding is derviced from the CSS value in Editor
  */
-const MENU_WIDTH: number = 225
-const MENU_HEIGHT: number = 46
+const MENU_WIDTH = 225;
+const MENU_HEIGHT = 46;
 
 function ArticelShare() {
-  const [colorMode] = useColorMode()
-  const [text, setText] = useState('')
-  const [focus, setFocus] = useState(false)
-  const [canTweet, setCanTweet] = useState(true)
+  const [colorMode] = useColorMode();
+  const [text, setText] = useState('');
+  const [focus, setFocus] = useState(false);
+  const [canTweet, setCanTweet] = useState(true);
   const [{ x, y, show }, setPosition] = useState<MenuFloatState>({
     x: 0,
     y: 0,
     show: false,
-  })
+  });
 
-  const share = generateShare(text)
-  const isDark = colorMode === 'dark'
+  const share = generateShare(text);
+  const isDark = colorMode === 'dark';
 
   useEffect(() => {
-    const events: string[] = ['keydown', 'keyup', 'mouseup', 'resize']
+    const events: string[] = ['keydown', 'keyup', 'mouseup', 'resize'];
 
     function handleMenuFloatSettings() {
       /**
@@ -51,41 +51,42 @@ function ArticelShare() {
        * the window.selection values will give the previous ranges instead of the current!
        */
       setTimeout(() => {
-        const article = document.getElementsByTagName('article')[0]
-        const paragraphOffset = document.getElementsByTagName('p')[0].offsetLeft
+        const article = document.getElementsByTagName('article')[0];
+        const paragraphOffset =
+          document.getElementsByTagName('p')[0].offsetLeft;
 
-        if (!article) return
+        if (!article) return;
 
         // We want to not show the menu float in code blocks
         const codeBlocks = Array.from(
-          article.getElementsByClassName('.prism-code')
-        )
-        const isHighlightedInCodeBlock = codeBlocks.some(block =>
-          window.getSelection().containsNode(block, true)
-        )
+          article.getElementsByClassName('.prism-code'),
+        );
+        const isHighlightedInCodeBlock = codeBlocks.some((block) =>
+          window.getSelection().containsNode(block, true),
+        );
 
-        if (isHighlightedInCodeBlock) return
+        if (isHighlightedInCodeBlock) return;
 
-        const articleBox = article.getBoundingClientRect() as DOMRect
+        const articleBox = article.getBoundingClientRect() as DOMRect;
 
-        const { width, height } = getSelectionDimensions()
-        const { x, y } = getHighlightedTextPositioning()
-        const { width: windowWidth } = getWindowDimensions()
-        const tablet = getBreakpointFromTheme('tablet')
-        const desktop = getBreakpointFromTheme('desktop')
+        const { width, height } = getSelectionDimensions();
+        const { x, y } = getHighlightedTextPositioning();
+        const { width: windowWidth } = getWindowDimensions();
+        const tablet = getBreakpointFromTheme('tablet');
+        const desktop = getBreakpointFromTheme('desktop');
 
         /**
          * Because the article is offset to the side to compensate for the progress bar
          * we need to calculate the offset of the menu share in the same way.
          */
-        let paddingOffset = 0
+        let paddingOffset = 0;
 
         if (windowWidth > tablet) {
-          paddingOffset = 53
+          paddingOffset = 53;
         }
 
         if (windowWidth > desktop) {
-          paddingOffset = 68
+          paddingOffset = 68;
         }
 
         /**
@@ -97,30 +98,30 @@ function ArticelShare() {
         const offset: { x: number; y: number } = {
           x: height > 29 ? paragraphOffset + paddingOffset : x,
           y: y - articleBox.y - 160,
-        }
+        };
 
         setPosition({
           x: offset.x + width / 2 - MENU_WIDTH / 2 - paddingOffset,
           y: offset.y - MENU_HEIGHT - 5,
           show: width > 1,
-        })
+        });
 
-        setText(getSelectionText())
-      }, 0)
+        setText(getSelectionText());
+      }, 0);
     }
 
     // attach all events
-    events.forEach(event =>
-      window.addEventListener(event, handleMenuFloatSettings)
-    )
+    events.forEach((event) =>
+      window.addEventListener(event, handleMenuFloatSettings),
+    );
 
     return () => {
       // remove all events after mount
-      events.forEach(event =>
-        window.removeEventListener(event, handleMenuFloatSettings)
-      )
-    }
-  }, [show])
+      events.forEach((event) =>
+        window.removeEventListener(event, handleMenuFloatSettings),
+      );
+    };
+  }, [show]);
 
   /**
    * Small workaround to set the focus once the x and y positiosn are set.
@@ -129,18 +130,18 @@ function ArticelShare() {
    */
   useEffect(() => {
     setTimeout(() => {
-      const { width } = getSelectionDimensions()
-      setFocus(width > 1)
-    }, 0)
-  }, [show])
+      const { width } = getSelectionDimensions();
+      setFocus(width > 1);
+    }, 0);
+  }, [show]);
 
   function handleCopyClick() {
-    const tempInput = document.createElement('input')
-    document.body.appendChild(tempInput)
-    tempInput.setAttribute('value', text)
-    tempInput.select()
-    document.execCommand('copy')
-    document.body.removeChild(tempInput)
+    const tempInput = document.createElement('input');
+    document.body.appendChild(tempInput);
+    tempInput.setAttribute('value', text);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
   }
 
   /**
@@ -148,13 +149,13 @@ function ArticelShare() {
    * characters we need to give them feedback that it's too long to tweet.
    */
   useEffect(() => {
-    const tweetLimit = 280
-    const otherCharactersInTweet = '""—  ' // 2 quotes, 1 emdash, 2 spaces
-    const url = window.location.href
-    const tweet = text + url + otherCharactersInTweet
+    const tweetLimit = 280;
+    const otherCharactersInTweet = '""—  '; // 2 quotes, 1 emdash, 2 spaces
+    const url = window.location.href;
+    const tweet = text + url + otherCharactersInTweet;
 
-    setCanTweet(tweet.length <= tweetLimit)
-  }, [text])
+    setCanTweet(tweet.length <= tweetLimit);
+  }, [text]);
 
   return (
     <MenuFloat
@@ -179,21 +180,21 @@ function ArticelShare() {
         <Icons.Copy />
       </MenuButton>
     </MenuFloat>
-  )
+  );
 }
 
-export default ArticelShare
+export default ArticelShare;
 
 function ReferralLink({ disabled, share, children }) {
   function handleClick(event) {
-    event.preventDefault()
-    if (disabled) return
+    event.preventDefault();
+    if (disabled) return;
 
     window.open(
       share,
       '',
-      'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600'
-    )
+      'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600',
+    );
   }
 
   return (
@@ -205,17 +206,17 @@ function ReferralLink({ disabled, share, children }) {
       <Hidden>Share the selected text</Hidden>
       {children}
     </MenuShare>
-  )
+  );
 }
 
 function generateShare(shareText: string) {
-  if (!shareText) return {}
-  const url = window.location.href
+  if (!shareText) return {};
+  const url = window.location.href;
 
   return {
     twitter: `https://twitter.com/intent/tweet?text="${shareText}" — ${url}`,
     linkedin: `http://www.linkedin.com/shareArticle?mini=true&url=${url}&summary=${shareText}&title=${shareText}`,
-  }
+  };
 }
 
 const popUpwards = keyframes`
@@ -239,7 +240,7 @@ const popUpwards = keyframes`
     transform:matrix(1,0,0,1,0,0);
     opacity:1
   }
-`
+`;
 
 const MenuFloat = styled.div<{ isDark: boolean }>`
   position: absolute;
@@ -248,8 +249,8 @@ const MenuFloat = styled.div<{ isDark: boolean }>`
   width: ${MENU_WIDTH}px;
   height: ${MENU_HEIGHT}px;
   padding: 7px 11px 7px 19px;
-  color: ${p => p.theme.colors.grey};
-  background: ${p => (p.isDark ? '#fafafa' : '#000')};
+  color: ${(p) => p.theme.colors.grey};
+  background: ${(p) => (p.isDark ? '#fafafa' : '#000')};
   border-radius: 5px;
   font-size: 18px;
   font-weight: 600;
@@ -267,45 +268,45 @@ const MenuFloat = styled.div<{ isDark: boolean }>`
     height: 0;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-top: 8px solid ${p => (p.isDark ? '#fafafa' : '#000')};
+    border-top: 8px solid ${(p) => (p.isDark ? '#fafafa' : '#000')};
     transition: border-color 200ms;
   }
 
   svg {
     path {
-      fill: ${p => (p.isDark ? '#000' : '#fff')};
+      fill: ${(p) => (p.isDark ? '#000' : '#fff')};
     }
   }
-`
+`;
 
 const MenuText = styled.span`
   margin-right: 11px;
-`
+`;
 
 const Hidden = styled.div`
   width: 0px;
   height: 0px;
   visibility: hidden;
   opacity: 0;
-`
+`;
 
 const MenuShare = styled.a<{ disabled: boolean }>`
   display: flex;
   align-items: center;
   padding: 16px 11px;
-  cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
 
   svg {
     path {
-      fill: ${p => (p.disabled ? '#F89797' : '')};
+      fill: ${(p) => (p.disabled ? '#F89797' : '')};
     }
   }
-`
+`;
 
 const MenuButton = styled.button`
   display: inline-block;
   padding: 16px 11px;
-`
+`;
 
 const MenuDivider = styled.div`
   display: inline-block;
@@ -314,4 +315,4 @@ const MenuDivider = styled.div`
   position: relative;
   margin: 0 8px;
   background: rgba(115, 115, 125, 0.3);
-`
+`;

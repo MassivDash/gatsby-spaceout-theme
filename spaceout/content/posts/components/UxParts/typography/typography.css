@@ -4,8 +4,8 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    max-height: 1050px;
 }
+
 
 .typographyGrid {
     display: grid;

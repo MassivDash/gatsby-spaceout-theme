@@ -1,27 +1,24 @@
-import React, { useRef, useState, useEffect } from "react";
-import styled from "@emotion/styled";
-import { css } from '@emotion/core'
-import throttle from "lodash/throttle";
-import { useColorMode } from 'theme-ui'
-import { graphql, useStaticQuery } from "gatsby";
-import MDXRenderer from "@components/MDX";
-import Section from "@components/Section";
-import { connect } from 'react-redux'
-import mediaqueries from "@styles/media";
-import { debounce } from "@utils";
-import Logo from '@components/Logo'
-import ArticleHero from "../sections/article/Article.Hero";
-import ArticleControls from "../sections/article/Article.Controls";
-import ArticlesNext from "../sections/article/Article.Next";
-import ArticleSEO from "../sections/article/Article.SEO";
-import ArticleShare from "../sections/article/Article.Share";
+import React, { useRef, useState, useEffect } from 'react';
+import styled from '@emotion/styled';
+import { css } from '@emotion/core';
+import throttle from 'lodash/throttle';
+import { useColorMode } from 'theme-ui';
+import { graphql, useStaticQuery } from 'gatsby';
+import MDXRenderer from '@components/MDX';
+import Section from '@components/Section';
+import { connect } from 'react-redux';
+import mediaqueries from '@styles/media';
+import { debounce } from '@utils';
+import Logo from '@components/Logo';
+import ArticleHero from '../sections/article/Article.Hero';
+import ArticleControls from '../sections/article/Article.Controls';
+import ArticlesNext from '../sections/article/Article.Next';
+import ArticleSEO from '../sections/article/Article.SEO';
+import ArticleShare from '../sections/article/Article.Share';
 
+import { setFontSizeIncrease } from '../state/createStore';
 
-import {
-  setFontSizeIncrease,
-} from '../state/createStore'
-
-import CSSFadeIn from "@components/Transitions/Transitions.CSS.FadeIn";
+import CSSFadeIn from '@components/Transitions/Transitions.CSS.FadeIn';
 const siteQuery = graphql`
   {
     allSite {
@@ -39,16 +36,16 @@ const siteQuery = graphql`
 
 function Article({ pageContext, location, fontSizeIncrease, theme }) {
   const contentSectionRef = useRef<HTMLElement>(null);
-  const [colorMode] = useColorMode()
-  const fill = colorMode === 'dark' ? '#fff' : '#000'
-  
+  const [colorMode] = useColorMode();
+  const fill = colorMode === 'dark' ? '#fff' : '#000';
+
   const [hasCalculated, setHasCalculated] = useState<boolean>(false);
-  const [contentHeight, setContentHeight] = useState<number>(0);
+  const [_, setContentHeight] = useState<number>(0);
 
   const results = useStaticQuery(siteQuery);
   const { similarPosts } = results.allSite.edges[0].node.siteMetadata;
 
-  const { article, authors, mailchimp, next } = pageContext;
+  const { article, authors, next } = pageContext;
 
   useEffect(() => {
     const calculateBodySize = throttle(() => {
@@ -63,9 +60,9 @@ function Article({ pageContext, location, fontSizeIncrease, theme }) {
        */
       if (!hasCalculated) {
         const debouncedCalculation = debounce(calculateBodySize);
-        const $imgs = contentSection.querySelectorAll("img");
+        const $imgs = contentSection.querySelectorAll('img');
 
-        $imgs.forEach($img => {
+        $imgs.forEach(($img) => {
           // If the image hasn't finished loading then add a listener
           if (!$img.complete) $img.onload = debouncedCalculation;
         });
@@ -79,73 +76,73 @@ function Article({ pageContext, location, fontSizeIncrease, theme }) {
     }, 20);
 
     calculateBodySize();
-    window.addEventListener("resize", calculateBodySize);
+    window.addEventListener('resize', calculateBodySize);
 
-    return () => window.removeEventListener("resize", calculateBodySize);
+    return () => window.removeEventListener('resize', calculateBodySize);
   }, []);
-
 
   return (
     <CSSFadeIn>
       <BackgroundLayer theme={theme}>
-      <ArticleSEO article={article} authors={authors} location={location} />
-      <ArticleHero article={article} authors={authors} />
-      <MobileControls>
-        <ArticleControls />
-      </MobileControls>
-      <ArticleBody fontSizeIncrease={fontSizeIncrease} ref={contentSectionRef}>
-        <MDXRenderer content={article.body}>
-        <GoBackLogo><Logo fill={fill} /></GoBackLogo>
-          <ArticleShare />
-        </MDXRenderer>
-        
-      </ArticleBody>
-      {next.length > 0 && similarPosts && (
-        <NextArticle >
-          <FooterNext></FooterNext>
-          <ArticlesNext articles={next} />
-          <FooterSpacer />
-        </NextArticle>
-      )}
+        <ArticleSEO article={article} authors={authors} location={location} />
+        <ArticleHero article={article} authors={authors} />
+        <MobileControls>
+          <ArticleControls />
+        </MobileControls>
+        <ArticleBody
+          fontSizeIncrease={fontSizeIncrease}
+          ref={contentSectionRef}
+        >
+          <MDXRenderer content={article.body}>
+            <GoBackLogo>
+              <Logo fill={fill} />
+            </GoBackLogo>
+            <ArticleShare />
+          </MDXRenderer>
+        </ArticleBody>
+        {next.length > 0 && similarPosts && (
+          <NextArticle>
+            <FooterNext></FooterNext>
+            <ArticlesNext articles={next} />
+            <FooterSpacer />
+          </NextArticle>
+        )}
       </BackgroundLayer>
     </CSSFadeIn>
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    fontSizeIncrease: state.fontSizeIncrease
-  }
-}
+    fontSizeIncrease: state.fontSizeIncrease,
+  };
+};
 
 const mapDispatchToProps = {
   setFontSizeIncrease,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Article);
+export default connect(mapStateToProps, mapDispatchToProps)(Article);
 
-const articleFontDynamicStyle = props =>
+const articleFontDynamicStyle = (props) =>
   css`
     font-size: ${18 * props.fontSizeIncrease}px;
     position: relative;
     transition: background 0.2s linear;
     margin-bottom: 100px;
 
-  ${mediaqueries.desktop`
+    ${mediaqueries.desktop`
     padding-left: 53px;
   `}
-  
-  ${mediaqueries.tablet`
+
+    ${mediaqueries.tablet`
     padding: 70px 0 80px;
   `}
 
   ${mediaqueries.phablet`
     padding: 60px 0;
   `}
-`;
+  `;
 
 const MobileControls = styled.div`
   position: relative;
@@ -166,19 +163,20 @@ const GoBackLogo = styled.div`
   min-height: 100px;
   min-width: 100px;
   width: 100%;
-`
+`;
 
-const ArticleBody = styled.article`${articleFontDynamicStyle}`
-  
+const ArticleBody = styled.article`
+  ${articleFontDynamicStyle}
+`;
 
 const NextArticle = styled(Section)`gatsby-
   display: block;
 `;
 
 const BackgroundLayer = styled.div`
-background-color: ${(p: any) => p.theme.colors.background};
-transition: 0.25s var(--ease-in-out-quad),color 0.25s var(--ease-in-out-quad); 
-padding-top: 20px;
+  background-color: ${(p: any) => p.theme.colors.background};
+  transition: 0.25s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
+  padding-top: 20px;
 `;
 
 const FooterNext = styled.h3`

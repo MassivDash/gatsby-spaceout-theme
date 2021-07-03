@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const TwitterIcon = ({ fill = 'white', size = 32, ...props }) => (
   <svg
@@ -16,6 +16,6 @@ const TwitterIcon = ({ fill = 'white', size = 32, ...props }) => (
       fill={fill}
     />
   </svg>
-)
+);
 
-export default TwitterIcon
+export default TwitterIcon;

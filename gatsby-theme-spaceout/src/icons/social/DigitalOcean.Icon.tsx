@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const DigitalOceanIcon = ({ fill = 'white' }) => (
   <svg
@@ -15,6 +15,6 @@ const DigitalOceanIcon = ({ fill = 'white' }) => (
       fill={fill}
     />
   </svg>
-)
+);
 
-export default DigitalOceanIcon
+export default DigitalOceanIcon;

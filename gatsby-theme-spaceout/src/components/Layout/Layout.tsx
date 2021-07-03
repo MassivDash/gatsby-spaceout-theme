@@ -20,8 +20,8 @@ import {
 interface LayoutProps {
   children: React.ReactChild;
   location: any;
-  setNavigatorPosition: Function;
-  setNavigatorShape: Function;
+  setNavigatorPosition: (string: string) => void;
+  setNavigatorShape: (string: string) => void;
 }
 
 /**
@@ -107,7 +107,7 @@ function Layout({
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     navigatorPosition: state.navigatorPosition,
   };

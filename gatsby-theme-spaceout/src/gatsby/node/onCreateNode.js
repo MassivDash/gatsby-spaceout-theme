@@ -16,7 +16,6 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
 
   // ///////////////// Utility functions ///////////////////
 
-  // eslint-disable-next-line unicorn/consistent-function-scoping
   function slugify(string) {
     return string
       .toLowerCase()
@@ -51,7 +50,6 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
     return permalink;
   }
 
-  // eslint-disable-next-line unicorn/consistent-function-scoping
   function generateSlug(...arguments_) {
     return `/${arguments_.join('/')}`.replace(/\/\/+/g, '/');
   }

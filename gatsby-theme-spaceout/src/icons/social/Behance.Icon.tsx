@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const BehanceIcon = ({ fill = '#fff', size = 32 }) => (
   <svg
@@ -32,6 +32,6 @@ const BehanceIcon = ({ fill = '#fff', size = 32 }) => (
       />
     </g>
   </svg>
-)
+);
 
-export default BehanceIcon
+export default BehanceIcon;

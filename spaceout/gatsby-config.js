@@ -101,13 +101,22 @@ const plugins = [
     resolve: 'gatsby-plugin-web-font-loader',
     options: {
       google: {
-        families: ['Open Sans:200,300,400,700,900', 'Roboto:200,300,700,900', 'Playfair Display:200,300,700,900']
-      }
-    }
+        families: [
+          'Raleway:200,300,700,900',
+          'Oswad:200,300,700,900',
+          'Lato:200,300,700,900',
+          'Cormorant:200,300,700,900',
+          'Lato:200,300,700,900',
+          'Cormorant:200,300,700,900',
+          'Barlow Condensed:200,300,700,900',
+          'Cutive:200,300,700,900',
+        ],
+      },
+    },
   },
   {
     resolve: `gatsby-plugin-emotion`,
-  }
+  },
 ];
 
 /**

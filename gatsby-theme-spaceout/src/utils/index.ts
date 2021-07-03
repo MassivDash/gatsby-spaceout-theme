@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import throttle from "lodash/throttle";
+import { useEffect, useState } from 'react';
+import throttle from 'lodash/throttle';
 
-import theme from "../gatsby-plugin-theme-ui";
+import theme from '../gatsby-plugin-theme-ui';
 
 /**
  * Clamp a number between min and max
@@ -30,7 +30,7 @@ export const clamp = (value: number, min: number, max: number) =>
  *    range(3, 5) [3, 4, 5, 6, 7]
  *    range(1, 5, 0.1) [1, 1.1, 1.2, 1.3, 1.4]
  */
-export const range = (start: number, len: number, step: number = 1) =>
+export const range = (start: number, len: number, step = 1) =>
   len
     ? new Array(len)
         .fill(undefined)
@@ -48,7 +48,8 @@ export const range = (start: number, len: number, step: number = 1) =>
 export const debounce = (fn: () => any, time = 100) => {
   let timeout: ReturnType<typeof setTimeout>;
 
-  return function() {
+  return function () {
+    // eslint-disable-next-line prefer-rest-params
     const functionCall = () => fn.apply(this, arguments);
 
     clearTimeout(timeout);
@@ -65,11 +66,11 @@ export const debounce = (fn: () => any, time = 100) => {
  * @example
  *    getBreakpointFromTheme('tablet') 768
  */
-export const getBreakpointFromTheme: (arg0: string) => number = name =>
+export const getBreakpointFromTheme: (arg0: string) => number = (name) =>
   theme.breakpoints.find(([label, _]) => label === name)![1];
 
 export const getWindowDimensions = (): { height: number; width: number } => {
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     const width =
       window.innerWidth ||
       document.documentElement.clientWidth ||
@@ -101,8 +102,8 @@ export function useResize() {
       50,
     );
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   });
 
   return dimensions;
@@ -119,11 +120,11 @@ export function useResize() {
  *    scrollable('disable') Will freeze the screen
  */
 export const scrollable = (action: string) => {
-  if (action.toLowerCase() === "enable") {
+  if (action.toLowerCase() === 'enable') {
     document.body.style.cssText = null;
   } else {
-    document.body.style.overflow = "hidden";
-    document.body.style.height = "100%";
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100%';
   }
 };
 
@@ -132,9 +133,9 @@ export function useScrollPosition() {
 
   useEffect(() => {
     const handleScroll = throttle(() => setOffset(window.pageYOffset), 30);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return offset;
@@ -159,7 +160,7 @@ export function startAnimation(callback) {
  * This will always return the top left corner of the selection.
  */
 export const getHighlightedTextPositioning = () => {
-  let doc: any = window.document;
+  const doc: any = window.document;
   let sel = doc.selection;
   let range;
   let rects;
@@ -169,7 +170,7 @@ export const getHighlightedTextPositioning = () => {
   let y = 0;
 
   if (sel) {
-    if (sel.type !== "Control") {
+    if (sel.type !== 'Control') {
       range = sel.createRange();
       range.collapse(true);
       x = range.boundingLeft;
@@ -194,16 +195,16 @@ export const getHighlightedTextPositioning = () => {
 
       // Fall back to inserting a temporary element
       if (x === 0 && y === 0) {
-        var span = doc.createElement("span");
+        const span = doc.createElement('span');
         if (span.getClientRects) {
           // Ensure span has dimensions and position by
           // adding a zero-width space character
-          span.appendChild(doc.createTextNode("\u200b"));
+          span.appendChild(doc.createTextNode('\u200b'));
           range.insertNode(span);
           rect = span.getClientRects()[0];
           x = rect.left;
           y = rect.top;
-          var spanParent = span.parentNode;
+          const spanParent = span.parentNode;
           spanParent.removeChild(span);
 
           // Glue any broken text nodes back together
@@ -227,18 +228,18 @@ function isOrContains(node, container) {
 }
 
 function elementContainsSelection(el) {
-  var sel;
+  let sel;
   if (window.getSelection) {
     sel = window.getSelection();
     if (sel.rangeCount > 0) {
-      for (var i = 0; i < sel.rangeCount; ++i) {
+      for (let i = 0; i < sel.rangeCount; ++i) {
         if (!isOrContains(sel.getRangeAt(i).commonAncestorContainer, el)) {
           return false;
         }
       }
       return true;
     }
-  } else if ((sel = document.selection) && sel.type != "Control") {
+  } else if ((sel = document.selection) && sel.type != 'Control') {
     return isOrContains(sel.createRange().parentElement(), el);
   }
   return false;
@@ -246,16 +247,16 @@ function elementContainsSelection(el) {
 
 export const getSelectionDimensions = () => {
   const isSelectedInPrism = Array.from(
-    document.getElementsByClassName("prism-code"),
+    document.getElementsByClassName('prism-code'),
   )
-    .map(el => elementContainsSelection(el))
-    .some(bool => bool);
+    .map((el) => elementContainsSelection(el))
+    .some((bool) => bool);
 
   const isSelectedInArticle = Array.from(
-    document.getElementsByTagName("article"),
+    document.getElementsByTagName('article'),
   )
-    .map(el => elementContainsSelection(el))
-    .some(bool => bool);
+    .map((el) => elementContainsSelection(el))
+    .some((bool) => bool);
 
   /**
    * we don't want to show the ArticleShare option when it's outside of
@@ -268,7 +269,7 @@ export const getSelectionDimensions = () => {
     };
   }
 
-  let doc: any = window.document;
+  const doc: any = window.document;
   let sel = doc.selection;
   let range;
 
@@ -276,7 +277,7 @@ export const getSelectionDimensions = () => {
   let height = 0;
 
   if (sel) {
-    if (sel.type !== "Control") {
+    if (sel.type !== 'Control') {
       range = sel.createRange();
       width = range.boundingWidth;
       height = range.boundingHeight;
@@ -286,7 +287,7 @@ export const getSelectionDimensions = () => {
     if (sel.rangeCount) {
       range = sel.getRangeAt(0).cloneRange();
       if (range.getBoundingClientRect) {
-        var rect = range.getBoundingClientRect();
+        const rect = range.getBoundingClientRect();
         width = rect.right - rect.left;
         height = rect.bottom - rect.top;
       }
@@ -297,10 +298,10 @@ export const getSelectionDimensions = () => {
 };
 
 export function getSelectionText() {
-  let text = "";
+  let text = '';
   if (window.getSelection) {
     text = window.getSelection().toString();
-  } else if (document.selection && document.selection.type != "Control") {
+  } else if (document.selection && document.selection.type != 'Control') {
     text = document.selection.createRange().text;
   }
   return text;
@@ -314,8 +315,8 @@ export function getSelectionText() {
 export function toKebabCase(str: string): string {
   return str
     .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
-    .map(x => x.toLowerCase())
-    .join("-");
+    .map((x) => x.toLowerCase())
+    .join('-');
 }
 
 export function copyToClipboard(toCopy: string) {

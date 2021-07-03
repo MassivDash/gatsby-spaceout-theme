@@ -1,8 +1,8 @@
-import React from 'react'
-import Scroller from 'gatsby-theme-spaceout/src/components/Scroller'
-import Section from 'gatsby-theme-spaceout/src/components/Section'
-import SEO from 'gatsby-theme-spaceout/src/components/SEO'
-import Headings from 'gatsby-theme-spaceout/src/components/Headings'
+import React from 'react';
+import Scroller from 'gatsby-theme-spaceout/src/components/Scroller';
+import Section from 'gatsby-theme-spaceout/src/components/Section';
+import SEO from 'gatsby-theme-spaceout/src/components/SEO';
+import Headings from 'gatsby-theme-spaceout/src/components/Headings';
 
 const HowItsDone = () => {
   return (
@@ -19,7 +19,7 @@ const HowItsDone = () => {
         </Section>
       </Scroller>
     </>
-  )
-}
+  );
+};
 
-export default HowItsDone
+export default HowItsDone;

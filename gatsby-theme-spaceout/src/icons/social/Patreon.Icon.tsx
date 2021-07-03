@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const PatreonIcon = ({ fill = 'white' }) => (
   <svg
@@ -15,6 +15,6 @@ const PatreonIcon = ({ fill = 'white' }) => (
       fill={fill}
     />
   </svg>
-)
+);
 
-export default PatreonIcon
+export default PatreonIcon;

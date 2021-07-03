@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const StackoverflowIcon = ({ fill = 'white' }) => (
   <svg
@@ -23,6 +23,6 @@ const StackoverflowIcon = ({ fill = 'white' }) => (
       fill={fill}
     />
   </svg>
-)
+);
 
-export default StackoverflowIcon
+export default StackoverflowIcon;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const PaypalIcon = ({ fill = 'white' }) => (
   <svg
@@ -13,6 +13,6 @@ const PaypalIcon = ({ fill = 'white' }) => (
       fill={fill}
     />
   </svg>
-)
+);
 
-export default PaypalIcon
+export default PaypalIcon;

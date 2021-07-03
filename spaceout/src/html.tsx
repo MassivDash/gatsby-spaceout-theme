@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default (props) => (
   <html {...props.htmlAttributes}>
@@ -24,4 +24,4 @@ export default (props) => (
       {props.postBodyComponents}
     </body>
   </html>
-)
+);

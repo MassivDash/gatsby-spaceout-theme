@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, memo } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import AniLink from 'gatsby-plugin-transition-link/AniLink';
@@ -56,9 +56,11 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
   if (!articles) return null;
 
   const hasOnlyOneArticle = articles.length === 1;
-  const { gridLayout = 'tiles', hasSetGridLayout, getGridLayout } = useContext(
-    GridLayoutContext,
-  );
+  const {
+    gridLayout = 'tiles',
+    hasSetGridLayout,
+    getGridLayout,
+  } = useContext(GridLayoutContext);
 
   /**readingTime
    * We're taking the flat array of articles [{}, {}, {}...]
@@ -158,7 +160,7 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
 };
 
 const wide = '1fr';
-const narrow = '457px';
+// const narrow = '457px';
 
 const limitToTwoLines = css`
   text-overflow: ellipsis;

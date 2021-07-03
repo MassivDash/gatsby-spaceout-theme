@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const CopyIcon = ({ fill = '#08080B', ...props }) => (
   <svg
@@ -14,6 +14,6 @@ const CopyIcon = ({ fill = '#08080B', ...props }) => (
       fill={fill}
     />
   </svg>
-)
+);
 
-export default CopyIcon
+export default CopyIcon;

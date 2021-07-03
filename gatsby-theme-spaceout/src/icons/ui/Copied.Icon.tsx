@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const CopiedIcon = ({ fill = '#fff' }) => (
   <svg
@@ -13,6 +13,6 @@ const CopiedIcon = ({ fill = '#fff' }) => (
       fill={fill}
     />
   </svg>
-)
+);
 
-export default CopiedIcon
+export default CopiedIcon;

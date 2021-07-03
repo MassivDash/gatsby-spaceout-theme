@@ -6,7 +6,6 @@ import { useColorMode } from 'theme-ui';
 import screenfull from 'screenfull';
 import { connect } from 'react-redux';
 import { setFontSizeIncrease } from '../../state/createStore';
-import { copyToClipboard } from '@utils';
 import { GridLayoutContext } from '../../sections/articles/Articles.List.Context';
 
 function Footer({ ...props }) {
@@ -50,7 +49,7 @@ function Footer({ ...props }) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     navigatorPosition: state.navigatorPosition,
     navigatorShape: state.navigatorShape,
@@ -131,38 +130,38 @@ function DarkModeToggle() {
   );
 }
 
-function SharePageButton() {
-  const [hasCopied, setHasCopied] = useState<boolean>(false);
-  const [colorMode] = useColorMode();
-  const isDark = colorMode === `dark`;
-  const fill = isDark ? '#fff' : '#000';
+// function SharePageButton() {
+//   const [hasCopied, setHasCopied] = useState<boolean>(false);
+//   const [colorMode] = useColorMode();
+//   const isDark = colorMode === `dark`;
+//   const fill = isDark ? '#fff' : '#000';
 
-  function copyToClipboardOnClick() {
-    if (hasCopied) return;
+//   function copyToClipboardOnClick() {
+//     if (hasCopied) return;
 
-    copyToClipboard(window.location.href);
-    setHasCopied(true);
+//     copyToClipboard(window.location.href);
+//     setHasCopied(true);
 
-    setTimeout(() => {
-      setHasCopied(false);
-    }, 1000);
-  }
+//     setTimeout(() => {
+//       setHasCopied(false);
+//     }, 1000);
+//   }
 
-  return (
-    <IconWrapper
-      isDark={isDark}
-      onClick={copyToClipboardOnClick}
-      data-a11y="false"
-      aria-label="Copy URL to clipboard"
-      title="Copy URL to clipboard"
-    >
-      <Icons.Link fill={fill} />
-      <ToolTip isDark={isDark} hasCopied={hasCopied}>
-        Copied
-      </ToolTip>
-    </IconWrapper>
-  );
-}
+//   return (
+//     <IconWrapper
+//       isDark={isDark}
+//       onClick={copyToClipboardOnClick}
+//       data-a11y="false"
+//       aria-label="Copy URL to clipboard"
+//       title="Copy URL to clipboard"
+//     >
+//       <Icons.Link fill={fill} />
+//       <ToolTip isDark={isDark} hasCopied={hasCopied}>
+//         Copied
+//       </ToolTip>
+//     </IconWrapper>
+//   );
+// }
 
 function ToggleFont({
   fontSizeIncrease,

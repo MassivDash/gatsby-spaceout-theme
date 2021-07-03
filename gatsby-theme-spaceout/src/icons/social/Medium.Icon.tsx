@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const MediumIcon = ({ fill = 'white' }) => (
   <svg
@@ -15,6 +15,6 @@ const MediumIcon = ({ fill = 'white' }) => (
       fill={fill}
     />
   </svg>
-)
+);
 
-export default MediumIcon
+export default MediumIcon;
