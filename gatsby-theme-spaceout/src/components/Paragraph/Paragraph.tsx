@@ -1,5 +1,12 @@
 import styled from '@emotion/styled';
 import mediaqueries from '@styles/media';
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => {
+  return {
+    fontSizeIncrease: state.fontSizeIncrease,
+  };
+};
 
 const Paragraph = styled.p`
   line-height: 1.756;
@@ -10,6 +17,7 @@ const Paragraph = styled.p`
   margin: 0 auto 35px;
   width: 100%;
   max-width: 1150px;
+  font-size: ${(p: any) => 18 * p.fontSizeIncrease}px;
 
   b {
     font-weight: 800;
@@ -29,4 +37,4 @@ const Paragraph = styled.p`
   `};
 `;
 
-export default Paragraph;
+export default connect(mapStateToProps)(Paragraph);
