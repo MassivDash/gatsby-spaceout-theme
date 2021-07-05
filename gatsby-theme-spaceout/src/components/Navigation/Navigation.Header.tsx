@@ -403,15 +403,12 @@ const NavContainer = styled.div<{
     right: 0;
     padding: 10px 0 40px 0;
     margin: 0;
-  }
-
-  @media (max-width: 1070px) {
     transform: ${(p) =>
       p.mobileMenuOpen
         ? 'translateY(0)'
-        : `translateY(calc(${
-            typeof window !== 'undefined' && window.innerHeight
-          }px - 50px))`};
+        : typeof window !== 'undefined'
+        ? `translateY(calc(${window.innerHeight}px - 50px))`
+        : 'translateY(calc(100% - 50px))'};
   }
 `;
 

@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import mediaqueries from '@styles/media';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
@@ -22,19 +21,6 @@ const Paragraph = styled.p`
   b {
     font-weight: 800;
   }
-
-  ${mediaqueries.desktop`
-    max-width: 507px;
-  `}
-
-  ${mediaqueries.tablet`
-    max-width: 486px;
-    margin: 0 auto 25px;
-  `};
-
-  ${mediaqueries.phablet`
-    padding-left: 20px;
-  `};
 `;
 
 export default connect(mapStateToProps)(Paragraph);

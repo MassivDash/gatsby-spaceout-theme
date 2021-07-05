@@ -11,7 +11,8 @@
     "start": "yarn workspace spaceout develop",
     "serve": "yarn workspace spaceout serve",
     "bootstrap": "yarn lerna bootstrap",
-    "publish": "yarn lerna version && yarn lerna publish"
+    "publish": "yarn lerna version && yarn lerna publish",
+    "rsync": "rsync -avz -e ssh spaceout/public/ startupwise@s19.mydevil.net:/usr/home/startupwise/domains/new.spaceout.pl/public_html/ --delete"
   },
   "workspaces": [
     "gatsby-theme-spaceout",
