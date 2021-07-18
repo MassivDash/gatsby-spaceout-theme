@@ -4,6 +4,7 @@ import Section from 'gatsby-theme-spaceout/src/components/Section';
 import SEO from 'gatsby-theme-spaceout/src/components/SEO';
 import Headings from 'gatsby-theme-spaceout/src/components/Headings';
 import Paragraph from 'gatsby-theme-spaceout/src/components/Paragraph';
+import BodyHolder from 'gatsby-theme-spaceout/src/components/BodyHolder';
 
 const HowItsDone = () => {
   return (
@@ -11,14 +12,7 @@ const HowItsDone = () => {
       <SEO />
       <Scroller style={{ minHeight: '100vh' }}>
         <Section>
-          <div
-            style={{
-              marginTop: '100px',
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
+          <BodyHolder>
             <Headings.H1>About me</Headings.H1>
             <Headings.H2>BIO:</Headings.H2>
             <Paragraph>
@@ -36,7 +30,7 @@ const HowItsDone = () => {
               developers.
             </Paragraph>
             <Paragraph>
-              For 2 years now, I have been involved in various projects as a
+              For 5+ years now, I have been involved in various projects as a
               systems architect and UI/UX consultant. I make sure that various
               designs and ideas can be implemented swiftly and without headache
               to all major platforms (such as AWS services, Azure, custom
@@ -62,7 +56,7 @@ const HowItsDone = () => {
               projects. I also work with various Activist and NGO groups as a
               pro-bono designer and developer.
             </Paragraph>
-          </div>
+          </BodyHolder>
         </Section>
       </Scroller>
     </>
