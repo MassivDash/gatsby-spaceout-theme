@@ -131,17 +131,9 @@ const articleFontDynamicStyle = (props) =>
     transition: background 0.2s linear;
     margin-bottom: 100px;
 
-    ${mediaqueries.desktop`
-    padding-left: 53px;
-  `}
-
-    ${mediaqueries.tablet`
-    padding: 70px 0 80px;
-  `}
-
-  ${mediaqueries.phablet`
-    padding: 60px 0;
-  `}
+    @media (max-width: 986px) {
+      padding: 60px 20px;
+    }
   `;
 
 const MobileControls = styled.div`

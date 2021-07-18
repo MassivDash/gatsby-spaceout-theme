@@ -44,7 +44,7 @@ const HowItsDone = () => {
               <Paragraph>
                 <FlexHolder>
                   <SocialLinks links={[{ name: 'spaceout', url: '/about' }]} />{' '}
-                  Łukasz Celitan
+                  Luke Celitan
                 </FlexHolder>
               </Paragraph>
             </NextToShuttleHolder>
