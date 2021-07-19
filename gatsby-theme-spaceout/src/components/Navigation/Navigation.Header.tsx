@@ -499,7 +499,7 @@ const LogoLink = styled(({ navigatorPosition, ...rest }) => (
     flex-direction: column;
     left: 0px;
     transform: ${(p: any) =>
-      p.navigatorPosition ? 'translateX(-140px)' : 'translateX(0px)'};
+      p.navigatorPosition ? 'translateX(-43vw)' : 'translateX(0px)'};
   }
 
   &[data-a11y='true']:focus::after {

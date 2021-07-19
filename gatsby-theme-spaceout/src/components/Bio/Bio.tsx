@@ -30,12 +30,13 @@ const BioContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  left: -10px;
+  left: 10px;
   margin-top: 20px;
 
   ${mediaqueries.phablet`
     display: flex;
     flex-direction: column; 
+    margin-bottom: 200px;
   `};
 `;
 

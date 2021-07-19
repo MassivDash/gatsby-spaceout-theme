@@ -3,7 +3,9 @@ import styled from '@emotion/styled';
 const Section = styled.section<{ narrow?: boolean }>`
   margin: auto;
   position: relative;
-  max-width: 1150px;
+  @media (min-width: 765px) {
+    margin: 0 50px;
+  }
 `;
 
 export default Section;

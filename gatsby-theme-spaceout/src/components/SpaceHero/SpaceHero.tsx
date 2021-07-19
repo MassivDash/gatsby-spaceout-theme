@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import logo from './logo.png';
 // import uuid from 'uuid';
@@ -8,8 +8,7 @@ import { keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
 import mediaqueries from '@styles/media';
 
-const SpaceHero = () => {
-  const [position, toggleToPosition] = useState('positionOne');
+const SpaceHero: FC = () => {
   const [backgroundLoaded, onBackgroundLoad] = useState(false);
   const [spacemanLoaded, onSpacemanLoad] = useState(false);
 
@@ -102,8 +101,8 @@ const SpaceHero = () => {
         <Image sizes={back.sizes} onLoad={() => onBackgroundLoad(true)} />
       </Blackie>
       <div>
-        {onBackgroundLoad && onSpacemanLoad && (
-          <SpaceoutBox onClick={() => toggleToPosition('positionTwo')}>
+        {backgroundLoaded && spacemanLoaded && (
+          <SpaceoutBox>
             <City src={logo} alt="" />
 
             <AnimatedSpace>
@@ -188,9 +187,11 @@ const Hero = styled.div`
   align-items: center;
   position: relative;
   z-index: 1;
+  box-shadow: 0px 20px 40px rgb(0 0 0 / 20%);
 
   ${mediaqueries.desktop`
-    margin: 0 0 0 10px;
+    margin: 40px 0 0 10px;
+    
     `}
 `;
 
@@ -204,18 +205,10 @@ const Blackie = styled.div`
   bottom: 0;
   display: grid;
   animation: ${moveBlack} 120s linear infinite;
-  ${mediaqueries.phone`
-   width: 100%;
-   height: 100%;
-   min-height: 650px;
-  `}
-  ${mediaqueries.tablet`
-    width: 100%;
-    height: 100%;
-    `}
   ${mediaqueries.desktop`
-    width: 100%;
-    height: 100%;
+  width: calc(5 * 100vw);
+  height: calc(2 * 100vh);
+  top: 0;
     top: 0;
     left: 0;
     right: 0;
@@ -296,6 +289,22 @@ const moveSpaceman = keyframes`
 	}
 `;
 
+// function template(i) {
+//   return css`
+//       &:nth-of-type(${i + 1}) {
+//         animation: ${draw} 600ms ${i + 1 * animationDelayTime}ms forwards;
+//        }
+//     `;
+// }
+
+// function getAnimations(items) {
+//   let str = '';
+//   for (let i = 0; i < items; i += 1) {
+//     str += template(i);
+//   }
+//   return str;
+// }
+
 const AnimatedSpace = styled.div`
   display: flex;
   align-items: center;
@@ -338,9 +347,16 @@ const AnimatedSpace = styled.div`
         animation: ${draw} 600ms ${7 * animationDelayTime}ms forwards;
       }
       &:nth-of-type(8) {
-        animation: ${draw} 600ms ${7 * animationDelayTime}ms forwards;
+        animation: ${draw} 600ms ${8 * animationDelayTime}ms forwards;
       }
     }
+  }
+  @media (max-width: 767px) {
+    transform: rotate(90deg) scale(0.8);
+    left: -90vw;
+    top: -10vh;
+    width: 800px;
+    height: 100%;
   }
 `;
 
@@ -354,6 +370,9 @@ const AnimatedStellar = styled.div`
   margin-top: 100px;
   width: 100%;
   min-height: 300px;
+  @media (max-width: 767px) {
+    top: -130px;
+  }
   svg {
     width: 100%;
     height: auto;
@@ -366,6 +385,11 @@ const AnimatedStellar = styled.div`
       fill: none;
       font-size: 67px;
       font-weight: normal;
+
+      @media (max-width: 767px) {
+        font-size: 34px;
+        top: -130px;
+      }
 
       &:nth-of-type(1) {
         animation: ${draw} 600ms ${8 * animationDelayTime}ms forwards;
@@ -450,13 +474,23 @@ const City = styled.img`
   position: absolute;
   left: 0;
   animation: ${moveCity} 38s linear infinite;
+  @media (max-width: 767px) {
+    left: -40px;
+    top: 100px;
+  }
 `;
+
 const Spaceman = styled.div`
   position: absolute;
   transition: 3s ease-in-out;
   z-index: 0;
   width: 1250px;
   animation: ${moveSpaceman} 38s linear infinite;
+
+  @media (max-width: 767px) {
+    top: 60vh;
+    left: 0;
+  }
 `;
 
 export default SpaceHero;
