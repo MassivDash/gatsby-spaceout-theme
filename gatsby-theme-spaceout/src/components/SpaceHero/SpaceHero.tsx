@@ -28,23 +28,7 @@ const SpaceHero: FC = () => {
       }
       back: imageSharp(original: { src: { regex: "/heroBack/" } }) {
         id
-        sizes(maxWidth: 1920, quality: 90, traceSVG: { color: "#121f28" }) {
-          aspectRatio
-          src
-          srcSet
-          srcWebp
-          srcSetWebp
-          sizes
-          tracedSVG
-        }
-        resize(width: 1920) {
-          src
-        }
-      }
-      earth: imageSharp(original: { src: { regex: "/earth/" } }) {
-        id
-        sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
-          base64
+        fluid(maxWidth: 1920, quality: 90, traceSVG: { color: "#121f28" }) {
           aspectRatio
           src
           srcSet
@@ -59,23 +43,7 @@ const SpaceHero: FC = () => {
       }
       spaceman: imageSharp(original: { src: { regex: "/spaceman/" } }) {
         id
-        sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
-          base64
-          aspectRatio
-          src
-          srcSet
-          srcWebp
-          srcSetWebp
-          sizes
-          tracedSVG
-        }
-        resize(width: 1920) {
-          src
-        }
-      }
-      shuttle: imageSharp(original: { src: { regex: "/shuttle/" } }) {
-        id
-        sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
+        fluid(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
           base64
           aspectRatio
           src
@@ -98,7 +66,7 @@ const SpaceHero: FC = () => {
   return (
     <Hero>
       <Blackie>
-        <Image sizes={back.sizes} onLoad={() => onBackgroundLoad(true)} />
+        <Image fluid={back.fluid} onLoad={() => onBackgroundLoad(true)} />
       </Blackie>
       <div>
         {backgroundLoaded && spacemanLoaded && (
@@ -145,7 +113,7 @@ const SpaceHero: FC = () => {
         )}
         <Spaceman>
           <Image
-            sizes={spaceman.sizes}
+            fluid={spaceman.fluid}
             style={{
               position: 'aboslute',
               width: '100%',

@@ -11,6 +11,7 @@ import mediaqueries from '@styles/media';
 const commonStyles = (p) => css`
   font-weight: bold;
   max-width: 1150px;
+  margin: 20px auto;
   color: ${p.theme.colors.accent};
 `;
 

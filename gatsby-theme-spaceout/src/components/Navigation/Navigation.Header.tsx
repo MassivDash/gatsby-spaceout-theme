@@ -345,33 +345,6 @@ const BackArrowIconContainer = styled.div`
   `}
 `;
 
-// const MobileNavContainer = styled.div<{theme: any, mobileMenuOpen: boolean}>`
-//   display: none;
-//   @media (max-width: 768px){
-//     display: flex;
-//     min-height: 80px;
-//     z-index: 787;
-//     background: white;
-//     bottom: 0;
-//     left: 0;
-//     position: fixed;
-//     width: 100%;
-//     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-//     transition: ease-in 0.4s;
-//     transform: ${(p => p.mobileMenuOpen ? 'translateY(-90vh)' : 'translateY(0px)')};
-//   }
-
-//   &::after {
-//     content: '';
-//     position: absolute;
-//     height: 100%;
-//     width: 1px;
-//     right: 0px;
-//     background: rgb(255,255,255);
-//     background: linear-gradient(3deg, ${p => p.theme.colors.secondary} 0%, ${p => p.theme.colors.primary} 100%);
-//   }
-// `
-
 const NavContainer = styled.div<{
   isDark: boolean;
   mobileMenuOpen: boolean;

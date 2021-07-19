@@ -5,14 +5,8 @@ import SEO from 'gatsby-theme-spaceout/src/components/SEO';
 import Headings from 'gatsby-theme-spaceout/src/components/Headings';
 import Paragraph from 'gatsby-theme-spaceout/src/components/Paragraph';
 import CSSFadeIn from 'gatsby-theme-spaceout/src/components/Transitions/Transitions.CSS.FadeIn';
-import TitleWithLottie from '../components/TitleWithLottie';
-import process from '../assets/lottie/process.json';
-import Shuttle, {
-  NextToShuttleHolder,
-  FlexHolder,
-} from '../components/Shuttle';
+import Shuttle from '../components/Shuttle';
 
-import SocialLinks from 'gatsby-theme-spaceout/src/components/SocialLinks';
 const HowItsDone = () => {
   return (
     <>
@@ -20,48 +14,39 @@ const HowItsDone = () => {
       <Scroller style={{ minHeight: '100vh' }}>
         <CSSFadeIn>
           <Section>
+            <div style={{ height: '50px', width: '100%' }}></div>
             <Shuttle />
-            <NextToShuttleHolder>
-              <Headings.H1 style={{ margin: '25px 0 75px 0' }}>
-                Creating an unforgettable web-app experience.
-              </Headings.H1>
 
-              <Paragraph>
-                Over the years of my freelance work as a website designer, I
-                have noticed how ready build solutions, one for all tools like
-                wordpress, joomla, templates and themes poorly preform in the
-                real environment. Solutions build for everyone, that satisfy
-                needs of none.
-              </Paragraph>
-
-              <Paragraph>
-                That how the spaceout brand was born, the idea to create awesome
-                web and native applications in terms of excellent user
-                experience, well crafted user interfaces and build upon the best
-                available development technologies.
-              </Paragraph>
-
-              <Paragraph>
-                <FlexHolder>
-                  <SocialLinks links={[{ name: 'spaceout', url: '/about' }]} />{' '}
-                  Luke Celitan
-                </FlexHolder>
-              </Paragraph>
-            </NextToShuttleHolder>
-
-            <Headings.H2 style={{ margin: '100px 0 25px 0 ' }}>
-              UX (User Experience)
-            </Headings.H2>
+            <div style={{ height: '50px', width: '100%' }}></div>
+            <Headings.H1>
+              Creating an unforgettable web-app experience. 💎
+            </Headings.H1>
+            <div style={{ height: '50px', width: '100%' }}></div>
+            <Paragraph>
+              Over the years of my freelance work as a website designer, I have
+              noticed how ready build solutions, one for all tools like
+              wordpress, joomla, templates and themes poorly preform in the real
+              environment. Solutions build for everyone, that satisfy needs of
+              none.
+            </Paragraph>
 
             <Paragraph>
-              Very first step in creation of whatever kind of product should
-              always be UX (User Experience) analysis. User experience (UX)
-              refers to any interaction a user has with a product or service.
-              The goal of UX design is to create easy, efficient, relevant and
-              all-round pleasant experiences for the user. In the age of the
-              internet and smartphones, the usability of a website (and actual
-              technical implementation), mobile app or piece of software will
-              largely determine its success on the market.
+              An unforgettable application must be easy to use and familiar, on
+              the other hand it needs those special touches to really grab the
+              user attention. Well thought out plan and design is the key to
+              success in creation of any product.
+            </Paragraph>
+
+            <Headings.H2>UX (User Experience)</Headings.H2>
+            <Paragraph>
+              Very first step in creation of whatever kind of digital product,
+              always should be UX (User Experience) analysis. User experience
+              (UX) refers to any interaction a user has with a product or
+              service. The goal of UX design is to create easy, efficient,
+              relevant and all-round pleasant experiences for the user. In the
+              age of the internet and smartphones, the usability of a website
+              (and actual technical implementation), mobile app or piece of
+              software will largely determine its success on the market.
             </Paragraph>
             <Paragraph>
               The UX design is all about ensuring that every aspect of a user’s
@@ -70,32 +55,42 @@ const HowItsDone = () => {
               understanding, researching, analysis, design, launch, and
               evaluation.
             </Paragraph>
-            <Headings.H3 style={{ margin: '100px 0 25px 0 ' }}>
-              Design Thinking
-            </Headings.H3>
+            <Headings.H2>UI (User Interface)</Headings.H2>
             <Paragraph>
-              Design thinking is an iterative, non-linear way of working that
-              seeks to understand users and solve problems. It consists of five
-              phases-empathize, define, ideate, prototype and test. The process
-              is perfect for situations where the overall challenge is not clear
-              or you have problems that are as yet unknown. With rapid
-              technological, environmental and social change becoming the new
-              normal, it’s important for companies to be as agile as possible.
-              Design thinking is a human-centric approach that can help to deal
-              with this environment of constant change. It allows designers to
-              focus on what’s best for the user.
+              After the UX analysis is done, the next step is to create or pick
+              a design system for the website or application. These days each
+              business should strive a consistent look and design across systems
+              and services. A design system is a collection of visual components
+              that be easily used to create most of the pages composition.
+            </Paragraph>
+            <Headings.H2>Development</Headings.H2>
+            <Paragraph>
+              Development and execution is most of the time the easiest part,
+              with good ux/ui execution, there should be nothing in way to
+              create an application, except for picking the correct technology
+              stack.
+            </Paragraph>
+            <Paragraph>
+              As a full stack javascript I prefer to use node.js on the backend,
+              however I am no stranger to NGNIX, APACHE, PHP ASP.NET servers, I
+              am also a big fan of the JAM stack approach to building
+              applications, which mostly relies on static files on downloading
+              relevant data from whatever source of truth is needed, preferably
+              a cloud function these days.Please feel free to look around for
+              technology stack I have used before in the post section of the
+              website, to get a feel
             </Paragraph>
 
-            <div style={{ margin: ' 150px 0' }}>
-              <TitleWithLottie
-                title="The Process"
-                column={false}
-                text={
-                  'I follow the standard 6 step UX process strategy; 1. Understand, 2.Research, 3, Analyze. 4. Design, 5.Launch, 6. Analyze again ePersonally I am a big fan of data driven design, however not each business has the data to start with. '
-                }
-                lottie={process}
-              />
-            </div>
+            <Headings.H2>Deployment</Headings.H2>
+            <Paragraph>
+              Different solutions and technology stacks require different
+              delivery methods, choosing the right provider is always crucial to
+              the business in long term in terms of costs and maintenance. AWS
+              and Azure Services are usually my go to choice, but there are many
+              other options available.
+            </Paragraph>
+
+            <div style={{ height: '200px', width: '100%' }}></div>
           </Section>
         </CSSFadeIn>
       </Scroller>
