@@ -5,7 +5,8 @@ import SEO from 'gatsby-theme-spaceout/src/components/SEO';
 import Headings from 'gatsby-theme-spaceout/src/components/Headings';
 import Paragraph from 'gatsby-theme-spaceout/src/components/Paragraph';
 import Spaceman, { FlexHolder } from '../components/Spaceman';
-
+import TechStack from '../components/TechStack';
+import { TechIcons } from 'gatsby-theme-spaceout/src/sections/articles/Articles.List';
 import CSSFadeIn from 'gatsby-theme-spaceout/src/components/Transitions/Transitions.CSS.FadeIn';
 const HowItsDone: FC = () => {
   return (
@@ -17,9 +18,9 @@ const HowItsDone: FC = () => {
             <div style={{ height: '50px', width: '100%' }}></div>
             <Spaceman />
             <Headings.H1>Hi there 👋</Headings.H1>
-            <Paragraph>
-              My name is Luke and I am full stack developer.
-            </Paragraph>
+            <Headings.H2>
+              My name is Luke and I am full stack javascript developer.
+            </Headings.H2>
             <Paragraph>
               I have built my first website way back in highschool (2004), and
               since then I have been perfecting my skills in both design, (UX,
@@ -35,35 +36,45 @@ const HowItsDone: FC = () => {
               major platforms (Web, iOS and Android).
             </Paragraph>
             <Paragraph>
+              Currently i am full time employed in JLL technology, Business
+              Intelligence division as a tech lead and security champion.
+            </Paragraph>
+            <Paragraph>My stack:</Paragraph>
+            <div style={{ maxWidth: '1150px', margin: '20px auto' }}>
+              <TechStack />
+            </div>
+            <Paragraph>
               If you are looking for a high quality custom product, that is not
-              based on themes or standard solutions. Contact me for more info at
-              luke@spaceout.pl
+              based on themes or standard solutions. Contact me for more info at{' '}
+              <a href="mailto:luke@spaceout.pl">luke@spaceout.pl</a>
             </Paragraph>
             <div style={{ height: '50px', width: '100%' }}></div>
-            <Headings.H2>🏆 I’m currently working on: </Headings.H2>
+            <Headings.H2>I’m currently working on ... </Headings.H2>
             <Paragraph>
-              🏅 Implementing compliance and security protocols at my current
-              job, using the DevSecOps (#OWASP) principles, using such tools as
-              self-hosted azure dev ops dependobot, static code and security
-              analysis on 13 commercial projects.
+              <TechIcons tech={['Owasp']} /> Implementing compliance and
+              security protocols using the DevSecOps (#OWASP) principles
             </Paragraph>
             <Paragraph>
-              🏅 Docker mastery and node orchestration, Node.js clusters and
-              distributed systems
+              <TechIcons tech={['Docker']} /> Docker mastery and node
+              orchestration, Node.js clusters and distributed systems
             </Paragraph>
             <Paragraph>
-              🏅 Mastering typescript and automatic testing using jest and
-              cypress.io
+              <TechIcons tech={['Cypress']} /> Mastering intergration testing
+              using cypress.io
+            </Paragraph>
+            <Paragraph>
+              <TechIcons tech={['Azure']} />
+              Azure dev ops advanced yaml pipeline configuration
             </Paragraph>
             <div style={{ height: '50px', width: '100%' }}></div>
-            <Headings.H2>🧑‍🚀 Personal info: </Headings.H2>
+            <Headings.H2>some personal info ... </Headings.H2>
             <Paragraph>
-              Personally, I am a big geek with huge love for Star Wars, Marvel
-              and DC comic books, Funk and 80s music. I take most of my design
-              inspiration from offline experiences like going to art museums,
-              galleries and working with other creative people on various
-              projects. I also work with various Activist and NGO groups as a
-              pro-bono designer and developer.
+              I am a big geek with huge love for Star Wars, Marvel and DC comic
+              books, Funk and 80s music. I take most of my design inspiration
+              from offline experiences like going to art museums, galleries and
+              working with other creative people on various projects. I also
+              work with various Activist and NGO groups as a pro-bono designer
+              and developer.
             </Paragraph>
 
             <Paragraph>
@@ -86,14 +97,16 @@ const HowItsDone: FC = () => {
               ></iframe>
             </FlexHolder>
             <div style={{ height: '50px', width: '100%' }}></div>
-            <Headings.H2>🛰️ Website info: </Headings.H2>
-            <div style={{ height: '50px', width: '100%' }}></div>
+            <Headings.H2>spaceout.pl info: </Headings.H2>
             <Paragraph>
               This website is designed with ❤ by Spaceout.pl, using gatsby.js
               v2, react framework and typescript, I am trying to make it a
               gatsby template for others to using yarn workspaces, however still
-              very at very early stage. Repo can be found at
-              https://github.com/MassivDash/gatsby-spaceout-theme
+              very at very early stage. Repo can be found{' '}
+              <a href="https://github.com/MassivDash/gatsby-spaceout-theme">
+                {' '}
+                here
+              </a>
             </Paragraph>
             <div style={{ height: '200px', width: '100%' }}></div>
           </Section>

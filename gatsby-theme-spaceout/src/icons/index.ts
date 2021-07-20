@@ -42,12 +42,21 @@ import Html from './devIcons/html.svg';
 import MySQL from './devIcons/mysql.svg';
 import Netlify from './devIcons/netlify.svg';
 import Postgre from './devIcons/postgre.svg';
+import Mongo from './devIcons/mongo.svg';
 import TS from './devIcons/ts.svg';
 import Gatsby from './devIcons/Gatsby-Monogram.svg';
 import Svelte from './devIcons/svelte.svg';
 import Ghostjs from './devIcons/ghostjs.svg';
 import Nextjs from './devIcons/nextjs.svg';
 import Tailwind from './devIcons/tailwind.svg';
+import Apollo from './devIcons/apollo.svg';
+import Azure from './devIcons/azure.svg';
+import Aws from './devIcons/aws.svg';
+import Docker from './devIcons/docker.svg';
+import Heroku from './devIcons/heroku.svg';
+import Yml from './devIcons/yml.svg';
+import Cypress from './devIcons/cypress.svg';
+import Owasp from './devIcons/owasp.svg';
 
 export default {
   Behance,
@@ -88,10 +97,19 @@ export default {
   MySQL,
   Netlify,
   Postgre,
+  Mongo,
   TS,
   Gatsby,
   Svelte,
   Ghostjs,
   Nextjs,
   Tailwind,
+  Apollo,
+  Aws,
+  Azure,
+  Docker,
+  Heroku,
+  Yml,
+  Cypress,
+  Owasp,
 };
