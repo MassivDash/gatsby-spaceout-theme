@@ -32,31 +32,31 @@ import ArrowUp from './ui/ArrowUp.Icon';
 
 //DEV Icons
 
-import ReactIcon from './devIcons/react.svg';
-import Wordpress from './devIcons/wordpress.svg';
-import JS from './devIcons/js.svg';
-import Css from './devIcons/css.svg';
-import Express from './devIcons/express.svg';
-import HandleBars from './devIcons/handlebars.svg';
-import Html from './devIcons/html.svg';
-import MySQL from './devIcons/mysql.svg';
-import Netlify from './devIcons/netlify.svg';
-import Postgre from './devIcons/postgre.svg';
-import Mongo from './devIcons/mongo.svg';
-import TS from './devIcons/ts.svg';
-import Gatsby from './devIcons/Gatsby-Monogram.svg';
-import Svelte from './devIcons/svelte.svg';
-import Ghostjs from './devIcons/ghostjs.svg';
-import Nextjs from './devIcons/nextjs.svg';
-import Tailwind from './devIcons/tailwind.svg';
-import Apollo from './devIcons/apollo.svg';
-import Azure from './devIcons/azure.svg';
-import Aws from './devIcons/aws.svg';
-import Docker from './devIcons/docker.svg';
-import Heroku from './devIcons/heroku.svg';
-import Yml from './devIcons/yml.svg';
-import Cypress from './devIcons/cypress.svg';
-import Owasp from './devIcons/owasp.svg';
+import { ReactComponent as ReactIcon } from './devIcons/react.svg';
+import { ReactComponent as Wordpress } from './devIcons/wordpress.svg';
+import { ReactComponent as JS } from './devIcons/js.svg';
+import { ReactComponent as Css } from './devIcons/css.svg';
+import { ReactComponent as Express } from './devIcons/express.svg';
+import { ReactComponent as HandleBars } from './devIcons/handlebars.svg';
+import { ReactComponent as Html } from './devIcons/html.svg';
+import { ReactComponent as MySQL } from './devIcons/mysql.svg';
+import { ReactComponent as Netlify } from './devIcons/netlify.svg';
+import { ReactComponent as Postgre } from './devIcons/postgre.svg';
+import { ReactComponent as Mongo } from './devIcons/mongo.svg';
+import { ReactComponent as TS } from './devIcons/ts.svg';
+import { ReactComponent as Gatsby } from './devIcons/Gatsby-Monogram.svg';
+import { ReactComponent as Svelte } from './devIcons/svelte.svg';
+import { ReactComponent as Ghostjs } from './devIcons/ghostjs.svg';
+import { ReactComponent as Nextjs } from './devIcons/nextjs.svg';
+import { ReactComponent as Tailwind } from './devIcons/tailwind.svg';
+import { ReactComponent as Apollo } from './devIcons/apollo.svg';
+import { ReactComponent as Azure } from './devIcons/azure.svg';
+import { ReactComponent as Aws } from './devIcons/aws.svg';
+import { ReactComponent as Docker } from './devIcons/docker.svg';
+import { ReactComponent as Heroku } from './devIcons/heroku.svg';
+import { ReactComponent as Yml } from './devIcons/yml.svg';
+import { ReactComponent as Cypress } from './devIcons/cypress.svg';
+import { ReactComponent as Owasp } from './devIcons/owasp.svg';
 
 export default {
   Behance,

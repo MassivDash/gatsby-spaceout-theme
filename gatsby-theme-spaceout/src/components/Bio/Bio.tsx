@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Link from 'gatsby-plugin-transition-link';
 import styled from '@emotion/styled';
 
@@ -6,7 +6,7 @@ import Image from '@components/Image';
 import mediaqueries from '@styles/media';
 import { IAuthor } from '@types';
 
-function Bio({ author }: IAuthor) {
+const Bio: FC<{ author: IAuthor }> = ({ author }) => {
   return (
     <BioContainer>
       <BioAvatar
@@ -22,7 +22,7 @@ function Bio({ author }: IAuthor) {
       <BioText dangerouslySetInnerHTML={{ __html: author.bio }} />
     </BioContainer>
   );
-}
+};
 
 export default Bio;
 
@@ -69,7 +69,7 @@ const BioAvatar = styled.div`
     top: -5px;
     width: 50px;
     height: 50px;
-    border: 2px solid ${(p) => p.theme.colors.accent};
+    border: 2px solid ${(p: any) => p.theme.colors.accent};
   }
 `;
 
@@ -85,9 +85,9 @@ const BioAvatarInner = styled.div`
 const BioText = styled.p`
   font-size: 17px;
   line-height: 1.45;
-  color: ${(p) => p.theme.colors.articleText};
+  color: ${(p: any) => p.theme.colors.articleText};
   .black a {
-    color: ${(p) => p.theme.colors.articleText};
+    color: ${(p: any) => p.theme.colors.articleText};
     text-decoration: underline;
   }
 `;

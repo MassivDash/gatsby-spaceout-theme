@@ -32,6 +32,7 @@ export interface IAuthor {
   avatar: {
     image: IGatsbyImageFluid;
     full: IGatsbyImageFluid;
+    medium: IGatsbyImageFluid;
   };
 }
 
@@ -41,14 +42,18 @@ export interface IArticle {
   excerpt: string;
   body: string;
   id: string;
+  title: string;
   hero: {
     full: IGatsbyImageFluid;
     preview: IGatsbyImageFluid;
     regular: IGatsbyImageFluid;
+    narrow: IGatsbyImageFluid;
     seo: string;
   };
   timeToRead: number;
   date: string;
+  appDescription: string;
+  tech: string[];
 }
 
 interface IArticleQuery {

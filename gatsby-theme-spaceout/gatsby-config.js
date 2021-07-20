@@ -29,6 +29,9 @@ module.exports = ({
       },
     },
     {
+      resolve: `gatsby-plugin-svgr`,
+    },
+    {
       resolve: 'gatsby-plugin-transition-link',
       options: {
         layout: require.resolve(`./src/components/Layout/Layout.tsx`),

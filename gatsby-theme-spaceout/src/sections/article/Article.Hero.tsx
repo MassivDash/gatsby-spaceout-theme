@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from '@emotion/styled';
 
 import Headings from '@components/Headings';
@@ -33,7 +33,7 @@ const siteQuery = graphql`
   }
 `;
 
-const ArticleHero = ({ article, authors }: ArticleHeroProps) => {
+const ArticleHero: FC<ArticleHeroProps> = ({ article, authors }) => {
   const { allSite } = useStaticQuery(siteQuery);
   const { readingTime } = allSite.edges[0].node.siteMetadata;
   const hasCoAUthors = authors.length > 1;
@@ -70,7 +70,7 @@ const ArticleHero = ({ article, authors }: ArticleHeroProps) => {
 export default ArticleHero;
 
 const Hero = styled.div`
-  ${(p) => mediaqueries.phablet`
+  ${(p: any) => mediaqueries.phablet`
     &::before {
       content: "";
       width: 100%;
@@ -107,7 +107,7 @@ const ArticleMeta = styled.div<{ hasCoAUthors: boolean }>`
 
 const ArticleUberTitle = styled.div`
   font-size: 3rem;
-  color: ${(p) => p.theme.colors.articleHoverText};
+  color: ${(p: any) => p.theme.colors.articleHoverText};
   z-index: 0;
   word-break: break-word;
   font-family: helvetica;
@@ -139,7 +139,7 @@ const Header = styled.header`
 
 const HeroHeading = styled(Headings.H1)`
   font-size: 48px;
-  font-family: ${(p) => p.theme.fonts.serif};
+  font-family: ${(p: any) => p.theme.fonts.serif};
   margin-bottom: 25px;
   font-weight: bold;
   line-height: 1.32;
@@ -158,9 +158,10 @@ const HeroSubtitle = styled.div<{ hasCoAUthors: boolean }>`
   position: relative;
   display: flex;
   font-size: 18px;
-  color: ${(p) => p.theme.colors.grey};
 
-  ${(p) => mediaqueries.phablet`
+  color: ${(p: any) => p.theme.colors.grey};
+
+  ${(p: any) => mediaqueries.phablet`
     font-size: 14px;
     flex-direction: row;
     flex-wrap: wrap;

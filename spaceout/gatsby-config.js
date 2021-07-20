@@ -74,6 +74,9 @@ const plugins = [
     },
   },
   {
+    resolve: `gatsby-plugin-svgr`,
+  },
+  {
     resolve: `gatsby-plugin-manifest`,
     options: {
       name: `Spaceout.pl`,

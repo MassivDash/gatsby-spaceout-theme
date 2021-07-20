@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, FC } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
+import { useColorMode } from 'theme-ui';
 import AniLink from 'gatsby-plugin-transition-link/AniLink';
 import Headings from '@components/Headings';
 import Image, { ImagePlaceholder } from '@components/Image';
@@ -52,7 +53,10 @@ interface ArticlesListItemProps {
   narrow?: boolean;
 }
 
-function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
+const ArticlesList: FC<ArticlesListProps> = ({
+  articles,
+  alwaysShowAllDetails,
+}) => {
   if (!articles) return null;
 
   const hasOnlyOneArticle = articles.length === 1;
@@ -67,12 +71,17 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
    * and turning it into an array of pairs of articles [[{}, {}], [{}, {}], [{}, {}]...]
    * This makes it simpler to create the grid we want
    */
-  const articlePairs = articles.reduce((result, value, index, array) => {
-    if (index % 2 === 0) {
-      result.push(array.slice(index, index + 2));
-    }
-    return result;
-  }, []);
+  const articlePairs = articles.reduce(
+    (result, value, index, array: IArticle[]) => {
+      if (index % 2 === 0) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        result.push(array.slice(index, index + 2));
+      }
+      return result;
+    },
+    [],
+  );
 
   useEffect(() => getGridLayout(), []);
 
@@ -100,21 +109,27 @@ function ArticlesList({ articles, alwaysShowAllDetails }: ArticlesListProps) {
       })}
     </ArticlesListContainer>
   );
-}
+};
 
 export default ArticlesList;
 
-export const TechIcons = ({ tech }) => {
-  const techItems = tech.map((tech) => (
-    <img
-      style={{ margin: '10px', zIndex: 1 }}
-      key={tech}
-      width="50px"
-      src={Icons[tech]}
-      alt={tech}
-    ></img>
-  ));
-  return techItems;
+export const TechIcons: FC<{ tech: string[] }> = ({ tech }) => {
+  const [colorMode, _] = useColorMode();
+  const isDark = colorMode === `dark`;
+  const techItems = tech.map((tech) => {
+    const IconComponent = Icons[tech];
+
+    return (
+      <IconComponent
+        key={tech}
+        width="48"
+        height="48"
+        {...(isDark && { fill: '#FFF' })}
+        style={{ margin: '5px' }}
+      />
+    );
+  });
+  return <>{techItems}</>;
 };
 
 const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
@@ -131,7 +146,7 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
   return (
     <ArticleLink fade top="entry" to={article.slug} data-a11y="false">
       <Item gridLayout={gridLayout}>
-        <ImageContainer narrow={narrow} gridLayout={gridLayout}>
+        <ImageContainer narrow={narrow || false} gridLayout={gridLayout}>
           {hasHeroImage ? <Image src={imageSource} /> : <ImagePlaceholder />}
           <ArticleHover>
             <TechIcons tech={article.tech} />
@@ -144,8 +159,8 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
             {article.title}
           </Title>
           <Excerpt
-            narrow={narrow}
-            hasOverflow={hasOverflow}
+            narrow={narrow || false}
+            hasOverflow={hasOverflow || false}
             gridLayout={gridLayout}
           >
             {article.excerpt}
