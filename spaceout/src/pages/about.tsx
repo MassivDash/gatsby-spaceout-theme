@@ -8,6 +8,8 @@ import Spaceman, { FlexHolder } from '../components/Spaceman';
 import TechStack from '../components/TechStack';
 import { TechIcons } from 'gatsby-theme-spaceout/src/sections/articles/Articles.List';
 import CSSFadeIn from 'gatsby-theme-spaceout/src/components/Transitions/Transitions.CSS.FadeIn';
+import ExternalLink from '../components/ExternalLink';
+
 const HowItsDone: FC = () => {
   return (
     <>
@@ -46,7 +48,9 @@ const HowItsDone: FC = () => {
             <Paragraph>
               If you are looking for a high quality custom product, that is not
               based on themes or standard solutions. Contact me for more info at{' '}
-              <a href="mailto:luke@spaceout.pl">luke@spaceout.pl</a>
+              <ExternalLink href="mailto:luke@spaceout.pl">
+                luke@spaceout.pl
+              </ExternalLink>
             </Paragraph>
             <div style={{ height: '50px', width: '100%' }}></div>
             <Headings.H2>I’m currently working on ... </Headings.H2>
@@ -103,10 +107,10 @@ const HowItsDone: FC = () => {
               v2, react framework and typescript, I am trying to make it a
               gatsby template for others to using yarn workspaces, however still
               very at very early stage. Repo can be found{' '}
-              <a href="https://github.com/MassivDash/gatsby-spaceout-theme">
+              <ExternalLink href="https://github.com/MassivDash/gatsby-spaceout-theme">
                 {' '}
                 here
-              </a>
+              </ExternalLink>
             </Paragraph>
             <div style={{ height: '200px', width: '100%' }}></div>
           </Section>

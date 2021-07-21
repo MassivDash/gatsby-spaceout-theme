@@ -509,14 +509,14 @@ const NavControls = styled.div`
 const NavLink = styled(({ navigatorPosition, ...rest }) => (
   <AniLink {...rest} />
 ))`
-  color: ${(p) => p.theme.colors.accent};
+  color: ${(p: any) => p.theme.colors.accent};
   margin: 10px auto;
   font-size: 18px;
   text-transform: Capitalize;
   opacity: ${(p) => (p.navigatorPosition === 'article' ? 0 : 1)};
   transition: 0.25s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
   &:hover {
-    color: ${(p) => p.theme.colors.hover};
+    color: ${(p: any) => p.theme.colors.hover};
   }
 `;
 const Hidden = styled.span`
@@ -632,7 +632,7 @@ const ArticleHover = styled.div<{ theme: any }>`
   align-items: flex-end;
   opacity: 0;
   background-image: url(${bg});
-  background-color: ${(p) => p.theme.colors.background};
+  background-color: ${(p: any) => p.theme.colors.background};
   transition: 0.44s var(--ease-out-quart);
   background-blend-mode: multiply;
   overflow: hidden;
@@ -652,7 +652,7 @@ const AppDescription = styled.p`
   word-break: break-word;
   font-family: helvetica;
   font-weight: 900;
-  color: ${(p) => p.theme.colors.articleHoverText};
+  color: ${(p: any) => p.theme.colors.articleHoverText};
 `;
 
 const HoverTitle = styled.p`
@@ -663,7 +663,7 @@ const HoverTitle = styled.p`
   font-size: 2rem;
   font-family: helvetica;
   font-weight: 900;
-  color: ${(p) => p.theme.colors.accent};
+  color: ${(p: any) => p.theme.colors.accent};
 `;
 
 const ArticlesControls = styled.div`

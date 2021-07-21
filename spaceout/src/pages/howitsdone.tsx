@@ -6,6 +6,7 @@ import Headings from 'gatsby-theme-spaceout/src/components/Headings';
 import Paragraph from 'gatsby-theme-spaceout/src/components/Paragraph';
 import CSSFadeIn from 'gatsby-theme-spaceout/src/components/Transitions/Transitions.CSS.FadeIn';
 import Shuttle from '../components/Shuttle';
+import TechStack from '../components/TechStack';
 
 const HowItsDone: FC = () => {
   return (
@@ -80,6 +81,10 @@ const HowItsDone: FC = () => {
               technology stack I have used before in the post section of the
               website, to get a feel
             </Paragraph>
+
+            <div style={{ maxWidth: '1150px', margin: '20px auto' }}>
+              <TechStack />
+            </div>
 
             <Headings.H2>Deployment</Headings.H2>
             <Paragraph>

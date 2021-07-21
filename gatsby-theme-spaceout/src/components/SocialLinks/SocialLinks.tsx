@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from '@emotion/styled';
 
 import Icons from '@icons';
@@ -34,7 +34,7 @@ const getHostname = (url) => {
   return new URL(url.toLowerCase()).hostname.replace('www.', '').split('.')[0];
 };
 
-function SocialLinks({ links, fill = '#73737D' }: SocialLinksProps) {
+const SocialLinks: FC<SocialLinksProps> = ({ links, fill = '#73737D' }) => {
   if (!links) return null;
 
   return (
@@ -63,7 +63,7 @@ function SocialLinks({ links, fill = '#73737D' }: SocialLinksProps) {
       })}
     </>
   );
-}
+};
 
 export default SocialLinks;
 
