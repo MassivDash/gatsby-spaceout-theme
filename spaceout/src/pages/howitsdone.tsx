@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Scroller from 'gatsby-theme-spaceout/src/components/Scroller';
 import Section from 'gatsby-theme-spaceout/src/components/Section';
 import SEO from 'gatsby-theme-spaceout/src/components/SEO';
@@ -7,7 +7,7 @@ import Paragraph from 'gatsby-theme-spaceout/src/components/Paragraph';
 import CSSFadeIn from 'gatsby-theme-spaceout/src/components/Transitions/Transitions.CSS.FadeIn';
 import Shuttle from '../components/Shuttle';
 
-const HowItsDone = () => {
+const HowItsDone: FC = () => {
   return (
     <>
       <SEO />
