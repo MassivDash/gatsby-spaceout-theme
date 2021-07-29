@@ -9,6 +9,8 @@ import TechStack from '../components/TechStack';
 import { TechIcons } from 'gatsby-theme-spaceout/src/sections/articles/Articles.List';
 import CSSFadeIn from 'gatsby-theme-spaceout/src/components/Transitions/Transitions.CSS.FadeIn';
 import ExternalLink from '../components/ExternalLink';
+import GitHubCalendar from 'react-github-calendar';
+import GitHubStatsCard from '../components/GithubCard';
 
 const HowItsDone: FC = () => {
   return (
@@ -70,6 +72,15 @@ const HowItsDone: FC = () => {
               <TechIcons tech={['Azure']} />
               Azure dev ops advanced yaml pipeline configuration
             </Paragraph>
+            <div style={{ height: '50px', width: '100%' }}></div>
+            <div style={{ maxWidth: '1150px', margin: '20px auto' }}>
+              <GitHubCalendar
+                username="MassivDash"
+                blockSize={18}
+                blockMargin={4}
+                showTotalCount={false}
+              />
+            </div>
             <div style={{ height: '50px', width: '100%' }}></div>
             <Headings.H2>some personal info ... </Headings.H2>
             <Paragraph>

@@ -14,18 +14,19 @@
   "dependencies": {
     "@emotion/core": "^10.0.14",
     "@emotion/styled": "^10.0.14",
+    "@svgr/webpack": "^5.5.0",
     "dotenv": "^8.0.0",
     "gatsby": "^2.17.10",
-    "gatsby-plugin-google-analytics": "^2.1.6",
     "gatsby-plugin-emotion": "^4.5.0",
+    "gatsby-plugin-google-analytics": "^2.1.6",
     "gatsby-plugin-mailchimp": "^5.1.2",
     "gatsby-plugin-manifest": "^2.2.4",
+    "gatsby-plugin-svgr": "^2",
     "gatsby-plugin-web-font-loader": "^1.0.4",
     "gatsby-source-filesystem": "^2.1.9",
-    "gatsby-plugin-svgr": "^2",
-    "@svgr/webpack": "^5.5.0",
     "lottie-react-web": "^2.2.2",
     "react": "^16.11.0",
-    "react-dom": "^16.11.0"
+    "react-dom": "^16.11.0",
+    "react-github-calendar": "^2.0.2"
   }
 }

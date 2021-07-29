@@ -91,7 +91,7 @@ const plugins = [
   {
     resolve: `gatsby-plugin-google-analytics`,
     options: {
-      trackingId: 'UA-100685543-1',
+      trackingId: 'UA-108090584-1',
       head: false,
       // Setting this parameter is optional
       anonymize: true,
