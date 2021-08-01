@@ -86,7 +86,7 @@ function SEO({
     path ? `${site.siteUrl}${path}` : site.siteUrl;
 
   // If no image is provided lets looks for a default spaceout static image
-  image = image ? image : '/janifelek.jpg';
+  image = image ? image : '/spaceout.jpg';
 
   const metaTags = [
     { charset: 'utf-8' },
@@ -147,10 +147,7 @@ function SEO({
       script={themeUIDarkModeWorkaroundScript}
       meta={metaTags}
     >
-      <link
-        href="https://fonts.googleapis.com/css?family=Merriweather:700,700i&display=swap"
-        rel="stylesheet"
-      />
+      yarn
       {children}
     </Helmet>
   );
