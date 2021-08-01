@@ -21,12 +21,14 @@
     "gatsby-plugin-google-analytics": "^2.1.6",
     "gatsby-plugin-mailchimp": "^5.1.2",
     "gatsby-plugin-manifest": "^2.2.4",
+    "gatsby-plugin-react-helmet": "^3.1.2",
     "gatsby-plugin-svgr": "^2",
     "gatsby-plugin-web-font-loader": "^1.0.4",
     "gatsby-source-filesystem": "^2.1.9",
     "lottie-react-web": "^2.2.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-github-calendar": "^2.0.2"
+    "react-github-calendar": "^2.0.2",
+    "react-helmet": "^5.2.1"
   }
 }

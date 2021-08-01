@@ -118,6 +118,9 @@ const plugins = [
   {
     resolve: `gatsby-plugin-emotion`,
   },
+  {
+    resolve: `gatsby-plugin-react-helmet`,
+  },
 ];
 
 /**
