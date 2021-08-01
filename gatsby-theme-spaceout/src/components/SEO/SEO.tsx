@@ -141,10 +141,10 @@ function SEO({
   }
 
   if (timeToRead) {
-    metaTags.push({ name: 'twitter:label1', value: 'Czas czytania' });
+    metaTags.push({ name: 'twitter:label1', value: 'Reading time' });
     metaTags.push({
       name: 'twitter:data1',
-      value: `${timeToRead} min czytania`,
+      value: `${timeToRead} min read`,
     });
   }
 
@@ -155,7 +155,6 @@ function SEO({
       script={themeUIDarkModeWorkaroundScript}
       meta={metaTags}
     >
-      yarn
       {children}
     </Helmet>
   );
