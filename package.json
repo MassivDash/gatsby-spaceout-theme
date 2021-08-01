@@ -12,7 +12,9 @@
     "serve": "yarn workspace spaceout serve",
     "bootstrap": "yarn lerna bootstrap",
     "publish": "yarn lerna version && yarn lerna publish",
-    "rsync": "rsync -avz -e ssh spaceout/public/ startupwise@s19.mydevil.net:/usr/home/startupwise/domains/spaceout.pl/public_html/ --delete"
+    "goLive": "yarn build && yarn rsync:site && yarn rsync:image",
+    "rsync:site": "rsync -avz -e ssh spaceout/public/ startupwise@s19.mydevil.net:/usr/home/startupwise/domains/spaceout.pl/public_html/ --delete",
+    "rsync:image": "rsync -avz -e ssh spaceout/spaceout.jpg startupwise@s19.mydevil.net:/usr/home/startupwise/domains/spaceout.pl/public_html/"
   },
   "workspaces": [
     "gatsby-theme-spaceout",

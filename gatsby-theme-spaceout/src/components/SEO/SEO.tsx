@@ -112,20 +112,28 @@ function SEO({
     { name: 'description', content: description || site.description },
 
     { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:site', content: site.name },
+    { name: 'twitter:site', content: site.name || 'spaceout.pl' },
     { name: 'twitter:title', content: title || site.title },
-    { name: 'twitter:description', content: description || site.description },
-    { name: 'twitter:creator', content: twitter.url },
+    {
+      name: 'twitter:description',
+      content: description || 'UX/UI design, Web and Native App develeopement.',
+    },
+    { name: 'twitter:creator', content: twitter.url || 'https://spaceout.pl' },
     {
       name: 'twitter:image',
       content: fullURL(image),
     },
 
-    { property: 'og:title', content: title || site.title },
-    { property: 'og:url', content: url },
+    { property: 'og:title', content: title || 'Spaceout' },
+    { property: 'og:url', content: url || 'https://spaceout.pl' },
     { property: 'og:image', content: fullURL(image) },
-    { property: 'og:description', content: description || site.description },
-    { property: 'og:site_name', content: site.name },
+    { property: 'og:type', content: 'website' },
+    { property: 'fb:app_id', content: '1535178676578893' },
+    {
+      property: 'og:description',
+      content: description || 'UX/UI design, Web and Native App develeopement.',
+    },
+    { property: 'og:site_name', content: site.name || 'Spaceout' },
   ];
 
   if (published) {
