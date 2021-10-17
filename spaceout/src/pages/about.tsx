@@ -10,7 +10,6 @@ import { TechIcons } from 'gatsby-theme-spaceout/src/sections/articles/Articles.
 import CSSFadeIn from 'gatsby-theme-spaceout/src/components/Transitions/Transitions.CSS.FadeIn';
 import ExternalLink from '../components/ExternalLink';
 import GitHubCalendar from 'react-github-calendar';
-import GitHubStatsCard from '../components/GithubCard';
 
 const HowItsDone: FC = () => {
   return (

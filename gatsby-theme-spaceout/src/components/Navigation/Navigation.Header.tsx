@@ -178,6 +178,7 @@ const NavigationHeader: React.FC<Props> = ({
           <StyledBurger
             theme={theme}
             mobileMenuOpen={mobileMenuOpen}
+            aria-label="Menu"
             onClick={() => {
               setMobileMenuOpen(!mobileMenuOpen);
               setMobileControls(false);
@@ -189,6 +190,7 @@ const NavigationHeader: React.FC<Props> = ({
           </StyledBurger>
           <StyledMoreButton
             type="button"
+            aria-label="More"
             onClick={() => setMobileControls(!mobileControlsOpen)}
           >
             <More fill={fillMore} />
@@ -757,6 +759,10 @@ const StyledBurger = styled.button<{ mobileMenuOpen: boolean; theme: any }>`
     position: absolute;
     top: 15px;
     right: 50px;
+
+    p {
+      display: none;
+    }
 
     &:focus {
       outline: none;

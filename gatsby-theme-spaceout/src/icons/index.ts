@@ -57,6 +57,7 @@ import { ReactComponent as Heroku } from './devIcons/heroku.svg';
 import { ReactComponent as Yml } from './devIcons/yml.svg';
 import { ReactComponent as Cypress } from './devIcons/cypress.svg';
 import { ReactComponent as Owasp } from './devIcons/owasp.svg';
+import { ReactComponent as Nodejs } from './devIcons/nodejs.svg';
 
 export default {
   Behance,
@@ -112,4 +113,5 @@ export default {
   Yml,
   Cypress,
   Owasp,
+  Nodejs,
 };

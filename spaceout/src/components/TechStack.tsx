@@ -24,6 +24,7 @@ const stack = [
   'Azure',
   'Netlify',
   'Heroku',
+  'Nodejs',
 ];
 
 const TechStack: FC = () => (
