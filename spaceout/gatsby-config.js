@@ -121,6 +121,7 @@ const plugins = [
   {
     resolve: `gatsby-plugin-react-helmet`,
   },
+  'gatsby-plugin-offline',
 ];
 
 /**

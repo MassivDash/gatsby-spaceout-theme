@@ -1,30 +1,30 @@
 Arguments: 
-  /home/spaceghost/.nvm/versions/node/v15.6.0/bin/node /usr/share/yarn/lib/cli.js add react-github-calendar
+  /Users/lukasz.celitan/.nvm/versions/node/v14.17.5/bin/node /Users/lukasz.celitan/Git/gatsby-spaceout-theme/.yarn/releases/yarn-1.22.11.js add gatsby-plugin-manifest
 
 PATH: 
-  /home/spaceghost/.npm-global/bin:/home/spaceghost/.deno/bin:/home/spaceghost/Owasp/dependency-check/bin:/home/spaceghost/.local/bin:/home/spaceghost/.npm-global/bin:/home/spaceghost/.deno/bin:/home/spaceghost/Owasp/dependency-check/bin:/home/spaceghost/.local/bin:/home/spaceghost/.nvm/versions/node/v15.6.0/bin:/home/spaceghost/.npm-global/bin:/home/spaceghost/.deno/bin:/home/spaceghost/Owasp/dependency-check/bin:/home/spaceghost/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/spaceghost/.dotnet/tools
+  /Users/lukasz.celitan/.nvm/versions/node/v14.17.5/bin:/Users/lukasz.celitan/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/lukasz.celitan/.nvm/versions/node/v14.17.5/bin:/Users/lukasz.celitan/homebrew/bin:/Users/lukasz.celitan/.pub-cache/bin:/Users/lukasz.celitan/.pub-cache/bin
 
 Yarn version: 
-  1.22.0
+  1.22.11
 
 Node version: 
-  15.6.0
+  14.17.5
 
 Platform: 
-  linux x64
+  darwin x64
 
 Trace: 
   Invariant Violation: expected workspace package to exist for "eslint"
-      at invariant (/usr/share/yarn/lib/cli.js:2314:15)
-      at _loop2 (/usr/share/yarn/lib/cli.js:94959:9)
-      at PackageHoister.init (/usr/share/yarn/lib/cli.js:95018:19)
-      at PackageLinker.getFlatHoistedTree (/usr/share/yarn/lib/cli.js:48743:20)
-      at PackageLinker.<anonymous> (/usr/share/yarn/lib/cli.js:48754:27)
+      at invariant (/Users/lukasz.celitan/Git/gatsby-spaceout-theme/.yarn/releases/yarn-1.22.11.js:2009:15)
+      at PackageHoister.init (/Users/lukasz.celitan/Git/gatsby-spaceout-theme/.yarn/releases/yarn-1.22.11.js:102505:9)
+      at PackageLinker.getFlatHoistedTree (/Users/lukasz.celitan/Git/gatsby-spaceout-theme/.yarn/releases/yarn-1.22.11.js:49380:20)
+      at /Users/lukasz.celitan/Git/gatsby-spaceout-theme/.yarn/releases/yarn-1.22.11.js:49387:29
       at Generator.next (<anonymous>)
-      at step (/usr/share/yarn/lib/cli.js:310:30)
-      at /usr/share/yarn/lib/cli.js:328:14
+      at step (/Users/lukasz.celitan/Git/gatsby-spaceout-theme/.yarn/releases/yarn-1.22.11.js:310:30)
+      at /Users/lukasz.celitan/Git/gatsby-spaceout-theme/.yarn/releases/yarn-1.22.11.js:328:14
       at new Promise (<anonymous>)
-      at new F (/usr/share/yarn/lib/cli.js:5301:28)
+      at new F (/Users/lukasz.celitan/Git/gatsby-spaceout-theme/.yarn/releases/yarn-1.22.11.js:25787:28)
+      at /Users/lukasz.celitan/Git/gatsby-spaceout-theme/.yarn/releases/yarn-1.22.11.js:307:12
 
 npm manifest: 
   {
@@ -43,19 +43,22 @@ npm manifest:
     "dependencies": {
       "@emotion/core": "^10.0.14",
       "@emotion/styled": "^10.0.14",
+      "@svgr/webpack": "^5.5.0",
       "dotenv": "^8.0.0",
       "gatsby": "^2.17.10",
-      "gatsby-plugin-google-analytics": "^2.1.6",
       "gatsby-plugin-emotion": "^4.5.0",
+      "gatsby-plugin-google-analytics": "^2.1.6",
       "gatsby-plugin-mailchimp": "^5.1.2",
       "gatsby-plugin-manifest": "^2.2.4",
+      "gatsby-plugin-react-helmet": "^3.1.2",
+      "gatsby-plugin-svgr": "^2",
       "gatsby-plugin-web-font-loader": "^1.0.4",
       "gatsby-source-filesystem": "^2.1.9",
-      "gatsby-plugin-svgr": "^2",
-      "@svgr/webpack": "^5.5.0",
       "lottie-react-web": "^2.2.2",
       "react": "^16.11.0",
-      "react-dom": "^16.11.0"
+      "react-dom": "^16.11.0",
+      "react-github-calendar": "^2.0.2",
+      "react-helmet": "^5.2.1"
     }
   }
 
@@ -17045,6 +17048,14 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
     integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
   
+  react-github-calendar@^2.0.2:
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/react-github-calendar/-/react-github-calendar-2.0.2.tgz#a8cd23a80575f2d50ccf6b237734e4e628e22e19"
+    integrity sha512-SkW4qWRGvNxzsAeukdbrIRWyEHSwkbnr+YdfHaXg/jE6KOHmZL0lxTty1kY0l62f9naeVHsmNxeLCPC748Fmtw==
+    dependencies:
+      date-fns "^2.14.0"
+      tinycolor2 "^1.4.0"
+  
   react-helmet@^5.2.1:
     version "5.2.1"
     resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.2.1.tgz#16a7192fdd09951f8e0fe22ffccbf9bb3e591ffa"
@@ -19696,7 +19707,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/tiny-relative-date/-/tiny-relative-date-1.3.0.tgz#fa08aad501ed730f31cc043181d995c39a935e07"
     integrity sha512-MOQHpzllWxDCHHaDno30hhLfbouoYlOI8YlMNtvKe1zXbjEVhbcEovQxvZrPvtiYW630GQDoMMarCnjfyfHA+A==
   
-  tinycolor2@^1.4.1:
+  tinycolor2@^1.4.0, tinycolor2@^1.4.1:
     version "1.4.2"
     resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
     integrity sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA==
