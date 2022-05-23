@@ -5,46 +5,45 @@ hero: gozdowstiThemeSq.jpg
 author: Luke Celitan
 date: 2019-11-11
 appDescription: Template
+category: Project
 tech:
   - Ghostjs
   - HandleBars
   - JS
 ---
 
-import { UI, GridGallery } from '../components/uxui.jsx'
+import { UI, GridGallery } from '../components/uxui.jsx';
 
 ## UX / UI
 
 One of my assiocates, Piotr Gozdowski, reporter, seo content writer and editor have approched me, to design a ghost.js template for his personal blog. He has agreed to open source this template to public. "Gozdowski theme", dark theme build upon the official casper template. You can check out his progress and theme at [https://gozdowskionline.pl](https://gozdowskionline.pl)
 The original minimalistic casper theme was already build for reading. I have decided to go for the dark theme and change the typograghy for more "newspaper" fashion. I am very pleased with the final design, esspcially for mobile.
 
-
-<UI colors={['#15171a', '#a9aaaa', '#737373' ,'#f7f8f9', '#fff']}
-    primeFontFamily={'Oswald'}
-    secondaryFontFamily={'Raleway, sans-serif'}
-    background={'#15171a'}
-    textColor='#FFF'
-    h1={{
-        color: '#fff',
-        borderLeft: '10px solid hsla(0,0%,96.9%,.44)',
-        fontFamily: 'Oswald',
-        padding: '10px 0 30px 15px',
-        textAlign: 'left',
-        fontSize: '5rem',
-        }}
-    h2={{
-      fontSize: '3.6rem',
-      fontWeight: '700',
-      fontFamily: 'Raleway,sans-serif',
-    }}
-    body={{
-      fontFamily: 'Raleway,sans-serif',
-      color: '#FFF',
-      fontSize: '1.5em',
-    }}
-        />
-
-
+<UI
+  colors={['#15171a', '#a9aaaa', '#737373', '#f7f8f9', '#fff']}
+  primeFontFamily={'Oswald'}
+  secondaryFontFamily={'Raleway, sans-serif'}
+  background={'#15171a'}
+  textColor="#FFF"
+  h1={{
+    color: '#fff',
+    borderLeft: '10px solid hsla(0,0%,96.9%,.44)',
+    fontFamily: 'Oswald',
+    padding: '10px 0 30px 15px',
+    textAlign: 'left',
+    fontSize: '5rem',
+  }}
+  h2={{
+    fontSize: '3.6rem',
+    fontWeight: '700',
+    fontFamily: 'Raleway,sans-serif',
+  }}
+  body={{
+    fontFamily: 'Raleway,sans-serif',
+    color: '#FFF',
+    fontSize: '1.5em',
+  }}
+/>
 
 ## Ghost.js
 

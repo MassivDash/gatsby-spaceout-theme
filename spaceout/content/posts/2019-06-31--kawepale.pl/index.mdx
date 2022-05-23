@@ -5,13 +5,13 @@ date: 2019-11-11
 hero: ./kawepale.jpg
 excerpt: Online Shop, Gatsby.js and WooCommerce installation
 appDescription: E-commerce
+category: Project
 tech:
   - ReactIcon
   - Wordpress
   - Gatsby
   - Css
 ---
-
 
 import { UI, GridGallery } from '../components/uxui.jsx';
 
@@ -27,35 +27,33 @@ In the design I wanted to express that feeling of personal touch and combine it 
 This platform was and is in constant development with clear goal to increase conversion rates on actual shopping and brand build.
 Google analytics metrics with extended custom event e-commerce tracking is a good tool in refactoring UI to fit customer needs.
 
+<UI
+  colors={['#0c0c0c', '#373739', '#737373', '#aaa5a5', '#f90000']}
+  primeFontFamily={'Barlow Condensed'}
+  secondaryFontFamily={'Cutive'}
+  background={'#FFF'}
+  textColor="#4a4a4a"
+  h1={{
+    fontFamily: 'Barlow Condensed,sans-serif',
+    fontWeight: '700',
+    fontSize: '40px',
+    textTransform: 'uppercase',
+    color: '#000',
+  }}
+  h2={{
+    fontSize: '35px',
+    fontWeight: '700',
+    fontFamily: 'Barlow Condensed, sans-serif',
+  }}
+  body={{
+    fontFamily: 'Cutive',
+    color: '#363636',
+    fontSize: '18px',
+    lineHeight: 1.5,
+  }}
+/>
 
-<UI colors={['#0c0c0c', '#373739', '#737373' ,'#aaa5a5', '#f90000']}
-    primeFontFamily={'Barlow Condensed'}
-    secondaryFontFamily={'Cutive'}
-    background={'#FFF'}
-    textColor='#4a4a4a'
-    h1={{
-          fontFamily: 'Barlow Condensed,sans-serif',
-          fontWeight: '700',
-          fontSize: '40px',
-          textTransform: 'uppercase',
-          color: '#000'
-        }}
-    h2={{
-      fontSize: '35px',
-      fontWeight: '700',
-      fontFamily: 'Barlow Condensed, sans-serif',
-    }}
-    body={{
-      fontFamily: 'Cutive',
-      color: '#363636',
-      fontSize: '18px',
-      lineHeight: 1.5,
-    }}
-        />
-
-
-
-<div style={{height: '100px'}} />
+<div style={{ height: '100px' }} />
 
 ![kawepale.pl](./kawepale.gif)
 
@@ -67,6 +65,5 @@ platform, shopping solution, custom payment integration and custom voucher creat
 For the backend and blog side of things I have entrusted the good old wordpress to do the job for me, as its build-in solutions were
 everything I needed to spawn the requirements quickly. On the front-side I have chosen the battle tested gatbsy.js
 framework. Gatsby is great for SEO and static frontside which scales easily
-
 
 Designed and developed by spaceout.pl

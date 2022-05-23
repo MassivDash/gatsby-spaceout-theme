@@ -3,8 +3,9 @@ title: Projekt Mowa
 excerpt: Logopedy and radio speaker blog
 hero: projektmowa2.jpg
 author: Luke Celitan
-date: 2019-11-11 
+date: 2019-11-11
 appDescription: Blog
+category: Project
 tech:
   - ReactIcon
   - Gatsby
@@ -13,64 +14,62 @@ tech:
   - Css
 ---
 
-import { UI, GridGallery } from '../components/uxui.jsx'
-import desktop from './projektMowaDesk.png'
-import mobile from './projektMowaMobile.png'
+import { UI, GridGallery } from '../components/uxui.jsx';
+import desktop from './projektMowaDesk.png';
+import mobile from './projektMowaMobile.png';
 
-## UX / UI 
+## UX / UI
 
-Projekt mowa is a blog app. The website is mainly designed to boost logopedy and radio voice practice business. 
-The client wanted warm colors, clean and minimal layout. I have decided on a rather standard layout blog collection main landing page, 
+Projekt mowa is a blog app. The website is mainly designed to boost logopedy and radio voice practice business.
+The client wanted warm colors, clean and minimal layout. I have decided on a rather standard layout blog collection main landing page,
 with some soft white touches and orange accents. Typography and article layout optimized for content delivery, with Roboto as the main body font and Playfair Display for accented messages.
 
-<UI colors={['#f7f7f7', '#dac8be', '#ffb48c', '#ff7446', '#4e4a4a']} 
-    primeFontFamily={'Roboto'} 
-    secondaryFontFamily={'Playfair Display'} 
-    background={'#f7f7f7'} 
-    h1={{
-        textAlign: 'center',
-        textTransform: 'uppercase',
-        fontSize: '1.6em',
-        fontFamily: 'Playfair Display,serif',
-        borderBottom: '1px solid #de460a',
-        color: '#4f4f4f',
-        margin: '10px auto'
-        }} 
-    h2={{
-      textAlign: 'center',
-      fontSize: '1.3em',
-      fontFamily: 'Roboto,sans-serif',
-      color: '#de460a',
-      marginBottom: '20px'
-    }}
-    body={{
-      fontFamily: 'Roboto,sans-serif',
-      color: '#4a4a4a',
-      fontSize: '1em'
-    }}
-        />
+<UI
+  colors={['#f7f7f7', '#dac8be', '#ffb48c', '#ff7446', '#4e4a4a']}
+  primeFontFamily={'Roboto'}
+  secondaryFontFamily={'Playfair Display'}
+  background={'#f7f7f7'}
+  h1={{
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    fontSize: '1.6em',
+    fontFamily: 'Playfair Display,serif',
+    borderBottom: '1px solid #de460a',
+    color: '#4f4f4f',
+    margin: '10px auto',
+  }}
+  h2={{
+    textAlign: 'center',
+    fontSize: '1.3em',
+    fontFamily: 'Roboto,sans-serif',
+    color: '#de460a',
+    marginBottom: '20px',
+  }}
+  body={{
+    fontFamily: 'Roboto,sans-serif',
+    color: '#4a4a4a',
+    fontSize: '1em',
+  }}
+/>
 
-<GridGallery images={[
-  {
-    src: desktop,
-    alt: "Desktop layout for projketmowa.pl"
-  },
-  {
-    src: mobile,
-    alt: "Mobile layout for projketmowa.pl"
-  }
-]} />
+<GridGallery
+  images={[
+    {
+      src: desktop,
+      alt: 'Desktop layout for projketmowa.pl',
+    },
+    {
+      src: mobile,
+      alt: 'Mobile layout for projketmowa.pl',
+    },
+  ]}
+/>
 
 ## Technology
 
-Projekt Mowa app was fully customized build based on standard [Gatsby](https://www.gatsbyjs.org/) stater template.   
-App written in React framework with [NetlifyCMS](https://www.netlifycms.org/) which provides all the common rich text editing and still enables the website to use the 
+Projekt Mowa app was fully customized build based on standard [Gatsby](https://www.gatsbyjs.org/) stater template.  
+App written in React framework with [NetlifyCMS](https://www.netlifycms.org/) which provides all the common rich text editing and still enables the website to use the
 jam stack technology. Front end theme was based on [bulma.css](https://bulma.io/) project
 
-This static web app is also equipped with service worker making in a fully downloadable app on the 
-android phones (Progressive Web App). Website was deployed via Netlify service. 
-
-
-
-
-
+This static web app is also equipped with service worker making in a fully downloadable app on the
+android phones (Progressive Web App). Website was deployed via Netlify service.

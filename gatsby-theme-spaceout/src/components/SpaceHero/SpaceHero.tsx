@@ -148,7 +148,7 @@ const Hero = styled.div`
   background-color: #121f28;
   min-height: 90vh;
   height: 900px;
-  margin-top: 10px;
+  margin-top: 40px;
   min-width: 67vw;
   display: flex;
   justify-content: center;

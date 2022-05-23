@@ -58,6 +58,7 @@ import { ReactComponent as Tailwind } from './devIcons/tailwind.svg';
 import { ReactComponent as TS } from './devIcons/ts.svg';
 import { ReactComponent as Wordpress } from './devIcons/wordpress.svg';
 import { ReactComponent as Yml } from './devIcons/yml.svg';
+import { ReactComponent as Rust } from './devIcons/rust.svg';
 
 export default {
   Behance,
@@ -114,4 +115,5 @@ export default {
   Cypress,
   Owasp,
   Nodejs,
+  Rust,
 };

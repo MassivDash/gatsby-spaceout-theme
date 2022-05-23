@@ -1,49 +1,47 @@
 ---
-title: Svelte Chess Timer 
+title: Svelte Chess Timer
 author: Luke Celitan
 date: 2020-10-03
 hero: ./hero.jpeg
 excerpt: 2 player online chess timer application
 appDescription: Application
+category: Project
 tech:
   - Svelte
   - Css
 ---
 
-
-
-import { UI, GridGallery } from '../components/uxui.jsx'
+import { UI, GridGallery } from '../components/uxui.jsx';
 
 ## UX / UI
 
-<UI colors={['#0c0c0c','#52525b', '#d4d4d8', '#fbfbfb' ,'#aaa5a5',]}
-    primeFontFamily={'Lato'}
-    secondaryFontFamily={'Cormorant'}
-    background={'#FFF'}
-    textColor='#0c0c0c'
-    h1={{
-          fontFamily: 'Cormorant',
-          fontWeight: '700',
-          fontSize: '40px',
-          textTransform: 'uppercase',
-          color: '#0c0c0c'
-        }}
-    h2={{
-      fontSize: '35px',
-      fontWeight: '700',
-      fontFamily: 'Lato',
-    }}
-    body={{
-      fontFamily: 'Lato',
-      color: '#0c0c0c',
-      fontSize: '18px',
-      lineHeight: 1.7,
-    }}
-        />
+<UI
+  colors={['#0c0c0c', '#52525b', '#d4d4d8', '#fbfbfb', '#aaa5a5']}
+  primeFontFamily={'Lato'}
+  secondaryFontFamily={'Cormorant'}
+  background={'#FFF'}
+  textColor="#0c0c0c"
+  h1={{
+    fontFamily: 'Cormorant',
+    fontWeight: '700',
+    fontSize: '40px',
+    textTransform: 'uppercase',
+    color: '#0c0c0c',
+  }}
+  h2={{
+    fontSize: '35px',
+    fontWeight: '700',
+    fontFamily: 'Lato',
+  }}
+  body={{
+    fontFamily: 'Lato',
+    color: '#0c0c0c',
+    fontSize: '18px',
+    lineHeight: 1.7,
+  }}
+/>
 
-## 
-
-
+##
 
 Svelte chess timer is a simple app written in the [Sevlte framework](https://svelte.dev/) . This fully operational chess timer clock, will track opponents times in the traditional way of counting down to midnight. The old switch-eru button lets you rotate the timer, great option if you are really plan on using it. Don't forget to switch on the alarm next to your timer, for the buzzer at the end of time limit
 

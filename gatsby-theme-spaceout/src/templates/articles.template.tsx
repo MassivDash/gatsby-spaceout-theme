@@ -8,7 +8,7 @@ import ArticlesHero from '../sections/articles/Articles.Hero';
 import ArticlesList from '../sections/articles/Articles.List';
 import CSSFadeIn from '@components/Transitions/Transitions.CSS.FadeIn';
 
-function ArticlesPage({ location, pageContext }) {
+function ArticlesPage({ location, pageContext }): React.ReactElement {
   const articles = pageContext.group;
   const authors = pageContext.additionalContext.authors;
 
