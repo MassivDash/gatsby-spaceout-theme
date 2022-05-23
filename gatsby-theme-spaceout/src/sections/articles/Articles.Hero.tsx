@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import styled from '@emotion/styled';
 
@@ -89,13 +89,15 @@ const authorQuery = graphql`
   }
 `;
 
-function ArticlesHero({ authors, top, bottom }: IAuthor) {
-  // const {
-  //   gridLayout = 'tiles',
-  //   hasSetGridLayout,
-  //   setGridLayout,
-  // } = useContext(GridLayoutContext);
-
+function ArticlesHero({
+  authors,
+  top,
+  bottom,
+}: {
+  authors: IAuthor[];
+  top?: boolean;
+  bottom?: boolean | undefined;
+}): ReactElement {
   const results = useStaticQuery(authorQuery);
   const hero = results.site.edges[0].node.siteMetadata.hero;
   // const tilesIsActive = hasSetGridLayout && gridLayout === 'tiles';
@@ -111,7 +113,7 @@ function ArticlesHero({ authors, top, bottom }: IAuthor) {
   }
 
   return (
-    <Section relative id="Articles__Hero">
+    <Section id="Articles__Hero">
       {top && (
         <>
           <HeadingContainer

@@ -1,29 +1,10 @@
-/**
- * This react helmt code is adapted from
- * https://themeteorchef.com/tutorials/reusable-seo-with-react-helmet.
- *
- * A great tutorial explaining how to setup a robust version of an
- * SEO friendly react-helmet instance.
- *
- *
- * Use the Helmt on pages to generate SEO and meta content!
- *
- * Usage:
- * <SEO
- *   title={title}
- *   description={description}
- *   image={image}
- * />
- *
- */
-
 import React from 'react';
 import Helmet from 'react-helmet';
 import { graphql, useStaticQuery } from 'gatsby';
 
 interface HelmetProps {
   children?: React.ReactChildren;
-  title: string;
+  title?: string;
   description?: string;
   pathname: string;
   image?: string;
@@ -77,7 +58,7 @@ function SEO({
   published,
   pathname,
   timeToRead,
-}: HelmetProps) {
+}: HelmetProps): React.ReactElement {
   const results = useStaticQuery(seoQuery);
   const site = results.allSite.edges[0].node.siteMetadata;
   const twitter = site.social.find((option) => option.name === 'twitter') || {};
@@ -88,7 +69,7 @@ function SEO({
   // If no image is provided lets looks for a default spaceout static image
   image = image ? image : '/spaceout.jpg';
 
-  const metaTags = [
+  const metaTags: Record<string, string>[] = [
     { charset: 'utf-8' },
     {
       'http-equiv': 'X-UA-Compatible',

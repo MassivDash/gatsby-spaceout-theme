@@ -7,8 +7,27 @@ import SpaceHero from '@components/SpaceHero';
 import ArticlesHero from '../sections/articles/Articles.Hero';
 import ArticlesList from '../sections/articles/Articles.List';
 import CSSFadeIn from '@components/Transitions/Transitions.CSS.FadeIn';
+import { IAuthor, IArticle } from 'src/types';
 
-function ArticlesPage({ location, pageContext }): React.ReactElement {
+interface Location {
+  pathname: string;
+}
+
+interface PageContext {
+  pageCount: number;
+  group: IArticle[];
+  additionalContext: {
+    authors: IAuthor[];
+  };
+}
+
+function ArticlesPage({
+  location,
+  pageContext,
+}: {
+  location: Location;
+  pageContext: PageContext;
+}): React.ReactElement {
   const articles = pageContext.group;
   const authors = pageContext.additionalContext.authors;
 
@@ -17,11 +36,10 @@ function ArticlesPage({ location, pageContext }): React.ReactElement {
       <SEO pathname={location.pathname} />
       <Section narrow>
         <SpaceHero />
-        <ArticlesHero authors={authors} top />
+        <ArticlesHero authors={authors as any} top />
         <ArticlesList articles={articles} />
-
         <ArticlesPaginator show={pageContext.pageCount > 1}>
-          <Paginator {...pageContext} />
+          <Paginator {...(pageContext as any)} />
         </ArticlesPaginator>
       </Section>
       <Section narrow>

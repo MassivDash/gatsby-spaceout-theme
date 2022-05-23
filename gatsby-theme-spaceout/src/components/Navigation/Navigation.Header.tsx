@@ -28,7 +28,7 @@ interface Props {
   navigatorPosition: any;
   setNavigatorShape: () => void;
   navigatorShape: string;
-  setMobileControls: () => void;
+  setMobileControls: (boolean) => void;
   mobileControlsOpen: boolean;
 }
 
@@ -134,9 +134,9 @@ const NavigationHeader: React.FC<Props> = ({
     const isNotPaginated = !location.pathname.includes('/page/');
 
     setShowBackArrow(
-      previousPathWasHomepage && isNotPaginated && width <= phablet,
+      (previousPathWasHomepage && isNotPaginated && width <= phablet) || false,
     );
-    setPreviousPath(prev);
+    setPreviousPath(prev || '/');
   }, []);
 
   const scrollRef = useRef(null);

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactElement } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import Link from 'gatsby-plugin-transition-link';
@@ -27,18 +27,18 @@ class Paginator extends Component<IPaginator, any> {
   current = this.props.index;
   pageRoot = this.props.pathPrefix;
 
-  get nextPath() {
+  get nextPath(): string {
     return this.getFullPath(this.current + 1);
   }
 
-  get previousPath() {
+  get previousPath(): string {
     return this.getFullPath(this.current - 1);
   }
 
   /**
    * Utility function to return a 1 ... 5 6 7 ... 10 style pagination
    */
-  get getPageLinks() {
+  get getPageLinks(): ReactElement[] {
     const current = this.current;
     const count = this.count;
     const maxPages = this.maxPages;
@@ -113,7 +113,7 @@ class Paginator extends Component<IPaginator, any> {
    * All it really does is glue the page path to the front,
    * but note there's special behaviour for page 1 where the URL should be / not /page/1
    */
-  getFullPath = (n: number) => {
+  getFullPath = (n: number): string => {
     if (this.pageRoot === '/') {
       return n === 1 ? this.pageRoot : this.pageRoot + 'page/' + n;
     } else {
@@ -121,7 +121,7 @@ class Paginator extends Component<IPaginator, any> {
     }
   };
 
-  render() {
+  render(): ReactElement | null {
     const count = this.count;
     const current = this.current;
 
