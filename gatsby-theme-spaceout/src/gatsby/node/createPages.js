@@ -212,6 +212,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
         authors: authorsThatWroteTheArticle,
         basePath,
         tech: article.tech,
+        category: article.category,
         slug: article.slug,
         id: article.id,
         title: article.title,

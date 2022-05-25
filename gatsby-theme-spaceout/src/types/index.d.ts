@@ -43,6 +43,7 @@ export interface IArticle {
   body: string;
   id: string;
   title: string;
+  category: 'Post' | 'Project';
   hero: {
     full: IGatsbyImageFluid;
     preview: IGatsbyImageFluid;

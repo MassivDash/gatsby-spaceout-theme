@@ -24,13 +24,6 @@ interface LayoutProps {
   setNavigatorShape: (string: string) => void;
 }
 
-/**
- * <Layout /> needs to wrap every page as it provides styles, navigation,
- * and the main structure of each page. Within Layout we have the <Container />
- * which hides a lot of the mess wimport { Transition } from "react-transition-group";
-import { TweenMax } from "gsap/all";e need to create our Desktop and Mobile experiences.
- */
-
 const siteQuery = graphql`
   {
     allSite: allSite {

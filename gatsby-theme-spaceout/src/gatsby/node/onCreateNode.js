@@ -93,6 +93,7 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
       date: node.frontmatter.date,
       appDescription: node.frontmatter.appDescription,
       tech: node.frontmatter.tech,
+      category: node.frontmatter.category,
       hero: node.frontmatter.hero,
       secret: node.frontmatter.secret || false,
       slug:

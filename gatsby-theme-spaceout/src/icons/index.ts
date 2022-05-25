@@ -29,6 +29,7 @@ import FullScreenEnter from './ui/FullScreenEnter.Icon';
 import FullScreenExit from './ui/FullScreenExit.Icon';
 import FontSetter from './ui/FontSetter.Icon';
 import ArrowUp from './ui/ArrowUp.Icon';
+import Search from './ui/Search.Icon';
 
 //DEV Icons
 
@@ -89,6 +90,7 @@ export default {
   FullScreenEnter,
   FontSetter,
   ArrowUp,
+  Search,
   ReactIcon,
   Wordpress,
   JS,
