@@ -22,6 +22,7 @@ interface LayoutProps {
   location: any;
   setNavigatorPosition: (string: string) => void;
   setNavigatorShape: (string: string) => void;
+  navigatorPosition: string;
 }
 
 const siteQuery = graphql`
@@ -64,7 +65,7 @@ function Layout({
   useEffect(() => {
     async function timeOut(time) {
       setTimeout(() => {
-        scrollRef?.current?.scrollToTop();
+        (scrollRef as any)?.current?.scrollToTop();
       }, time);
     }
 
@@ -94,7 +95,9 @@ function Layout({
             {children}
           </Scrollbar>
         </Infoscreen>
-        <NavigationFooter ScrollToTop={() => scrollRef.current.scrollToTop()} />
+        <NavigationFooter
+          ScrollToTop={() => (scrollRef as any).current.scrollToTop()}
+        />
       </Container>
     </ArticlesContextProvider>
   );
@@ -115,8 +118,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(memo(Layout));
 
 const Container = styled.div`
   position: fixed;
-  background: ${(p) => p.theme.colors.background};
-  transition: ${(p) => p.theme.colorModeTransition};
+  background: ${(p: any) => p.theme.colors.background};
+  transition: ${(p: any) => p.theme.colorModeTransition};
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -129,7 +132,7 @@ const Container = styled.div`
 `;
 
 const Infoscreen = styled.div`
-  background: ${(p) => p.theme.colors.background};
+  background: ${(p: any) => p.theme.colors.background};
   transition: 0.25s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
   scroll-behavior: smooth;
 `;

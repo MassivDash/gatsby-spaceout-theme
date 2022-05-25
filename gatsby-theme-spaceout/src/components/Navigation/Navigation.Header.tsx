@@ -24,7 +24,7 @@ import {
 } from '../../state/createStore';
 
 interface Props {
-  theme: any;
+  theme?: any;
   navigatorPosition: any;
   setNavigatorShape: () => void;
   navigatorShape: string;
