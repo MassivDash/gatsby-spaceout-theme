@@ -5,7 +5,8 @@ const Section = styled.section<{ narrow?: boolean }>`
   position: relative;
   margin: 0 15px;
   @media (min-width: 765px) {
-    margin: 0 50px;
+    margin: 50px auto;
+    max-width: 1150px;
   }
 `;
 

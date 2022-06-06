@@ -49,12 +49,13 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, authors }) => {
         <HeroSubtitle hasCoAUthors={hasCoAUthors}>
           <TechIcons tech={article.tech} />
           <ArticleAuthors authors={authors} />
-          {readingTime && (
-            <ArticleMeta hasCoAUthors={hasCoAUthors}>
-              {article.timeToRead} min czytania
-            </ArticleMeta>
-          )}
         </HeroSubtitle>
+        {readingTime && (
+          <ArticleMeta hasCoAUthors={hasCoAUthors}>
+            category: <b>{article.category.toLocaleLowerCase()}</b>, reading
+            time: <b>{article.timeToRead} min</b>
+          </ArticleMeta>
+        )}
       </Header>
       <HeroImage id="ArticleImage__Hero">
         {hasHeroImage ? (
@@ -98,7 +99,8 @@ const Hero = styled.div`
 `;
 
 const ArticleMeta = styled.div<{ hasCoAUthors: boolean }>`
-  margin-left: ${(p) => (p.hasCoAUthors ? '10px' : '0')};
+  margin: 20px auto;
+  max-width: 1150px;
 
   ${mediaqueries.phablet`
     margin-left: 0;
@@ -117,7 +119,8 @@ const ArticleUberTitle = styled.div`
 const Header = styled.header`
   position: relative;
   z-index: 10;
-  margin: 20px 10vw 120px;
+  margin: 20px auto;
+  max-width: 1150px;
 
   ${mediaqueries.desktop`
     padding-left: 53px;
@@ -143,6 +146,7 @@ const HeroHeading = styled(Headings.H1)`
   margin-bottom: 25px;
   font-weight: bold;
   line-height: 1.32;
+  max-width: 1150px;
 
   ${mediaqueries.tablet`
     margin-bottom: 20px;
@@ -158,6 +162,7 @@ const HeroSubtitle = styled.div<{ hasCoAUthors: boolean }>`
   position: relative;
   display: flex;
   font-size: 18px;
+  max-width: 1150px;
 
   color: ${(p: any) => p.theme.colors.grey};
 

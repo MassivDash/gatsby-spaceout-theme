@@ -7,7 +7,6 @@ import SpaceHero from '@components/SpaceHero';
 import ArticlesHero from '../sections/articles/Articles.Hero';
 import ArticlesList from '../sections/articles/Articles.List';
 import CSSFadeIn from '@components/Transitions/Transitions.CSS.FadeIn';
-import PostSearchbar from '@components/PostSearchbar/PostSearchbar';
 import { IAuthor, IArticle } from 'src/types';
 
 interface Location {
@@ -29,12 +28,7 @@ function ArticlesPage({
   location: Location;
   pageContext: PageContext;
 }): React.ReactElement {
-  const articles = pageContext.group.filter(
-    (article) => article.category !== 'Post',
-  );
-
-  const postTitles = articles.map((article) => article.title);
-
+  const articles = pageContext.group;
   const authors = pageContext.additionalContext.authors;
 
   return (
@@ -42,7 +36,6 @@ function ArticlesPage({
       <SEO pathname={location.pathname} />
       <Section narrow>
         <SpaceHero />
-        <PostSearchbar posts={postTitles} />
         <ArticlesHero authors={authors as any} top />
         <ArticlesList articles={articles} />
         <ArticlesPaginator show={pageContext.pageCount > 1}>

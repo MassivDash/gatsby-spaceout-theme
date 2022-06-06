@@ -112,7 +112,7 @@ const Grid = styled.div<{ numberOfArticles: number }>`
   `}
 `;
 
-const ImageContainer = styled.div`
+const ImageContainer = styled.div<{ narrow?: boolean }>`
   position: relative;
   height: auto;
   box-shadow: 0 30px 60px -10px rgba(0, 0, 0, ${(p) => (p.narrow ? 0.22 : 0.3)}),
@@ -147,7 +147,7 @@ const Item = styled.div`
     box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    background: ${(p) => p.theme.colors.card};
+    background: ${(p: any) => p.theme.colors.card};
   }
 `;
 
@@ -155,8 +155,8 @@ const Title = styled(Headings.H3)`
   font-size: 22px;
   line-height: 1.4;
   margin-bottom: ${(p) => (p.hasOverflow ? '45px' : '10px')};
-  color: ${(p) => p.theme.colors.primary};
-  font-family: ${(p) => p.theme.fonts.serif};
+  color: ${(p: any) => p.theme.colors.primary};
+  font-family: ${(p: any) => p.theme.fonts.serif};
   transition: color 0.3s ease-in-out;
   ${limitToTwoLines};
 
@@ -170,11 +170,11 @@ const Title = styled(Headings.H3)`
   `}
 `;
 
-const Excerpt = styled.p<{ narrow: boolean; hasOverflow: boolean }>`
+const Excerpt = styled.p<{ narrow?: boolean; hasOverflow?: boolean }>`
   ${limitToTwoLines};
   font-size: 16px;
   margin-bottom: 10px;
-  color: ${(p) => p.theme.colors.grey};
+  color: ${(p: any) => p.theme.colors.grey};
   display: ${(p) => (p.hasOverflow ? 'none' : 'box')};
   max-width: ${(p) => (p.narrow ? '100%' : '100%')};
 
@@ -197,7 +197,7 @@ const Excerpt = styled.p<{ narrow: boolean; hasOverflow: boolean }>`
 const MetaData = styled.div`
   font-weight: 600;
   font-size: 16px;
-  color: ${(p) => p.theme.colors.grey};
+  color: ${(p: any) => p.theme.colors.grey};
   opacity: 0.33;
 
   ${mediaqueries.phablet`
@@ -225,7 +225,7 @@ const ArticleLink = styled(Link)<{ narrow: string }>`
 
   &:hover h2,
   &:focus h2 {
-    color: ${(p) => p.theme.colors.accent};
+    color: ${(p: any) => p.theme.colors.accent};
   }
 
   &[data-a11y='true']:focus::after {
@@ -235,7 +235,7 @@ const ArticleLink = styled(Link)<{ narrow: string }>`
     top: -2%;
     width: 104%;
     height: 104%;
-    border: 3px solid ${(p) => p.theme.colors.accent};
+    border: 3px solid ${(p: any) => p.theme.colors.accent};
     background: rgba(255, 255, 255, 0.01);
   }
 

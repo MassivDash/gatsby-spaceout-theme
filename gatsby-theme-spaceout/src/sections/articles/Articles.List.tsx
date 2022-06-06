@@ -166,7 +166,10 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
             {article.excerpt}
           </Excerpt>
           {readingTime && (
-            <MetaData>{article.timeToRead} min czytania</MetaData>
+            <MetaData>
+              type: <b>{article.category}</b>, time to read:{' '}
+              <b>{article.timeToRead + 1} min</b>
+            </MetaData>
           )}
         </ExcerptWrapper>
       </Item>

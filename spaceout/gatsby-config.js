@@ -5,8 +5,8 @@ const siteMetadata = {
   name: `Interstellar design`,
   siteUrl: `https://spaceout.pl`,
   description: `UX/UI design, Web and Native App develeopement.`,
-  readingTime: false,
-  similarPosts: false,
+  readingTime: true,
+  similarPosts: true,
   hero: {
     heading: `Intersetellar web design`,
     maxWidth: 652,
