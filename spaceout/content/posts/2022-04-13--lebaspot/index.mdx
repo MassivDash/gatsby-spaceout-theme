@@ -25,12 +25,16 @@ dynamic pages that require connection to various 3rd party APIs (like
 booking.com). The obvious business requirements was creating a room reservation
 system that will not allow overbooking, double booking and a responsive admin
 panel so the owners can have control over their reservations whenever they want.
+The website also had to contain diffrent languages versions, in order to widen
+the audience of this mini hotel. The seo was a also a big factor in this build.
 
 The design changed over the years, but in the end I have decieded upon a subtle
 elegant look in shades of black, grey and white. Lato (Sans Serif, did you know
 ? "Lato" means summer in polish) and Cormorant (Serif) fonts are being utilized
 as the main duo of typography set up. Thankfully owners could come up with Hotel
 pictures that mathed the tone of the website.
+
+![Website screen](./ui1.png)
 
 <UI
   colors={['#0c0c0c', '#52525b', '#d4d4d8', '#fbfbfb', '#aaa5a5']}
@@ -57,6 +61,19 @@ pictures that mathed the tone of the website.
     lineHeight: 1.7,
   }}
 />
+
+I have also decided to inlude current wheater api call so the user can see what
+he is actually missing. A fine detail that hopefully users can appreciate. I
+think it ties in nicley with the navbar and language picker, making a less
+borking but yest standard navbar.
+
+![Nav Bar](./ui2.png)
+
+Other non standard but very important elements were the searchbar with filters
+and reservation calendar picker. The search back was constructed as sticky
+element that show it self on scroll back, optimising user room reservation
+search for the user. A custom calendar picker had also to be constructed bin
+order to show hafl booked days.
 
 ## Developent: next.js, postgres, tailwindcss
 

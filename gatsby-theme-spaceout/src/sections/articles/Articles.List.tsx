@@ -29,20 +29,6 @@ const siteQuery = graphql`
   }
 `;
 
-/**
- * Tiles
- * [LONG], [SHORT]
- * [SHORT], [LONG]
- * [SHORT], [LONG]
- *
- * or ------------
- *
- * Rows
- * [LONG]
- * [LONG]
- * [LONG]
- */
-
 interface ArticlesListProps {
   articles: IArticle[];
   alwaysShowAllDetails?: boolean;
@@ -168,7 +154,7 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
           {readingTime && (
             <MetaData>
               type: <b>{article.category.toLocaleLowerCase()}</b>, reading time:{' '}
-              <b>{article.timeToRead + 1} min</b>
+              <b>{article.timeToRead} min</b>
             </MetaData>
           )}
         </ExcerptWrapper>
@@ -178,8 +164,6 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
 };
 
 const wide = '1fr';
-// const narrow = '457px';
-
 const limitToTwoLines = css`
   text-overflow: ellipsis;
   overflow-wrap: normal;
