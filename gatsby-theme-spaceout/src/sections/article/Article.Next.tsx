@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import Link from 'gatsby-plugin-transition-link';
@@ -22,7 +22,7 @@ import { IArticle } from '@types';
  * as the next one suggested article, which requires special styling we didn't want to
  * mix into the generic list component.
  */
-const ArticlesNext = ({ articles }: { articles: IArticle[] }) => {
+const ArticlesNext: FC<{ articles: IArticle[] }> = ({ articles }) => {
   if (!articles) return null;
   const numberOfArticles = articles.length;
   return (

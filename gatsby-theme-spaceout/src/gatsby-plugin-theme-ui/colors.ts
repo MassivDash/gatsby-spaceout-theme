@@ -4,7 +4,7 @@ export default {
   prism,
   primary: '#000',
   secondary: '#eeeeee',
-  grey: '#73737D',
+  grey: '#373737',
   background: '#fafafa',
   accent: '#27262d',
   hover: 'rgba(0, 0, 0, 0.07)',
@@ -21,7 +21,7 @@ export default {
   articleHoverText: '#D9DBE0',
   modes: {
     dark: {
-      grey: '#73737D',
+      grey: '#fafafa',
       primary: '#fff',
       secondary: '#fff',
       accent: '#E9DAAC',
