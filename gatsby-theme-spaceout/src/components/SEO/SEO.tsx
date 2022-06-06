@@ -1,6 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { graphql, useStaticQuery } from 'gatsby';
+import {graphql, useStaticQuery} from 'gatsby';
 
 interface HelmetProps {
   children?: React.ReactChildren;
@@ -70,7 +70,7 @@ function SEO({
   image = image ? image : '/spaceout.jpg';
 
   const metaTags: Record<string, string>[] = [
-    { charset: 'utf-8' },
+    {charset: 'utf-8'},
     {
       'http-equiv': 'X-UA-Compatible',
       content: 'IE=edge',
@@ -87,42 +87,42 @@ function SEO({
       rel: 'canonical',
       href: fullURL(pathname),
     },
-    { itemprop: 'name', content: title || site.title },
-    { itemprop: 'description', content: description || site.description },
-    { itemprop: 'image', content: fullURL(image) },
-    { name: 'description', content: description || site.description },
+    {itemprop: 'name', content: title || site.title},
+    {itemprop: 'description', content: description || site.description},
+    {itemprop: 'image', content: fullURL(image)},
+    {name: 'description', content: description || site.description},
 
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:site', content: site.name || 'spaceout.pl' },
-    { name: 'twitter:title', content: title || site.title },
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:site', content: site.name || 'spaceout.pl'},
+    {name: 'twitter:title', content: title || site.title},
     {
       name: 'twitter:description',
       content: description || 'UX/UI design, Web and Native App develeopement.',
     },
-    { name: 'twitter:creator', content: twitter.url || 'https://spaceout.pl' },
+    {name: 'twitter:creator', content: twitter.url || 'https://spaceout.pl'},
     {
       name: 'twitter:image',
       content: fullURL(image),
     },
 
-    { property: 'og:title', content: title || 'Spaceout' },
-    { property: 'og:url', content: url || 'https://spaceout.pl' },
-    { property: 'og:image', content: fullURL(image) },
-    { property: 'og:type', content: 'website' },
-    { property: 'fb:app_id', content: '1535178676578893' },
+    {property: 'og:title', content: title || 'Spaceout'},
+    {property: 'og:url', content: url || 'https://spaceout.pl'},
+    {property: 'og:image', content: fullURL(image)},
+    {property: 'og:type', content: 'website'},
+    {property: 'fb:app_id', content: '1535178676578893'},
     {
       property: 'og:description',
       content: description || 'UX/UI design, Web and Native App develeopement.',
     },
-    { property: 'og:site_name', content: site.name || 'Spaceout' },
+    {property: 'og:site_name', content: site.name || 'Spaceout'},
   ];
 
   if (published) {
-    metaTags.push({ name: 'article:published_time', content: published });
+    metaTags.push({name: 'article:published_time', content: published});
   }
 
   if (timeToRead) {
-    metaTags.push({ name: 'twitter:label1', value: 'Reading time' });
+    metaTags.push({name: 'twitter:label1', value: 'Reading time'});
     metaTags.push({
       name: 'twitter:data1',
       value: `${timeToRead} min read`,
@@ -132,7 +132,7 @@ function SEO({
   return (
     <Helmet
       title={title || site.title}
-      htmlAttributes={{ lang: 'en' }}
+      htmlAttributes={{lang: 'en'}}
       script={themeUIDarkModeWorkaroundScript}
       meta={metaTags}
     >

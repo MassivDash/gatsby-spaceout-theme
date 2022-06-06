@@ -1,6 +1,6 @@
 import React from 'react';
 
-const YouTubeIcon = ({ fill = 'white' }) => (
+const YouTubeIcon = ({fill = 'white'}) => (
   <svg
     width="17"
     height="12"

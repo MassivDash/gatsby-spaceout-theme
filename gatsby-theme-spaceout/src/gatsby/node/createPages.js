@@ -46,7 +46,7 @@ const byDate = (a, b) => new Date(b.dateForSEO) - new Date(a.dateForSEO);
 
 // ///////////////////////////////////////////////////////
 
-module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
+module.exports = async ({actions: {createPage}, graphql}, themeOptions) => {
   const {
     rootPath,
     basePath = '/',
@@ -58,15 +58,15 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
   } = themeOptions;
 
   // Defaulting to look at the local MDX files as sources.
-  const { local = true, contentful = false } = sources;
+  const {local = true, contentful = false} = sources;
 
   let authors;
   let articles;
 
   const dataSources = {
-    local: { authors: [], articles: [] },
-    contentful: { authors: [], articles: [] },
-    netlify: { authors: [], articles: [] },
+    local: {authors: [], articles: []},
+    contentful: {authors: [], articles: []},
+    netlify: {authors: [], articles: []},
   };
 
   if (rootPath) {

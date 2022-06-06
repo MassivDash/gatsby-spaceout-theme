@@ -1,4 +1,4 @@
-import { createStore as reduxCreateStore } from 'redux';
+import {createStore as reduxCreateStore} from 'redux';
 
 /*
  * action types
@@ -19,39 +19,39 @@ const SET_MOBILE_CONTROLS = 'SET_MOBILE_CONTROLS';
  */
 
 export function setNavigatorPosition(value) {
-  return { type: SET_NAVIGATOR_POSITION, value };
+  return {type: SET_NAVIGATOR_POSITION, value};
 }
 
 export function setNavigatorScroll(value) {
-  return { type: SET_NAVIGATOR_SCROLL, value };
+  return {type: SET_NAVIGATOR_SCROLL, value};
 }
 
 export function setNavigatorShape(value) {
-  return { type: SET_NAVIGATOR_SHAPE, value };
+  return {type: SET_NAVIGATOR_SHAPE, value};
 }
 
 export function setNavigatorFilter(value) {
-  return { type: SET_NAVIGATOR_FILTER, value };
+  return {type: SET_NAVIGATOR_FILTER, value};
 }
 
 export function setIsWideScreen(value) {
-  return { type: SET_IS_WIDE_SCREEN, value };
+  return {type: SET_IS_WIDE_SCREEN, value};
 }
 
 export function setScrollToTop(value) {
-  return { type: SET_SCROLL_TO_TOP, value };
+  return {type: SET_SCROLL_TO_TOP, value};
 }
 
 export function setFontSizeIncrease(value) {
-  return { type: SET_FONT_SIZE_INCREASE, value };
+  return {type: SET_FONT_SIZE_INCREASE, value};
 }
 
 export function setCategoryFilter(value) {
-  return { type: SET_CATEGORY_FILTER, value };
+  return {type: SET_CATEGORY_FILTER, value};
 }
 
 export function setMobileControls(value) {
-  return { type: SET_MOBILE_CONTROLS, value };
+  return {type: SET_MOBILE_CONTROLS, value};
 }
 
 /*
@@ -130,4 +130,4 @@ const initialState = {
 };
 
 export default (preloadedState) =>
-  reduxCreateStore(reducer, { ...initialState, ...preloadedState });
+  reduxCreateStore(reducer, {...initialState, ...preloadedState});

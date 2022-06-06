@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
+import React, {ReactElement} from 'react';
+import {graphql, useStaticQuery} from 'gatsby';
 import styled from '@emotion/styled';
 
 import Section from '@components/Section';
@@ -7,7 +7,7 @@ import Bio from '@components/Bio';
 // import SpaceHero from '@components/SpaceHero';
 // import Icons from '@icons';
 import mediaqueries from '@styles/media';
-import { IAuthor } from '@types';
+import {IAuthor} from '@types';
 
 const authorQuery = graphql`
   {
@@ -23,9 +23,9 @@ const authorQuery = graphql`
         }
       }
     }
-    back: imageSharp(original: { src: { regex: "/heroBack/" } }) {
+    back: imageSharp(original: {src: {regex: "/heroBack/"}}) {
       id
-      sizes(maxWidth: 1920, quality: 90, traceSVG: { color: "#121f28" }) {
+      sizes(maxWidth: 1920, quality: 90, traceSVG: {color: "#121f28"}) {
         aspectRatio
         src
         srcSet
@@ -38,9 +38,9 @@ const authorQuery = graphql`
         src
       }
     }
-    earth: imageSharp(original: { src: { regex: "/earth/" } }) {
+    earth: imageSharp(original: {src: {regex: "/earth/"}}) {
       id
-      sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
+      sizes(maxWidth: 3000, quality: 90, traceSVG: {color: "#FFF"}) {
         base64
         aspectRatio
         src
@@ -54,9 +54,9 @@ const authorQuery = graphql`
         src
       }
     }
-    spaceman: imageSharp(original: { src: { regex: "/spaceman/" } }) {
+    spaceman: imageSharp(original: {src: {regex: "/spaceman/"}}) {
       id
-      sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
+      sizes(maxWidth: 3000, quality: 90, traceSVG: {color: "#FFF"}) {
         base64
         aspectRatio
         src
@@ -70,9 +70,9 @@ const authorQuery = graphql`
         src
       }
     }
-    shuttle: imageSharp(original: { src: { regex: "/shuttle/" } }) {
+    shuttle: imageSharp(original: {src: {regex: "/shuttle/"}}) {
       id
-      sizes(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
+      sizes(maxWidth: 3000, quality: 90, traceSVG: {color: "#FFF"}) {
         base64
         aspectRatio
         src
@@ -117,7 +117,7 @@ function ArticlesHero({
       {top && (
         <>
           <HeadingContainer
-            style={{ maxWidth: `${hero.maxWidth}px` }}
+            style={{maxWidth: `${hero.maxWidth}px`}}
           ></HeadingContainer>
         </>
       )}

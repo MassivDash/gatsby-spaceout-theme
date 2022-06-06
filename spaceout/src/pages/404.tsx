@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import Scroller from 'gatsby-theme-spaceout/src/components/Scroller';
 import Section from 'gatsby-theme-spaceout/src/components/Section';
 import SEO from 'gatsby-theme-spaceout/src/components/SEO';
@@ -9,9 +9,9 @@ const Page404: FC = () => {
   return (
     <>
       <SEO />
-      <Scroller style={{ minHeight: '100vh' }}>
+      <Scroller style={{minHeight: '100vh'}}>
         <Section>
-          <div style={{ marginTop: '100px' }}>
+          <div style={{marginTop: '100px'}}>
             <Headings.H1>404</Headings.H1>
             <Paragraph>This website is currently unavailable.</Paragraph>
           </div>

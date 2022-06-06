@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import styled from '@emotion/styled';
-import { TechIcons } from 'gatsby-theme-spaceout/src/sections/articles/Articles.List';
+import {TechIcons} from 'gatsby-theme-spaceout/src/sections/articles/Articles.List';
 
 const stack = [
   'ReactIcon',

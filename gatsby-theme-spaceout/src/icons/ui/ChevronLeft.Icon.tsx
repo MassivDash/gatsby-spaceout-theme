@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ChevronLeft = ({ fill }) => (
+const ChevronLeft = ({fill}) => (
   <svg
     width="24"
     height="24"

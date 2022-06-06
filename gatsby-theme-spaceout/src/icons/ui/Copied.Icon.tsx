@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CopiedIcon = ({ fill = '#fff' }) => (
+const CopiedIcon = ({fill = '#fff'}) => (
   <svg
     width="15"
     height="19"

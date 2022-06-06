@@ -1,12 +1,12 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import Scroller from 'gatsby-theme-spaceout/src/components/Scroller';
 import Section from 'gatsby-theme-spaceout/src/components/Section';
 import SEO from 'gatsby-theme-spaceout/src/components/SEO';
 import Headings from 'gatsby-theme-spaceout/src/components/Headings';
 import Paragraph from 'gatsby-theme-spaceout/src/components/Paragraph';
-import Spaceman, { FlexHolder } from '../components/Spaceman';
+import Spaceman, {FlexHolder} from '../components/Spaceman';
 import TechStack from '../components/TechStack';
-import { TechIcons } from 'gatsby-theme-spaceout/src/sections/articles/Articles.List';
+import {TechIcons} from 'gatsby-theme-spaceout/src/sections/articles/Articles.List';
 import CSSFadeIn from 'gatsby-theme-spaceout/src/components/Transitions/Transitions.CSS.FadeIn';
 import ExternalLink from '../components/ExternalLink';
 import GitHubCalendar from 'react-github-calendar';
@@ -15,10 +15,10 @@ const HowItsDone: FC = () => {
   return (
     <>
       <SEO />
-      <Scroller style={{ minHeight: '100vh' }}>
+      <Scroller style={{minHeight: '100vh'}}>
         <CSSFadeIn>
           <Section>
-            <div style={{ height: '50px', width: '100%' }}></div>
+            <div style={{height: '50px', width: '100%'}}></div>
             <Spaceman />
             <Headings.H1>Hi there 👋</Headings.H1>
             <Headings.H2>
@@ -43,7 +43,7 @@ const HowItsDone: FC = () => {
               Intelligence division as a tech lead and security champion.
             </Paragraph>
             <Paragraph>My stack:</Paragraph>
-            <div style={{ maxWidth: '1150px', margin: '20px auto' }}>
+            <div style={{maxWidth: '1150px', margin: '20px auto'}}>
               <TechStack />
             </div>
             <Paragraph>
@@ -53,7 +53,7 @@ const HowItsDone: FC = () => {
                 luke@spaceout.pl
               </ExternalLink>
             </Paragraph>
-            <div style={{ height: '50px', width: '100%' }}></div>
+            <div style={{height: '50px', width: '100%'}}></div>
             <Headings.H2>I’m currently working on ... </Headings.H2>
             <Paragraph>
               <TechIcons tech={['Owasp']} /> Implementing compliance and
@@ -71,8 +71,8 @@ const HowItsDone: FC = () => {
               <TechIcons tech={['Azure']} />
               Azure dev ops advanced yaml pipeline configuration
             </Paragraph>
-            <div style={{ height: '50px', width: '100%' }}></div>
-            <div style={{ maxWidth: '1150px', margin: '20px auto' }}>
+            <div style={{height: '50px', width: '100%'}}></div>
+            <div style={{maxWidth: '1150px', margin: '20px auto'}}>
               <GitHubCalendar
                 username="MassivDash"
                 blockSize={18}
@@ -80,7 +80,7 @@ const HowItsDone: FC = () => {
                 showTotalCount={false}
               />
             </div>
-            <div style={{ height: '50px', width: '100%' }}></div>
+            <div style={{height: '50px', width: '100%'}}></div>
             <Headings.H2>some personal info ... </Headings.H2>
             <Paragraph>
               I am a big geek with huge love for Star Wars, Marvel and DC comic
@@ -110,7 +110,7 @@ const HowItsDone: FC = () => {
                 allow="encrypted-media"
               ></iframe>
             </FlexHolder>
-            <div style={{ height: '50px', width: '100%' }}></div>
+            <div style={{height: '50px', width: '100%'}}></div>
             <Headings.H2>spaceout.pl info: </Headings.H2>
             <Paragraph>
               This website is designed with ❤ by Spaceout.pl, using gatsby.js
@@ -122,7 +122,7 @@ const HowItsDone: FC = () => {
                 here
               </ExternalLink>
             </Paragraph>
-            <div style={{ height: '200px', width: '100%' }}></div>
+            <div style={{height: '200px', width: '100%'}}></div>
           </Section>
         </CSSFadeIn>
       </Scroller>

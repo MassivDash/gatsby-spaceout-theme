@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect, ReactNode } from 'react';
+import React, {useState, useRef, useEffect, ReactNode} from 'react';
 import styled from '@emotion/styled';
 import throttle from 'lodash/throttle';
 
 import HandleOverlap from './Article.HandleOverlap';
 
 import mediaqueries from '@styles/media';
-import { clamp } from '@utils';
+import {clamp} from '@utils';
 
 interface AsideProps {
   children: ReactNode[] | ReactNode;
@@ -27,7 +27,7 @@ interface AsideProps {
  *                  |  content  |
  *
  */
-function Aside({ contentHeight, children }: AsideProps) {
+function Aside({contentHeight, children}: AsideProps) {
   const progressRef = useRef<HTMLDivElement>(null);
 
   const [progress, setProgress] = useState<number>(0);
@@ -36,7 +36,7 @@ function Aside({ contentHeight, children }: AsideProps) {
 
   const show = imageOffset && progress < 100;
   const childrenWithProps = React.Children.map(children, (child) =>
-    React.cloneElement(child, { show }),
+    React.cloneElement(child, {show}),
   );
 
   useEffect(() => {

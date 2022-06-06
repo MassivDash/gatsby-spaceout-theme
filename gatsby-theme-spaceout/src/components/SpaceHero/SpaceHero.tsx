@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, FC } from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
+import React, {useState, FC} from 'react';
+import {graphql, useStaticQuery} from 'gatsby';
 import logo from './logo.png';
 // import uuid from 'uuid';
 import Image from 'gatsby-image';
-import { keyframes } from '@emotion/core';
+import {keyframes} from '@emotion/core';
 import styled from '@emotion/styled';
 import mediaqueries from '@styles/media';
 
@@ -26,9 +26,9 @@ const SpaceHero: FC = () => {
           }
         }
       }
-      back: imageSharp(original: { src: { regex: "/heroBack/" } }) {
+      back: imageSharp(original: {src: {regex: "/heroBack/"}}) {
         id
-        fluid(maxWidth: 1920, quality: 90, traceSVG: { color: "#121f28" }) {
+        fluid(maxWidth: 1920, quality: 90, traceSVG: {color: "#121f28"}) {
           aspectRatio
           src
           srcSet
@@ -41,9 +41,9 @@ const SpaceHero: FC = () => {
           src
         }
       }
-      spaceman: imageSharp(original: { src: { regex: "/spaceman/" } }) {
+      spaceman: imageSharp(original: {src: {regex: "/spaceman/"}}) {
         id
-        fluid(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
+        fluid(maxWidth: 3000, quality: 90, traceSVG: {color: "#FFF"}) {
           base64
           aspectRatio
           src
@@ -61,7 +61,7 @@ const SpaceHero: FC = () => {
   `;
 
   const results = useStaticQuery(spaceHeroQuery);
-  const { spaceman, back } = results;
+  const {spaceman, back} = results;
 
   return (
     <Hero>

@@ -7,7 +7,7 @@ import SpaceHero from '@components/SpaceHero';
 import ArticlesHero from '../sections/articles/Articles.Hero';
 import ArticlesList from '../sections/articles/Articles.List';
 import CSSFadeIn from '@components/Transitions/Transitions.CSS.FadeIn';
-import { IAuthor, IArticle } from 'src/types';
+import {IAuthor, IArticle} from 'src/types';
 
 interface Location {
   pathname: string;
@@ -51,6 +51,6 @@ function ArticlesPage({
 
 export default ArticlesPage;
 
-const ArticlesPaginator = styled.div<{ show: boolean }>`
+const ArticlesPaginator = styled.div<{show: boolean}>`
   ${(p) => p.show && `margin-top: 95px;`}
 `;

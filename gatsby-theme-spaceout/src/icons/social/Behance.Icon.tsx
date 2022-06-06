@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BehanceIcon = ({ fill = '#fff', size = 32 }) => (
+const BehanceIcon = ({fill = '#fff', size = 32}) => (
   <svg
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"

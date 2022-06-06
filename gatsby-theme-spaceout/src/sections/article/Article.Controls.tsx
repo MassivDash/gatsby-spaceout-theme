@@ -1,9 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, {FC, useState} from 'react';
 import styled from '@emotion/styled';
-import { useColorMode } from 'theme-ui';
+import {useColorMode} from 'theme-ui';
 
 import mediaqueries from '@styles/media';
-import { copyToClipboard } from '@utils';
+import {copyToClipboard} from '@utils';
 
 const ArticleControls: FC = () => {
   return (
@@ -108,7 +108,7 @@ const NavControls = styled.div`
   justify-content: center;
 `;
 
-const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
+const ToolTip = styled.div<{isDark: boolean; hasCopied: boolean}>`
   position: absolute;
   padding: 4px 13px;
   background: ${(p) => (p.isDark ? '#000' : 'rgba(0,0,0,0.1)')};
@@ -165,7 +165,7 @@ const IconWrapper = styled.button`
 `;
 
 // This is based off a codepen! Much appreciated to: https://codepen.io/aaroniker/pen/KGpXZo
-const MoonOrSun = styled.div<{ isDark: boolean }>`
+const MoonOrSun = styled.div<{isDark: boolean}>`
   position: relative;
   width: 24px;
   height: 24px;
@@ -217,7 +217,7 @@ const MoonOrSun = styled.div<{ isDark: boolean }>`
   }
 `;
 
-const MoonMask = styled.div<{ isDark: boolean }>`
+const MoonMask = styled.div<{isDark: boolean}>`
   position: absolute;
   right: -1px;
   top: -8px;

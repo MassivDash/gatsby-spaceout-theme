@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import Scroller from 'gatsby-theme-spaceout/src/components/Scroller';
 import Section from 'gatsby-theme-spaceout/src/components/Section';
 import SEO from 'gatsby-theme-spaceout/src/components/SEO';
@@ -12,17 +12,17 @@ const HowItsDone: FC = () => {
   return (
     <>
       <SEO />
-      <Scroller style={{ minHeight: '100vh' }}>
+      <Scroller style={{minHeight: '100vh'}}>
         <CSSFadeIn>
           <Section>
-            <div style={{ height: '50px', width: '100%' }}></div>
+            <div style={{height: '50px', width: '100%'}}></div>
             <Shuttle />
 
-            <div style={{ height: '50px', width: '100%' }}></div>
+            <div style={{height: '50px', width: '100%'}}></div>
             <Headings.H1>
               Creating an unforgettable web-app experience. 💎
             </Headings.H1>
-            <div style={{ height: '50px', width: '100%' }}></div>
+            <div style={{height: '50px', width: '100%'}}></div>
             <Paragraph>
               Over the years of my freelance work as a website designer, I have
               noticed how ready build solutions, one for all tools like
@@ -82,7 +82,7 @@ const HowItsDone: FC = () => {
               website, to get a feel
             </Paragraph>
 
-            <div style={{ maxWidth: '1150px', margin: '20px auto' }}>
+            <div style={{maxWidth: '1150px', margin: '20px auto'}}>
               <TechStack />
             </div>
 
@@ -95,7 +95,7 @@ const HowItsDone: FC = () => {
               other options available.
             </Paragraph>
 
-            <div style={{ height: '200px', width: '100%' }}></div>
+            <div style={{height: '200px', width: '100%'}}></div>
           </Section>
         </CSSFadeIn>
       </Scroller>

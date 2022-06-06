@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { createContext, useState } from 'react';
+import React, {createContext, useState} from 'react';
 
 interface GridLayoutProviderProps {
   children: React.ReactChild;
@@ -13,7 +13,7 @@ export const GridLayoutContext = createContext({
   getGridLayout: () => {},
 });
 
-function GridLayoutProvider({ children }: GridLayoutProviderProps) {
+function GridLayoutProvider({children}: GridLayoutProviderProps) {
   const initialLayout = 'rows';
 
   const [gridLayout, setGridLayout] = useState<string>(initialLayout);

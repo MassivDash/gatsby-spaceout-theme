@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 const mapStateToProps = (state) => {
   return {

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import mediaqueries from '@styles/media';
 
-const Grid = ({ columns = '1fr 1fr', children }) => {
+const Grid = ({columns = '1fr 1fr', children}) => {
   const GridHolder = styled.div`
     display: grid;
     grid-template-columns: ${columns};

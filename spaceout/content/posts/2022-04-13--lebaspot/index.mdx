@@ -16,7 +16,21 @@ tech:
 
 import { UI, GridGallery } from '../components/uxui.jsx';
 
-## UX / UI
+## Ux/Ui
+
+This website has started out as a custom wordpress theme and wp installation,
+however as the seasons went by, I have decided to move the project to the
+next.js installation. It seemed as the right combintion between static pages and
+dynamic pages that require connection to various 3rd party APIs (like
+booking.com). The obvious business requirements was creating a room reservation
+system that will not allow overbooking, double booking and a responsive admin
+panel so the owners can have control over their reservations whenever they want.
+
+The design changed over the years, but in the end I have decieded upon a subtle
+elegant look in shades of black, grey and white. Lato (Sans Serif, did you know
+? "Lato" means summer in polish) and Cormorant (Serif) fonts are being utilized
+as the main duo of typography set up. Thankfully owners could come up with Hotel
+pictures that mathed the tone of the website.
 
 <UI
   colors={['#0c0c0c', '#52525b', '#d4d4d8', '#fbfbfb', '#aaa5a5']}
@@ -44,11 +58,28 @@ import { UI, GridGallery } from '../components/uxui.jsx';
   }}
 />
 
+## Developent: next.js, postgres, tailwindcss
+
+Next.js is a framework that allows you to create a single page application. It
+is a lot more flexible than wordpress that helped me tie custom business rules
+with mentioned 3rd api intergartions. For this next.js dynamic and api
+capabielities were used, the next.js helps on this end a lot, providing also the
+in-house image optimalizastions features on the server side.
+
+I have used the postgres database as the main backend database. Its a solid
+choice for verstile and scalable sql data storage.
+
+On this project I have used the React and tailwindcss framework to create a
+responsive customer website and admin panel. I became quite fond of the
+tailwindcss framework as it is a great tool for quickly building responisve
+designs and achive great performance on css performance and overall bundle.
+Definately a framework I plan to keep on using.
+
+Overall next.js is a great React framework for building a single page
+applications, however it is not without it faults. Rapid developement of next.js
+can bring troubles as core upgrades bring often many breaking changes and other
+bugs to already established instance.
+
 ## Lebaspot.com.pl is a bed and breakfast property located by the polish bałtyk sea.
 
-This polish mini hotel, wanted to transfer most of the booking work online, therefore the owners of this property where not only interested in a nice and “sunny” design but also in its ablity to effectivly show them and visitors the free and reserved rooms for the whole time the property is working.
-Landing page for Łebaspot, premium apartment and rooms for rent near the sea. Simple and minimalist layout with main focus on beautiful rooms and apartment photos. The design was mainly focused on projecting elegance and professionalism of this establishment. Website build upon next.js framework with custom CRM system for room reservation management.
-##Deployment
-Since most of hosting providers, are very accustomed to wordpress installations, there is no problem finding a reasonable hosting services for this kind of websites. In this case, I have recommended the same provider I using for this website; mydevil.net. Great service with ability to host your own node and ruby apps.
-
-## Design and development by spaceout.pl
+👉 https://lebaspot.com.pl
