@@ -165,13 +165,13 @@ const ListItem = ({ article, narrow }: ArticlesListItemProps) => {
           >
             {article.excerpt}
           </Excerpt>
+          {readingTime && (
+            <MetaData>
+              type: <b>{article.category.toLocaleLowerCase()}</b>, reading time:{' '}
+              <b>{article.timeToRead + 1} min</b>
+            </MetaData>
+          )}
         </ExcerptWrapper>
-        {readingTime && (
-          <MetaData>
-            type: <b>{article.category.toLocaleLowerCase()}</b>, reading time:{' '}
-            <b>{article.timeToRead + 1} min</b>
-          </MetaData>
-        )}
       </Item>
     </ArticleLink>
   );
@@ -357,9 +357,6 @@ const Title = styled(Headings.H2)`
 `;
 
 const ExcerptWrapper = styled.div`
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  border-bottom: 2px solid ${(p) => p.theme.colors.horizontalRule};
   ${mediaqueries.tablet`
 min-height: 150px;
 `}
@@ -398,12 +395,15 @@ const MetaData = styled.div`
   font-weight: 400;
   font-size: 16px;
   color: ${(p: any) => p.theme.colors.grey};
-  opacity: 0.44;
   text-align: left;
+  opacity: 0.8;
+  padding-top: 10px;
+  margin-top: 10px;
+  border-top: 2px solid ${(p: any) => p.theme.colors.horizontalRule};
 
   ${mediaqueries.phablet`
     max-width: 100%;
-    padding:  0 20px 30px;
+    padding:  10px 20px 30px;
   `}
 `;
 
