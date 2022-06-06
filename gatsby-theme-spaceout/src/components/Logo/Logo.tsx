@@ -31,7 +31,7 @@ const LogoSvg = (props) => (
       transform="translate(-12.394 -193.767) scale(1.00186 .99814)"
       wordSpacing="0"
       xmlSpace="preserve"
-      style={{lineHeight: '1.25'}}
+      style={{ lineHeight: '1.25' }}
     >
       <tspan
         x="26.911"
@@ -41,7 +41,7 @@ const LogoSvg = (props) => (
         stroke="#41428f"
         strokeOpacity="0.473"
         strokeWidth="0.245"
-        style={{fontSize: '163.648'}}
+        style={{ fontSize: '163.648' }}
       >
         s
       </tspan>
@@ -476,7 +476,7 @@ const LogoSvg = (props) => (
   </svg>
 );
 
-const Logo = ({fill = '#fff'}: {fill?: string}) => {
+const Logo = ({ fill = '#fff' }: { fill?: string }) => {
   return (
     <LogoContainer>
       <LogoSvg width={50} height={50} className="Logo__Desktop" fill={fill} />

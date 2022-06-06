@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ToggleOpen = ({fill}) => (
+const ToggleOpen = ({ fill }) => (
   <svg
     width="17"
     height="17"

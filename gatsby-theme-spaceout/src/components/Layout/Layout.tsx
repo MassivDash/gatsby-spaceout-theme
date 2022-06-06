@@ -1,18 +1,21 @@
-import React, {useEffect, memo, useRef} from 'react';
-import {Global} from '@emotion/core';
-import {connect} from 'react-redux';
+import React, { useEffect, memo, useRef } from 'react';
+import { Global } from '@emotion/core';
+import { connect } from 'react-redux';
 import styled from '@emotion/styled';
-import {useColorMode} from 'theme-ui';
+import { useColorMode } from 'theme-ui';
 import mediaqueries from '@styles/media';
-import {withPrefix, graphql, useStaticQuery} from 'gatsby';
+import { withPrefix, graphql, useStaticQuery } from 'gatsby';
 import Scrollbar from '@components/Scroller';
 import NavigationFooter from '@components/Navigation/Navigation.Footer';
 import NavigationHeader from '@components/Navigation/Navigation.Header';
 import ArticlesContextProvider from '../../sections/articles/Articles.List.Context';
 
-import {globalStyles} from '@styles';
+import { globalStyles } from '@styles';
 
-import {setNavigatorPosition, setNavigatorShape} from '../../state/createStore';
+import {
+  setNavigatorPosition,
+  setNavigatorShape,
+} from '../../state/createStore';
 
 interface LayoutProps {
   children: React.ReactChild;
@@ -48,10 +51,10 @@ function Layout({
 }: LayoutProps) {
   const [colorMode] = useColorMode();
   useEffect(() => {
-    parent.postMessage({theme: colorMode}, '*');
+    parent.postMessage({ theme: colorMode }, '*');
   }, [colorMode]);
 
-  const {allSite} = useStaticQuery(siteQuery);
+  const { allSite } = useStaticQuery(siteQuery);
 
   const scrollRef = useRef(null);
   const isHomepage = location.pathname === withPrefix('/');

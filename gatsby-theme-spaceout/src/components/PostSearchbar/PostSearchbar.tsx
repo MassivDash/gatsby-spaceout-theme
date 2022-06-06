@@ -6,7 +6,7 @@ interface Props {
   posts?: string[];
 }
 
-const PostSearchbar: React.FC<Props> = ({posts}) => {
+const PostSearchbar: React.FC<Props> = ({ posts }) => {
   return (
     <Searchbox>
       <Icons.Search />

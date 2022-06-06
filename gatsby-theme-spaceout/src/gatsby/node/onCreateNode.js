@@ -4,8 +4,8 @@ const crypto = require(`crypto`);
 
 // Create fields for post slugs and source
 // This will change with schema customization with work
-module.exports = ({node, actions, getNode, createNodeId}, themeOptions) => {
-  const {createNode, createNodeField, createParentChildLink} = actions;
+module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
+  const { createNode, createNodeField, createParentChildLink } = actions;
   const contentPath = themeOptions.contentPath || 'content/posts';
   const basePath = themeOptions.basePath || '/';
   const articlePermalinkFormat = themeOptions.articlePermalinkFormat || ':slug';
@@ -82,7 +82,7 @@ module.exports = ({node, actions, getNode, createNodeId}, themeOptions) => {
       },
     });
 
-    createParentChildLink({parent: fileNode, child: node});
+    createParentChildLink({ parent: fileNode, child: node });
 
     return;
   }
@@ -125,7 +125,7 @@ module.exports = ({node, actions, getNode, createNodeId}, themeOptions) => {
       },
     });
 
-    createParentChildLink({parent: fileNode, child: node});
+    createParentChildLink({ parent: fileNode, child: node });
   }
 
   if (node.internal.type === `ContentfulAuthor`) {

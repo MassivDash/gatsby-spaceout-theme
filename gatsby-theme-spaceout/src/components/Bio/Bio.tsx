@@ -1,12 +1,12 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import Link from 'gatsby-plugin-transition-link';
 import styled from '@emotion/styled';
 
 import Image from '@components/Image';
 import mediaqueries from '@styles/media';
-import {IAuthor} from '@types';
+import { IAuthor } from '@types';
 
-const Bio: FC<{author: IAuthor}> = ({author}) => {
+const Bio: FC<{ author: IAuthor }> = ({ author }) => {
   return (
     <BioContainer>
       <BioAvatar
@@ -19,7 +19,7 @@ const Bio: FC<{author: IAuthor}> = ({author}) => {
           <Image src={author.avatar.medium} />
         </BioAvatarInner>
       </BioAvatar>
-      <BioText dangerouslySetInnerHTML={{__html: author.bio}} />
+      <BioText dangerouslySetInnerHTML={{ __html: author.bio }} />
     </BioContainer>
   );
 };

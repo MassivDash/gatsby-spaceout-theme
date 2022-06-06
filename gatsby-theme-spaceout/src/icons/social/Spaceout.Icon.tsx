@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Spaceout = ({fill = 'white', size = 32}) => {
+const Spaceout = ({ fill = 'white', size = 32 }) => {
   return (
     <svg
       version="1.0"

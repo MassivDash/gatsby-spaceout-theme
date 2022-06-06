@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import {keyframes} from '@emotion/core';
-import {useColorMode} from 'theme-ui';
+import { keyframes } from '@emotion/core';
+import { useColorMode } from 'theme-ui';
 
 import Icons from '@icons';
 
@@ -31,7 +31,7 @@ function ArticelShare() {
   const [text, setText] = useState('');
   const [focus, setFocus] = useState(false);
   const [canTweet, setCanTweet] = useState(true);
-  const [{x, y, show}, setPosition] = useState<MenuFloatState>({
+  const [{ x, y, show }, setPosition] = useState<MenuFloatState>({
     x: 0,
     y: 0,
     show: false,
@@ -69,9 +69,9 @@ function ArticelShare() {
 
         const articleBox = article.getBoundingClientRect() as DOMRect;
 
-        const {width, height} = getSelectionDimensions();
-        const {x, y} = getHighlightedTextPositioning();
-        const {width: windowWidth} = getWindowDimensions();
+        const { width, height } = getSelectionDimensions();
+        const { x, y } = getHighlightedTextPositioning();
+        const { width: windowWidth } = getWindowDimensions();
         const tablet = getBreakpointFromTheme('tablet');
         const desktop = getBreakpointFromTheme('desktop');
 
@@ -95,7 +95,7 @@ function ArticelShare() {
          * then start the position from the left most edge so we can center the bar in
          * the middle of the text area
          */
-        const offset: {x: number; y: number} = {
+        const offset: { x: number; y: number } = {
           x: height > 29 ? paragraphOffset + paddingOffset : x,
           y: y - articleBox.y - 160,
         };
@@ -130,7 +130,7 @@ function ArticelShare() {
    */
   useEffect(() => {
     setTimeout(() => {
-      const {width} = getSelectionDimensions();
+      const { width } = getSelectionDimensions();
       setFocus(width > 1);
     }, 0);
   }, [show]);
@@ -185,7 +185,7 @@ function ArticelShare() {
 
 export default ArticelShare;
 
-function ReferralLink({disabled, share, children}) {
+function ReferralLink({ disabled, share, children }) {
   function handleClick(event) {
     event.preventDefault();
     if (disabled) return;
@@ -242,7 +242,7 @@ const popUpwards = keyframes`
   }
 `;
 
-const MenuFloat = styled.div<{isDark: boolean}>`
+const MenuFloat = styled.div<{ isDark: boolean }>`
   position: absolute;
   align-items: center;
   z-index: 1;
@@ -290,7 +290,7 @@ const Hidden = styled.div`
   opacity: 0;
 `;
 
-const MenuShare = styled.a<{disabled: boolean}>`
+const MenuShare = styled.a<{ disabled: boolean }>`
   display: flex;
   align-items: center;
   padding: 16px 11px;

@@ -5,7 +5,7 @@ export default (props) => (
     <head>
       <meta charSet="utf-8" />
       <script
-        dangerouslySetInnerHTML={{__html: `document.domain = "spaceout.pl"`}}
+        dangerouslySetInnerHTML={{ __html: `document.domain = "spaceout.pl"` }}
       />
       {props.headComponents}
     </head>
@@ -14,7 +14,7 @@ export default (props) => (
       <div
         key="body"
         id="___gatsby"
-        dangerouslySetInnerHTML={{__html: props.body}}
+        dangerouslySetInnerHTML={{ __html: props.body }}
       />
       {props.postBodyComponents}
     </body>

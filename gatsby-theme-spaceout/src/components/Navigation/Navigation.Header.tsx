@@ -1,18 +1,18 @@
-import React, {useState, useEffect, useMemo, useRef} from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import styled from '@emotion/styled';
-import {navigate, graphql, useStaticQuery} from 'gatsby';
+import { navigate, graphql, useStaticQuery } from 'gatsby';
 import AniLink from 'gatsby-plugin-transition-link/AniLink';
 import Image from 'gatsby-image';
 import Scrollbar from '@components/Scroller';
-import {useColorMode} from 'theme-ui';
-import {connect} from 'react-redux';
+import { useColorMode } from 'theme-ui';
+import { connect } from 'react-redux';
 import Logo from '@components/Logo';
 import SocialLinks from '@components/SocialLinks';
 import Icons from '@icons';
 import mediaqueries from '@styles/media';
 import bg from './snow.png';
 import More from './More';
-import {getWindowDimensions, getBreakpointFromTheme} from '@utils';
+import { getWindowDimensions, getBreakpointFromTheme } from '@utils';
 
 import {
   setNavigatorPosition,
@@ -41,7 +41,7 @@ interface Props {
 
 const siteQuery = graphql`
   {
-    sitePlugin: sitePlugin(name: {eq: "gatsby-theme-spaceout"}) {
+    sitePlugin: sitePlugin(name: { eq: "gatsby-theme-spaceout" }) {
       pluginOptions {
         rootPath
         basePath
@@ -115,17 +115,17 @@ const NavigationHeader: React.FC<Props> = ({
   const [previousPath, setPreviousPath] = useState<string>('/');
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
-  const {sitePlugin, allSite, allArticles} = useStaticQuery(siteQuery);
-  const {title, name, description, social, menuLinks} =
+  const { sitePlugin, allSite, allArticles } = useStaticQuery(siteQuery);
+  const { title, name, description, social, menuLinks } =
     allSite.edges[0].node.siteMetadata;
 
   const [colorMode] = useColorMode();
   const fill = colorMode === 'dark' ? '#fff' : '#000';
   const fillMore = colorMode === 'dark' ? '#E9DAAC' : '#000';
   const isDark = colorMode === 'dark';
-  const {rootPath, basePath} = sitePlugin.pluginOptions;
+  const { rootPath, basePath } = sitePlugin.pluginOptions;
   useEffect(() => {
-    const {width} = getWindowDimensions();
+    const { width } = getWindowDimensions();
     const phablet = getBreakpointFromTheme('phablet');
 
     const prev = localStorage.getItem('previousPath');
@@ -279,7 +279,7 @@ const NavigationHeader: React.FC<Props> = ({
   );
 };
 
-function ArrowControl({setNavigatorShape, navigatorShape, theme}) {
+function ArrowControl({ setNavigatorShape, navigatorShape, theme }) {
   const [colorMode] = useColorMode();
   const isDark = colorMode === `dark`;
   const fill = isDark ? '#fff' : '#000';
@@ -393,7 +393,7 @@ const NavInfoContainer = styled.div`
   flex-direction: column;
 `;
 
-const Title = styled.h1<{navigatorPosition: any; theme: any}>`
+const Title = styled.h1<{ navigatorPosition: any; theme: any }>`
   height: 80%;
   font-weight: 300;
   font-size: ${(p) => (p.navigatorPosition ? '22px' : '28px')};
@@ -415,7 +415,7 @@ const Title = styled.h1<{navigatorPosition: any; theme: any}>`
   }
 `;
 
-const Subtitle = styled.h2<{navigatorPosition: any; theme: any}>`
+const Subtitle = styled.h2<{ navigatorPosition: any; theme: any }>`
   font-weight: 400;
   font-size: 16px;
   margin: auto;
@@ -438,7 +438,7 @@ const Subtitle = styled.h2<{navigatorPosition: any; theme: any}>`
   }
 `;
 
-const Description = styled.h3<{theme: any}>`
+const Description = styled.h3<{ theme: any }>`
   font-weight: 400;
   font-size: 15px;
   margin: 20px auto;
@@ -460,7 +460,7 @@ const NavSocialContainer = styled.div`
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const LogoLink = styled(({navigatorPosition, ...rest}) => (
+const LogoLink = styled(({ navigatorPosition, ...rest }) => (
   <AniLink {...rest} />
 ))`
   position: relative;
@@ -508,7 +508,9 @@ const NavControls = styled.div`
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const NavLink = styled(({navigatorPosition, ...rest}) => <AniLink {...rest} />)`
+const NavLink = styled(({ navigatorPosition, ...rest }) => (
+  <AniLink {...rest} />
+))`
   color: ${(p: any) => p.theme.colors.accent};
   margin: 10px auto;
   font-size: 18px;
@@ -597,7 +599,7 @@ const ArticleViewer = styled.aside<{
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const ArticleLink = styled(({navigatorPosition, ...rest}) => (
+const ArticleLink = styled(({ navigatorPosition, ...rest }) => (
   <AniLink {...rest} />
 ))`
   position: relative;
@@ -621,7 +623,7 @@ const ArticleLink = styled(({navigatorPosition, ...rest}) => (
   }
 `;
 
-const ArticleHover = styled.div<{theme: any}>`
+const ArticleHover = styled.div<{ theme: any }>`
   top: 0;
   right: 0;
   position: absolute;
@@ -740,7 +742,7 @@ const IconWrapper = styled.button<{
   }
 `;
 
-const StyledBurger = styled.button<{mobileMenuOpen: boolean; theme: any}>`
+const StyledBurger = styled.button<{ mobileMenuOpen: boolean; theme: any }>`
   display: node;
 
   @media (max-width: 768px) {
@@ -769,7 +771,7 @@ const StyledBurger = styled.button<{mobileMenuOpen: boolean; theme: any}>`
     div {
       width: 2rem;
       height: 3px;
-      background: ${({mobileMenuOpen, theme}) =>
+      background: ${({ mobileMenuOpen, theme }) =>
         mobileMenuOpen ? theme.colors.accent : theme.colors.accent};
       border-radius: 10px;
       transition: all 0.3s linear;
@@ -777,21 +779,21 @@ const StyledBurger = styled.button<{mobileMenuOpen: boolean; theme: any}>`
       transform-origin: 1px;
 
       :first-of-type {
-        width: ${({mobileMenuOpen}) => (mobileMenuOpen ? '100%' : '50%')};
-        transform: ${({mobileMenuOpen}) =>
+        width: ${({ mobileMenuOpen }) => (mobileMenuOpen ? '100%' : '50%')};
+        transform: ${({ mobileMenuOpen }) =>
           mobileMenuOpen ? 'rotate(45deg)' : 'rotate(0)'};
       }
 
       :nth-of-type(2) {
-        width: ${({mobileMenuOpen}) => (mobileMenuOpen ? '100%' : '75%')};
-        opacity: ${({mobileMenuOpen}) => (mobileMenuOpen ? '0' : '1')};
-        transform: ${({mobileMenuOpen}) =>
+        width: ${({ mobileMenuOpen }) => (mobileMenuOpen ? '100%' : '75%')};
+        opacity: ${({ mobileMenuOpen }) => (mobileMenuOpen ? '0' : '1')};
+        transform: ${({ mobileMenuOpen }) =>
           mobileMenuOpen ? 'translateX(20px)' : 'translateX(0)'};
       }
 
       :nth-of-type(3) {
-        width: ${({mobileMenuOpen}) => (mobileMenuOpen ? '100%' : '50%')};
-        transform: ${({mobileMenuOpen}) =>
+        width: ${({ mobileMenuOpen }) => (mobileMenuOpen ? '100%' : '50%')};
+        transform: ${({ mobileMenuOpen }) =>
           mobileMenuOpen ? 'rotate(-45deg)' : 'rotate(0)'};
       }
     }

@@ -1,1 +1,1 @@
-export {default} from './BodyHolder';
+export { default } from './BodyHolder';

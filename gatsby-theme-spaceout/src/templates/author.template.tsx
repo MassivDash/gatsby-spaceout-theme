@@ -8,7 +8,7 @@ import Paginator from '@components/Navigation/Navigation.Paginator';
 import AuthorHero from '../sections/author/Author.Hero';
 import AuthorArticles from '../sections/author/Author.Articles';
 
-function ArticlesPage({location, pageContext}) {
+function ArticlesPage({ location, pageContext }) {
   const author = pageContext.additionalContext.author;
   const articles = pageContext.group;
 

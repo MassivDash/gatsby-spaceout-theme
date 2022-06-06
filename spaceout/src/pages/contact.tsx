@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import styled from '@emotion/styled';
 import Scroller from 'gatsby-theme-spaceout/src/components/Scroller';
 import Section from 'gatsby-theme-spaceout/src/components/Section';
@@ -47,7 +47,7 @@ const HowItsDone: FC = () => {
       <Scroller>
         <CSSFadeIn>
           <Section>
-            <div style={{height: '50px', width: '100%'}}></div>
+            <div style={{ height: '50px', width: '100%' }}></div>
             <Headings.H1>Contact</Headings.H1>
             <Paragraph>
               Feel free to contact me by email:{' '}

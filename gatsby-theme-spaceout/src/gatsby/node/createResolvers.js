@@ -13,7 +13,7 @@ const mdxResolverPassthrough =
   };
 
 // Define resolvers for custom fields
-module.exports = ({createResolvers}) => {
+module.exports = ({ createResolvers }) => {
   createResolvers({
     Article: {
       excerpt: {

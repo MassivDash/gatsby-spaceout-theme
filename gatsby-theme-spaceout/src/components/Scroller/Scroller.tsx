@@ -6,7 +6,9 @@ import React, {
   useRef,
   useEffect,
 } from 'react';
-import ReactScrollbarsCustom, {ScrollbarContext} from 'react-scrollbars-custom';
+import ReactScrollbarsCustom, {
+  ScrollbarContext,
+} from 'react-scrollbars-custom';
 import styled from '@emotion/styled';
 
 import mediaqueries from '@styles/media';
@@ -24,7 +26,7 @@ export const ScrollManager = React.forwardRef((props: Props, ref: any) => {
   const isShow = isScrolling || isMouseOver;
   const infoScreenRef = useRef(null);
 
-  const {isDark, sideMenu, children, ...rest} = props;
+  const { isDark, sideMenu, children, ...rest } = props;
 
   const onScrollStart = useCallback(() => {
     setIsScrolling(true);
@@ -47,7 +49,7 @@ export const ScrollManager = React.forwardRef((props: Props, ref: any) => {
 
   const trackProps = useMemo(
     () => ({
-      renderer: ({elementRef, style, ...restProps}) => (
+      renderer: ({ elementRef, style, ...restProps }) => (
         <span
           {...restProps}
           ref={elementRef}
@@ -67,7 +69,7 @@ export const ScrollManager = React.forwardRef((props: Props, ref: any) => {
 
   const thumbYProps = useMemo(
     () => ({
-      renderer: ({elementRef, style, ...restProps}) => (
+      renderer: ({ elementRef, style, ...restProps }) => (
         <span
           {...restProps}
           ref={elementRef}
@@ -95,7 +97,7 @@ export const ScrollManager = React.forwardRef((props: Props, ref: any) => {
 
   const trackYProps = useMemo(
     () => ({
-      renderer: ({elementRef, style, ...restProps}) => (
+      renderer: ({ elementRef, style, ...restProps }) => (
         <span
           {...restProps}
           ref={elementRef}
@@ -124,7 +126,7 @@ export const ScrollManager = React.forwardRef((props: Props, ref: any) => {
 
   return (
     <ReactScrollbarsCustom
-      style={{minHeight: '100vh'}}
+      style={{ minHeight: '100vh' }}
       ref={ref}
       {...rest}
       noScrollX={true}

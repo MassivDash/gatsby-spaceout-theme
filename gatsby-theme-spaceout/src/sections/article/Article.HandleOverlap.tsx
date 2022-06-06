@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import throttle from 'lodash/throttle';
 
@@ -79,7 +79,7 @@ function HandleOverlap(props: OverlapProps) {
 
 export default HandleOverlap;
 
-const OverlapContainer = styled.div<{isOverlapping: boolean}>`
+const OverlapContainer = styled.div<{ isOverlapping: boolean }>`
   user-select: ${(p) => (p.isOverlapping ? 'none' : 'initial')};
   pointer-events: ${(p) => (p.isOverlapping ? 'none' : 'initial')};
   opacity: ${(p) => (p.isOverlapping ? 0 : 1)};

@@ -1,1 +1,1 @@
-export {default} from './SpaceHero';
+export { default } from './SpaceHero';

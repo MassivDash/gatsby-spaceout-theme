@@ -1,14 +1,14 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from '@emotion/styled';
 import mediaqueries from '@styles/media';
 import Icons from '@icons';
-import {useColorMode} from 'theme-ui';
+import { useColorMode } from 'theme-ui';
 import screenfull from 'screenfull';
-import {connect} from 'react-redux';
-import {setFontSizeIncrease} from '../../state/createStore';
-import {GridLayoutContext} from '../../sections/articles/Articles.List.Context';
+import { connect } from 'react-redux';
+import { setFontSizeIncrease } from '../../state/createStore';
+import { GridLayoutContext } from '../../sections/articles/Articles.List.Context';
 
-function Footer({...props}) {
+function Footer({ ...props }) {
   const {
     gridLayout = 'tiles',
     hasSetGridLayout,
@@ -211,7 +211,7 @@ function ToggleFont({
   );
 }
 
-function GoToTop({ScrollToTop, navigatorPosition}) {
+function GoToTop({ ScrollToTop, navigatorPosition }) {
   const [colorMode] = useColorMode();
   const isDark = colorMode === `dark`;
   const fill = isDark ? '#fff' : '#000';
@@ -282,7 +282,7 @@ const ActionBarDivider = styled.div`
   margin-top: 20px;
 `;
 
-const IconWrapper = styled.button<{isDark: boolean}>`
+const IconWrapper = styled.button<{ isDark: boolean }>`
   opacity: 0.5;
   position: relative;
   border-radius: 5px;
@@ -323,7 +323,7 @@ const IconWrapper = styled.button<{isDark: boolean}>`
 `;
 
 // This is based off a codepen! Much appreciated to: https://codepen.io/aaroniker/pen/KGpXZo
-const MoonOrSun = styled.div<{isDark: boolean}>`
+const MoonOrSun = styled.div<{ isDark: boolean }>`
   position: relative;
   width: 24px;
   height: 24px;
@@ -375,7 +375,7 @@ const MoonOrSun = styled.div<{isDark: boolean}>`
   }
 `;
 
-const MoonMask = styled.div<{isDark: boolean}>`
+const MoonMask = styled.div<{ isDark: boolean }>`
   position: absolute;
   right: -1px;
   top: -8px;
@@ -389,7 +389,7 @@ const MoonMask = styled.div<{isDark: boolean}>`
   transition: ${(p) => p.theme.colorModeTransition}, transform 0.45s ease;
 `;
 
-const ToolTip = styled.div<{isDark: boolean; hasCopied: boolean}>`
+const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
   position: absolute;
   padding: 4px 13px;
   background: ${(p) => (p.isDark ? '#000' : '#fff')};
@@ -415,7 +415,7 @@ const ToolTip = styled.div<{isDark: boolean; hasCopied: boolean}>`
     border-top: 6px solid ${(p) => (p.isDark ? '#000' : 'rgba(0,0,0,0.1)')};
   }
 `;
-const GridButton = styled.button<{active: boolean}>`
+const GridButton = styled.button<{ active: boolean }>`
   position: relative;
   display: flex;
   align-items: center;

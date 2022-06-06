@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import throttle from 'lodash/throttle';
 
 import theme from '../gatsby-plugin-theme-ui';
@@ -69,7 +69,7 @@ export const debounce = (fn: () => any, time = 100) => {
 export const getBreakpointFromTheme: (arg0: string) => number = (name) =>
   theme.breakpoints.find(([label, _]) => label === name)![1];
 
-export const getWindowDimensions = (): {height: number; width: number} => {
+export const getWindowDimensions = (): { height: number; width: number } => {
   if (typeof window !== 'undefined') {
     const width =
       window.innerWidth ||
@@ -94,7 +94,7 @@ export const getWindowDimensions = (): {height: number; width: number} => {
 };
 
 export function useResize() {
-  const [dimensions, setDimensions] = useState({width: 1280, height: 900});
+  const [dimensions, setDimensions] = useState({ width: 1280, height: 900 });
 
   useEffect(() => {
     const handleResize = throttle(
@@ -214,7 +214,7 @@ export const getHighlightedTextPositioning = () => {
     }
   }
 
-  return {x, y};
+  return { x, y };
 };
 
 function isOrContains(node, container) {
@@ -294,7 +294,7 @@ export const getSelectionDimensions = () => {
     }
   }
 
-  return {width, height};
+  return { width, height };
 };
 
 export function getSelectionText() {

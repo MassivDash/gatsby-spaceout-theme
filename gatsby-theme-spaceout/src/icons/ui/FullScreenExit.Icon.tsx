@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FullScreenExit = ({height = 26, width = 26, fill = 'white'}) => (
+const FullScreenExit = ({ height = 26, width = 26, fill = 'white' }) => (
   <svg width={width} height={height} viewBox="0 0 26 26">
     <path fill="none" d="M0 0h24v24H0V0z" />
     <path

@@ -1,13 +1,13 @@
-import React, {Component, ReactElement} from 'react';
+import React, { Component, ReactElement } from 'react';
 import styled from '@emotion/styled';
-import {css} from '@emotion/core';
+import { css } from '@emotion/core';
 import Link from 'gatsby-plugin-transition-link';
-import {Helmet} from 'react-helmet';
+import { Helmet } from 'react-helmet';
 
 import mediaqueries from '@styles/media';
-import {range} from '@utils';
+import { range } from '@utils';
 
-import {IPaginator} from '@types';
+import { IPaginator } from '@types';
 
 /**
  * <Paginator />
@@ -99,7 +99,7 @@ class Paginator extends Component<IPaginator, any> {
         <PageNumberBUtton
           key={`PaginatorPage_${page}`}
           to={this.getFullPath(page)}
-          style={{opacity: current === page ? 1 : 0.3}}
+          style={{ opacity: current === page ? 1 : 0.3 }}
           className="Paginator__pageLink"
         >
           {page}

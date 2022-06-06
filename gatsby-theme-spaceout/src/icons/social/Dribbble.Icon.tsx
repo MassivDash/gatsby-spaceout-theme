@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DribbbleIcon = ({fill = 'white', size = 32}) => (
+const DribbbleIcon = ({ fill = 'white', size = 32 }) => (
   <svg
     width={size}
     height={size}

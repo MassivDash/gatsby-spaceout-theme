@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MediumIcon = ({fill = 'white'}) => (
+const MediumIcon = ({ fill = 'white' }) => (
   <svg
     width="13"
     height="11"

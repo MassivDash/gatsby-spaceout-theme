@@ -1,6 +1,6 @@
 import React from 'react';
 import ImageWithZoom from 'react-medium-image-zoom';
-import {useThemeUI} from 'theme-ui';
+import { useThemeUI } from 'theme-ui';
 
 function handleImageZoomBackground(background: string) {
   const images = Array.from(document.getElementsByClassName('Image__Zoom'));
@@ -16,7 +16,7 @@ function handleImageZoomBackground(background: string) {
 }
 
 function ImageZoom(props) {
-  const {theme} = useThemeUI();
+  const { theme } = useThemeUI();
 
   const image = {
     ...props,

@@ -30,9 +30,9 @@ const StyledTable = styled.table`
   `};
 `;
 
-function Table({children}) {
+function Table({ children }) {
   return (
-    <div style={{overflowX: 'auto', padding: '0 20px'}}>
+    <div style={{ overflowX: 'auto', padding: '0 20px' }}>
       <StyledTable>{children}</StyledTable>
     </div>
   );

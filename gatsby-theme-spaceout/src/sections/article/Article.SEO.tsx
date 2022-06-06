@@ -2,8 +2,8 @@ import React from 'react';
 
 import SEO from '@components/SEO';
 
-import {IArticle, IAuthor} from '@types';
-import {graphql, useStaticQuery} from 'gatsby';
+import { IArticle, IAuthor } from '@types';
+import { graphql, useStaticQuery } from 'gatsby';
 
 const siteQuery = graphql`
   {

@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import Highlight, {defaultProps} from 'prism-react-renderer';
+import React, { useState } from 'react';
+import Highlight, { defaultProps } from 'prism-react-renderer';
 import styled from '@emotion/styled';
-import {LiveProvider, LiveEditor, LiveError, LivePreview} from 'react-live';
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
 import Icons from '@icons';
 import mediaqueries from '@styles/media';
-import {copyToClipboard} from '@utils';
+import { copyToClipboard } from '@utils';
 
 const RE = /{([\d,-]+)}/;
 
@@ -27,29 +27,29 @@ function calculateLinesToHighlight(meta) {
   }
 }
 
-function CodePrism({codeString, language, metastring, ...props}) {
+function CodePrism({ codeString, language, metastring, ...props }) {
   const shouldHighlightLine = calculateLinesToHighlight(metastring);
 
   if (props['live']) {
     return (
       <Container>
         <LiveProvider code={codeString} noInline={true}>
-          <LiveEditor style={{marginBottom: '3px', borderRadius: '2px'}} />
-          <LivePreview style={{fontSize: '18px', borderRadius: '2px'}} />
-          <LiveError style={{color: 'tomato'}} />
+          <LiveEditor style={{ marginBottom: '3px', borderRadius: '2px' }} />
+          <LivePreview style={{ fontSize: '18px', borderRadius: '2px' }} />
+          <LiveError style={{ color: 'tomato' }} />
         </LiveProvider>
       </Container>
     );
   } else {
     return (
       <Highlight {...defaultProps} code={codeString} language={language}>
-        {({className, tokens, getLineProps, getTokenProps}) => {
+        {({ className, tokens, getLineProps, getTokenProps }) => {
           return (
-            <div style={{overflow: 'auto'}}>
-              <pre className={className} style={{position: 'relative'}}>
+            <div style={{ overflow: 'auto' }}>
+              <pre className={className} style={{ position: 'relative' }}>
                 <Copy toCopy={codeString} />
                 {tokens.map((line, index) => {
-                  const {className} = getLineProps({
+                  const { className } = getLineProps({
                     line,
                     key: index,
                     className: shouldHighlightLine(index)
@@ -61,7 +61,7 @@ function CodePrism({codeString, language, metastring, ...props}) {
                     <div key={index} className={className}>
                       <span className="number-line">{index + 1}</span>
                       {line.map((token, key) => {
-                        const {className, children} = getTokenProps({
+                        const { className, children } = getTokenProps({
                           token,
                           key,
                         });
@@ -86,7 +86,7 @@ function CodePrism({codeString, language, metastring, ...props}) {
 
 export default CodePrism;
 
-function Copy({toCopy}: {toCopy: string}) {
+function Copy({ toCopy }: { toCopy: string }) {
   const [hasCopied, setHasCopied] = useState<boolean>(false);
 
   function copyToClipboardOnClick() {
