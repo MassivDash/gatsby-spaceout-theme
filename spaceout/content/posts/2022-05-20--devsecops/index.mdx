@@ -9,6 +9,66 @@ tech:
   - TS
   - Nodejs
   - ReactIcon
+  - Rust
 ---
 
-# Image proccesing and manipulation with a build in cli.
+## Introduction
+
+Around the year 2010 the Software Engineering had been transfomred by the
+invention of [DevOps methology](https://en.wikipedia.org/wiki/DevOps). Its main
+focus was to bring the Developers (Dev) and server Admins (Ops) to close
+cooperation in order to ensure that software products get a quick a steady
+release.
+
+DevOps changed the landscape of software creation by providing tools to automate
+CI/CD pipelines, terraforming or maintaining server and network instances as a
+code, procedures and protocols for automating unit and e2e testing. It also gave
+us the role of DevOps Engineer, a fairly new position in the IT world, that
+focuses on the tasks mentioned above.
+
+## Enter DevSecOps
+
+Small and big businesses have adopted quickly the DevOps methodology. In 2022
+DevOps Engineers are essential IT personnel in delivering products / local
+software instances to its online environments. As these practices became
+standard, businesses have switched their focus from delivering fast to trying to
+delivering fast but secure software.
+
+Cyber crime is on the steady rise, data breaches, ransomware, phishing, supply
+attacks, "evil competition" ddos attacks, social engineering attacks, the list
+goes on and on. For more stats about cyber crime you can
+[read this article](https://www.comparitech.com/vpn/cybersecurity-cyber-crime-statistics-facts-trends/).
+
+In the past security teams were mostly reactive and not involved in the
+development phase. Security specialists would focus on audits, reports and scans
+on already made electronic products, then they would go back to dev teams or
+product owners for remediation actions. This approach can be very problematic,
+features or functions based on insecure solutions need time to be rewritten or
+adjusted, sometimes already paid and delivered products need now additional work
+in order to comply with security standards.
+
+DevSecOps tries to remediate this problem, by involving the Security team in the
+development process. Sometimes this is refereed to as "shifting left" in the
+industry. This move tries to shift the responsibility of secure coding into the
+developer domain by providing necessary tools and procedures to the DevOps
+cycle.
+
+![Dev Sec Ops methodology](/devsecops-diagram.png) _source:
+https://www.atlassian.com/pl/devops/devops-tools/devsecops-tools_
+
+## DevSecOps OWASP model
+
+In my current position (Dec, 2022) as web application architect and team leader,
+I have adopted the the DevSecOps model proposed by the OWASP organization
+https://github.com/OWASP/DevSecOpsGuideline
+
+The DevSecOps model helps in producing:
+
+- automation to create short feedback loops to developers
+- breaking down the silos between development, security, and operations
+- breaking down security work into small pieces to create flow
+- making decisions based on threat intelligence from operations
+- establishing a culture of security experimentation and learning
+
+## Threat Modeling
+The first step in running a successful DevSecOps model is to do a threat analysis on the planned developed software. 

@@ -1,13 +1,110 @@
 ---
-title: Clean Architecure
+title: Clean Architecture - common pitfalls
 author: Luke Celitan
-date: 2021-11-01
+date: 2022-11-01
 hero: ./cover.jpg
-excerpt: Common pitfalls of not having clean architecture
+excerpt:
+  How To Avoid The Pitfalls Of Not Applying Clean Architecture In Software
 category: Post
 tech:
   - Rust
   - Nodejs
 ---
 
-# Common pitfalls of not having clean architecture
+# How To Avoid The Pitfalls Of Not Applying Clean Architecture In Software
+
+The software that we design and implement has to be reliable, maintainable and
+scalable. If a software is not designed with these qualities in mind, it can
+turn into a mess. This article discusses the importance of practicing clean code
+and architecture in order to avoid the pitfalls of not applying them
+
+## Clean code and clean architecture
+
+When it comes to software development, clean code and clean architecture are two
+of the most important concepts to keep in mind. Unfortunately, they are often
+overlooked or not applied properly, which can lead to a number of problems down
+the line. Clean code is all about making your code easy to read, understand, and
+maintain. It should be well-organized and free of any unnecessary clutter. This
+makes it simpler and faster to make changes when needed, and also helps prevent
+errors from creeping in. Meanwhile, clean architecture is all about designing
+your software in a way that keeps the different parts loosely coupled and easily
+interchangeable. This makes your code more robust and easier to scale as your
+needs change over time. Unfortunately, both of these concepts are often ignored
+or misunderstood. As a result, many software projects end up being needlessly
+complex and difficult to maintain. If you want to avoid these pitfalls, be sure
+to keep clean code and clean architecture in mind from the very start of your
+project.
+
+When in need of good architecture patterns look out for existing platforms and
+solutions. Open source projects that survived the harsh reality of software
+engineering will be a great source for anyone who is looking for good patterns.
+With time and experience a software engineer will be able to tell apart the
+anti-patterns and patterns one should follow.
+
+## What does clean code look like?
+
+When it comes to clean code, there are a few key things to keep in mind. First
+and foremost, clean code is readable and easy to understand. It is well-
+organized and well-documented, so that anyone who needs to can easily find and
+use the information they need. Clean code is also consistent in style and
+formatting. This makes it easier to read and understand, as well as more likely
+to be error-free. In addition, clean code is modular – it is organized into
+small, self-contained units that can be easily reused. Finally, clean code is
+testable. This means that it can be verified that the code does what it is
+supposed to do, and that any changes made will not break existing functionality.
+By following these guidelines, you can ensure that your code is clean, readable,
+and maintainable – all of which are essential for any software project.
+
+## Clean code essentials:
+
+### Security
+
+The best present any software architect can do for himself is to start the
+design from security first perspective. Making a proper threat modeling will
+help in establishing the correct patterns and services needed to complete the
+project.
+
+### Documentation
+
+This sometimes can be the most overlooked part of the project, however it will
+be the most important thing in keeping it truly alive. Proper documentation
+should include
+
+- How to install the project
+- How to start the application in dev mode
+- How to build the project (production mode)
+- What is the delivery scenario (CI/CD, Release strategy and naming conventions)
+- Architecture and Services used in Software (Servers, DB's, Caches, Blobs, 3rd
+  party)
+- Where to get the secret keys (Vaults, People, ...)
+- How to monitor the software (Logs, AppInsights, Trackers ...)
+- coding and contributions standards (Style, Commits, Tests, Coverage)
+
+## Problems with not having a clean architecture or clean code
+
+There are many potential problems that can arise from not having a clean
+architecture or clean code in your software project. Some of the more common
+ones include:
+
+1. Increased complexity and confusion: Without a well-defined architecture, your
+   code can quickly become complex and difficult to understand. This can lead to
+   confusion and errors when making changes or adding new features.
+2. decreased flexibility: A messy codebase can be very inflexible, making it
+   hard to make changes or add new functionality without breaking existing code.
+3. increased maintenance costs: Dirty code is often more difficult and
+   time-consuming to maintain, leading to higher costs over time.
+4. decreased reliability: Code that is poorly organized and written in a hurry
+   is often less reliable and may contain more bugs. This can lead to unexpected
+   behavior and crashes, which can be very frustrating for users.
+5. decreased quality: In general, lower-quality code is simply not as good as
+   well-crafted code. This can impact the overall quality of your project and
+   make it less likely to meet users' needs and expectations.
+
+## Conclusion
+
+If you're not careful, it's easy to fall into the trap of not applying clean
+architecture in your software development projects. However, by following the
+tips outlined in this article, you can avoid these pitfalls and create cleaner,
+more maintainable code. By adhering to the principles of clean architecture, you
+can make your code easier to understand, reuse, and modify – which will save you
+time and money in the long run.
