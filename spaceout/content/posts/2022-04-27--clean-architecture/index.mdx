@@ -64,6 +64,15 @@ design from security first perspective. Making a proper threat modeling will
 help in establishing the correct patterns and services needed to complete the
 project.
 
+These days security first approach in my opinion is the only way to write a
+professional software. Even if your code or project is squeaky clean but you did
+not plan or execute any kind of security strategy, you may end up loosing
+reputation or feel wrath of your client when their application gets DDOS'ed or
+data breached.
+
+For more info om threat modeling and running your project in the DevSecOps
+methodology please checkout his [link](https://spaceout.pl/dev-sec-ops)
+
 ### Documentation
 
 This sometimes can be the most overlooked part of the project, however it will
@@ -80,7 +89,9 @@ should include
 - How to monitor the software (Logs, AppInsights, Trackers ...)
 - coding and contributions standards (Style, Commits, Tests, Coverage)
 
-## Problems with not having a clean architecture or clean code
+## Common pitfalls
+
+### We do not need to think about the structure or clean code at the beginning of the project
 
 There are many potential problems that can arise from not having a clean
 architecture or clean code in your software project. Some of the more common
@@ -100,6 +111,49 @@ ones include:
    well-crafted code. This can impact the overall quality of your project and
    make it less likely to meet users' needs and expectations.
 
+Not following the rules outlined before will result in a typical scenario where
+your development velocity will drop exponentially, leaving your project manager
+or client frustrated. In this case the development team primary goal is to
+deliver features, not thinking about the structure of the project, not giving
+the team or developer the time needed to implement proper testing or refactoring
+what was already written. The usual management response to this situation is add
+more man power to the development team in hopes that additional team mates will
+bring the velocity back up to where it was at the beginning of the project.
+However adding more people to a late project will make it even latter.
+
+It is important to understand that the business does not understand this, nor
+care, however it is up the development team to establish the speed and proper
+timetable. The conversation about the proposed velocity with business side will
+be a difficult one, but it will always be a part of the development cycle.
+
+### No need to deploy straight away, we will think about the CI/CD later on
+
+Not establishing proper git flow, automatic code delivery to an online
+environment, will result in a classic "It works on my computer" - "but are we
+going to give your computer to the client ?" Developers tend to have fast
+machines with loads of ram, pushing straight to online instances should be a
+natural step in order to catch these differences. Calls and functions that work
+normally on your computer can suddenly be too much for a small server or online
+cloud instance. We also have to think about differences in Operating Systems,
+network speed and other external factors.
+
+Make yourself a favour and make sure to test major pushes straight on the online
+environment.
+
+This will also help with any kind of more advanced patterns like microservices,
+one must be careful not fall into a trap of creating applications that are easy
+to develop but hard to deploy
+
+### Clean architecture does not impact on how the system works
+
+This is another misconception among developers, true software architects will
+take into consideration what are the business costs of running a project. Clean
+architecture keeps the system lean, unnecessary code or bad arch will have
+impact on system performance, ram and cpu usage. Upgrading servers or instances
+so your application works as it should can result in additional frictions with
+your client, or can even result in client dropping the project if the estimated
+server costs are met with huge real costs of sustaining an application.
+
 ## Conclusion
 
 If you're not careful, it's easy to fall into the trap of not applying clean
@@ -108,3 +162,8 @@ tips outlined in this article, you can avoid these pitfalls and create cleaner,
 more maintainable code. By adhering to the principles of clean architecture, you
 can make your code easier to understand, reuse, and modify – which will save you
 time and money in the long run.
+
+Clean arch tries to minimize costs of adding features, fixing bugs, it will
+direct the developer in where solution should be added, and what is the most
+important it should protect the system from implementing a bug that cannot be
+fixed.
