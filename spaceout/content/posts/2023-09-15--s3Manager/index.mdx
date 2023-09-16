@@ -1,0 +1,128 @@
+---
+title: S3 Manager
+excerpt: GUI for managing and browsking S3 buckets
+date: 2022-04-27
+hero: s3ManagerCover.png
+author: Luke Celitan
+appDescription: AWS S3 GUI
+category: Project
+tech:
+  - Svelte
+  - Rust
+  - TS
+  - Tailwind
+---
+
+import { UI, GridGallery } from '../components/uxui.jsx';
+
+# S3 Manager
+
+A graphical user interface to aws s3 service.
+
+This project is standalone application for connecting to your AWS S3 service.
+Tested on Mac, Linux, Win 10.
+
+![LightMode](./lightFiles.png) ![LightMode](./lightImg.png)
+![DarkMode](./darkImg.png) ![DarkMode](./darkFiles.png)
+
+## Installation files
+
+[releases](https://github.com/MassivDash/S3_Manager/releases)
+
+## Features
+
+![LightFiles](/screenshots/lightFiles.png?raw=true)
+![DarkFiles](/screenshots/darkFiles.png?raw=true)
+
+![LightImg](/screenshots/lightImg.png?raw=true)
+![DarkImg](/screenshots/darkImg.png?raw=true)
+
+- Dark and light mode dependant on system preferences
+- Files, Pictures, Movies and buckets gallery (grid style)
+- Optimized for looking through the pictures / movies, lazy loading, images and
+  movies streamed dritecly from the bucket, are loaded with presigned urls.
+- Adjustable grid gallery
+- Simple name search
+- folders filtering in movies and images pages
+- Tagging of assets
+- Folder creation
+- Multi file upload (drop files)
+- Galleries remember scroll positions while navigating the app.
+
+### AWS Account
+
+In order to use the application you need aws account with s3 service activated.
+S3 app uses standard aws config files used for aws cli connection
+[info here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
+
+```
+~/.aws/credentials
+```
+
+```
+[default]
+aws_access_key_id=AKIAIOSFODNN7EXAMPLE
+aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+```
+
+```
+~/.aws/config
+```
+
+```
+[default]
+region=us-west-2
+output=json
+```
+
+### Alternate s3 endpoint
+
+Set env vars `S3_CUSTOM_ENDPOINT` to `true` or `1` at your machine to alter the
+s3 default endpoints Set the alternative endpoint url with
+`S3_CUSTOM_ENDPOINT_URL` env
+
+## Local install and development
+
+Rust lang (cargo) and node.js (npm or yarn) and tauri-cli instalations are
+needed to run / build the project from source
+
+### Development
+
+### Installing the Prerequisites
+
+Project is build thanks to tauri app which uses RUST lang for the system portion
+of the app and a custom html frontend, in order to start the project you need to
+install following.
+
+- Tauri app perquisites
+  https://tauri.app/v1/guides/getting-started/prerequisites
+- Tauri app cli `cargo install tauri-cli`
+
+### Architecture
+
+This application is based on [tauri.app](https://tauri.app/), RUST lang in the
+backend (core0 of the app and frontend things are handled by svelte + vite + ts
+combo.
+
+Simple division: Rust manages the data and the calls, front end displays the
+data.
+
+### Start
+
+Since rust is responsible for making the aws calls you will need the rust
+"backend" to be started, without it the app will not work. You will also need
+need the aws credentials present on the system
+
+```
+cargo tauri dev
+```
+
+### Build
+
+```
+cargo tauri build
+```
+
+## Backend development
+
+Rust has its own docs on each package
