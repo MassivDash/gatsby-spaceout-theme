@@ -17,10 +17,43 @@ import { UI, GridGallery } from '../components/uxui.jsx';
 
 # S3 Manager
 
-A graphical user interface to aws s3 service.
+Hi everyone, I'm excited to share with you a project I've been working on for
+the last few months. It's a graphical user interface to aws s3 service, which
+lets you easily manage your buckets, files and permissions. I have wrote it
+using Rust lang in the backend and svelte for a frontend, and I want to tell you
+how fun it was working with rust backend.
 
-This project is standalone application for connecting to your AWS S3 service.
-Tested on Mac, Linux, Win 10.
+Rust is a systems programming language that focuses on performance, reliability
+and concurrency. It has a powerful type system, memory safety guarantees and a
+rich ecosystem of libraries and tools. Rust also has some unique features that
+make it a great choice for backend development, such as:
+
+- Ownership and borrowing: Rust uses these concepts to manage memory and
+  resources without a garbage collector, avoiding runtime overhead and memory
+  leaks.
+- Traits and generics: Rust allows you to define abstract interfaces and
+  implement them for different types, enabling code reuse and polymorphism.
+- Async/await: Rust supports asynchronous programming with a built-in syntax
+  that makes it easy to write concurrent code that is readable and efficient.
+- Error handling: Rust has a robust and expressive way of dealing with errors,
+  using the Result and Option types and the ? operator.
+
+Using Rust for the backend of my GUI project was a rewarding experience. I
+learned a lot about the language and its features, and I enjoyed the challenge
+of writing fast and reliable code. I also used some awesome crates that made my
+life easier, such as:
+
+- Tokio: A runtime for writing async applications with Rust.
+- Rusoto: A AWS SDK for Rust.
+- Warp: A web framework that provides a simple and elegant way to create RESTful
+  APIs.
+- Sveltekit: A framework for building web applications with Svelte, a reactive
+  frontend framework that compiles to vanilla JavaScript.
+
+The result is a GUI application that is easy to use, responsive and
+cross-platform. You can download it from my GitHub repository (link below) and
+try it out yourself. I hope you find it useful and fun to use. If you have any
+feedback or suggestions, please let me know in the comments. Thanks for reading!
 
 ![LightMode](./lightFiles.png) ![LightMode](./lightImg.png)
 ![DarkMode](./darkImg.png) ![DarkMode](./darkFiles.png)
@@ -30,12 +63,6 @@ Tested on Mac, Linux, Win 10.
 [releases](https://github.com/MassivDash/S3_Manager/releases)
 
 ## Features
-
-![LightFiles](/screenshots/lightFiles.png?raw=true)
-![DarkFiles](/screenshots/darkFiles.png?raw=true)
-
-![LightImg](/screenshots/lightImg.png?raw=true)
-![DarkImg](/screenshots/darkImg.png?raw=true)
 
 - Dark and light mode dependant on system preferences
 - Files, Pictures, Movies and buckets gallery (grid style)
