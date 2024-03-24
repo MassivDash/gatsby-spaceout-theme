@@ -9,9 +9,9 @@ import TechStack from '../components/TechStack';
 import { TechIcons } from 'gatsby-theme-spaceout/src/sections/articles/Articles.List';
 import CSSFadeIn from 'gatsby-theme-spaceout/src/components/Transitions/Transitions.CSS.FadeIn';
 import ExternalLink from '../components/ExternalLink';
-import GitHubCalendar from 'react-github-calendar';
+import bwSpaceman from '../assets/bwSpaceman.png';
 
-const HowItsDone: FC = () => {
+const About: FC = () => {
   return (
     <>
       <SEO />
@@ -38,22 +38,28 @@ const HowItsDone: FC = () => {
               and React Native, Node.js, which I use to develop Apps for all the
               major platforms (Web, iOS and Android).
             </Paragraph>
+
             <Paragraph>
-              Currently i am full time employed in JLL technology, Business
-              Intelligence division as a tech lead and security champion.
+              Currently i am full time employed as an engineering manager in JLL
+              technologies, business intelligence division, were me and the team
+              work together to build full stack solutions, supporting workplace
+              dynamics research and monitoring using sensors and big data.
             </Paragraph>
             <Paragraph>My stack:</Paragraph>
             <div style={{ maxWidth: '1150px', margin: '20px auto' }}>
               <TechStack />
             </div>
             <Paragraph>
-              If you are looking for a high quality custom product, that is not
-              based on themes or standard solutions. Contact me for more info at{' '}
+              I am open for collaboration on open source and ngo projects. If
+              you are looking for a high quality custom solutions, that are not
+              based on themes or 3rd party paid modules. Contact me for more
+              info at{' '}
               <ExternalLink href="mailto:luke@spaceout.pl">
                 luke@spaceout.pl
               </ExternalLink>
             </Paragraph>
             <div style={{ height: '50px', width: '100%' }}></div>
+            <img src={bwSpaceman}></img>
             <Headings.H2>I’m currently working on ... </Headings.H2>
             <Paragraph>
               <TechIcons tech={['Owasp']} /> Implementing compliance and
@@ -72,14 +78,6 @@ const HowItsDone: FC = () => {
               Azure dev ops advanced yaml pipeline configuration
             </Paragraph>
             <div style={{ height: '50px', width: '100%' }}></div>
-            <div style={{ maxWidth: '1150px', margin: '20px auto' }}>
-              <GitHubCalendar
-                username="MassivDash"
-                blockSize={18}
-                blockMargin={4}
-                showTotalCount={false}
-              />
-            </div>
             <div style={{ height: '50px', width: '100%' }}></div>
             <Headings.H2>some personal info ... </Headings.H2>
             <Paragraph>
@@ -130,4 +128,4 @@ const HowItsDone: FC = () => {
   );
 };
 
-export default HowItsDone;
+export default About;

@@ -7,13 +7,52 @@ module.exports = {
       jsx: true, // Allows for the parsing of JSX
     },
   },
-  plugins: ['@typescript-eslint', 'prettier'],
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
-    'plugin:prettier/recommended',
+  overrides: [
+    {
+      files: ['**/*.js', '**/*.jsx'],
+      plugins: ['prettier'],
+      extends: [
+        'eslint:recommended',
+        'plugin:react/recommended',
+        'plugin:prettier/recommended',
+      ],
+      rules: {
+        'react/prop-types': 0,
+        'react/display-name': 0,
+        'react/no-unescaped-entities': 0,
+      },
+      parser: '@babel/eslint-parser',
+    },
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      plugins: ['@typescript-eslint', 'prettier'],
+      extends: [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:prettier/recommended',
+      ],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        project: [
+          './gatsby-theme-spaceout/tsconfig.json',
+          './spaceout/tsconfig.json',
+        ],
+      },
+      rules: {
+        'eslint/prefer-rest-params': 'off',
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/explicit-member-accessibility': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/camelcase': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
+        '@typescript-eslint/no-unused-vars': [
+          'error',
+          { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+        ],
+        'no-console': ['error', { allow: ['warn', 'error'] }],
+      },
+    },
   ],
   settings: {
     react: {
@@ -25,23 +64,6 @@ module.exports = {
     browser: true,
     jest: true,
     node: true,
-  },
-  rules: {
-    'eslint/prefer-rest-params': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/explicit-member-accessibility': 'off',
-    '@typescript-eslint/no-var-requires': 'off',
-    '@typescript-eslint/camelcase': 'off',
-    '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
-    ],
-    'no-console': ['error', { allow: ['warn', 'error'] }],
-    'react/prop-types': 0,
-    'react/display-name': 0,
-    'react/no-unescaped-entities': 0,
   },
   globals: {
     __DEV__: true,

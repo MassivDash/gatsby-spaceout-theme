@@ -55,8 +55,65 @@ cross-platform. You can download it from my GitHub repository (link below) and
 try it out yourself. I hope you find it useful and fun to use. If you have any
 feedback or suggestions, please let me know in the comments. Thanks for reading!
 
+## LightMode UI overview
+
 ![LightMode](./lightFiles.png) ![LightMode](./lightImg.png)
+
+<UI
+  colors={['#1F2937', '#52525b', '#F9FAFB', '#FFEDD5', '#FFF7ED']}
+  primeFontFamily={'Roboto'}
+  secondaryFontFamily={'Audiowide'}
+  background={'#FFF7ED'}
+  textColor="#1F2937"
+  h1={{
+    fontFamily: 'Roboto',
+    fontWeight: '700',
+    fontSize: '40px',
+    textTransform: 'uppercase',
+    color: '#1F2937',
+  }}
+  h2={{
+    fontSize: '35px',
+    fontWeight: '700',
+    fontFamily: 'Roboto',
+  }}
+  body={{
+    fontFamily: 'Roboto',
+    color: '#1F2937',
+    fontSize: '18px',
+    lineHeight: 1.7,
+  }}
+/>
+
+## Dark Mode UI overview
+
 ![DarkMode](./darkImg.png) ![DarkMode](./darkFiles.png)
+
+<UI
+  colors={['#1E293B', '#0F172A', '#FFEDD5', '#FFF7ED', '#F9FAFB', '#FFF']}
+  primeFontFamily={'Roboto'}
+  secondaryFontFamily={'Audiowide'}
+  background={'#1E293B'}
+  textColor="#FFF"
+  h1={{
+    fontFamily: 'Roboto',
+    fontWeight: '700',
+    fontSize: '40px',
+    textTransform: 'uppercase',
+    color: '#fff',
+  }}
+  h2={{
+    fontSize: '35px',
+    fontWeight: '700',
+    fontFamily: 'Roboto',
+  }}
+  body={{
+    fontFamily: 'Roboto',
+    color: '#fff',
+    fontSize: '18px',
+    lineHeight: 1.7,
+  }}
+/>
 
 ## Installation files
 
@@ -108,48 +165,18 @@ Set env vars `S3_CUSTOM_ENDPOINT` to `true` or `1` at your machine to alter the
 s3 default endpoints Set the alternative endpoint url with
 `S3_CUSTOM_ENDPOINT_URL` env
 
-## Local install and development
-
 Rust lang (cargo) and node.js (npm or yarn) and tauri-cli instalations are
 needed to run / build the project from source
 
-### Development
-
-### Installing the Prerequisites
-
-Project is build thanks to tauri app which uses RUST lang for the system portion
-of the app and a custom html frontend, in order to start the project you need to
-install following.
-
-- Tauri app perquisites
-  https://tauri.app/v1/guides/getting-started/prerequisites
-- Tauri app cli `cargo install tauri-cli`
-
-### Architecture
-
 This application is based on [tauri.app](https://tauri.app/), RUST lang in the
-backend (core0 of the app and frontend things are handled by svelte + vite + ts
+backend (core of the app and frontend things are handled by svelte + vite + ts
 combo.
 
 Simple division: Rust manages the data and the calls, front end displays the
 data.
 
-### Start
+## Github info
 
-Since rust is responsible for making the aws calls you will need the rust
-"backend" to be started, without it the app will not work. You will also need
-need the aws credentials present on the system
+https://github.com/MassivDash/S3_Manager
 
-```
-cargo tauri dev
-```
-
-### Build
-
-```
-cargo tauri build
-```
-
-## Backend development
-
-Rust has its own docs on each package
+Don't forget to ⭐ the project if you found it helpful.

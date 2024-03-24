@@ -134,10 +134,6 @@ export const globalStyles = css`
     min-height: 98vh;
   }
 
-  tspan {
-    font-size: 165px;
-  }
-
   .item-enter {
     opacity: 0;
   }
