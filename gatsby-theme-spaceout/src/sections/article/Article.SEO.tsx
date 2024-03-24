@@ -81,9 +81,10 @@ function ArticleSEO({
       title={article.title}
       description={article.excerpt}
       image={article.hero.seo.src}
-      timeToRead={article.timeToRead}
+      timeToRead={`${article.timeToRead}`}
       published={article.date}
       pathname={location.href}
+      slug={article.slug}
     >
       <script type="application/ld+json">{microdata}</script>
     </SEO>

@@ -8,11 +8,10 @@ const UnorderedList = styled.ul`
   position: relative;
   padding: 15px 0 30px 30px;
   transition: ${(p: any) => p.theme.colorModeTransition};
-  margin: 0 auto;
+  margin: 0 auto 35px;
   font-size: 18px;
-
   width: 100%;
-  max-width: 680px;
+  max-width: 1150px;
 
   ${mediaqueries.desktop`
     max-width: 507px;

@@ -1,26 +1,26 @@
 import React from 'react';
 import { Bar, Rectangle } from 'recharts';
 import './charts.css';
-import { BarChartWrapper } from './wrapper';
+import { BarChartWrapper, Controls } from './wrapper';
 
 export const AvgServerChart = ({ data }) => {
   return (
     <BarChartWrapper data={data}>
       <Bar
         dataKey="all"
-        fill="#c93d22"
+        fill="#333333"
         activeBar={<Rectangle fill="#ed8e88" stroke="#fce3e2" />}
       />
       <Bar
         stackId={1}
         dataKey="image"
-        fill="#4e6ab9"
+        fill="#195eec"
         activeBar={<Rectangle fill="#eb5751" stroke="#fce3e2" />}
       />
       <Bar
         stackId={1}
         dataKey="html"
-        fill="#82b9f4"
+        fill="#c93d22"
         stroke="#fce3e2"
         activeBar={<Rectangle fill="#e7a1a5" stroke="#fce3e2" />}
       />
@@ -33,24 +33,15 @@ export const MinMaxServerChart = ({ html, image }) => {
   const data = !mode ? html : image;
   return (
     <>
-      <div className="controls">
-        <button
-          className={!mode ? 'chart-control active' : 'chart-control'}
-          onClick={() => setMode(false)}
-        >
-          html
-        </button>
-        <button
-          className={mode ? 'chart-control active' : 'chart-control'}
-          onClick={() => setMode(true)}
-        >
-          image
-        </button>
-      </div>
+      <Controls
+        mode={mode}
+        onClickHtml={() => setMode(false)}
+        onClickImage={() => setMode(true)}
+      />
       <BarChartWrapper data={data}>
         <Bar
           dataKey="min"
-          fill="#82b9f4"
+          fill="#195eec"
           activeBar={<Rectangle fill="#ed8e88" stroke="#fce3e2" />}
         />
         <Bar

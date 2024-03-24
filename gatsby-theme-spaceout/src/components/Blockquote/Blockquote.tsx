@@ -1,7 +1,16 @@
+interface Theme {
+  colorModeTransition?: string;
+  colors: {
+    articleText?: string;
+  };
+  fonts: {
+    serif?: string;
+  };
+}
 import styled from '@emotion/styled';
 import mediaqueries from '@styles/media';
 
-const Blockquote = styled.blockquote`
+const Blockquote = styled.blockquote<{ theme: Theme }>`
   transition: ${(p) => p.theme.colorModeTransition};
   margin: 15px auto 50px;
   color: ${(p) => p.theme.colors.articleText};
@@ -19,17 +28,15 @@ const Blockquote = styled.blockquote`
     padding-bottom: 0;
     width: 100%;
     margin: 0 auto;
-    font-size: 36px;
+    font-size: 20px;
     line-height: 1.32;
     font-weight: bold;
 
     ${mediaqueries.tablet`
-      font-size: 26px;
-      padding: 0 180px;
+      padding: 0 100px;
     `};
 
     ${mediaqueries.phablet`
-      font-size: 36px;
       padding: 0 20px 0 40px;
     `};
   }

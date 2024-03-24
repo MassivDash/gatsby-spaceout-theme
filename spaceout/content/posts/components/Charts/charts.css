@@ -24,15 +24,24 @@
 .chart-control {
   padding: 20px;
   min-width: 50px;
-  border-bottom: 1px solid #ccc;
-  transistion: 0.7s all cubic-bezier(0.05, 0.7, 0.1, 1);
+  border-bottom: 1px solid #c93d22;
+  transition: 0.7s all cubic-bezier(0.05, 0.7, 0.1, 1);
+  color: #c93d22;
+}
+
+.chart-control:hover {
+  opacity: 0.5;
+}
+
+.chart-control:first-child {
+  color: #195eec;
+  border-color: #195eec;
 }
 
 .active {
-  color: #c93d22;
   font-weight: 700;
-  border-bottom: 1px solid #c93d22;
-  transistion: 0.4s all cubic-bezier(0.05, 0.7, 0.1, 1);
+  border-width: 2px;
+  transition: 0.4s all cubic-bezier(0.05, 0.7, 0.1, 1);
 }
 
 .chartGridHolder {

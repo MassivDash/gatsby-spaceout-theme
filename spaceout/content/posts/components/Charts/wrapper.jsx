@@ -12,7 +12,7 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 
 export const ChartStyleWrapper = ({ children }) => {
-  const [isInView, setIsInView] = useState(true);
+  const [isInView, setIsInView] = useState(false);
   const chartRef = useRef();
 
   useEffect(() => {
@@ -75,5 +75,24 @@ export const BarChartWrapper = ({ children, data, xAxisDataKey = 'name' }) => (
     </BarChart>
   </ChartStyleWrapper>
 );
+
+export const Controls = ({ mode, onClickHtml, onClickImage }) => {
+  return (
+    <div className="controls">
+      <button
+        className={!mode ? 'chart-control active' : 'chart-control'}
+        onClick={onClickHtml}
+      >
+        html
+      </button>
+      <button
+        className={mode ? 'chart-control active' : 'chart-control'}
+        onClick={onClickImage}
+      >
+        image
+      </button>
+    </div>
+  );
+};
 
 export default ChartStyleWrapper;

@@ -1,10 +1,10 @@
 ---
 title: Static race
-excerpt: A static serve race between node and rust
+excerpt: A static serve race between nginx, actix, express and restify
 date: 2024-03-22
 hero: cover.png
 author: Luke Celitan
-appDescription: A static serve
+appDescription: Sever Analysis
 category: Post
 tech:
   - Rust
@@ -29,12 +29,17 @@ import restifyData from './restify.json';
 ## Static race, who will become the static king ?
 
 In the world of web development, the choice of server framework can
-significantly impact the performance and efficiency of a website, and there is
-no other backbone of the internet like the static server. A simple worker
-checking the files on the drive and serving it back to the user.
+significantly impact the performance and efficiency of a website. In the most
+real life scenarios you will need an instance to serve static assets to the
+client whatever application you are building. Html, css, jss, images and others
+static assets are the backbone of any frontend.
 
 Static serving is the most cheapest and most reliable way to deliver content on
-the intrent so far.
+the intrent so far. Until you start moving your assetes to CDN providers, most
+likely you will decide the serve the static files localy.
+
+I decided to create a simple test to find out which serving option is the most
+performant on my own.
 
 Today, we're diving into a comparative analysis of four different server
 frameworks: Actix, Express, Nginx, and Restify. The focus of this comparison is
@@ -52,16 +57,25 @@ resources, with 1000 calls each.
 ## Test Methodology
 
 The test was straightforward: open a static website consisting of a simple HTML
-page (200kb) and a single image (12.7mb). All applications ran on the same
-machine, boasting 2GB of RAM and SSD storage, and were tested sequentially to
-ensure fairness. Security was also a priority, with all connections made through
-SSL, thanks to the host provider's network overlay.
+page (200kb) and a single image (12.7mb) and download it fully to the client
+browser.
 
-This setup provides a glimpse into the real-world performance of these web
-frameworks, offering valuable insights for developers and enthusiasts alike.
-Whether you're building a personal project or scaling an enterprise application,
-understanding the nuances of each server's capabilities is key to optimizing
-your web presence and your server costs.
+All applications are running on the same machine, boasting 2GB of RAM and SSD
+storage, and were tested sequentially to ensure fairness. Each application has a
+SSL let's encrypt certificate and is located in the same region (Warsaw).
+
+The links for reference
+
+- https://nginxtest.spaceout.pl/
+- https://expresstest.spaceout.pl/
+- https://astrox.spaceout.pl/rustTest
+- https://restifytest.spaceout.pl/
+
+All application were created with minimal reproduction except for rust based
+actix, astro x website is a another rust based project, I am working on, i has
+some more middlewares but still serves as a static server as well.
+
+**Html markup used in the test**
 
 ```html
 <!DOCTYPE html>
@@ -76,7 +90,12 @@ your web presence and your server costs.
 </html>
 ```
 
-This is the test picture we will be stressing my hosting with.
+**Test Picture**
+
+This is the test picture we will be stressing my hosting with. Here obviously
+optimized, but in the test the upscaled 12.7MB version was used. Definetly
+chosen in order to get some bigger diffrences in how framework utilize bigger
+i/o operations.
 
 ![Web Dev Commandos](./webdev2.png)
 
@@ -136,12 +155,12 @@ test('should reload page 1000 times and generate HAR file', async () => {
   image={minMaxImage.sort((a, b) => a.min - b.min)}
 />
 
-Actix, a web framework written in Rust, has been turning heads with its
-impressive HTML return times. It recently clocked in at a blistering 34.154ms,
-showcasing the efficiency of Rust's design for concurrent web services. Nginx,
-the stalwart of high-performance web servers, is hot on Actix's heels with a
-return time of 34.349ms. This close competition highlights the advancements in
-web server technology and the fine margins that separate the top performers.
+Actix, a server framework written in Rust, has been turning heads with its
+impressive HTML return times. It clocked in at a blistering 34.154ms, showcasing
+the efficiency of Rust's design for concurrent web services. Nginx, the stalwart
+of high-performance web servers, is hot on Actix's heels with a return time of
+34.349ms. This close competition highlights the advancements in web server
+technology and the fine margins that separate the top performers.
 
 When it comes to handling larger files, Nginx takes the lead. It served a 12.7MB
 file in just 596.061ms, edging out Actix, which completed the task in 612.17ms.
@@ -167,7 +186,11 @@ On an avarage **the fastest serving framework is the rust based actix server,
 with an avarage serving time of 559.72ms (0.55s)**, it is also a winner in the
 the html (45.48ms) and image category (972.60ms).
 
-### Closer look
+### In details comparison.
+
+The min, avg, max analysis suggests that the Actix is the most preformant
+framework. I have prepared the funnel and scatter charts to help anlayse the
+overall spread and stability of each framework.
 
 #### Actix (https://actix.rs/)
 
@@ -177,9 +200,9 @@ independently executing but cooperating “Actors” that communicate via messag
 This model offers high performance and scalability through its asynchronous
 programming model and lightweight design
 
-**Actix is the average request time category winner, with solid numbers to back
-it up, for 1000 requests most of them were delivered better than the competition
-in both html and image file**
+> Actix is the average request time category winner, with solid numbers to back
+> it up, for 1000 requests most of them were delivered better than the
+> competition in both html and image file
 
 The scatter graph indicates solid and consistent content delivery, overall it
 looks like the most stable way to server static content on the web.
@@ -198,24 +221,31 @@ to address the C10k problem, which is the challenge of handling ten thousand
 concurrent connections. Over the years, it has evolved to serve a variety of
 roles including a reverse proxy, load balancer, mail proxy, and HTTP cache.
 
-Nginx is the fastest responder in this test, will overall solid scores.
-Definetly a good choice if possible, the data indicates it provides stable and
-consistent delivery.
+> Nginx is the fastest responder in this test, will overall solid scores.
+> Definetly a good choice if possible, the data indicates it provides stable and
+> consistent delivery. On avarage he was still 17.67%\* behind Actix framework,
+> making it second best choice for serving static content
 
 <div class="chartGridHolder">
   <FunnelTime data={nginxData} />
   <ScatterChart data={nginxData} fill={'#fe5218'} />
 </div>
 
+```
+* slower % calculation
+
+Difference = Score - Base = 599 ms - 509.040587 ms = 89.959413 ms
+Percentage slower = (Difference / Base) * 100 = (89.959413 ms / 509.040587 ms) * 100 ≈ 17.67 %
+```
+
 #### Express
 
 Express.js, often referred to simply as Express, is the most popular backend web
 application framework for Node.js. Renowned for its minimalist and unopinionated
 approach, it offers a robust set of features for web and mobile applications.
-Express simplifies the server creation process for Node.js, allowing developers
-to write less code while achieving more functionality. It provides a powerful
-routing API, middleware support, and a suite of HTTP utility methods, making it
-an ideal choice for building RESTful APIs.
+
+> Express times are much more hectic and spread out than the nginx and actix,
+> with a 25.65% slower times than rust based actix.
 
 <div class="chartGridHolder">
   <FunnelTime data={expressData} />
@@ -231,15 +261,26 @@ focuses on providing a semantically correct implementation of REST, adhering
 closely to HTTP and REST specifications, which is reflected in its support for
 RFC standards throughout its codebase and documentation.
 
+> The last runner on the list is restify which is 27.16% slower than actix. He
+> really tried to beat express but in the end express image and average delivery
+> was 1.51% slower than express
+
 <div class="chartGridHolder">
   <FunnelTime data={restifyData} />
   <ScatterChart data={restifyData} fill={'#ff6c3d'} />
 </div>
 
-### Conclusion
+### Final thoughts
 
-Each framework has its strengths and weaknesses, and the choice often depends on
-the specific needs of the project. For instance, if performance is the top
-priority, Actix or Nginx might be the go-to options. However, for those looking
-for a more straightforward development process with plenty of community support,
-the good old Express could be still a valid choice.
+It looks like the best choice for serving static files is the Actix framework,
+but I would not be quiting on nginx just yet. Ngnix is still a great option
+especially with its build in features like load balancers, reverse proxy and
+others. If you are not building a rust based application the Nginx is the way to
+go.
+
+Node frameworks showed significantly weaker scores than the "native" drivers,
+this was especially seen on the large image transfers. In my opinion if the
+performance is what you are looking for the you should try to use underlying
+services for serving static content.
+
+The raw test data can be accessed at https://github.com/MassivDash/staticRace

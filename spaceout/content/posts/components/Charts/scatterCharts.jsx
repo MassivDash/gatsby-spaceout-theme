@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChartStyleWrapper } from './wrapper';
+import { ChartStyleWrapper, Controls } from './wrapper';
 import {
   XAxis,
   YAxis,
@@ -10,7 +10,7 @@ import {
   ComposedChart,
 } from 'recharts';
 
-export const ScatterChart = ({ data, fill = 'red' }) => {
+export const ScatterChart = ({ data }) => {
   const [mode, setMode] = React.useState(false);
 
   const name = data[0].name || 'Error';
@@ -26,20 +26,11 @@ export const ScatterChart = ({ data, fill = 'red' }) => {
 
   return (
     <div className="funnel">
-      <div className="controls">
-        <button
-          className={!mode ? 'chart-control active' : 'chart-control'}
-          onClick={() => setMode(false)}
-        >
-          html
-        </button>
-        <button
-          className={mode ? 'chart-control active' : 'chart-control'}
-          onClick={() => setMode(true)}
-        >
-          image
-        </button>
-      </div>
+      <Controls
+        mode={mode}
+        onClickHtml={() => setMode(false)}
+        onClickImage={() => setMode(true)}
+      />
       <ChartStyleWrapper>
         <ComposedChart
           width={500}
@@ -65,7 +56,11 @@ export const ScatterChart = ({ data, fill = 'red' }) => {
             />
           )}
           {!mode && <YAxis unit="ms" type="number" includeHidden />}
-          <Scatter name={name} dataKey="Time" fill={fill} />
+          <Scatter
+            name={name}
+            dataKey="Time"
+            fill={!mode ? '#195eec' : '#c93d22'}
+          />
         </ComposedChart>
       </ChartStyleWrapper>
     </div>

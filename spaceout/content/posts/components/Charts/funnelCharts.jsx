@@ -1,7 +1,7 @@
 import React from 'react';
 import { RadialBar, RadialBarChart, Tooltip, Legend } from 'recharts';
 import './charts.css';
-import { ChartStyleWrapper } from './wrapper';
+import { ChartStyleWrapper, Controls } from './wrapper';
 
 function calculatePercentage(number, total) {
   return ((number / total) * 100).toFixed();
@@ -70,8 +70,6 @@ function createFunnel(timeValues) {
     ),
   }));
 
-  console.log(funnel);
-
   return funnel;
 }
 
@@ -95,25 +93,16 @@ export const FunnelTime = ({ data }) => {
     index: `${Number(item.min).toFixed()}ms - ${Number(item.max).toFixed()}ms`,
     Time: item.value,
     count: item.count,
-    fill: lightenColor('#c93d22', index * 2),
+    fill: lightenColor(!mode ? '#195eec' : '#c93d22', index * 2),
   }));
 
   return (
     <div className="funnel">
-      <div className="controls">
-        <button
-          className={!mode ? 'chart-control active' : 'chart-control'}
-          onClick={() => setMode(false)}
-        >
-          html
-        </button>
-        <button
-          className={mode ? 'chart-control active' : 'chart-control'}
-          onClick={() => setMode(true)}
-        >
-          image
-        </button>
-      </div>
+      <Controls
+        mode={mode}
+        onClickHtml={() => setMode(false)}
+        onClickImage={() => setMode(true)}
+      />
       <ChartStyleWrapper>
         <RadialBarChart
           innerRadius="10%"

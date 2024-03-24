@@ -8,7 +8,7 @@ interface HelmetProps {
   description?: string;
   pathname: string;
   image?: string;
-  url?: string;
+  slug?: string;
   canonical?: string;
   published?: string;
   timeToRead?: string;
@@ -53,8 +53,8 @@ function SEO({
   title,
   description,
   children,
-  url,
   image,
+  slug,
   published,
   pathname,
   timeToRead,
@@ -62,6 +62,8 @@ function SEO({
   const results = useStaticQuery(seoQuery);
   const site = results.allSite.edges[0].node.siteMetadata;
   const twitter = site.social.find((option) => option.name === 'twitter') || {};
+
+  const url = `${site.siteUrl}${slug}/`;
 
   const fullURL = (path: string) =>
     path ? `${site.siteUrl}${path}` : site.siteUrl;
