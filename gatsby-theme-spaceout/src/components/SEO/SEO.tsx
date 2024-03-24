@@ -87,7 +87,7 @@ function SEO({
     },
     {
       rel: 'canonical',
-      href: fullURL(pathname),
+      href: `${fullURL(pathname)}/`,
     },
     { itemprop: 'name', content: title || site.title },
     { itemprop: 'description', content: description || site.description },
