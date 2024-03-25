@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import ColorPallete from './UxParts/colorPallete/colorPallete';
 import Typography from './UxParts/typography/typography';
 import './uiStyles.css';
@@ -32,9 +32,40 @@ export const UI = ({
 };
 
 export const GridGallery = ({ images, gridCols = 'auto auto' }) => {
-  const imagesArray = images.map((image) => (
-    <img key={image.src} src={image.src} alt={image.alt} />
+  const observer = useRef();
+  const imagesRef = useRef([]);
+
+  useEffect(() => {
+    observer.current = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const image = entry.target;
+          const src = image.dataset.src;
+          image.src = src;
+          observer.current.unobserve(image);
+        }
+      });
+    });
+
+    imagesRef.current.forEach((img) => observer.current.observe(img));
+
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+    };
+  }, []);
+
+  const imagesArray = images.map((image, index) => (
+    <img
+      ref={(el) => (imagesRef.current[index] = el)}
+      key={image.src}
+      data-src={image.src}
+      alt={image.alt}
+      className="lazy"
+    />
   ));
+
   return (
     <div
       className="gridGalleryHolder"
