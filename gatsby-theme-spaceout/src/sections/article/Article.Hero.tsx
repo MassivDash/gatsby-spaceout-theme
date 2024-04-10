@@ -101,6 +101,7 @@ const Hero = styled.div`
 const ArticleMeta = styled.div<{ hasCoAUthors: boolean }>`
   margin: 20px auto;
   max-width: 1150px;
+  color: ${(p: any) => p.theme.colors.primary};
 
   ${mediaqueries.phablet`
     margin-left: 0;
