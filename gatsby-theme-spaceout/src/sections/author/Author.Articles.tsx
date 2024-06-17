@@ -12,7 +12,7 @@ interface AuthorArticlesProps {
 
 const AuthorArticles = ({ articles }: AuthorArticlesProps) => {
   return (
-    <AuthorArticlesContainer>
+    <AuthorArticlesContainer data-pagefind-ignore>
       <ArticlesList articles={articles} alwaysShowAllDetails />
     </AuthorArticlesContainer>
   );

@@ -1,23 +1,79 @@
-
 .uiuxHolder {
-    display: grid;
-    grid-template-columns: 1fr;
-    max-width: 1150px;
-    margin: auto;
-    border: 5px solid whitesmoke;
-    padding: 10px 25px;
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 1150px;
+  margin: auto;
+  border: 5px solid whitesmoke;
+  padding: 10px 25px;
 }
 
-@media screen and (min-width: 500px){
+@media screen and (min-width: 500px) {
   .uiuxHolder {
     grid-template-columns: 1fr 2fr;
   }
 }
 
-
 .gridGalleryHolder {
-    display: grid;
-    max-width: 1150px;
-    margin: 20px auto;
-    grid-column-gap: 10px;
+  display: grid;
+  max-width: 1150px;
+  margin: 20px auto;
+  grid-column-gap: 10px;
+}
+
+.ide {
+  background: #242322;
+  font-family: monospace;
+  font-size: 16px;
+  color: white;
+  user-select: none;
+  padding: 20px;
+  border-radius: 0.4em;
+  max-width: 1150px;
+  margin: 20px auto;
+}
+
+.ide .tree,
+.ide .tree-node,
+.ide .tree-node-group {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ide .tree-branch-wrapper,
+.ide .tree-node__leaf {
+  outline: none;
+  outline: none;
+}
+
+.ide .tree-node {
+  cursor: pointer;
+  margin: 2px 0;
+}
+
+.ide .tree-node:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ide .tree .tree-node--focused {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.ide .tree .tree-node--selected {
+  background: rgba(48, 107, 176);
+}
+
+.ide .tree-node__branch {
+  display: block;
+}
+
+.ide .icon {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.ide .helperIcon {
+  position: absolute;
+  top: 0;
+  left: 5px;
 }

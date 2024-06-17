@@ -16,6 +16,7 @@ export const ChartStyleWrapper = ({ children }) => {
   const chartRef = useRef();
 
   useEffect(() => {
+    const reference = chartRef.current;
     if (typeof window !== 'undefined') {
       const observer = new IntersectionObserver(
         ([entry]) => {
@@ -28,13 +29,13 @@ export const ChartStyleWrapper = ({ children }) => {
         },
       );
 
-      if (chartRef.current) {
-        observer.observe(chartRef.current);
+      if (reference) {
+        observer.observe(reference);
       }
 
       return () => {
-        if (chartRef.current) {
-          observer.unobserve(chartRef.current);
+        if (reference) {
+          observer.unobserve(reference);
         }
       };
     }

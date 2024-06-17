@@ -9,6 +9,7 @@ module.exports = ({ actions }) => {
         '@styles': path.resolve(__dirname, '../../styles/'),
         '@utils': path.resolve(__dirname, '../../utils/'),
         '@types': path.resolve(__dirname, '../../types/'),
+        '/pagefind/pagefind.js': path.resolve(__dirname, './pagefindStub.js'),
       },
       extensions: ['.js', '.json', '.ts', '.tsx'],
     },

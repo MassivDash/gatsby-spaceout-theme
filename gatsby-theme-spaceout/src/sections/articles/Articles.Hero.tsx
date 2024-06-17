@@ -113,7 +113,7 @@ function ArticlesHero({
   }
 
   return (
-    <Section id="Articles__Hero">
+    <Section id="Articles__Hero" data-pagefind-ignore>
       {top && (
         <>
           <HeadingContainer

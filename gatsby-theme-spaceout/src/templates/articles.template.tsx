@@ -31,11 +31,14 @@ function ArticlesPage({
   const articles = pageContext.group;
   const authors = pageContext.additionalContext.authors;
 
+  const checkIfSecondPageOrAbove =
+    Number(location.pathname.split('/').pop()) >= 2;
+
   return (
     <CSSFadeIn>
       <SEO pathname={location.pathname} />
-      <Section narrow>
-        <SpaceHero />
+      <Section narrow data-pagefind-ignore>
+        {!checkIfSecondPageOrAbove && <SpaceHero />}
         <ArticlesHero authors={authors as any} top />
         <ArticlesList articles={articles} />
         <ArticlesPaginator show={pageContext.pageCount > 1}>

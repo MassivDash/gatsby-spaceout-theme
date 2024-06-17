@@ -149,6 +149,7 @@ const NavigationHeader: React.FC<Props> = ({
         theme={theme}
         isDark={isDark}
         mobileMenuOpen={mobileMenuOpen}
+        data-pagefind-ignore
       >
         <NavInfoContainer>
           <LogoLink
@@ -393,7 +394,7 @@ const NavInfoContainer = styled.div`
   flex-direction: column;
 `;
 
-const Title = styled.h1<{ navigatorPosition: any; theme: any }>`
+const Title = styled.p<{ navigatorPosition: any; theme: any }>`
   height: 80%;
   font-weight: 300;
   font-size: ${(p) => (p.navigatorPosition ? '22px' : '28px')};
@@ -415,7 +416,7 @@ const Title = styled.h1<{ navigatorPosition: any; theme: any }>`
   }
 `;
 
-const Subtitle = styled.h2<{ navigatorPosition: any; theme: any }>`
+const Subtitle = styled.p<{ navigatorPosition: any; theme: any }>`
   font-weight: 400;
   font-size: 16px;
   margin: auto;
@@ -438,7 +439,7 @@ const Subtitle = styled.h2<{ navigatorPosition: any; theme: any }>`
   }
 `;
 
-const Description = styled.h3<{ theme: any }>`
+const Description = styled.p<{ theme: any }>`
   font-weight: 400;
   font-size: 15px;
   margin: 20px auto;

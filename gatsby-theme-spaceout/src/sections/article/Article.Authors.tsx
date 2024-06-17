@@ -24,6 +24,7 @@ function ArticleAuthors({ authors }: { authors: IAuthor[] }) {
       <AuthorLink
         as={authors[0].authorsPage ? Link : 'div'}
         to={authors[0].slug}
+        data-pagefind-ignore
       >
         <strong style={{ margin: 'auto 5px' }}> by </strong>
         <AuthorAvatar>
@@ -47,7 +48,11 @@ function CoAuthors({ authors }: { authors: IAuthor[] }) {
   const listWidth = { width: `${10 + authors.length * 15}px` };
 
   return (
-    <CoAuthorsContainer onClick={() => setIsOpen(!isOpen)} isOpen={isOpen}>
+    <CoAuthorsContainer
+      onClick={() => setIsOpen(!isOpen)}
+      isOpen={isOpen}
+      data-pagefind-ignore
+    >
       <CoAuthorsList style={listWidth}>
         {authors.map((author, index) => (
           <CoAuthorAvatar style={{ left: `${index * 15}px` }} key={author.name}>

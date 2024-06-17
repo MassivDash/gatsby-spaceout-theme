@@ -101,7 +101,7 @@ function Article({ pageContext, location, fontSizeIncrease, theme }) {
           </MDXRenderer>
         </ArticleBody>
         {next.length > 0 && similarPosts && (
-          <NextArticle>
+          <NextArticle data-pagefind-ignore>
             <FooterNext></FooterNext>
             <ArticlesNext articles={next} />
             <FooterSpacer />

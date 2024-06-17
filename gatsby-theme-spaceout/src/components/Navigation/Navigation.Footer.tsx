@@ -7,6 +7,7 @@ import screenfull from 'screenfull';
 import { connect } from 'react-redux';
 import { setFontSizeIncrease } from '../../state/createStore';
 import { GridLayoutContext } from '../../sections/articles/Articles.List.Context';
+import PostSearchbar from '../PostSearchbar/PostSearchbar';
 
 function Footer({ ...props }) {
   const {
@@ -14,10 +15,12 @@ function Footer({ ...props }) {
     hasSetGridLayout,
     setGridLayout,
   } = useContext(GridLayoutContext);
+
   const tilesIsActive = hasSetGridLayout && gridLayout === 'tiles';
   return (
     <ActionsBar mobileControlsOpen={props.mobileControlsOpen}>
       <ActionBarDivider>
+        <PostSearchbar posts={[]} />
         <DarkModeToggle />
         <GridButton
           onClick={() => setGridLayout('tiles')}
@@ -249,7 +252,7 @@ const FadeArticleAnimationArrow = styled.div`
   transition: 0.5s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
 `;
 
-const ActionsBar = styled.div`
+const ActionsBar = styled.div<{ mobileControlsOpen: boolean; theme: any }>`
   position: relative;
   display: flex;
   width: 100%;
