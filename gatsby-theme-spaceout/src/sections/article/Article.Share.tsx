@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
 import { useColorMode } from 'theme-ui';
-
+import { Theme } from 'src/gatsby-plugin-theme-ui';
 import Icons from '@icons';
 
 import {
@@ -26,7 +26,7 @@ interface MenuFloatState {
 const MENU_WIDTH = 225;
 const MENU_HEIGHT = 46;
 
-function ArticelShare() {
+const ArticleShare: React.FC = () => {
   const [colorMode] = useColorMode();
   const [text, setText] = useState('');
   const [focus, setFocus] = useState(false);
@@ -62,7 +62,9 @@ function ArticelShare() {
           article.getElementsByClassName('.prism-code'),
         );
         const isHighlightedInCodeBlock = codeBlocks.some((block) =>
-          window.getSelection().containsNode(block, true),
+          (window as unknown as Window & { getSelection: any })
+            .getSelection()
+            .containsNode(block, true),
         );
 
         if (isHighlightedInCodeBlock) return;
@@ -181,9 +183,9 @@ function ArticelShare() {
       </MenuButton>
     </MenuFloat>
   );
-}
+};
 
-export default ArticelShare;
+export default ArticleShare;
 
 function ReferralLink({ disabled, share, children }) {
   function handleClick(event) {
@@ -242,7 +244,7 @@ const popUpwards = keyframes`
   }
 `;
 
-const MenuFloat = styled.div<{ isDark: boolean }>`
+const MenuFloat = styled.div<{ isDark: boolean; theme: Theme }>`
   position: absolute;
   align-items: center;
   z-index: 1;

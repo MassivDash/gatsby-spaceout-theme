@@ -6,13 +6,9 @@ interface OverlapProps {
   children: React.ReactNode[];
 }
 
-interface OverlapState {
-  isOverlapping: boolean;
-}
-
-function HandleOverlap(props: OverlapProps) {
+const HandleOverlap: React.FC<OverlapProps> = (props) => {
   const asideRef = useRef<HTMLDivElement>(null);
-  const [isOverlapping, setIsOverlapping] = useState<OverlapState>(false);
+  const [isOverlapping, setIsOverlapping] = useState<boolean>(false);
 
   // Is the current element within the window's frame? That's all we care about!
   function isVisible(element: HTMLElement): boolean {
@@ -44,7 +40,9 @@ function HandleOverlap(props: OverlapProps) {
       const noNodesAreVisible = !nodesToNotOverlap.some(isVisible);
 
       nodesToNotOverlap.forEach((node: HTMLElement): void | null => {
-        const isOverlapping = collide(asideRef.current, node);
+        const isOverlapping = asideRef.current
+          ? collide(asideRef.current, node)
+          : false;
 
         if (noNodesAreVisible) {
           return setIsOverlapping(isOverlapping);
@@ -75,7 +73,7 @@ function HandleOverlap(props: OverlapProps) {
       {props.children}
     </OverlapContainer>
   );
-}
+};
 
 export default HandleOverlap;
 

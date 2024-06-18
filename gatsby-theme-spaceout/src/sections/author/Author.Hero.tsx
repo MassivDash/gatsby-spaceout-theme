@@ -4,15 +4,16 @@ import styled from '@emotion/styled';
 import Image from '@components/Image';
 
 import mediaqueries from '@styles/media';
-import { IAuthor } from '@types';
+import type { IAuthor } from '@types';
 
 import SocialLinks from '@components/SocialLinks';
+import type { Theme } from 'src/gatsby-plugin-theme-ui';
 
 interface AuthorHeroProps {
   author: IAuthor;
 }
 
-const AuthorHero = ({ author }: AuthorHeroProps) => {
+const AuthorHero: React.FC<AuthorHeroProps> = ({ author }) => {
   return (
     <Hero>
       <HeroImage>
@@ -39,7 +40,7 @@ const Hero = styled.div`
   margin: 35px auto 110px;
 `;
 
-const HeroImage = styled.div`
+const HeroImage = styled.div<{ theme: Theme }>`
   position: relative;
   z-index: 1;
   height: 164px;
@@ -62,7 +63,7 @@ const HeroImage = styled.div`
   `}
 `;
 
-const Heading = styled.h1`
+const Heading = styled.h1<{ theme: Theme }>`
   font-size: 38px;
   font-family: ${(p) => p.theme.fonts.sansSerif};
   color: ${(p) => p.theme.colors.primary};
@@ -76,7 +77,7 @@ const Heading = styled.h1`
   `}
 `;
 
-const Subheading = styled.p`
+const Subheading = styled.p<{ theme: Theme }>`
   margin: 0 auto;
   max-width: 450px;
   color: ${(p) => p.theme.colors.grey};

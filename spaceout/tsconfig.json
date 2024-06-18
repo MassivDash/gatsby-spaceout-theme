@@ -28,6 +28,6 @@
       "@types": ["src/types/index.d.ts"]
     }
   },
-  "include": ["src/**/*", "globals.ts"],
+  "include": ["src/**/*", "src/global.d.ts"],
   "exclude": ["node_modules"]
 }

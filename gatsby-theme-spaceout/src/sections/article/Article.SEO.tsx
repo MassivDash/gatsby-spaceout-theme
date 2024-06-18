@@ -2,7 +2,7 @@ import React from 'react';
 
 import SEO from '@components/SEO';
 
-import { IArticle, IAuthor } from '@types';
+import { IArticle, IAuthor, Location } from '@types';
 import { graphql, useStaticQuery } from 'gatsby';
 
 const siteQuery = graphql`
@@ -20,15 +20,11 @@ const siteQuery = graphql`
   }
 `;
 
-function ArticleSEO({
-  article,
-  authors,
-  location,
-}: {
+const ArticleSEO: React.FC<{
   article: IArticle;
   authors: IAuthor[];
-  location: any;
-}) {
+  location: Location;
+}> = ({ article, authors, location }) => {
   const results = useStaticQuery(siteQuery);
   const name = results.allSite.edges[0].node.siteMetadata.name;
   const siteUrl = results.allSite.edges[0].node.siteMetadata.siteUrl;
@@ -89,6 +85,6 @@ function ArticleSEO({
       <script type="application/ld+json">{microdata}</script>
     </SEO>
   );
-}
+};
 
 export default ArticleSEO;

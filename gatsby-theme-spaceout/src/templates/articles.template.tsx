@@ -7,19 +7,7 @@ import SpaceHero from '@components/SpaceHero';
 import ArticlesHero from '../sections/articles/Articles.Hero';
 import ArticlesList from '../sections/articles/Articles.List';
 import CSSFadeIn from '@components/Transitions/Transitions.CSS.FadeIn';
-import { IAuthor, IArticle } from 'src/types';
-
-interface Location {
-  pathname: string;
-}
-
-interface PageContext {
-  pageCount: number;
-  group: IArticle[];
-  additionalContext: {
-    authors: IAuthor[];
-  };
-}
+import type { Location, PageContext } from 'src/types';
 
 function ArticlesPage({
   location,

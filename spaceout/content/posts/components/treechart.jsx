@@ -48,7 +48,6 @@ export function TreeChart({ folder }) {
             isExpanded,
             getNodeProps,
             level,
-            handleSelect,
           }) => (
             <div {...getNodeProps()} style={{ paddingLeft: 20 * (level - 1) }}>
               {isBranch ? (

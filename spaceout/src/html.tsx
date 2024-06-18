@@ -1,6 +1,15 @@
 import React from 'react';
 
-export default (props) => (
+type Props = {
+  htmlAttributes: Record<string, unknown>;
+  headComponents: React.ReactNode;
+  bodyAttributes: Record<string, unknown>;
+  preBodyComponents: React.ReactNode;
+  body: string;
+  postBodyComponents: React.ReactNode;
+};
+
+const Html: React.FC<Props> = (props) => (
   <html {...props.htmlAttributes}>
     <head>
       <meta charSet="utf-8" />
@@ -20,3 +29,5 @@ export default (props) => (
     </body>
   </html>
 );
+
+export default Html;

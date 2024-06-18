@@ -15,7 +15,7 @@ import theme from '../gatsby-plugin-theme-ui';
  *    clamp(50, 1, 10) 10
  *    clamp(0.5, 1, 10) 1
  */
-export const clamp = (value: number, min: number, max: number) =>
+export const clamp = (value: number, min: number, max: number): number =>
   value < min ? min : value > max ? max : value;
 
 /**
@@ -30,7 +30,7 @@ export const clamp = (value: number, min: number, max: number) =>
  *    range(3, 5) [3, 4, 5, 6, 7]
  *    range(1, 5, 0.1) [1, 1.1, 1.2, 1.3, 1.4]
  */
-export const range = (start: number, len: number, step = 1) =>
+export const range = (start: number, len: number, step = 1): number[] =>
   len
     ? new Array(len)
         .fill(undefined)
@@ -45,12 +45,14 @@ export const range = (start: number, len: number, step = 1) =>
  * @param {number} time Amount in ms to debounce. Defaults to 100ms
  * @returns {function} Your function debounced by given ms
  */
-export const debounce = (fn: () => any, time = 100) => {
+export const debounce = (
+  fn: (...args: any[]) => any,
+  time = 100,
+): ((...args: any[]) => void) => {
   let timeout: ReturnType<typeof setTimeout>;
 
-  return function () {
-    // eslint-disable-next-line prefer-rest-params
-    const functionCall = () => fn.apply(this, arguments);
+  return function (...args: any[]) {
+    const functionCall = () => fn.apply(this, args);
 
     clearTimeout(timeout);
     timeout = setTimeout(functionCall, time);
@@ -93,7 +95,7 @@ export const getWindowDimensions = (): { height: number; width: number } => {
   };
 };
 
-export function useResize() {
+export function useResize(): { height: number; width: number } {
   const [dimensions, setDimensions] = useState({ width: 1280, height: 900 });
 
   useEffect(() => {
@@ -119,20 +121,20 @@ export function useResize() {
  *    scrollable('enable') Will allow the user to scroll again
  *    scrollable('disable') Will freeze the screen
  */
-export const scrollable = (action: string) => {
+export const scrollable = (action: string): void => {
   if (action.toLowerCase() === 'enable') {
-    document.body.style.cssText = null;
+    document.body.style.cssText = '';
   } else {
     document.body.style.overflow = 'hidden';
     document.body.style.height = '100%';
   }
 };
 
-export function useScrollPosition() {
+export function useScrollPosition(): number {
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {
-    const handleScroll = throttle(() => setOffset(window.pageYOffset), 30);
+    const handleScroll = throttle(() => setOffset(window.scrollY), 30);
     window.addEventListener('scroll', handleScroll);
 
     return () => window.removeEventListener('scroll', handleScroll);
@@ -147,7 +149,7 @@ export function useScrollPosition() {
  * and animation on mount but it not flowing correctly
  * due to fram timing.
  */
-export function startAnimation(callback) {
+export function startAnimation(callback: (any?) => any): void {
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       callback();
@@ -159,7 +161,7 @@ export function startAnimation(callback) {
  * Returns the X and Y coordinates of a selected piece of Text.
  * This will always return the top left corner of the selection.
  */
-export const getHighlightedTextPositioning = () => {
+export const getHighlightedTextPositioning = (): { x: number; y: number } => {
   const doc: any = window.document;
   let sel = doc.selection;
   let range;
@@ -239,13 +241,16 @@ function elementContainsSelection(el) {
       }
       return true;
     }
-  } else if ((sel = document.selection) && sel.type != 'Control') {
+  } else if (
+    (sel = (document as Document & { selection: any }).selection) &&
+    sel.type != 'Control'
+  ) {
     return isOrContains(sel.createRange().parentElement(), el);
   }
   return false;
 }
 
-export const getSelectionDimensions = () => {
+export const getSelectionDimensions = (): { width: number; height: number } => {
   const isSelectedInPrism = Array.from(
     document.getElementsByClassName('prism-code'),
   )
@@ -297,12 +302,16 @@ export const getSelectionDimensions = () => {
   return { width, height };
 };
 
-export function getSelectionText() {
+export function getSelectionText(): string {
   let text = '';
-  if (window.getSelection) {
-    text = window.getSelection().toString();
-  } else if (document.selection && document.selection.type != 'Control') {
-    text = document.selection.createRange().text;
+  if (window.getSelection()) {
+    text = (window.getSelection() as Selection).toString();
+  } else if (
+    (document as Document & { selection: any }).selection &&
+    (document as Document & { selection: any }).selection.type != 'Control'
+  ) {
+    text = (document as Document & { selection: any }).selection.createRange()
+      .text;
   }
   return text;
 }
@@ -313,13 +322,13 @@ export function getSelectionText() {
  * this-is-my-output
  */
 export function toKebabCase(str: string): string {
-  return str
-    .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
-    .map((x) => x.toLowerCase())
-    .join('-');
+  const matches = str.match(
+    /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g,
+  );
+  return matches ? matches.map((x) => x.toLowerCase()).join('-') : '';
 }
 
-export function copyToClipboard(toCopy: string) {
+export function copyToClipboard(toCopy: string): void {
   const el = document.createElement(`textarea`);
   el.value = toCopy;
   el.setAttribute(`readonly`, ``);

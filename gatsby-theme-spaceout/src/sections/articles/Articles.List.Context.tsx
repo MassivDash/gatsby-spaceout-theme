@@ -13,7 +13,9 @@ export const GridLayoutContext = createContext({
   getGridLayout: () => {},
 });
 
-function GridLayoutProvider({ children }: GridLayoutProviderProps) {
+const GridLayoutProvider: React.FC<GridLayoutProviderProps> = ({
+  children,
+}) => {
   const initialLayout = 'rows';
 
   const [gridLayout, setGridLayout] = useState<string>(initialLayout);
@@ -41,6 +43,6 @@ function GridLayoutProvider({ children }: GridLayoutProviderProps) {
       {children}
     </GridLayoutContext.Provider>
   );
-}
+};
 
 export default GridLayoutProvider;

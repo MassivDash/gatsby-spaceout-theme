@@ -2,7 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import mediaqueries from '@styles/media';
-import { IArticle } from '@types';
+import type { IArticle } from '@types';
+import { Theme } from 'src/gatsby-plugin-theme-ui';
 
 import ArticlesList from '../articles/Articles.List';
 
@@ -10,7 +11,7 @@ interface AuthorArticlesProps {
   articles: IArticle[];
 }
 
-const AuthorArticles = ({ articles }: AuthorArticlesProps) => {
+const AuthorArticles: React.FC<AuthorArticlesProps> = ({ articles }) => {
   return (
     <AuthorArticlesContainer data-pagefind-ignore>
       <ArticlesList articles={articles} alwaysShowAllDetails />
@@ -20,7 +21,7 @@ const AuthorArticles = ({ articles }: AuthorArticlesProps) => {
 
 export default AuthorArticles;
 
-const AuthorArticlesContainer = styled.div`
+const AuthorArticlesContainer = styled.div<{ theme: Theme }>`
   background: linear-gradient(
     180deg,
     ${(p) => p.theme.colors.card} 0%,

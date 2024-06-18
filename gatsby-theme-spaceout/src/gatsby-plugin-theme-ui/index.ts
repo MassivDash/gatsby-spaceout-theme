@@ -5,7 +5,20 @@ import tags, { Tags } from './tags';
 
 import { Theme } from 'theme-ui';
 
-const breakpoints: [string, number][] = [
+type Breakpoint = [
+  (
+    | 'phone_small'
+    | 'phone'
+    | 'phablet'
+    | 'tablet'
+    | 'desktop'
+    | 'desktop_medium'
+    | 'desktop_large'
+  ),
+  number,
+];
+
+const breakpoints: Breakpoint[] = [
   ['phone_small', 320],
   ['phone', 376],
   ['phablet', 540],

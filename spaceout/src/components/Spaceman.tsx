@@ -4,7 +4,7 @@ import { keyframes } from '@emotion/core';
 import spaceman from '../assets/spaceman.png';
 import bg from '../assets/heroBack.jpg';
 
-const SpacemanTitle = () => {
+const SpacemanTitle: React.FC = () => {
   return (
     <ShadowParent>
       <SpacemanHolder>

@@ -29,10 +29,15 @@ export interface IAuthor {
   name: string;
   slug: string;
   bio: string;
+  social: {
+    name: string;
+    url: string;
+  }[];
   avatar: {
     image: IGatsbyImageFluid;
     full: IGatsbyImageFluid;
     medium: IGatsbyImageFluid;
+    large: IGatsbyImageFluid;
   };
 }
 
@@ -49,9 +54,12 @@ export interface IArticle {
     preview: IGatsbyImageFluid;
     regular: IGatsbyImageFluid;
     narrow: IGatsbyImageFluid;
-    seo: string;
+    seo: {
+      src: string;
+    };
   };
   timeToRead: number;
+  dateForSEO: string;
   date: string;
   appDescription: string;
   tech: string[];
@@ -69,4 +77,18 @@ export interface IProgress {
   title: string;
   mode: string;
   onClose?: () => void;
+}
+
+export interface Location {
+  pathname: string;
+  href: string;
+}
+
+export interface PageContext extends IPaginator {
+  pageCount: number;
+  group: IArticle[];
+  additionalContext: {
+    authors: IAuthor[];
+    author: IAuthor;
+  };
 }

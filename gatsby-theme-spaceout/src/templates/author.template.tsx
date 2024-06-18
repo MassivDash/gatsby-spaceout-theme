@@ -7,8 +7,12 @@ import Paginator from '@components/Navigation/Navigation.Paginator';
 
 import AuthorHero from '../sections/author/Author.Hero';
 import AuthorArticles from '../sections/author/Author.Articles';
+import type { Location, PageContext } from 'src/types';
 
-function ArticlesPage({ location, pageContext }) {
+const ArticlesPage: React.FC<{
+  location: Location;
+  pageContext: PageContext;
+}> = ({ location, pageContext }) => {
   const author = pageContext.additionalContext.author;
   const articles = pageContext.group;
 
@@ -28,7 +32,7 @@ function ArticlesPage({ location, pageContext }) {
       </Section>
     </>
   );
-}
+};
 
 export default ArticlesPage;
 
