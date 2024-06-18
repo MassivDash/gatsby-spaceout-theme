@@ -1,6 +1,11 @@
 import React from 'react';
 
-const YouTubeIcon = ({ fill = 'white' }) => (
+const YouTubeIcon: React.FC<{
+  fill?: string;
+  height?: number;
+  width?: number;
+  size?: number;
+}> = ({ fill = 'white' }) => (
   <svg
     width="17"
     height="12"

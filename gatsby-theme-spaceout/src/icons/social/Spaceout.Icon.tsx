@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Spaceout = ({ fill = 'white', size = 32 }) => {
+const Spaceout: React.FC<{
+  fill?: string;
+  height?: number;
+  width?: number;
+  size?: number;
+}> = ({ fill = 'white', size = 32 }) => {
   return (
     <svg
       version="1.0"

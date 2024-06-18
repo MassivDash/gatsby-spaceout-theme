@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-function More(props) {
+const More: React.FC<{ fill: string }> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,6 +16,6 @@ function More(props) {
       />
     </svg>
   );
-}
+};
 
 export default More;

@@ -1,6 +1,11 @@
 import React from 'react';
 
-const GithubIcon = ({ fill = 'white', size = 32 }) => (
+const GithubIcon: React.FC<{
+  fill?: string;
+  height?: number;
+  width?: number;
+  size?: number;
+}> = ({ fill = 'white', size = 32 }) => (
   <svg
     width={size}
     height={size}

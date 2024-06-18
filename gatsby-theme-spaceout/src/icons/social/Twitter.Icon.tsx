@@ -1,6 +1,11 @@
 import React from 'react';
 
-const TwitterIcon = ({ fill = 'white', size = 32, ...props }) => (
+const TwitterIcon: React.FC<{
+  fill?: string;
+  height?: number;
+  width?: number;
+  size?: number;
+}> = ({ fill = 'white', size = 32, ...props }) => (
   <svg
     width={size}
     height={size}

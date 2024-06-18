@@ -5,12 +5,12 @@ import { keyframes } from '@emotion/core';
 
 interface CSSFadeInProps {
   as?: string;
-  children: any;
+  children: React.ReactNode;
 }
 
-function CSSFadeIn({ as, children }: CSSFadeInProps) {
+const CSSFadeIn: React.FC<CSSFadeInProps> = ({ as, children }) => {
   return <TransitionCSS as={as}>{children}</TransitionCSS>;
-}
+};
 
 export default CSSFadeIn;
 
@@ -20,7 +20,7 @@ const fadein = keyframes`
   100% { opacity: 1; }
 `;
 
-const TransitionCSS = styled.div`
+const TransitionCSS = styled.div<{ as?: string }>`
   opacity: 0;
   animation: ${fadein} 1.9s linear forwards;
 `;
@@ -39,7 +39,10 @@ const transitionStyles = {
   exited: { opacity: 0 },
 };
 
-export const Fade = ({ in: inProp, children }) => (
+export const Fade: React.FC<{ in: boolean; children: React.ReactNode }> = ({
+  in: inProp,
+  children,
+}) => (
   <Transition in={inProp} timeout={duration}>
     {(state) => (
       <div

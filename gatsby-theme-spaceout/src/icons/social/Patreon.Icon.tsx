@@ -1,6 +1,11 @@
 import React from 'react';
 
-const PatreonIcon = ({ fill = 'white' }) => (
+const PatreonIcon: React.FC<{
+  fill?: string;
+  height?: number;
+  width?: number;
+  size?: number;
+}> = ({ fill = 'white' }) => (
   <svg
     width="14"
     height="14"

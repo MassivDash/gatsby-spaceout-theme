@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import throttle from 'lodash/throttle';
 
 interface OverlapProps {
-  children: React.ReactNode[];
+  children: React.ReactNode[] | React.ReactNode;
 }
 
 const HandleOverlap: React.FC<OverlapProps> = (props) => {

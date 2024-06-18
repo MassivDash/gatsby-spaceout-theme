@@ -4,7 +4,7 @@ import { keyframes } from '@emotion/core';
 import shuttle from '../assets/shuttle.png';
 import bg from '../assets/heroBack.jpg';
 
-const ShuttleTitle = () => {
+const ShuttleTitle: React.FC = () => {
   return (
     <ShadowParent>
       <ShuttleHolder>

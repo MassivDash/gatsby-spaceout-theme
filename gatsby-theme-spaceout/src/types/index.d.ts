@@ -38,6 +38,7 @@ export interface IAuthor {
     full: IGatsbyImageFluid;
     medium: IGatsbyImageFluid;
     large: IGatsbyImageFluid;
+    small: IGatsbyImageFluid;
   };
 }
 

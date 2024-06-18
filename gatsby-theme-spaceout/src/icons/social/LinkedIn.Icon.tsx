@@ -1,6 +1,11 @@
 import React from 'react';
 
-const LinkedinIcon = ({ fill = 'white', ...props }) => (
+const LinkedinIcon: React.FC<{
+  fill?: string;
+  height?: number;
+  width?: number;
+  size?: number;
+}> = ({ fill = 'white', ...props }) => (
   <svg
     width="14"
     height="14"

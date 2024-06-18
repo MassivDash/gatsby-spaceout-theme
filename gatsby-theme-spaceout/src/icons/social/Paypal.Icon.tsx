@@ -1,6 +1,11 @@
 import React from 'react';
 
-const PaypalIcon = ({ fill = 'white' }) => (
+const PaypalIcon: React.FC<{
+  fill?: string;
+  height?: number;
+  width?: number;
+  size?: number;
+}> = ({ fill = 'white' }) => (
   <svg
     width="14"
     height="14"

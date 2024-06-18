@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { useColorMode } from 'theme-ui';
 import Link from 'gatsby-plugin-transition-link';
-
+import { Theme } from 'src/gatsby-plugin-theme-ui';
 import Image from '@components/Image';
 import Icons from '@icons';
 import mediaqueries from '@styles/media';
@@ -13,7 +13,7 @@ import { IAuthor } from '@types';
  * Spaceout supports multiple authors and therefore we need to ensure
  * we render the right UI when there are varying amount of authors.
  */
-function ArticleAuthors({ authors }: { authors: IAuthor[] }) {
+const ArticleAuthors: React.FC<{ authors: IAuthor[] }> = ({ authors }) => {
   const hasCoAuthors = authors.length > 1;
 
   // Special dropdown UI for multiple authors
@@ -35,7 +35,7 @@ function ArticleAuthors({ authors }: { authors: IAuthor[] }) {
       </AuthorLink>
     );
   }
-}
+};
 
 export default ArticleAuthors;
 
@@ -108,7 +108,7 @@ function generateAuthorNames(authors: IAuthor[]) {
     .join(', ');
 }
 
-const AuthorAvatar = styled.div`
+const AuthorAvatar = styled.div<{ theme: Theme }>`
   height: 25px;
   width: 25px;
   border-radius: 50%;
@@ -125,7 +125,7 @@ const AuthorAvatar = styled.div`
   `}
 `;
 
-const AuthorLink = styled.div`
+const AuthorLink = styled.div<{ theme: Theme; as: string; to: string }>`
   display: flex;
   align-items: center;
   color: inherit;
@@ -139,7 +139,7 @@ const AuthorLink = styled.div`
   }
 `;
 
-const CoAuthorsList = styled.div`
+const CoAuthorsList = styled.div<{ theme: Theme }>`
   position: relative;
   height: 25px;
   margin-right: 15px;
@@ -149,7 +149,7 @@ const CoAuthorsList = styled.div`
   `}
 `;
 
-const CoAuthorsListOpen = styled.ul`
+const CoAuthorsListOpen = styled.ul<{ theme: Theme }>`
   position: absolute;
   z-index: 2;
   left: -21px;
@@ -174,7 +174,7 @@ const CoAuthorsListItemOpen = styled.li`
   }
 `;
 
-const CoAuthorAvatarOpen = styled.div`
+const CoAuthorAvatarOpen = styled.div<{ theme: Theme }>`
   height: 25px;
   width: 25px;
   border-radius: 50%;
@@ -189,7 +189,7 @@ const CoAuthorAvatarOpen = styled.div`
   }
 `;
 
-const CoAuthorAvatar = styled.div`
+const CoAuthorAvatar = styled.div<{ theme: Theme }>`
   position: absolute;
   height: 25px;
   width: 25px;
@@ -229,7 +229,7 @@ const NameContainer = styled.strong`
   `}
 `;
 
-const AuthorNameOpen = styled.strong`
+const AuthorNameOpen = styled.strong<{ theme: Theme }>`
   position: relative;
   cursor: pointer;
   color: ${(p) => p.theme.colors.secondary};
@@ -257,7 +257,7 @@ const IconOpenContainer = styled.div`
   right: 21px;
 `;
 
-const CoAuthorsContainer = styled.div<{ isOpen: boolean }>`
+const CoAuthorsContainer = styled.div<{ isOpen: boolean; theme: Theme }>`
   position: relative;
   display: flex;
   align-items: center;

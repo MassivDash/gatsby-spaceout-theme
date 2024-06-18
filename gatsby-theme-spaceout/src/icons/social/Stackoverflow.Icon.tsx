@@ -1,6 +1,11 @@
 import React from 'react';
 
-const StackoverflowIcon = ({ fill = 'white' }) => (
+const StackoverflowIcon: React.FC<{
+  fill?: string;
+  height?: number;
+  width?: number;
+  size?: number;
+}> = ({ fill = 'white' }) => (
   <svg
     width="15"
     height="15"

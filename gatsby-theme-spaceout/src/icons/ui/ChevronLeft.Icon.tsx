@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ChevronLeft = ({ fill }) => (
+const ChevronLeft: React.FC<{ fill?: string }> = ({ fill }) => (
   <svg
     width="24"
     height="24"

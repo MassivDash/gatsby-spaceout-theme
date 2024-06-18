@@ -10,12 +10,13 @@ function handleImageZoomBackground(background: string) {
       img.previousElementSibling &&
       img.previousElementSibling.tagName === 'DIV'
     ) {
-      img.previousElementSibling.style.background = background;
+      const divElement = img.previousElementSibling as HTMLElement;
+      divElement.style.background = background;
     }
   });
 }
 
-function ImageZoom(props) {
+const ImageZoom: React.FC = (props) => {
   const { theme } = useThemeUI();
 
   const image = {
@@ -40,6 +41,6 @@ function ImageZoom(props) {
       }}
     />
   );
-}
+};
 
 export default ImageZoom;

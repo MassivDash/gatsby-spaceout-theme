@@ -172,10 +172,10 @@ const ArticleShare: React.FC = () => {
     >
       <MenuText>Share: </MenuText>
       <ReferralLink disabled={!canTweet} share={share.twitter}>
-        <Icons.Twitter width="18px" height="15px" />
+        <Icons.Twitter width={18} height={15} />
       </ReferralLink>
       <ReferralLink disabled={false} share={share.linkedin}>
-        <Icons.LinkedIn width="16px" height="16px" />
+        <Icons.LinkedIn width={16} height={16} />
       </ReferralLink>
       <MenuDivider />
       <MenuButton onClick={handleCopyClick} aria-label="Copy selected text">

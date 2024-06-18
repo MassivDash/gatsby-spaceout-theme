@@ -1,6 +1,10 @@
 import React from 'react';
 
-const DigitalOceanIcon = ({ fill = 'white' }) => (
+const DigitalOceanIcon: React.FC<{
+  fill?: string;
+  height?: number;
+  width?: number;
+}> = ({ fill = 'white' }) => (
   <svg
     width="14"
     height="14"

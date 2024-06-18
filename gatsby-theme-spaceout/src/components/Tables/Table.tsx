@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import mediaqueries from '@styles/media';
+import { Theme } from 'src/gatsby-plugin-theme-ui';
 
-const StyledTable = styled.table`
+const StyledTable = styled.table<{ theme: Theme }>`
   position: relative;
   line-height: 1.65;
   color: ${(p) => p.theme.colors.grey};
@@ -30,12 +31,12 @@ const StyledTable = styled.table`
   `};
 `;
 
-function Table({ children }) {
+const Table: React.FC = ({ children }) => {
   return (
     <div style={{ overflowX: 'auto', padding: '0 20px' }}>
       <StyledTable>{children}</StyledTable>
     </div>
   );
-}
+};
 
 export default Table;

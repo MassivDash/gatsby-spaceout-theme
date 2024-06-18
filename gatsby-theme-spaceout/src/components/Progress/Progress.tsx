@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import throttle from 'lodash/throttle';
+import type { Theme } from 'src/gatsby-plugin-theme-ui';
 
 import { clamp } from '@utils';
 
-export interface IProgress {
-  contentHeight: number;
-}
-
-function Progress({ contentHeight }: IProgress) {
+const Progress: React.FC<{ contentHeight: number }> = ({ contentHeight }) => {
   const [progress, setProgress] = useState<number>(0);
 
   useEffect(() => {
@@ -35,7 +32,7 @@ function Progress({ contentHeight }: IProgress) {
       </Trackline>
     </ProgressContainer>
   );
-}
+};
 
 export default Progress;
 
@@ -45,7 +42,7 @@ const ProgressContainer = styled.div`
   user-select: none;
 `;
 
-const Trackline = styled.div`
+const Trackline = styled.div<{ theme: Theme }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -57,7 +54,7 @@ const Trackline = styled.div`
   overflow: hidden;
 `;
 
-const ProgressLine = styled.div`
+const ProgressLine = styled.div<{ theme: Theme }>`
   position: absolute;
   height: 100%;
   top: -100%;

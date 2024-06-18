@@ -1,6 +1,10 @@
 import React from 'react';
 
-const FullScreenEnter = ({ height = 26, width = 26, fill = 'white' }) => (
+const FullScreenEnter: React.FC<{
+  fill?: string;
+  height?: number;
+  width?: number;
+}> = ({ height = 26, width = 26, fill = 'white' }) => (
   <svg width={width} height={height} viewBox="0 0 26 26">
     <path fill="none" d="M0 0h24v24H0V0z" />
     <path

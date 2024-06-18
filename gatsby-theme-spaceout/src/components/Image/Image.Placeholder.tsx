@@ -19,16 +19,18 @@ const Container = styled.div`
   `}
 `;
 
-function ImagePlaceholder(props) {
+const ImagePlaceholder: React.FC = (props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
+    if (!containerRef.current) return;
     setDimensions(containerRef.current.getBoundingClientRect());
 
-    const handleResize = () =>
+    const handleResize = () => {
+      if (!containerRef.current) return;
       setDimensions(containerRef.current.getBoundingClientRect());
-
+    };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -40,6 +42,6 @@ function ImagePlaceholder(props) {
       </div>
     </Container>
   );
-}
+};
 
 export default ImagePlaceholder;

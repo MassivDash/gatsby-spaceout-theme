@@ -1,6 +1,11 @@
 import React from 'react';
 
-const InstagramIcon = ({ fill = 'white', size = 32 }) => (
+const InstagramIcon: React.FC<{
+  fill?: string;
+  height?: number;
+  width?: number;
+  size?: number;
+}> = ({ fill = 'white', size = 32 }) => (
   <svg
     width={size}
     height={size}

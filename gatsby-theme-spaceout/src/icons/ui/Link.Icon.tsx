@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LinkIcon = ({ fill }: { fill: string }): React.ReactElement => (
+const LinkIcon = ({ fill }: { fill?: string }): React.ReactElement => (
   <svg
     width="24"
     height="20"

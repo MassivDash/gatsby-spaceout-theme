@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import Highlight, { defaultProps } from 'prism-react-renderer';
+import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import styled from '@emotion/styled';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
 import Icons from '@icons';
 import mediaqueries from '@styles/media';
 import { copyToClipboard } from '@utils';
+import { Theme } from 'src/gatsby-plugin-theme-ui';
 
 const RE = /{([\d,-]+)}/;
 
 function calculateLinesToHighlight(meta) {
-  if (RE.test(meta)) {
-    const lineNumbers = RE.exec(meta)[1]
+  if (RE.test(meta)[1]) {
+    const lineNumbers = (RE as any)
+      .exec(meta)[1]
       .split(',')
       .map((v) => v.split('-').map((y) => parseInt(y, 10)));
 
@@ -27,7 +29,11 @@ function calculateLinesToHighlight(meta) {
   }
 }
 
-function CodePrism({ codeString, language, metastring, ...props }) {
+const CodePrism: React.FC<{
+  codeString: string;
+  language: Language;
+  metastring: string;
+}> = ({ codeString, language, metastring, ...props }) => {
   const shouldHighlightLine = calculateLinesToHighlight(metastring);
 
   if (props['live']) {
@@ -82,7 +88,7 @@ function CodePrism({ codeString, language, metastring, ...props }) {
       </Highlight>
     );
   }
-}
+};
 
 export default CodePrism;
 
@@ -115,7 +121,7 @@ function Copy({ toCopy }: { toCopy: string }) {
   );
 }
 
-const CopyButton = styled.button`
+const CopyButton = styled.button<{ theme: Theme }>`
   position: absolute;
   right: 22px;
   top: 24px;
@@ -145,7 +151,7 @@ const CopyButton = styled.button`
   `}
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ theme: Theme }>`
   overflow: scroll;
   width: 100%;
   max-width: 750px;

@@ -27,7 +27,7 @@ interface AsideProps {
  *                  |  content  |
  *
  */
-function Aside({ contentHeight, children }: AsideProps) {
+const Aside: React.FC<AsideProps> = ({ contentHeight, children }) => {
   const progressRef = useRef<HTMLDivElement>(null);
 
   const [progress, setProgress] = useState<number>(0);
@@ -36,21 +36,25 @@ function Aside({ contentHeight, children }: AsideProps) {
 
   const show = imageOffset && progress < 100;
   const childrenWithProps = React.Children.map(children, (child) =>
-    React.cloneElement(child, { show }),
+    child && React.isValidElement(child)
+      ? React.cloneElement(child, { show: show } as { show: boolean }) // Define the 'show' prop in the component being rendered
+      : null,
   );
 
   useEffect(() => {
-    const imageRect = document
-      .getElementById('ArticleImage__Hero')
-      .getBoundingClientRect();
+    const imageElement = document.getElementById('ArticleImage__Hero');
+    const imageRect = imageElement
+      ? imageElement.getBoundingClientRect()
+      : null;
 
-    const imageOffsetFromTopOfWindow = imageRect.top + window.scrollY;
+    const imageOffsetFromTopOfWindow =
+      (imageRect && imageRect.top + window.scrollY) || 0;
     setImageOffset(imageOffsetFromTopOfWindow);
 
     const handleScroll = throttle(() => {
       const el = progressRef.current;
-      const top = el.getBoundingClientRect().top;
-      const height = el.offsetHeight;
+      const top = (el && el.getBoundingClientRect().top) || 0;
+      const height = (el && el.offsetHeight) || 0;
       const windowHeight =
         window.innerHeight || document.documentElement.clientHeight;
 
@@ -89,7 +93,7 @@ function Aside({ contentHeight, children }: AsideProps) {
       </Align>
     </AsideContainer>
   );
-}
+};
 
 export default Aside;
 
@@ -104,7 +108,7 @@ const AsideContainer = styled.aside`
 `;
 
 const Align = React.memo(styled.div<{
-  show: boolean;
+  show: boolean | number;
   shouldFixAside: boolean;
   imageOffset: number;
 }>`

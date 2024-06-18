@@ -1,6 +1,11 @@
 import React from 'react';
 
-const MediumIcon = ({ fill = 'white' }) => (
+const MediumIcon: React.FC<{
+  fill?: string;
+  height?: number;
+  width?: number;
+  size?: number;
+}> = ({ fill = 'white' }) => (
   <svg
     width="13"
     height="11"

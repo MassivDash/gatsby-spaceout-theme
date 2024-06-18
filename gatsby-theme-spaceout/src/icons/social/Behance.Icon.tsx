@@ -1,6 +1,11 @@
 import React from 'react';
 
-const BehanceIcon = ({ fill = '#fff', size = 32 }) => (
+const BehanceIcon: React.FC<{
+  fill?: string;
+  height?: number;
+  width?: number;
+  size?: number;
+}> = ({ fill = '#fff', size = 32 }) => (
   <svg
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
