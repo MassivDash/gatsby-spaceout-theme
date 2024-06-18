@@ -1,4 +1,36 @@
-export default {
+export interface PrismTheme {
+  token: string;
+  languageJavascript: string;
+  javascript: string;
+  background: string;
+  comment: string;
+  string: string;
+  var: string;
+  number: string;
+  constant: string;
+  plain: string;
+  doctype: string;
+  tag: string;
+  keyword: string;
+  boolean: string;
+  function: string;
+  parameter: string;
+  className: string;
+  attrName: string;
+  attrValue: string;
+  interpolation: string;
+  punctuation: string;
+  ['maybe-class-name']: string;
+  property: string;
+  propertyAccess: string;
+  namespace: string;
+  highlight: string;
+  highlightBorder: string;
+  dom: string;
+  operator: string;
+}
+
+const prismTheme: PrismTheme = {
   token: `#fff`,
   languageJavascript: `#e8696b`,
   javascript: `#e8696b`,
@@ -29,3 +61,5 @@ export default {
   dom: `#5F8DC3`,
   operator: `#5FA8AA`,
 };
+
+export default prismTheme;

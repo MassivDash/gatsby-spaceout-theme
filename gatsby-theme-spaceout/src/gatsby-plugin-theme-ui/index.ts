@@ -1,9 +1,11 @@
 import merge from 'lodash/merge';
 
-import colors from './colors';
-import tags from './tags';
+import colors, { ThemeColors } from './colors';
+import tags, { Tags } from './tags';
 
-const breakpoints = [
+import { Theme } from 'theme-ui';
+
+const breakpoints: [string, number][] = [
   ['phone_small', 320],
   ['phone', 376],
   ['phablet', 540],
@@ -13,7 +15,13 @@ const breakpoints = [
   ['desktop_large', 1440],
 ];
 
-const fonts = {
+interface Fonts {
+  serif: string;
+  sansSerif: string;
+  monospace: string;
+}
+
+const fonts: Fonts = {
   serif: 'Helvetica',
   sansSerif: `'Open Sans', sans serif`,
   monospace: `"Operator Mono", Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace`,
@@ -22,7 +30,17 @@ const fonts = {
 const colorModeTransition =
   'background 0.25s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad)';
 
-export default merge({
+export interface Theme {
+  initialColorMode: 'light' | 'dark';
+  useCustomProperties: boolean;
+  colorModeTransition: string;
+  colors: ThemeColors;
+  fonts: Fonts;
+  breakpoints: Breakpoint[];
+  tags: Tags;
+}
+
+const theme: Theme = merge({
   initialColorMode: 'light',
   useCustomProperties: true,
   colorModeTransition,
@@ -31,3 +49,5 @@ export default merge({
   breakpoints,
   tags,
 });
+
+export default theme;

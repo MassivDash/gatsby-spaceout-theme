@@ -1,6 +1,49 @@
 import prism from './prism';
+import { PrismTheme } from './prism';
 
-export default {
+export interface ThemeColors {
+  prism: PrismTheme;
+  primary: string;
+  secondary: string;
+  grey: string;
+  background: string;
+  accent: string;
+  hover: string;
+  gradient: string;
+  articleText: string;
+  track: string;
+  progress: string;
+  card: string;
+  error: string;
+  success: string;
+  errorBackground: string;
+  horizontalRule: string;
+  inputBackground: string;
+  articleHoverText: string;
+  modes: {
+    dark: {
+      grey: string;
+      primary: string;
+      secondary: string;
+      accent: string;
+      background: string;
+      hover: string;
+      gradient: string;
+      articleText: string;
+      track: string;
+      progress: string;
+      card: string;
+      error: string;
+      success: string;
+      errorBackground: string;
+      horizontalRule: string;
+      inputBackground: string;
+      articleHoverText: string;
+    };
+  };
+}
+
+const colors: ThemeColors = {
   prism,
   primary: '#000',
   secondary: '#eeeeee',
@@ -32,7 +75,6 @@ export default {
       articleText: '#fff',
       track: 'rgba(255, 255, 255, 0.3)',
       progress: '#fff',
-
       card: '#1D2128',
       error: '#EE565B',
       success: '#46B17B',
@@ -43,3 +85,5 @@ export default {
     },
   },
 };
+
+export default colors;

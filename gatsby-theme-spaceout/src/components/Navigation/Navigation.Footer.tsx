@@ -8,8 +8,21 @@ import { connect } from 'react-redux';
 import { setFontSizeIncrease } from '../../state/createStore';
 import { GridLayoutContext } from '../../sections/articles/Articles.List.Context';
 import PostSearchbar from '../PostSearchbar/PostSearchbar';
+import { Theme } from 'src/gatsby-plugin-theme-ui';
 
-function Footer({ ...props }) {
+interface Props {
+  navigatorPosition: 'main' | 'article';
+  navigatorShape: 'hidden' | 'visible';
+  navigatorScroll: false | number;
+  isWideScreen: boolean;
+  categoryFilter: 'Post' | 'Project';
+  fontSizeIncrease: number;
+  mobileControlsOpen: boolean;
+  setFontSizeIncrease: () => void;
+  ScrollToTop: () => void;
+}
+
+const Footer: React.FC<Props> = ({ ...props }) => {
   const {
     gridLayout = 'tiles',
     hasSetGridLayout,
@@ -20,7 +33,7 @@ function Footer({ ...props }) {
   return (
     <ActionsBar mobileControlsOpen={props.mobileControlsOpen}>
       <ActionBarDivider>
-        <PostSearchbar posts={[]} />
+        <PostSearchbar />
         <DarkModeToggle />
         <GridButton
           onClick={() => setGridLayout('tiles')}
@@ -30,7 +43,7 @@ function Footer({ ...props }) {
           aria-label="Show articles in Tile grid"
           {...props}
         >
-          <Icons.Tiles />
+          <Icons.Tiles fill="currentColor" />
         </GridButton>
         <GridButton
           onClick={() => setGridLayout('rows')}
@@ -40,7 +53,7 @@ function Footer({ ...props }) {
           aria-label="Show articles in Row grid"
           {...props}
         >
-          <Icons.Rows />
+          <Icons.Rows fill="currentColor" />
         </GridButton>
       </ActionBarDivider>
       <ActionBarDivider>
@@ -50,7 +63,7 @@ function Footer({ ...props }) {
       </ActionBarDivider>
     </ActionsBar>
   );
-}
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -133,39 +146,6 @@ function DarkModeToggle() {
   );
 }
 
-// function SharePageButton() {
-//   const [hasCopied, setHasCopied] = useState<boolean>(false);
-//   const [colorMode] = useColorMode();
-//   const isDark = colorMode === `dark`;
-//   const fill = isDark ? '#fff' : '#000';
-
-//   function copyToClipboardOnClick() {
-//     if (hasCopied) return;
-
-//     copyToClipboard(window.location.href);
-//     setHasCopied(true);
-
-//     setTimeout(() => {
-//       setHasCopied(false);
-//     }, 1000);
-//   }
-
-//   return (
-//     <IconWrapper
-//       isDark={isDark}
-//       onClick={copyToClipboardOnClick}
-//       data-a11y="false"
-//       aria-label="Copy URL to clipboard"
-//       title="Copy URL to clipboard"
-//     >
-//       <Icons.Link fill={fill} />
-//       <ToolTip isDark={isDark} hasCopied={hasCopied}>
-//         Copied
-//       </ToolTip>
-//     </IconWrapper>
-//   );
-// }
-
 function ToggleFont({
   fontSizeIncrease,
   setFontSizeIncrease,
@@ -237,7 +217,7 @@ function GoToTop({ ScrollToTop, navigatorPosition }) {
   );
 }
 
-const FadeArticleAnimationFont = styled.div`
+const FadeArticleAnimationFont = styled.div<{ navigatorPosition: string }>`
   opacity: ${(p) => (p.navigatorPosition === 'article' ? 1 : 0)};
   transform: ${(p) =>
     p.navigatorPosition === 'article'
@@ -246,7 +226,7 @@ const FadeArticleAnimationFont = styled.div`
   transition: 0.5s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
 `;
 
-const FadeArticleAnimationArrow = styled.div`
+const FadeArticleAnimationArrow = styled.div<{ navigatorPosition: string }>`
   transform: ${(p) =>
     p.navigatorPosition === 'article' ? 'translateY(1px)' : 'translateY(60px)'};
   transition: 0.5s var(--ease-in-out-quad), color 0.25s var(--ease-in-out-quad);
@@ -285,7 +265,7 @@ const ActionBarDivider = styled.div`
   margin-top: 20px;
 `;
 
-const IconWrapper = styled.button<{ isDark: boolean }>`
+const IconWrapper = styled.button<{ isDark: boolean; theme: Theme }>`
   opacity: 0.5;
   position: relative;
   border-radius: 5px;
@@ -326,7 +306,7 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
 `;
 
 // This is based off a codepen! Much appreciated to: https://codepen.io/aaroniker/pen/KGpXZo
-const MoonOrSun = styled.div<{ isDark: boolean }>`
+const MoonOrSun = styled.div<{ isDark: boolean; theme: Theme }>`
   position: relative;
   width: 24px;
   height: 24px;
@@ -378,7 +358,7 @@ const MoonOrSun = styled.div<{ isDark: boolean }>`
   }
 `;
 
-const MoonMask = styled.div<{ isDark: boolean }>`
+const MoonMask = styled.div<{ isDark: boolean; theme: Theme }>`
   position: absolute;
   right: -1px;
   top: -8px;
@@ -418,7 +398,11 @@ const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
     border-top: 6px solid ${(p) => (p.isDark ? '#000' : 'rgba(0,0,0,0.1)')};
   }
 `;
-const GridButton = styled.button<{ active: boolean }>`
+const GridButton = styled.button<{
+  active: boolean;
+  theme: Theme;
+  navigatorPosition: string;
+}>`
   position: relative;
   display: flex;
   align-items: center;

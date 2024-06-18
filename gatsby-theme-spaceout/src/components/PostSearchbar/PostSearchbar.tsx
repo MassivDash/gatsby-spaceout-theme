@@ -5,10 +5,7 @@ import Link from 'gatsby-plugin-transition-link';
 import { MdSearchOff, MdSearch } from 'react-icons/md';
 import { TbZoomReset } from 'react-icons/tb';
 import { MdManageSearch } from 'react-icons/md';
-
-interface Props {
-  posts?: string[];
-}
+import { Theme } from 'src/gatsby-plugin-theme-ui';
 
 type Anchor = {
   element: string;
@@ -53,9 +50,19 @@ type SearchResult = {
   sub_results: SubResult[];
 };
 
+interface SearchResultInnerCall {
+  data: () => Promise<SearchResult>;
+}
+
+type WindowWithPagefind = Window & {
+  pagefind: {
+    search: (term: string) => Promise<{ results: SearchResultInnerCall[] }>;
+  };
+};
+
 type SearchResults = SearchResult[];
 
-const PostSearchbar: React.FC<Props> = ({ posts }) => {
+const PostSearchbar: React.FC = () => {
   const [results, setResults] = useState<SearchResults | []>([]);
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [searchItemVisible, setSearchItemVisible] = useState(false);
@@ -64,13 +71,17 @@ const PostSearchbar: React.FC<Props> = ({ posts }) => {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    // This is constructed in the postbuild action script, so we need to ignore the webpack warning
+    // This is constructed in the postbuild action script, so we need to ignore the webpack warning and ts warning
+    // This requires that the pagefind.js file is in the static folder, run postbuild to generate it
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     import(/* webpackIgnore: true */ '/pagefind/pagefind.js')
       .then((module) => {
-        window.pagefind = module;
+        (window as unknown as WindowWithPagefind).pagefind = module;
         setScriptLoaded(true);
       })
       .catch((err) => {
+        // eslint-disable-next-line no-console
         console.log(err);
       });
   }, []);
@@ -80,12 +91,15 @@ const PostSearchbar: React.FC<Props> = ({ posts }) => {
       setSearchTerm(e.target.value);
 
       // grab the first 5 results
-      const searchResults = await window.pagefind.search(e.target.value);
-      const fiveResults: SearchResults = await Promise.all(
+      const searchResults = await (
+        window as unknown as WindowWithPagefind
+      ).pagefind.search(e.target.value);
+      const fiveResults = await Promise.all(
         searchResults.results.slice(0, 5).map((r) => r.data()),
       );
       setResults(fiveResults);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };
@@ -119,7 +133,7 @@ const PostSearchbar: React.FC<Props> = ({ posts }) => {
                 setSearchTerm('');
               }}
             >
-              <TbZoomReset />
+              <StyledSearchReset />
             </Button>
           )}
         </FlexHolder>
@@ -161,7 +175,7 @@ const PostSearchbar: React.FC<Props> = ({ posts }) => {
 };
 
 const Searchbox = styled.div<{
-  theme: any;
+  theme: Theme;
   searchItemVisible: boolean;
   rowCount: number;
   searchTerm: string;
@@ -178,11 +192,11 @@ const Searchbox = styled.div<{
   transform: ${(p) =>
     p.searchItemVisible ? 'translateX(0)' : 'translateX(150%)'};
   right: calc(2vw + 35px);
-  top: 5px;
+  top: 10px;
   flex-direction: column;
   margin-left: 320px;
   height: ${(p) =>
-    p.rowCount > 0 ? p.rowCount * 400 : p.searchTerm !== '' ? 400 : 75}px;
+    p.rowCount > 0 ? p.rowCount * 400 : p.searchTerm !== '' ? 400 : 55}px;
   max-height: 95%;
   overflow-y: scroll;
   transition: all 0.9s var(--ease-in-out-quad),
@@ -225,7 +239,7 @@ const ResultCard = styled.div`
   list-style: none;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ theme: any }>`
   background: transparent;
   border: none;
   cursor: pointer;
@@ -314,7 +328,8 @@ const FlexHolder = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  no-wrap: true;
+  flex-wrap: nowrap;
+  width: 100%;
 `;
 
 export default PostSearchbar;
