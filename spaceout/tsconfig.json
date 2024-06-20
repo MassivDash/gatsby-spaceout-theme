@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "esnext",
-    "lib": ["dom", "es5", "es6", "es7", "scripthost", "es2015"],
+    "target": "es6",
+    "module": "es6",
+    "lib": ["dom", "es5", "es6", "es7", "scripthost"],
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,

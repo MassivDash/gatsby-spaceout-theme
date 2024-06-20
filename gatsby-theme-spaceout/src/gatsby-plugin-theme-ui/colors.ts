@@ -6,6 +6,7 @@ export interface ThemeColors {
   primary: string;
   secondary: string;
   grey: string;
+  spaceout: string;
   background: string;
   accent: string;
   hover: string;
@@ -26,6 +27,7 @@ export interface ThemeColors {
       primary: string;
       secondary: string;
       accent: string;
+      spaceout: string;
       background: string;
       hover: string;
       gradient: string;
@@ -49,6 +51,7 @@ const colors: ThemeColors = {
   secondary: '#eeeeee',
   grey: '#373737',
   background: '#fafafa',
+  spaceout: '#313131',
   accent: '#27262d',
   hover: 'rgba(0, 0, 0, 0.07)',
   gradient: 'linear-gradient(180deg, rgba(217, 219, 224, 0) 0%, #D9DBE0 100%)',
@@ -67,6 +70,7 @@ const colors: ThemeColors = {
       grey: '#fafafa',
       primary: '#fff',
       secondary: '#fff',
+      spaceout: '#cfcfd0',
       accent: '#E9DAAC',
       background: '#111216',
       hover: 'rgba(255, 255, 255, 0.07)',

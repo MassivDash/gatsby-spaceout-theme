@@ -2,13 +2,13 @@ require('dotenv').config();
 
 const siteMetadata = {
   title: `Spaceout`,
-  name: `Interstellar design`,
+  name: `beyond excelsior`,
   siteUrl: `https://spaceout.pl`,
-  description: `UX/UI design, Web and Native App develeopement.`,
+  description: `Software development, application and system architecture, developer and user experience, user interface, web and native app development.`,
   readingTime: true,
   similarPosts: true,
   hero: {
-    heading: `Intersetellar web design`,
+    heading: `beyond excelsior`,
     maxWidth: 652,
   },
   menuLinks: [

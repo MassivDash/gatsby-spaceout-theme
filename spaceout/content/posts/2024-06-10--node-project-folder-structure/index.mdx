@@ -12,7 +12,7 @@ tech:
 ---
 
 import { TreeChart } from '../components/treechart.jsx';
-import { monorepo, monorepoSrc } from './monorepo.jsx';
+import monoRepoJson from './monorepo.json';
 
 # Folders, files and the mayhem that comes with it
 
@@ -32,7 +32,7 @@ overwhelming depending on the maturity of the project.
 
 Lets a have a quick look at this monorepo node + react structue
 
-<TreeChart folder={monorepo} />
+<TreeChart folder={monoRepoJson} />
 
 The monorepo shares a common node modules and uses webpack to build front and
 back end. Front end is usually served via express.js as a static bundle but can
@@ -49,5 +49,3 @@ fellow devs although not able to remember all the folders and files, can easily
 navigate through the project.
 
 ## Front to back connection
-
-<TreeChart folder={monorepoSrc} />

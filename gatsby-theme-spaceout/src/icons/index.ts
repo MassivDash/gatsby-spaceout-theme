@@ -59,7 +59,7 @@ import { ReactComponent as Tailwind } from './devIcons/tailwind.svg';
 import { ReactComponent as TS } from './devIcons/ts.svg';
 import { ReactComponent as Wordpress } from './devIcons/wordpress.svg';
 import { ReactComponent as Yml } from './devIcons/yml.svg';
-import { ReactComponent as Rust } from './devIcons/rust.svg';
+import { FaRust as Rust } from 'react-icons/fa';
 
 export default {
   Behance,

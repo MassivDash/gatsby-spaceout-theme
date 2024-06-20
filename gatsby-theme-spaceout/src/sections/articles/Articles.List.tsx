@@ -32,6 +32,7 @@ const siteQuery = graphql`
 interface ArticlesListProps {
   articles: IArticle[];
   alwaysShowAllDetails?: boolean;
+  id: string;
 }
 
 interface ArticlesListItemProps {
@@ -42,6 +43,7 @@ interface ArticlesListItemProps {
 const ArticlesList: FC<ArticlesListProps> = ({
   articles,
   alwaysShowAllDetails,
+  id,
 }) => {
   if (!articles) return null;
 
@@ -73,6 +75,7 @@ const ArticlesList: FC<ArticlesListProps> = ({
 
   return (
     <ArticlesListContainer
+      id={id}
       style={{ opacity: hasSetGridLayout ? 1 : 0 }}
       alwaysShowAllDetails={alwaysShowAllDetails}
     >

@@ -28,7 +28,7 @@ function ArticlesPage({
       <Section narrow data-pagefind-ignore>
         {!checkIfSecondPageOrAbove && <SpaceHero />}
         <ArticlesHero authors={authors as any} top />
-        <ArticlesList articles={articles} />
+        <ArticlesList id="Articles" articles={articles} />
         <ArticlesPaginator show={pageContext.pageCount > 1}>
           <Paginator {...(pageContext as any)} />
         </ArticlesPaginator>

@@ -1,151 +1,159 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, FC } from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
+import React, { FC, useState } from 'react';
 import logo from './logo.png';
-// import uuid from 'uuid';
-import Image from 'gatsby-image';
+import { useColorMode } from 'theme-ui';
 import { keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
+import { Theme } from 'src/gatsby-plugin-theme-ui';
 import mediaqueries from '@styles/media';
+import * as THREE from 'three';
+import OrbitControls from './three/orbitControls';
+import planetTexture from './2k_haumea.jpg';
+
+import { useEffect, useRef } from 'react';
+
+function MyThree() {
+  const refContainer = useRef(null);
+  const [colorMode] = useColorMode();
+  const [initialized, setInitialised] = useState(false);
+  const isDark = colorMode === `dark`;
+  const OrControls = OrbitControls(THREE);
+
+  useEffect(() => {
+    // we need to restart the scene if the color mode changes
+    if (initialized) {
+      // destroy the scene
+      // remove the event listener
+
+      // remove the canvas
+      (refContainer?.current as unknown as HTMLElement)?.removeChild(
+        (refContainer?.current as unknown as HTMLElement).childNodes[0],
+      );
+    }
+
+    const objects: any[] = [];
+
+    // === THREE.JS CODE START ===
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(isDark ? 0x111216 : 0xfafafa);
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000,
+    );
+
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    // document.body.appendChild( renderer.domElement );
+    // use ref as a mount point of the Three.js scene instead of the document.body
+    (refContainer.current as unknown as HTMLElement) &&
+      (refContainer.current as unknown as HTMLElement).appendChild(
+        renderer.domElement,
+      );
+    const geometry = new THREE.SphereGeometry(0.9, 100, 100);
+    const loadManager = new THREE.LoadingManager();
+    const loader = new THREE.TextureLoader(loadManager);
+    const texture = loader.load(planetTexture);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    const material = new THREE.MeshBasicMaterial({
+      map: texture,
+      overdraw: 0.1,
+    });
+    const sphere = new THREE.Mesh(geometry, material);
+
+    loadManager.onLoad = () => {
+      scene.add(sphere);
+      objects.push(sphere);
+      camera.position.z = 2.2;
+      camera.position.y = 0;
+
+      const animate = function () {
+        requestAnimationFrame(animate);
+        sphere.rotation.x += 0.001;
+        sphere.rotation.y += 0.001;
+        render();
+      };
+      animate();
+
+      new OrControls(camera, renderer.domElement);
+
+      window.addEventListener('resize', onWindowResize, false);
+      onWindowResize();
+
+      function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        render();
+      }
+
+      function render() {
+        renderer.render(scene, camera);
+      }
+
+      setInitialised(true);
+    };
+
+    loadManager.onError = (e) => {
+      console.error('There was an error loading ' + e);
+    };
+  }, [isDark]);
+  return <div ref={refContainer}></div>;
+}
 
 const SpaceHero: FC = () => {
-  const [backgroundLoaded, onBackgroundLoad] = useState(false);
-  const [spacemanLoaded, onSpacemanLoad] = useState(false);
-
-  const spaceHeroQuery = graphql`
-    {
-      site: allSite {
-        edges {
-          node {
-            siteMetadata {
-              hero {
-                heading
-                maxWidth
-              }
-            }
-          }
-        }
-      }
-      back: imageSharp(original: { src: { regex: "/heroBack/" } }) {
-        id
-        fluid(maxWidth: 1920, quality: 90, traceSVG: { color: "#121f28" }) {
-          aspectRatio
-          src
-          srcSet
-          srcWebp
-          srcSetWebp
-          sizes
-          tracedSVG
-        }
-        resize(width: 1920) {
-          src
-        }
-      }
-      spaceman: imageSharp(original: { src: { regex: "/spaceman/" } }) {
-        id
-        fluid(maxWidth: 3000, quality: 90, traceSVG: { color: "#FFF" }) {
-          base64
-          aspectRatio
-          src
-          srcSet
-          srcWebp
-          srcSetWebp
-          sizes
-          tracedSVG
-        }
-        resize(width: 1920) {
-          src
-        }
-      }
-    }
-  `;
-
-  const results = useStaticQuery(spaceHeroQuery);
-  const { spaceman, back } = results;
-
   return (
     <Hero>
-      <Blackie>
-        <Image fluid={back.fluid} onLoad={() => onBackgroundLoad(true)} />
-      </Blackie>
-      <div>
-        {backgroundLoaded && spacemanLoaded && (
-          <SpaceoutBox>
-            <City src={logo} alt="" />
+      <ThreeContainer>
+        <MyThree />
+      </ThreeContainer>
+      <SpaceoutBox>
+        <City src={logo} alt="" />
+        <AnimatedSpace>
+          <svg
+            onClick={() =>
+              document
+                .getElementById('Articles')
+                ?.scrollIntoView({ behavior: 'smooth' })
+            }
+          >
+            <title>{'spaceout.pl'}</title>
+            <text fontFamily="Paytone one" fillRule="evenodd">
+              <tspan x={3} y={109}>
+                {[...'spaceout'].map((letter) => (
+                  <tspan key={letter + Math.random()}>{letter}</tspan>
+                ))}
+              </tspan>
+            </text>
+          </svg>
+        </AnimatedSpace>
 
-            <AnimatedSpace>
-              <svg>
-                <title>{'spaceout.pl'}</title>
-                <text
-                  stroke="#fff"
-                  fill="#645F5A"
-                  fontFamily="Paytone one"
-                  fillRule="evenodd"
-                >
-                  <tspan x={3} y={109}>
-                    {[...'spaceout'].map((letter) => (
-                      <tspan key={letter + Math.random()}>{letter}</tspan>
-                    ))}
-                  </tspan>
-                </text>
-              </svg>
-            </AnimatedSpace>
-
-            <AnimatedStellar>
-              <svg>
-                <title>{'spaceout.pl'}</title>
-                <text
-                  strokeWidth="1"
-                  stroke="#fff"
-                  fill="#645F5A"
-                  fontFamily="Satisfy"
-                  fillRule="evenodd"
-                >
-                  <tspan x={3} y={109}>
-                    {[...'interstellar design'].map((letter) => (
-                      <tspan key={letter + Math.random()}>{letter}</tspan>
-                    ))}
-                  </tspan>
-                </text>
-              </svg>
-            </AnimatedStellar>
-          </SpaceoutBox>
-        )}
-        <Spaceman>
-          <Image
-            fluid={spaceman.fluid}
-            style={{
-              position: 'aboslute',
-              width: '100%',
-              height: '100%',
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-            }}
-            onLoad={() => onSpacemanLoad(true)}
-          />
-        </Spaceman>
-      </div>
+        <AnimatedStellar>
+          <svg
+            onClick={() =>
+              document
+                .getElementById('Articles')
+                ?.scrollIntoView({ behavior: 'smooth' })
+            }
+          >
+            <title>{'spaceout.pl'}</title>
+            <text fontFamily="Satisfy" fillRule="evenodd">
+              <tspan x={3} y={109}>
+                {[...'beyond excelsior'].map((letter) => (
+                  <tspan key={letter + Math.random()}>{letter}</tspan>
+                ))}
+              </tspan>
+            </text>
+          </svg>
+        </AnimatedStellar>
+      </SpaceoutBox>
     </Hero>
   );
 };
 
-const moveBlack = keyframes`
-	0% {
-		transform: scale(3) translate(-400px)
-	}
-	50% {
-		transform: scale(3) translate(0px)
-    	}
-
-	100% {transform: scale(3) translate(-400px)
-	}
-`;
-
 const Hero = styled.div`
   overflow: hidden;
-  background-color: #121f28;
+  background-color: transparent;
   min-height: 90vh;
   height: 900px;
   margin-top: 40px;
@@ -155,7 +163,6 @@ const Hero = styled.div`
   align-items: center;
   position: relative;
   z-index: 1;
-  box-shadow: 0px 20px 40px rgb(0 0 0 / 20%);
 
   ${mediaqueries.desktop`
     margin: 40px 0 0 10px;
@@ -163,43 +170,24 @@ const Hero = styled.div`
     `}
 `;
 
-const Blackie = styled.div`
-  z-index: 0;
-  background-color: transparent;
-  position: absolute;
-  right: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  display: grid;
-  animation: ${moveBlack} 120s linear infinite;
-  ${mediaqueries.desktop`
-  width: calc(5 * 100vw);
-  height: calc(2 * 100vh);
-  top: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    `}
-`;
-
 const animationDelayTime = 300;
 
 const draw = keyframes`
 	0% {
-		fill: none;
+    opacity: 0
+    fill-opacity: 0;
     z-index: 5;
 	}
 	90% {
-		fill: #FFFFFF00;
+		opacity: 0.7;
+    fill-opacity: 0.7;
     z-index: 5;
 	}
 
 	100% {
+    opacity: 1;
 		stroke-dashoffset: 0;
 		fill-opacity: 1;
-		fill: #FFFFFF;
     z-index: 5;
 	}
 `;
@@ -230,50 +218,8 @@ const moveCity = keyframes`
     transform: translate(134px, -83px)
 	}
 `;
-const moveSpaceman = keyframes`
-	0% {
 
-    transform: translate(-345px,-502px)
-    	}
-
-  25% {
-
-    transform: translate(-365px,-522px)
-  }
-
-	50% {
-
-    transform: translate(-375px,-532px)
-	}
-
-  75% {
-
-    transform: translate(-365px,-522px)
-  }
-
-	100% {
-
-    transform: translate(-345px,-502px)
-	}
-`;
-
-// function template(i) {
-//   return css`
-//       &:nth-of-type(${i + 1}) {
-//         animation: ${draw} 600ms ${i + 1 * animationDelayTime}ms forwards;
-//        }
-//     `;
-// }
-
-// function getAnimations(items) {
-//   let str = '';
-//   for (let i = 0; i < items; i += 1) {
-//     str += template(i);
-//   }
-//   return str;
-// }
-
-const AnimatedSpace = styled.div`
+const AnimatedSpace = styled.div<{ theme: Theme }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -281,17 +227,19 @@ const AnimatedSpace = styled.div`
   z-index: 5;
   left: 10vw;
   width: 100%;
+  opacity: 0.8;
   min-height: 300px;
   svg {
     width: 100%;
     height: auto;
-    fill: none;
-    stroke: white;
+
+    stroke: none;
+    fill: ${(p) => p.theme.colors.primary};
     stroke-width: 4;
     tspan > tspan {
       stroke-dasharray: 1500;
       stroke-dashoffset: -1500;
-      fill: none;
+      opacity: 0;
       font-size: 160px;
       &:nth-of-type(1) {
         animation: ${draw} 600ms ${1 * animationDelayTime}ms forwards;
@@ -319,6 +267,7 @@ const AnimatedSpace = styled.div`
       }
     }
   }
+
   @media (max-width: 767px) {
     transform: rotate(90deg) scale(0.8);
     left: -90vw;
@@ -328,7 +277,7 @@ const AnimatedSpace = styled.div`
   }
 `;
 
-const AnimatedStellar = styled.div`
+const AnimatedStellar = styled.div<{ theme: Theme }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -344,13 +293,13 @@ const AnimatedStellar = styled.div`
   svg {
     width: 100%;
     height: auto;
-    fill: none;
-    stroke: white;
-    stroke-width: 4;
+    stroke: ${(p) => p.theme.colors.grey};
+    fill: ${(p) => p.theme.colors.grey};
+    stroke-width: 2;
     tspan > tspan {
       stroke-dasharray: 1500;
       stroke-dashoffset: -1500;
-      fill: none;
+      opacity: 0;
       font-size: 67px;
       font-weight: normal;
 
@@ -448,17 +397,10 @@ const City = styled.img`
   }
 `;
 
-const Spaceman = styled.div`
+const ThreeContainer = styled.div`
+  width: 100%;
+  height: 100%;
   position: absolute;
-  transition: 3s ease-in-out;
-  z-index: 0;
-  width: 1250px;
-  animation: ${moveSpaceman} 38s linear infinite;
-
-  @media (max-width: 767px) {
-    top: 60vh;
-    left: 0;
-  }
 `;
 
 export default SpaceHero;
