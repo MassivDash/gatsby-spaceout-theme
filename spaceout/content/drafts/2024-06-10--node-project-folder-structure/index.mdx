@@ -1,0 +1,127 @@
+---
+title: Folders, Files and Structure of a Node.js Project
+excerpt: A guide to organizing your any js project
+date: 2024-06-06
+hero: foldersCover.jpg
+author: Luke Celitan
+appDescription: Architecture
+category: Post
+tech:
+  - TS
+  - Nodejs
+---
+
+import { TreeChart } from '../components/treechart.jsx';
+import nextjs from './nextjs.json';
+
+# Folders, files and the mayhem that comes with it
+
+I will try to investigate the affects of folder structure on the DX (Developer
+Experience) and how it can affects the project in the long run in terms of
+structure, maintability and scabaility.
+
+## Vintage point
+
+As software developers, we grapple with intricate systems, complex algorithms,
+and intricate code. The complexity of our codebases impacts not only our
+productivity but also the reliability and maintainability of our software.
+
+Folders and files serve as the building blocks of any project, but calculating
+or estimating project complexity remains challenging. Does a higher number of
+folders and files necessarily indicate a more complex project? With proper
+refactoring, testing, and documentation, it seems that having more folders and
+files may actually make the project less complex.
+
+When pondering project complexity, we should consider some magical ratio—a
+combination of the number of folders, files, and lines of code per file—that
+could provide insights into the project’s overall complexity.
+
+## Cyclomatic Complexity and the Halstead Volume Metric.
+
+Cyclomatic complexity and the Halstead Volume Metric are most common searches
+for code complexity formulas and metrics. I thought it would be nice to make
+some notes on those before we continue.
+
+Cyclomatic Complexity: Unraveling Code Paths Cyclomatic complexity, introduced
+by Thomas McCabe in 1976, quantifies the number of linearly independent paths
+through a program’s source code. Imagine your code as a labyrinth, with each
+decision point (such as an if statement or a loop) creating a branching path.
+The more branches, the more complex the code. Here are some key points:
+
+### Counting Paths: Cyclomatic complexity is calculated using the formula:
+
+M = E - N + 2P
+
+- (M) represents the cyclomatic complexity.
+- (E) is the number of edges (control flow paths) in the control graph.
+- (N) is the number of nodes (decision points) in the graph.
+- (P) is the number of connected components (usually 1 for a single program).
+
+### Thresholds and Interpretation:
+
+- A higher cyclomatic complexity indicates greater code complexity.
+- Common thresholds:
+  - 1-10: Simple code.
+  - 11-20: Moderately complex code.
+  - 21+: Complex code that needs attention.
+- High complexity can lead to bugs, maintenance challenges, and reduced code
+  quality.
+
+### The Halstead Volume Metric
+
+Halstead Volume Metric: Measuring Code Vocabulary The Halstead Volume Metric,
+proposed by Maurice Howard Halstead in 1977, takes a different approach. It
+analyzes code structure and vocabulary, considering both operators and operands.
+
+V = N \cdot \log_2(n)
+
+- (V) represents the volume.
+- (N) is the program length (sum of operators and operands).
+- (n) is the total number of unique operators and operands.
+
+### Interpretation:
+
+- A higher volume indicates more complex code.
+- Unlike cyclomatic complexity, which focuses on control flow, the Halstead
+  metric considers the richness of the code’s vocabulary.
+- It reflects how challenging it is to understand the code due to its unique
+  constructs.
+
+### The new metric ?
+
+There are commercial and hence private "forumals" and metrics for measuring code
+coplexity, SonarQube, Codacy and jellyfish all provide code quality and
+complexity metrics, but what I am looking for is a simple metric that can be
+applied to any software project, regardless of the language or framework.
+
+Before I start making any assumptions, let's review project file and folder
+structure from some popular open source projects.
+
+### The folder mayhem in Next.js
+
+Below you will find interactive folder structure for curren version of Next.js
+There is a extra timing challange for you, try to find the `pages` press start
+and the timer will start ticking you will be asked to find one random page from
+the repo.
+
+<TreeChart folder={nextjs} />
+
+The Next.js is a great example on how overwhelimng a project structure can be.
+You can tell from the start you have to be a very dedicated developer for any
+hope of actually contrbuting to the project. This monorope includes rust,
+typescript, example pages, tests, mysterious experimental folders, plugins,
+errors and many more. Since the project is open source, popular and its
+matuarity is quite high, running at ver 14 and with corporate back up, we can
+assume that although project structure is complex, it is reasonably maintained.
+
+We can gather some simple data that will be the basis for the new complexity
+metric. I have decided to use the following data points:
+
+| codelines | All Characters | Folders | Files | Deepest Level |
+| --------- | -------------- | ------- | ----- | ------------- |
+| 1838968   | 113077701      | 7516    | 16365 | 13            |
+
+Complexity = (folders \* Deepest level) / ((files \* codelines) / All
+Characters)
+
+## Front to back connection

@@ -4,7 +4,7 @@ const siteMetadata = {
   title: `Spaceout`,
   name: `beyond excelsior`,
   siteUrl: `https://spaceout.pl`,
-  description: `Software development, application and system architecture, developer and user experience, user interface, web and native app development.`,
+  description: `Software development, application and system architecture`,
   readingTime: true,
   similarPosts: true,
   hero: {
