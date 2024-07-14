@@ -10,10 +10,10 @@ import {
   ComposedChart,
 } from 'recharts';
 
-export const ScatterChart = ({ data }) => {
+export const ScatterChart = ({ data, labelKey = 'name' }) => {
   const [mode, setMode] = React.useState(false);
 
-  const name = data[0].name || 'Error';
+  const name = data[0][labelKey] || 'Error';
 
   const html = data
     .filter((item) => item['Content-Type'] === 'text/html')

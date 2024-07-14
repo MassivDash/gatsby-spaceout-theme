@@ -1,0 +1,59 @@
+{
+    "totalProjects": 7,
+    "projects": [
+        {
+            "codelines": 746,
+            "chars": 31823,
+            "folders": 4,
+            "files": 21,
+            "deepestLevel": 3,
+            "complexity": 14,
+            "name": "angular-starter"
+        },
+        {
+            "codelines": 39,
+            "chars": 644,
+            "folders": 1,
+            "files": 3,
+            "deepestLevel": 1,
+            "complexity": 1,
+            "name": "helloWorld"
+        },
+        {
+            "codelines": 306,
+            "chars": 9070,
+            "folders": 3,
+            "files": 15,
+            "deepestLevel": 2,
+            "complexity": 5,
+            "name": "nest-starter"
+        },
+        {
+            "codelines": 306,
+            "chars": 9230,
+            "folders": 3,
+            "files": 17,
+            "deepestLevel": 2,
+            "complexity": 6,
+            "name": "react-starter"
+        },
+        {
+            "codelines": 14384,
+            "chars": 160352,
+            "folders": 10,
+            "files": 36,
+            "deepestLevel": 5,
+            "complexity": 104,
+            "name": "svelte-starter"
+        },
+        {
+            "codelines": 209,
+            "chars": 4885,
+            "folders": 5,
+            "files": 12,
+            "deepestLevel": 3,
+            "complexity": 4,
+            "name": "vue-starter"
+        }
+    ]
+}

@@ -42,7 +42,7 @@ function MyThree() {
       1000,
     );
 
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     // document.body.appendChild( renderer.domElement );
     // use ref as a mount point of the Three.js scene instead of the document.body
@@ -75,7 +75,8 @@ function MyThree() {
       };
       animate();
 
-      new OrControls(camera, renderer.domElement);
+      const controls = new OrControls(camera, renderer.domElement);
+      controls.minDistance = 1.2; // how far you can zoom in
 
       window.addEventListener('resize', onWindowResize, false);
       onWindowResize();

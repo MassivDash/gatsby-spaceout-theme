@@ -1,0 +1,68 @@
+{
+  "totalProjects": 8,
+  "projects": [
+    {
+      "codelines": 1031506,
+      "chars": 35998462,
+      "folders": 2088,
+      "files": 8492,
+      "deepestLevel": 12,
+      "complexity": 33295,
+      "name": "angular"
+    },
+    {
+      "codelines": 39,
+      "chars": 644,
+      "folders": 1,
+      "files": 2,
+      "deepestLevel": 1,
+      "complexity": 1,
+      "name": "helloWorld"
+    },
+    {
+      "codelines": 121478,
+      "chars": 3563867,
+      "folders": 591,
+      "files": 2005,
+      "deepestLevel": 7,
+      "complexity": 2960,
+      "name": "nest"
+    },
+    {
+      "codelines": 1675551,
+      "chars": 84344594,
+      "folders": 7513,
+      "files": 16360,
+      "deepestLevel": 13,
+      "complexity": 2100659,
+      "name": "next.js"
+    },
+    {
+      "codelines": 746718,
+      "chars": 22874058,
+      "folders": 536,
+      "files": 6441,
+      "deepestLevel": 11,
+      "complexity": 20913,
+      "name": "react"
+    },
+    {
+      "codelines": 261712,
+      "chars": 6965036,
+      "folders": 3000,
+      "files": 7704,
+      "deepestLevel": 9,
+      "complexity": 6907,
+      "name": "svelte"
+    },
+    {
+      "codelines": 150388,
+      "chars": 4593935,
+      "folders": 94,
+      "files": 661,
+      "deepestLevel": 6,
+      "complexity": 3231,
+      "name": "vue-core"
+    }
+  ]
+}
