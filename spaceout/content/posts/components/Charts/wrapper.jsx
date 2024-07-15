@@ -9,48 +9,17 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import React, { useEffect, useRef, useState } from 'react';
-
+import React from 'react';
+import { Observer } from '../intersectionObserver';
 export const ChartStyleWrapper = ({ children }) => {
-  const [isInView, setIsInView] = useState(false);
-  const chartRef = useRef();
-
-  useEffect(() => {
-    const reference = chartRef.current;
-    if (typeof window !== 'undefined') {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          setIsInView(entry.isIntersecting);
-        },
-        {
-          root: null,
-          rootMargin: '0px',
-          threshold: 0.1,
-        },
-      );
-
-      if (reference) {
-        observer.observe(reference);
-      }
-
-      return () => {
-        if (reference) {
-          observer.unobserve(reference);
-        }
-      };
-    }
-  }, []);
-
   return (
-    <div className="chartHolder" ref={chartRef}>
-      {isInView && (
-        <div className="chartInnerHolder">
-          <ResponsiveContainer width="100%" height="100%">
-            {children}
-          </ResponsiveContainer>
-        </div>
-      )}
-    </div>
+    <Observer>
+      <div className="chartInnerHolder">
+        <ResponsiveContainer width="100%" height="100%">
+          {children}
+        </ResponsiveContainer>
+      </div>
+    </Observer>
   );
 };
 

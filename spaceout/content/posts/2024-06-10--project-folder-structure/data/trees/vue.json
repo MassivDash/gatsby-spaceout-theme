@@ -1,5 +1,5 @@
 {
-  "name": "core",
+  "name": "vue",
   "children": [
     {
       "name": ".github",

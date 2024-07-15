@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   DiCss3,
   DiJavascript,
@@ -31,7 +31,7 @@ import { VscJson } from 'react-icons/vsc';
 import TreeView, { flattenTree } from 'react-accessible-treeview';
 import './uiStyles.css';
 
-export function TreeChart({ folder }) {
+export const TreeChart = memo(({ folder }) => {
   const data = flattenTree(folder);
   return (
     <div>
@@ -64,7 +64,7 @@ export function TreeChart({ folder }) {
       </div>
     </div>
   );
-}
+});
 
 const FolderIcon = ({ isOpen, folderType }) => {
   return (

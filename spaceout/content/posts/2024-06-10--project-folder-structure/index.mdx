@@ -30,6 +30,7 @@ import reactStarter from './data/trees/react-starter.json';
 import angularStarter from './data/trees/angular-starter.json';
 import svelteStarter from './data/trees/svelte-starter.json';
 import nestStarter from './data/trees/nest-starter.json';
+import nextjsStarter from './data/trees/nextjs-blog.json';
 
 import complexityScores from './data/complexityScoresProjects.json';
 import complexityScoresStarters from './data/complexityScoresStarters.json';
@@ -223,6 +224,8 @@ complexity of these projects from a developer's perspective.
 
 #### The popular starter projects from the biggest frontend frameworks
 
+<div style="height: 25px" />
+
 <ComplexityChart data={complexityScoresStarters.projects} labelKey />
 
 You can check the folder structre of those projects below, select from the
@@ -240,9 +243,11 @@ dropdown to see the folder structure of the project.
 
 #### Complexity scores on the projects from the biggest frontend frameworks
 
+<div style="height: 25px" />
+
 <ComplexityChart data={complexityScores.projects} labelKey />
 
-<TreeChartChanger folders={[angular, react, svelte, nest, vue]} />
+<TreeChartChanger folders={[angular, react, svelte, nest, vue, nextjs]} />
 
 > Next.js project ended up with +2 mil complexlity score, is it justified ?
 
