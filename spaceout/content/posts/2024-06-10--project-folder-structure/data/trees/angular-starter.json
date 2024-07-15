@@ -1,0 +1,83 @@
+{
+    "name": "angular-starter",
+    "children": [
+        {
+            "name": "public",
+            "children": [
+                {
+                    "name": "favicon.ico"
+                }
+            ]
+        },
+        {
+            "name": "src",
+            "children": [
+                {
+                    "name": "app",
+                    "children": [
+                        {
+                            "name": "app.component.html"
+                        },
+                        {
+                            "name": "app.component.scss"
+                        },
+                        {
+                            "name": "app.component.spec.ts"
+                        },
+                        {
+                            "name": "app.component.ts"
+                        },
+                        {
+                            "name": "app.config.server.ts"
+                        },
+                        {
+                            "name": "app.config.ts"
+                        },
+                        {
+                            "name": "app.routes.ts"
+                        }
+                    ]
+                },
+                {
+                    "name": "index.html"
+                },
+                {
+                    "name": "main.server.ts"
+                },
+                {
+                    "name": "main.ts"
+                },
+                {
+                    "name": "styles.scss"
+                }
+            ]
+        },
+        {
+            "name": ".editorconfig"
+        },
+        {
+            "name": ".gitignore"
+        },
+        {
+            "name": "angular.json"
+        },
+        {
+            "name": "package.json"
+        },
+        {
+            "name": "README.md"
+        },
+        {
+            "name": "server.ts"
+        },
+        {
+            "name": "tsconfig.app.json"
+        },
+        {
+            "name": "tsconfig.json"
+        },
+        {
+            "name": "tsconfig.spec.json"
+        }
+    ]
+}

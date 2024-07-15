@@ -1,0 +1,66 @@
+{
+  "name": "react-starter",
+  "children": [
+    {
+      "name": "public",
+      "children": [
+        {
+          "name": "favicon.ico"
+        },
+        {
+          "name": "index.html"
+        },
+        {
+          "name": "logo192.png"
+        },
+        {
+          "name": "logo512.png"
+        },
+        {
+          "name": "manifest.json"
+        },
+        {
+          "name": "robots.txt"
+        }
+      ]
+    },
+    {
+      "name": "src",
+      "children": [
+        {
+          "name": "App.css"
+        },
+        {
+          "name": "App.js"
+        },
+        {
+          "name": "App.test.js"
+        },
+        {
+          "name": "index.css"
+        },
+        {
+          "name": "index.js"
+        },
+        {
+          "name": "logo.svg"
+        },
+        {
+          "name": "reportWebVitals.js"
+        },
+        {
+          "name": "setupTests.js"
+        }
+      ]
+    },
+    {
+      "name": ".gitignore"
+    },
+    {
+      "name": "package.json"
+    },
+    {
+      "name": "README.md"
+    }
+  ]
+}

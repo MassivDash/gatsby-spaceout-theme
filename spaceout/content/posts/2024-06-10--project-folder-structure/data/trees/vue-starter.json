@@ -1,0 +1,61 @@
+{
+  "name": "vue-starter",
+  "children": [
+    {
+      "name": "public",
+      "children": [
+        {
+          "name": "favicon.ico"
+        },
+        {
+          "name": "index.html"
+        }
+      ]
+    },
+    {
+      "name": "src",
+      "children": [
+        {
+          "name": "assets",
+          "children": [
+            {
+              "name": "logo.png"
+            }
+          ]
+        },
+        {
+          "name": "components",
+          "children": [
+            {
+              "name": "HelloWorld.vue"
+            }
+          ]
+        },
+        {
+          "name": "App.vue"
+        },
+        {
+          "name": "main.js"
+        }
+      ]
+    },
+    {
+      "name": ".gitignore"
+    },
+    {
+      "name": "babel.config.js"
+    },
+    {
+      "name": "jsconfig.json"
+    },
+    {
+      "name": "package.json"
+    },
+    {
+      "name": "README.md"
+    },
+    {
+      "name": "vue.config.js"
+    }
+  ]
+}

@@ -1,0 +1,322 @@
+---
+title: Folders, Files and everything in between
+excerpt: A guide to organizing your any js project
+date: 2024-06-06
+hero: foldersCover.jpg
+author: Luke Celitan
+appDescription: Architecture
+category: Post
+tech:
+  - TS
+  - Nodejs
+  - Nextjs
+  - ReactIcon
+---
+
+import { TreeChart } from '../components/treechart.jsx';
+import { TreeChartChanger } from '../components/treeChartChanger.jsx';
+import { ComplexityChart } from '../components/Charts/complexityChart.jsx';
+import { LineChartComplexity } from '../components/Charts/lineChart.jsx';
+
+import nextjs from './data/trees/nextjs.json';
+import react from './data/trees/react.json';
+import angular from './data/trees/angular.json';
+import nest from './data/trees/nest.json';
+import svelte from './data/trees/svelte.json';
+import vue from './data/trees/vue.json';
+
+import vueStarter from './data/trees/vue-starter.json';
+import reactStarter from './data/trees/react-starter.json';
+import angularStarter from './data/trees/angular-starter.json';
+import svelteStarter from './data/trees/svelte-starter.json';
+import nestStarter from './data/trees/nest-starter.json';
+
+import complexityScores from './data/complexityScoresProjects.json';
+import complexityScoresStarters from './data/complexityScoresStarters.json';
+import complexityGraphData from './data/complexityGraphData.json';
+
+## Folders, Files, and the Mayhem That Comes With It
+
+Let's dive into the fascinating world of project structure and its impact on
+Developer Experience (DX). We'll explore how folder organization affects a
+project's long-term maintainability and scalability.
+
+Buckle up—this journey might change how you think about your code's
+architecture! A Developer's Perspective As software developers, we're constantly
+wrestling with intricate systems, complex algorithms, and elaborate code.
+
+The complexity of our codebases doesn't just impact our productivity—it's a key
+factor in the reliability and maintainability of our software. Folders and files
+are the building blocks of any project, but how do we measure their impact on
+complexity? Is a project with more folders and files inherently more complex? Or
+could proper refactoring, testing, and documentation actually make a larger
+project less complex?
+
+These are the questions we'll be pondering as we search for that elusive "magic
+ratio" of folders, files, and code that could give us insights into a project's
+overall complexity.
+
+### The Folder Labyrinth: A Case Study of Next.js
+
+Before we embark on our quest for the perfect project structure, let's take a
+peek at one of the most complex open-source projects out there: Next.js. Brace
+yourself for some mind-bending numbers:
+
+| codelines | All Characters | Folders | Files | Deepest Level |
+| --------- | -------------- | ------- | ----- | ------------- |
+| 1675551   | 84344594       | 7513    | 16360 | 13            |
+
+<TreeChart folder={nextjs} />
+
+Take a moment to let those figures sink in. Can you imagine navigating through
+7,513 folders spread across 13 levels of depth? It's enough to make even the
+most seasoned developer's head spin! Next.js serves as a prime example of how
+overwhelming a project structure can become. At first glance, it's clear that
+making meaningful contributions to this behemoth requires a highly dedicated
+developer. This monorepo encompasses various technologies like Rust and
+TypeScript, and includes example pages, tests, mysterious experimental folders,
+plugins, errors, and much more. Despite its incredibly complex structure,
+Next.js remains a widely popular and well-maintained open-source project. Or
+does it? The sheer amount of code-digging and setup required before contributing
+got me thinking: How can proper structure and documentation make a project more
+accessible and less intimidating? Next.js will serve as our benchmark for
+complexity. But before we dive into our own complexity metric, let's explore
+some existing methods for calculating project complexity.
+
+### Cyclomatic Complexity and the Halstead Volume Metric
+
+When searching for code complexity formulas, two metrics often pop up:
+Cyclomatic Complexity and the Halstead Volume Metric. Let's break these down
+before we continue our journey.
+
+### Cyclomatic Complexity: Unraveling Code Paths
+
+Introduced by Thomas McCabe in 1976, Cyclomatic Complexity quantifies the number
+of linearly independent paths through a program's source code. Imagine your code
+as a labyrinth, with each decision point (like an if statement or a loop)
+creating a branching path. The more branches, the more complex the code. The
+formula for Cyclomatic Complexity is:
+
+```math
+M = E - N + 2P
+```
+
+- (M) represents the cyclomatic complexity.
+- (E) is the number of edges (control flow paths) in the control graph.
+- (N) is the number of nodes (decision points) in the graph.
+- (P) is the number of connected components (usually 1 for a single program).
+
+### Thresholds and Interpretation:
+
+- A higher cyclomatic complexity indicates greater code complexity.
+- Common thresholds:
+  - 1-10: Simple code.
+  - 11-20: Moderately complex code.
+  - 21+: Complex code that needs attention.
+
+Higher complexity can lead to bugs, maintenance challenges, and reduced code
+quality. But remember, this metric focuses solely on control flow, not on other
+aspects of code complexity.
+
+### The Halstead Volume Metric: Measuring Code Vocabulary
+
+Proposed by Maurice Howard Halstead in 1977, the Halstead Volume Metric takes a
+different approach. It analyzes code structure and vocabulary, considering both
+operators and operands. The formula for the Halstead Volume Metric is:
+
+```math
+V = N * log2(n)
+```
+
+- (V) represents the volume.
+- (N) is the program length (sum of operators and operands).
+- (n) is the total number of unique operators and operands.
+
+Unlike Cyclomatic Complexity, which focuses on control flow, the Halstead metric
+considers the richness of the code's vocabulary. It reflects how challenging it
+is to understand the code due to its unique constructs.
+
+### A new metric ?
+
+While commercial tools like SonarQube, Codacy, and Jellyfish provide code
+quality and complexity metrics, I was looking for a simple metric that could be
+applied to any software project, regardless of language or framework. Unable to
+find existing packages that provided a single meaningful metric for project
+complexity, I decided to create my own.
+
+### Celitan's Complexity Measurement (CCM):
+
+After much consideration, I've developed a new metric called Celitan's
+Complexity Measurement (CCM). Here's the formula:
+
+```math
+CCM = [(0.2 * F/D) + (0.2 * L/400) + (0.2 * C/4000) + (0.1 * T)] * [1 + log(F + D + 1)]
+```
+
+Where:
+
+- F = Number of files
+- D = Number of directories
+- L = Total lines of code
+- C = Total characters
+- T = Tree depth (deepest level of the project structure)
+
+Let's break down each component:
+
+1. File to Directory Ratio (0.2 \* F/D): Measures the distribution of files
+   across directories. A higher ratio indicates more files per directory,
+   potentially increasing complexity.
+2. Normalized Lines (0.2 \* L/400): Normalizes the total lines of code against
+   an arbitrary maximum of 400 lines per file, contributing to complexity based
+   on overall code volume.
+3. Normalized Characters (0.2 \* C/4000): Similar to normalized lines, this
+   factor considers the total character count, normalized against an arbitrary
+   maximum of 4000 characters per file.
+4. Tree Depth (0.1 \* T): Accounts for the depth of the project structure.
+   Deeper structures are considered more complex, but with less weight than
+   other factors.
+5. Scale Factor [1 + log(F + D + 1)]: This logarithmic scale factor increases
+   the complexity measurement as the total number of files and directories
+   grows, but at a decreasing rate.
+
+The formula combines these elements to produce a single complexity score. The
+base complexity is calculated as a weighted sum of the first four factors, then
+multiplied by the scale factor to account for overall project size. To give you
+an idea of how this metric scales, here's a table showing complexity scores for
+projects of varying sizes:
+
+| Project | Files | Directories | Total Lines | Total Chars | Tree Depth | Complexity |
+| ------- | ----- | ----------- | ----------- | ----------- | ---------- | ---------- |
+| A       | 2     | 1           | 69          | 644         | 1          | 1          |
+| B       | 5     | 2           | 100         | 1000        | 2          | 3          |
+| C       | 10    | 3           | 500         | 5000        | 3          | 7          |
+| D       | 20    | 5           | 1000        | 10000       | 4          | 12         |
+| E       | 50    | 10          | 5000        | 50000       | 5          | 45         |
+| F       | 100   | 15          | 10000       | 100000      | 6          | 93         |
+| G       | 200   | 20          | 20000       | 200000      | 7          | 199        |
+| H       | 500   | 30          | 50000       | 500000      | 8          | 544        |
+| I       | 1000  | 50          | 100000      | 1000000     | 9          | 1157       |
+| J       | 2000  | 100         | 200000      | 2000000     | 10         | 2467       |
+
+The metric is calibrated so that a basic "Hello World" project in Express.js has
+a complexity of 1, serving as our baseline. For reference, that project has one
+folder, 2 files (index.js and package.json), 39 lines of code, 644 characters,
+and a tree depth of 1.
+
+### Visualizing the Complexity Curve
+
+If we plot these values, we can see how the complexity score grows with the size
+of the project. The growth isn't linear—it increases more rapidly as projects
+become larger and more intricate. This reflects the real-world experience that
+managing very large projects becomes exponentially more challenging.
+
+<LineChartComplexity data={complexityGraphData} />
+
+### Complexity in Practice
+
+To truly measure the effectiveness of our Celitan's Complexity Measurement
+(CCM), we need to put it to the test in real-world scenarios. Applying the
+formula to various starter projects across different frameworks and languages
+will give us a more concrete understanding of its performance. This practical
+approach will allow us to see if the CCM accurately reflects the perceived
+complexity of these projects from a developer's perspective.
+
+#### The popular starter projects from the biggest frontend frameworks
+
+<ComplexityChart data={complexityScoresStarters.projects} labelKey />
+
+You can check the folder structre of those projects below, select from the
+dropdown to see the folder structure of the project.
+
+<TreeChartChanger
+  folders={[
+    angularStarter,
+    reactStarter,
+    svelteStarter,
+    nestStarter,
+    vueStarter,
+  ]}
+/>
+
+#### Complexity scores on the projects from the biggest frontend frameworks
+
+<ComplexityChart data={complexityScores.projects} labelKey />
+
+<TreeChartChanger folders={[angular, react, svelte, nest, vue]} />
+
+> Next.js project ended up with +2 mil complexlity score, is it justified ?
+
+> Do the results align with your intuition and experience?
+
+### Feedback and Refinement
+
+By comparing the formula's output with the collective wisdom of developers, we
+can fine-tune the metric, adjust its parameters if necessary, and ultimately
+create a more robust and reliable measure of project complexity. This iterative
+process of testing, gathering feedback, and refining will be key to developing a
+truly useful complexity measurement tool for the development community.
+
+Any thoughts on the results ? Let me know at luke@spaceout.pl
+
+### Implementation
+
+```typescript
+interface ProjectStructure {
+  files: number;
+  directories: number;
+  totalLines: number;
+  totalChars: number;
+  treeDepth: number;
+}
+
+function calculateComplexity(project: ProjectStructure): number {
+  const { files, directories, totalLines, totalChars, treeDepth } = project;
+
+  const fileToDirectoryRatio = files / directories;
+  const normalizedLines = totalLines / 400; // 400 lines = max lines per file (arbitary, can be adjustable)
+  const normalizedChars = totalChars / 4000; // 4000 chars = max chars per file (arbitary, can be adjustable)
+
+  const baseComplexity =
+    fileToDirectoryRatio * 0.2 +
+    normalizedLines * 0.2 +
+    normalizedChars * 0.2 +
+    deepestLevel * 0.1;
+
+  const scaleFactor = 1 + Math.log(files + directories + 1);
+  return baseComplexity * scaleFactor;
+}
+```
+
+Whole project is published on npm as project-analyzer, published to npm
+https://www.npmjs.com/package/project-analyzer,
+
+```bash
+npm i -g project-analyzer
+```
+
+you can also find the source for the project on
+https://github.com/MassivDash/ProjectAnalyzer
+
+### Practical Applications
+
+This formula is highly customizable. You can adjust the normalization factors
+and weights to better suit your specific project types or development practices.
+For instance, if your projects tend to have deeper folder structures, you might
+increase the weight of the tree depth factor. Some potential applications of
+this complexity metric include:
+
+- Estimating development time and resources for new projects
+- Identifying overly complex parts of a system that might need refactoring
+- Comparing different solutions or architectures for the same problem
+- Tracking project complexity over time to ensure it doesn't grow uncontrollably
+
+### Conclusion
+
+Quantifying project complexity isn't an exact science, but having a consistent,
+customizable method can provide valuable insights. This formula offers a
+starting point for teams to measure and discuss project complexity in a more
+objective manner.
+
+Remember, the goal isn't to achieve the lowest complexity score possible, but to
+understand your projects better and make informed decisions about architecture,
+refactoring, and resource allocation.

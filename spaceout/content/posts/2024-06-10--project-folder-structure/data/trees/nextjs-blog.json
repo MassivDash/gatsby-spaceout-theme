@@ -1,0 +1,47 @@
+{
+  "name": "nextjs-blog",
+  "children": [
+    {
+      "name": "pages",
+      "children": [
+        {
+          "name": "index.js"
+        }
+      ]
+    },
+    {
+      "name": "public",
+      "children": [
+        {
+          "name": "favicon.ico"
+        },
+        {
+          "name": "vercel.svg"
+        }
+      ]
+    },
+    {
+      "name": "styles",
+      "children": [
+        {
+          "name": "global.css"
+        },
+        {
+          "name": "Home.module.css"
+        }
+      ]
+    },
+    {
+      "name": ".gitignore"
+    },
+    {
+      "name": ".nvmrc"
+    },
+    {
+      "name": "package.json"
+    },
+    {
+      "name": "README.md"
+    }
+  ]
+}

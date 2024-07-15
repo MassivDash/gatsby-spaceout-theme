@@ -1,0 +1,60 @@
+{
+  "name": "nest-starter",
+  "children": [
+    {
+      "name": "src",
+      "children": [
+        {
+          "name": "app.controller.spec.ts"
+        },
+        {
+          "name": "app.controller.ts"
+        },
+        {
+          "name": "app.module.ts"
+        },
+        {
+          "name": "app.service.ts"
+        },
+        {
+          "name": "main.ts"
+        }
+      ]
+    },
+    {
+      "name": "test",
+      "children": [
+        {
+          "name": "app.e2e-spec.ts"
+        },
+        {
+          "name": "jest-e2e.json"
+        }
+      ]
+    },
+    {
+      "name": ".eslintrc.js"
+    },
+    {
+      "name": ".gitignore"
+    },
+    {
+      "name": ".prettierrc"
+    },
+    {
+      "name": "nest-cli.json"
+    },
+    {
+      "name": "package.json"
+    },
+    {
+      "name": "README.md"
+    },
+    {
+      "name": "tsconfig.build.json"
+    },
+    {
+      "name": "tsconfig.json"
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "name": "svelte-starter",
+  "children": [
+    {
+      "name": "src",
+      "children": [
+        {
+          "name": "lib",
+          "children": [
+            {
+              "name": "images",
+              "children": [
+                {
+                  "name": "github.svg"
+                },
+                {
+                  "name": "svelte-logo.svg"
+                },
+                {
+                  "name": "svelte-welcome.png"
+                },
+                {
+                  "name": "svelte-welcome.webp"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "routes",
+          "children": [
+            {
+              "name": "about",
+              "children": [
+                {
+                  "name": "+page.svelte"
+                },
+                {
+                  "name": "+page.ts"
+                }
+              ]
+            },
+            {
+              "name": "sverdle",
+              "children": [
+                {
+                  "name": "how-to-play",
+                  "children": [
+                    {
+                      "name": "+page.svelte"
+                    },
+                    {
+                      "name": "+page.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "+page.server.ts"
+                },
+                {
+                  "name": "+page.svelte"
+                },
+                {
+                  "name": "game.test.ts"
+                },
+                {
+                  "name": "game.ts"
+                },
+                {
+                  "name": "reduced-motion.ts"
+                },
+                {
+                  "name": "words.server.ts"
+                }
+              ]
+            },
+            {
+              "name": "+layout.svelte"
+            },
+            {
+              "name": "+page.svelte"
+            },
+            {
+              "name": "+page.ts"
+            },
+            {
+              "name": "Counter.svelte"
+            },
+            {
+              "name": "Header.svelte"
+            }
+          ]
+        },
+        {
+          "name": "app.css"
+        },
+        {
+          "name": "app.d.ts"
+        },
+        {
+          "name": "app.html"
+        }
+      ]
+    },
+    {
+      "name": "static",
+      "children": [
+        {
+          "name": "favicon.png"
+        },
+        {
+          "name": "robots.txt"
+        }
+      ]
+    },
+    {
+      "name": "tests",
+      "children": [
+        {
+          "name": "test.ts"
+        }
+      ]
+    },
+    {
+      "name": ".gitignore"
+    },
+    {
+      "name": ".npmrc"
+    },
+    {
+      "name": ".prettierignore"
+    },
+    {
+      "name": ".prettierrc"
+    },
+    {
+      "name": "eslint.config.js"
+    },
+    {
+      "name": "package.json"
+    },
+    {
+      "name": "playwright.config.ts"
+    },
+    {
+      "name": "README.md"
+    },
+    {
+      "name": "svelte.config.js"
+    },
+    {
+      "name": "tsconfig.json"
+    },
+    {
+      "name": "vite.config.ts"
+    }
+  ]
+}

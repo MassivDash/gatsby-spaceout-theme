@@ -1,0 +1,2453 @@
+{
+  "name": "core",
+  "children": [
+    {
+      "name": ".github",
+      "children": [
+        {
+          "name": "ISSUE_TEMPLATE",
+          "children": [
+            {
+              "name": "bug_report.yml"
+            },
+            {
+              "name": "config.yml"
+            }
+          ]
+        },
+        {
+          "name": "workflows",
+          "children": [
+            {
+              "name": "autofix.yml"
+            },
+            {
+              "name": "canary-minor.yml"
+            },
+            {
+              "name": "canary.yml"
+            },
+            {
+              "name": "ci.yml"
+            },
+            {
+              "name": "ecosystem-ci-trigger.yml"
+            },
+            {
+              "name": "lock-closed-issues.yml"
+            },
+            {
+              "name": "release-tag.yml"
+            },
+            {
+              "name": "size-data.yml"
+            },
+            {
+              "name": "size-report.yml"
+            }
+          ]
+        },
+        {
+          "name": "bug-repro-guidelines.md"
+        },
+        {
+          "name": "commit-convention.md"
+        },
+        {
+          "name": "contributing.md"
+        },
+        {
+          "name": "FUNDING.yml"
+        },
+        {
+          "name": "git-branch-workflow.excalidraw"
+        },
+        {
+          "name": "git-branch-workflow.png"
+        },
+        {
+          "name": "issue-workflow.png"
+        },
+        {
+          "name": "maintenance.md"
+        },
+        {
+          "name": "renovate.json5"
+        }
+      ]
+    },
+    {
+      "name": "changelogs",
+      "children": [
+        {
+          "name": "CHANGELOG-3.0.md"
+        },
+        {
+          "name": "CHANGELOG-3.1.md"
+        },
+        {
+          "name": "CHANGELOG-3.2.md"
+        },
+        {
+          "name": "CHANGELOG-3.3.md"
+        }
+      ]
+    },
+    {
+      "name": "packages",
+      "children": [
+        {
+          "name": "compiler-core",
+          "children": [
+            {
+              "name": "__tests__",
+              "children": [
+                {
+                  "name": "__snapshots__",
+                  "children": [
+                    {
+                      "name": "codegen.spec.ts.snap"
+                    },
+                    {
+                      "name": "compile.spec.ts.snap"
+                    },
+                    {
+                      "name": "parse.spec.ts.snap"
+                    },
+                    {
+                      "name": "scopeId.spec.ts.snap"
+                    }
+                  ]
+                },
+                {
+                  "name": "transforms",
+                  "children": [
+                    {
+                      "name": "__snapshots__",
+                      "children": [
+                        {
+                          "name": "hoistStatic.spec.ts.snap"
+                        },
+                        {
+                          "name": "transformElement.spec.ts.snap"
+                        },
+                        {
+                          "name": "transformExpressions.spec.ts.snap"
+                        },
+                        {
+                          "name": "transformText.spec.ts.snap"
+                        },
+                        {
+                          "name": "vFor.spec.ts.snap"
+                        },
+                        {
+                          "name": "vIf.spec.ts.snap"
+                        },
+                        {
+                          "name": "vMemo.spec.ts.snap"
+                        },
+                        {
+                          "name": "vModel.spec.ts.snap"
+                        },
+                        {
+                          "name": "vOnce.spec.ts.snap"
+                        },
+                        {
+                          "name": "vSlot.spec.ts.snap"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "hoistStatic.spec.ts"
+                    },
+                    {
+                      "name": "noopDirectiveTransform.spec.ts"
+                    },
+                    {
+                      "name": "transformElement.spec.ts"
+                    },
+                    {
+                      "name": "transformExpressions.spec.ts"
+                    },
+                    {
+                      "name": "transformSlotOutlet.spec.ts"
+                    },
+                    {
+                      "name": "transformText.spec.ts"
+                    },
+                    {
+                      "name": "vBind.spec.ts"
+                    },
+                    {
+                      "name": "vFor.spec.ts"
+                    },
+                    {
+                      "name": "vIf.spec.ts"
+                    },
+                    {
+                      "name": "vMemo.spec.ts"
+                    },
+                    {
+                      "name": "vModel.spec.ts"
+                    },
+                    {
+                      "name": "vOn.spec.ts"
+                    },
+                    {
+                      "name": "vOnce.spec.ts"
+                    },
+                    {
+                      "name": "vSlot.spec.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "codegen.spec.ts"
+                },
+                {
+                  "name": "compile.spec.ts"
+                },
+                {
+                  "name": "parse.spec.ts"
+                },
+                {
+                  "name": "scopeId.spec.ts"
+                },
+                {
+                  "name": "testUtils.ts"
+                },
+                {
+                  "name": "transform.spec.ts"
+                },
+                {
+                  "name": "utils.spec.ts"
+                }
+              ]
+            },
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "compat",
+                  "children": [
+                    {
+                      "name": "compatConfig.ts"
+                    },
+                    {
+                      "name": "transformFilter.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "transforms",
+                  "children": [
+                    {
+                      "name": "hoistStatic.ts"
+                    },
+                    {
+                      "name": "noopDirectiveTransform.ts"
+                    },
+                    {
+                      "name": "transformElement.ts"
+                    },
+                    {
+                      "name": "transformExpression.ts"
+                    },
+                    {
+                      "name": "transformSlotOutlet.ts"
+                    },
+                    {
+                      "name": "transformText.ts"
+                    },
+                    {
+                      "name": "vBind.ts"
+                    },
+                    {
+                      "name": "vFor.ts"
+                    },
+                    {
+                      "name": "vIf.ts"
+                    },
+                    {
+                      "name": "vMemo.ts"
+                    },
+                    {
+                      "name": "vModel.ts"
+                    },
+                    {
+                      "name": "vOn.ts"
+                    },
+                    {
+                      "name": "vOnce.ts"
+                    },
+                    {
+                      "name": "vSlot.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "ast.ts"
+                },
+                {
+                  "name": "babelUtils.ts"
+                },
+                {
+                  "name": "codegen.ts"
+                },
+                {
+                  "name": "compile.ts"
+                },
+                {
+                  "name": "errors.ts"
+                },
+                {
+                  "name": "index.ts"
+                },
+                {
+                  "name": "options.ts"
+                },
+                {
+                  "name": "parser.ts"
+                },
+                {
+                  "name": "runtimeHelpers.ts"
+                },
+                {
+                  "name": "tokenizer.ts"
+                },
+                {
+                  "name": "transform.ts"
+                },
+                {
+                  "name": "utils.ts"
+                },
+                {
+                  "name": "validateExpression.ts"
+                }
+              ]
+            },
+            {
+              "name": "index.js"
+            },
+            {
+              "name": "LICENSE"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            }
+          ]
+        },
+        {
+          "name": "compiler-dom",
+          "children": [
+            {
+              "name": "__tests__",
+              "children": [
+                {
+                  "name": "__snapshots__",
+                  "children": [
+                    {
+                      "name": "index.spec.ts.snap"
+                    }
+                  ]
+                },
+                {
+                  "name": "transforms",
+                  "children": [
+                    {
+                      "name": "__snapshots__",
+                      "children": [
+                        {
+                          "name": "stringifyStatic.spec.ts.snap"
+                        },
+                        {
+                          "name": "Transition.spec.ts.snap"
+                        },
+                        {
+                          "name": "vModel.spec.ts.snap"
+                        },
+                        {
+                          "name": "vShow.spec.ts.snap"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ignoreSideEffectTags.spec.ts"
+                    },
+                    {
+                      "name": "stringifyStatic.spec.ts"
+                    },
+                    {
+                      "name": "transformStyle.spec.ts"
+                    },
+                    {
+                      "name": "Transition.spec.ts"
+                    },
+                    {
+                      "name": "vHtml.spec.ts"
+                    },
+                    {
+                      "name": "vModel.spec.ts"
+                    },
+                    {
+                      "name": "vOn.spec.ts"
+                    },
+                    {
+                      "name": "vShow.spec.ts"
+                    },
+                    {
+                      "name": "vText.spec.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "decoderHtmlBrowser.spec.ts"
+                },
+                {
+                  "name": "index.spec.ts"
+                },
+                {
+                  "name": "parse.spec.ts"
+                }
+              ]
+            },
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "transforms",
+                  "children": [
+                    {
+                      "name": "ignoreSideEffectTags.ts"
+                    },
+                    {
+                      "name": "stringifyStatic.ts"
+                    },
+                    {
+                      "name": "transformStyle.ts"
+                    },
+                    {
+                      "name": "Transition.ts"
+                    },
+                    {
+                      "name": "vHtml.ts"
+                    },
+                    {
+                      "name": "vModel.ts"
+                    },
+                    {
+                      "name": "vOn.ts"
+                    },
+                    {
+                      "name": "vShow.ts"
+                    },
+                    {
+                      "name": "vText.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "decodeHtmlBrowser.ts"
+                },
+                {
+                  "name": "errors.ts"
+                },
+                {
+                  "name": "index.ts"
+                },
+                {
+                  "name": "parserOptions.ts"
+                },
+                {
+                  "name": "runtimeHelpers.ts"
+                }
+              ]
+            },
+            {
+              "name": "index.js"
+            },
+            {
+              "name": "LICENSE"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            }
+          ]
+        },
+        {
+          "name": "compiler-sfc",
+          "children": [
+            {
+              "name": "__tests__",
+              "children": [
+                {
+                  "name": "__snapshots__",
+                  "children": [
+                    {
+                      "name": "compileScript.spec.ts.snap"
+                    },
+                    {
+                      "name": "compileTemplate.spec.ts.snap"
+                    },
+                    {
+                      "name": "cssVars.spec.ts.snap"
+                    },
+                    {
+                      "name": "templateTransformAssetUrl.spec.ts.snap"
+                    },
+                    {
+                      "name": "templateTransformSrcset.spec.ts.snap"
+                    }
+                  ]
+                },
+                {
+                  "name": "compileScript",
+                  "children": [
+                    {
+                      "name": "__snapshots__",
+                      "children": [
+                        {
+                          "name": "defineEmits.spec.ts.snap"
+                        },
+                        {
+                          "name": "defineExpose.spec.ts.snap"
+                        },
+                        {
+                          "name": "defineModel.spec.ts.snap"
+                        },
+                        {
+                          "name": "defineOptions.spec.ts.snap"
+                        },
+                        {
+                          "name": "defineProps.spec.ts.snap"
+                        },
+                        {
+                          "name": "definePropsDestructure.spec.ts.snap"
+                        },
+                        {
+                          "name": "defineSlots.spec.ts.snap"
+                        },
+                        {
+                          "name": "hoistStatic.spec.ts.snap"
+                        },
+                        {
+                          "name": "importUsageCheck.spec.ts.snap"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "defineEmits.spec.ts"
+                    },
+                    {
+                      "name": "defineExpose.spec.ts"
+                    },
+                    {
+                      "name": "defineModel.spec.ts"
+                    },
+                    {
+                      "name": "defineOptions.spec.ts"
+                    },
+                    {
+                      "name": "defineProps.spec.ts"
+                    },
+                    {
+                      "name": "definePropsDestructure.spec.ts"
+                    },
+                    {
+                      "name": "defineSlots.spec.ts"
+                    },
+                    {
+                      "name": "hoistStatic.spec.ts"
+                    },
+                    {
+                      "name": "importUsageCheck.spec.ts"
+                    },
+                    {
+                      "name": "resolveType.spec.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "fixture",
+                  "children": [
+                    {
+                      "name": "import.scss"
+                    }
+                  ]
+                },
+                {
+                  "name": "compileScript.spec.ts"
+                },
+                {
+                  "name": "compileStyle.spec.ts"
+                },
+                {
+                  "name": "compileTemplate.spec.ts"
+                },
+                {
+                  "name": "cssVars.spec.ts"
+                },
+                {
+                  "name": "parse.spec.ts"
+                },
+                {
+                  "name": "rewriteDefault.spec.ts"
+                },
+                {
+                  "name": "templateTransformAssetUrl.spec.ts"
+                },
+                {
+                  "name": "templateTransformSrcset.spec.ts"
+                },
+                {
+                  "name": "templateUtils.spec.ts"
+                },
+                {
+                  "name": "utils.ts"
+                }
+              ]
+            },
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "script",
+                  "children": [
+                    {
+                      "name": "analyzeScriptBindings.ts"
+                    },
+                    {
+                      "name": "context.ts"
+                    },
+                    {
+                      "name": "defineEmits.ts"
+                    },
+                    {
+                      "name": "defineExpose.ts"
+                    },
+                    {
+                      "name": "defineModel.ts"
+                    },
+                    {
+                      "name": "defineOptions.ts"
+                    },
+                    {
+                      "name": "defineProps.ts"
+                    },
+                    {
+                      "name": "definePropsDestructure.ts"
+                    },
+                    {
+                      "name": "defineSlots.ts"
+                    },
+                    {
+                      "name": "importUsageCheck.ts"
+                    },
+                    {
+                      "name": "normalScript.ts"
+                    },
+                    {
+                      "name": "resolveType.ts"
+                    },
+                    {
+                      "name": "topLevelAwait.ts"
+                    },
+                    {
+                      "name": "utils.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "style",
+                  "children": [
+                    {
+                      "name": "cssVars.ts"
+                    },
+                    {
+                      "name": "pluginScoped.ts"
+                    },
+                    {
+                      "name": "pluginTrim.ts"
+                    },
+                    {
+                      "name": "preprocessors.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "template",
+                  "children": [
+                    {
+                      "name": "templateUtils.ts"
+                    },
+                    {
+                      "name": "transformAssetUrl.ts"
+                    },
+                    {
+                      "name": "transformSrcset.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "cache.ts"
+                },
+                {
+                  "name": "compileScript.ts"
+                },
+                {
+                  "name": "compileStyle.ts"
+                },
+                {
+                  "name": "compileTemplate.ts"
+                },
+                {
+                  "name": "index.ts"
+                },
+                {
+                  "name": "parse.ts"
+                },
+                {
+                  "name": "rewriteDefault.ts"
+                },
+                {
+                  "name": "shims.d.ts"
+                },
+                {
+                  "name": "warn.ts"
+                }
+              ]
+            },
+            {
+              "name": "LICENSE"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            }
+          ]
+        },
+        {
+          "name": "compiler-ssr",
+          "children": [
+            {
+              "name": "__tests__",
+              "children": [
+                {
+                  "name": "ssrComponent.spec.ts"
+                },
+                {
+                  "name": "ssrElement.spec.ts"
+                },
+                {
+                  "name": "ssrFallthroughAttrs.spec.ts"
+                },
+                {
+                  "name": "ssrInjectCssVars.spec.ts"
+                },
+                {
+                  "name": "ssrPortal.spec.ts"
+                },
+                {
+                  "name": "ssrScopeId.spec.ts"
+                },
+                {
+                  "name": "ssrSlotOutlet.spec.ts"
+                },
+                {
+                  "name": "ssrSuspense.spec.ts"
+                },
+                {
+                  "name": "ssrText.spec.ts"
+                },
+                {
+                  "name": "ssrTransition.spec.ts"
+                },
+                {
+                  "name": "ssrTransitionGroup.spec.ts"
+                },
+                {
+                  "name": "ssrVFor.spec.ts"
+                },
+                {
+                  "name": "ssrVIf.spec.ts"
+                },
+                {
+                  "name": "ssrVModel.spec.ts"
+                },
+                {
+                  "name": "ssrVShow.spec.ts"
+                },
+                {
+                  "name": "utils.ts"
+                }
+              ]
+            },
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "transforms",
+                  "children": [
+                    {
+                      "name": "ssrInjectCssVars.ts"
+                    },
+                    {
+                      "name": "ssrInjectFallthroughAttrs.ts"
+                    },
+                    {
+                      "name": "ssrTransformComponent.ts"
+                    },
+                    {
+                      "name": "ssrTransformElement.ts"
+                    },
+                    {
+                      "name": "ssrTransformSlotOutlet.ts"
+                    },
+                    {
+                      "name": "ssrTransformSuspense.ts"
+                    },
+                    {
+                      "name": "ssrTransformTeleport.ts"
+                    },
+                    {
+                      "name": "ssrTransformTransition.ts"
+                    },
+                    {
+                      "name": "ssrTransformTransitionGroup.ts"
+                    },
+                    {
+                      "name": "ssrVFor.ts"
+                    },
+                    {
+                      "name": "ssrVIf.ts"
+                    },
+                    {
+                      "name": "ssrVModel.ts"
+                    },
+                    {
+                      "name": "ssrVShow.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "errors.ts"
+                },
+                {
+                  "name": "index.ts"
+                },
+                {
+                  "name": "runtimeHelpers.ts"
+                },
+                {
+                  "name": "ssrCodegenTransform.ts"
+                }
+              ]
+            },
+            {
+              "name": "LICENSE"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            }
+          ]
+        },
+        {
+          "name": "dts-built-test",
+          "children": [
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "index.ts"
+                }
+              ]
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            },
+            {
+              "name": "tsconfig.json"
+            }
+          ]
+        },
+        {
+          "name": "dts-test",
+          "children": [
+            {
+              "name": "appDirective.test-d.ts"
+            },
+            {
+              "name": "appUse.test-d.ts"
+            },
+            {
+              "name": "built.test-d.ts"
+            },
+            {
+              "name": "compiler.test-d.ts"
+            },
+            {
+              "name": "component.test-d.ts"
+            },
+            {
+              "name": "componentInstance.test-d.tsx"
+            },
+            {
+              "name": "componentTypeExtensions.test-d.tsx"
+            },
+            {
+              "name": "defineComponent.test-d.tsx"
+            },
+            {
+              "name": "defineCustomElement.test-d.ts"
+            },
+            {
+              "name": "extractProps.test-d.ts"
+            },
+            {
+              "name": "functionalComponent.test-d.tsx"
+            },
+            {
+              "name": "h.test-d.ts"
+            },
+            {
+              "name": "inject.test-d.ts"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "reactivity.test-d.ts"
+            },
+            {
+              "name": "README.md"
+            },
+            {
+              "name": "ref.test-d.ts"
+            },
+            {
+              "name": "setupHelpers.test-d.ts"
+            },
+            {
+              "name": "tsconfig.test.json"
+            },
+            {
+              "name": "tsx.test-d.tsx"
+            },
+            {
+              "name": "utils.d.ts"
+            },
+            {
+              "name": "watch.test-d.ts"
+            }
+          ]
+        },
+        {
+          "name": "reactivity",
+          "children": [
+            {
+              "name": "__tests__",
+              "children": [
+                {
+                  "name": "collections",
+                  "children": [
+                    {
+                      "name": "Map.spec.ts"
+                    },
+                    {
+                      "name": "Set.spec.ts"
+                    },
+                    {
+                      "name": "shallowReadonly.spec.ts"
+                    },
+                    {
+                      "name": "WeakMap.spec.ts"
+                    },
+                    {
+                      "name": "WeakSet.spec.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "computed.bench.ts"
+                },
+                {
+                  "name": "computed.spec.ts"
+                },
+                {
+                  "name": "deferredComputed.spec.ts"
+                },
+                {
+                  "name": "effect.spec.ts"
+                },
+                {
+                  "name": "effectScope.spec.ts"
+                },
+                {
+                  "name": "gc.spec.ts"
+                },
+                {
+                  "name": "reactive.spec.ts"
+                },
+                {
+                  "name": "reactiveArray.bench.ts"
+                },
+                {
+                  "name": "reactiveArray.spec.ts"
+                },
+                {
+                  "name": "reactiveMap.bench.ts"
+                },
+                {
+                  "name": "reactiveObject.bench.ts"
+                },
+                {
+                  "name": "readonly.spec.ts"
+                },
+                {
+                  "name": "ref.bench.ts"
+                },
+                {
+                  "name": "ref.spec.ts"
+                },
+                {
+                  "name": "shallowReactive.spec.ts"
+                },
+                {
+                  "name": "shallowReadonly.spec.ts"
+                }
+              ]
+            },
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "baseHandlers.ts"
+                },
+                {
+                  "name": "collectionHandlers.ts"
+                },
+                {
+                  "name": "computed.ts"
+                },
+                {
+                  "name": "constants.ts"
+                },
+                {
+                  "name": "deferredComputed.ts"
+                },
+                {
+                  "name": "dep.ts"
+                },
+                {
+                  "name": "effect.ts"
+                },
+                {
+                  "name": "effectScope.ts"
+                },
+                {
+                  "name": "index.ts"
+                },
+                {
+                  "name": "reactive.ts"
+                },
+                {
+                  "name": "reactiveEffect.ts"
+                },
+                {
+                  "name": "ref.ts"
+                },
+                {
+                  "name": "warning.ts"
+                }
+              ]
+            },
+            {
+              "name": "index.js"
+            },
+            {
+              "name": "LICENSE"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            }
+          ]
+        },
+        {
+          "name": "runtime-core",
+          "children": [
+            {
+              "name": "__tests__",
+              "children": [
+                {
+                  "name": "components",
+                  "children": [
+                    {
+                      "name": "BaseTransition.spec.ts"
+                    },
+                    {
+                      "name": "KeepAlive.spec.ts"
+                    },
+                    {
+                      "name": "Suspense.spec.ts"
+                    },
+                    {
+                      "name": "Teleport.spec.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "helpers",
+                  "children": [
+                    {
+                      "name": "createSlots.spec.ts"
+                    },
+                    {
+                      "name": "renderList.spec.ts"
+                    },
+                    {
+                      "name": "renderSlot.spec.ts"
+                    },
+                    {
+                      "name": "resolveAssets.spec.ts"
+                    },
+                    {
+                      "name": "toHandlers.spec.ts"
+                    },
+                    {
+                      "name": "useModel.spec.ts"
+                    },
+                    {
+                      "name": "withMemo.spec.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "apiAsyncComponent.spec.ts"
+                },
+                {
+                  "name": "apiCreateApp.spec.ts"
+                },
+                {
+                  "name": "apiExpose.spec.ts"
+                },
+                {
+                  "name": "apiInject.spec.ts"
+                },
+                {
+                  "name": "apiLifecycle.spec.ts"
+                },
+                {
+                  "name": "apiOptions.spec.ts"
+                },
+                {
+                  "name": "apiSetupContext.spec.ts"
+                },
+                {
+                  "name": "apiSetupHelpers.spec.ts"
+                },
+                {
+                  "name": "apiWatch.bench.ts"
+                },
+                {
+                  "name": "apiWatch.spec.ts"
+                },
+                {
+                  "name": "componentEmits.spec.ts"
+                },
+                {
+                  "name": "componentProps.spec.ts"
+                },
+                {
+                  "name": "componentPublicInstance.spec.ts"
+                },
+                {
+                  "name": "componentSlots.spec.ts"
+                },
+                {
+                  "name": "directives.spec.ts"
+                },
+                {
+                  "name": "errorHandling.spec.ts"
+                },
+                {
+                  "name": "h.spec.ts"
+                },
+                {
+                  "name": "hmr.spec.ts"
+                },
+                {
+                  "name": "hydration.spec.ts"
+                },
+                {
+                  "name": "misc.spec.ts"
+                },
+                {
+                  "name": "rendererAttrsFallthrough.spec.ts"
+                },
+                {
+                  "name": "rendererChildren.spec.ts"
+                },
+                {
+                  "name": "rendererComponent.spec.ts"
+                },
+                {
+                  "name": "rendererElement.spec.ts"
+                },
+                {
+                  "name": "rendererFragment.spec.ts"
+                },
+                {
+                  "name": "rendererOptimizedMode.spec.ts"
+                },
+                {
+                  "name": "rendererTemplateRef.spec.ts"
+                },
+                {
+                  "name": "scheduler.spec.ts"
+                },
+                {
+                  "name": "scopeId.spec.ts"
+                },
+                {
+                  "name": "vnode.spec.ts"
+                },
+                {
+                  "name": "vnodeHooks.spec.ts"
+                }
+              ]
+            },
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "compat",
+                  "children": [
+                    {
+                      "name": "attrsFallthrough.ts"
+                    },
+                    {
+                      "name": "compatConfig.ts"
+                    },
+                    {
+                      "name": "component.ts"
+                    },
+                    {
+                      "name": "componentAsync.ts"
+                    },
+                    {
+                      "name": "componentFunctional.ts"
+                    },
+                    {
+                      "name": "componentVModel.ts"
+                    },
+                    {
+                      "name": "customDirective.ts"
+                    },
+                    {
+                      "name": "data.ts"
+                    },
+                    {
+                      "name": "global.ts"
+                    },
+                    {
+                      "name": "globalConfig.ts"
+                    },
+                    {
+                      "name": "instance.ts"
+                    },
+                    {
+                      "name": "instanceChildren.ts"
+                    },
+                    {
+                      "name": "instanceEventEmitter.ts"
+                    },
+                    {
+                      "name": "instanceListeners.ts"
+                    },
+                    {
+                      "name": "props.ts"
+                    },
+                    {
+                      "name": "renderFn.ts"
+                    },
+                    {
+                      "name": "renderHelpers.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "components",
+                  "children": [
+                    {
+                      "name": "BaseTransition.ts"
+                    },
+                    {
+                      "name": "KeepAlive.ts"
+                    },
+                    {
+                      "name": "Suspense.ts"
+                    },
+                    {
+                      "name": "Teleport.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "helpers",
+                  "children": [
+                    {
+                      "name": "createSlots.ts"
+                    },
+                    {
+                      "name": "renderList.ts"
+                    },
+                    {
+                      "name": "renderSlot.ts"
+                    },
+                    {
+                      "name": "resolveAssets.ts"
+                    },
+                    {
+                      "name": "toHandlers.ts"
+                    },
+                    {
+                      "name": "useModel.ts"
+                    },
+                    {
+                      "name": "useSsrContext.ts"
+                    },
+                    {
+                      "name": "withMemo.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "apiAsyncComponent.ts"
+                },
+                {
+                  "name": "apiComputed.ts"
+                },
+                {
+                  "name": "apiCreateApp.ts"
+                },
+                {
+                  "name": "apiDefineComponent.ts"
+                },
+                {
+                  "name": "apiInject.ts"
+                },
+                {
+                  "name": "apiLifecycle.ts"
+                },
+                {
+                  "name": "apiSetupHelpers.ts"
+                },
+                {
+                  "name": "apiWatch.ts"
+                },
+                {
+                  "name": "component.ts"
+                },
+                {
+                  "name": "componentEmits.ts"
+                },
+                {
+                  "name": "componentOptions.ts"
+                },
+                {
+                  "name": "componentProps.ts"
+                },
+                {
+                  "name": "componentPublicInstance.ts"
+                },
+                {
+                  "name": "componentRenderContext.ts"
+                },
+                {
+                  "name": "componentRenderUtils.ts"
+                },
+                {
+                  "name": "componentSlots.ts"
+                },
+                {
+                  "name": "customFormatter.ts"
+                },
+                {
+                  "name": "devtools.ts"
+                },
+                {
+                  "name": "directives.ts"
+                },
+                {
+                  "name": "enums.ts"
+                },
+                {
+                  "name": "errorHandling.ts"
+                },
+                {
+                  "name": "featureFlags.ts"
+                },
+                {
+                  "name": "h.ts"
+                },
+                {
+                  "name": "hmr.ts"
+                },
+                {
+                  "name": "hydration.ts"
+                },
+                {
+                  "name": "index.ts"
+                },
+                {
+                  "name": "internalObject.ts"
+                },
+                {
+                  "name": "profiling.ts"
+                },
+                {
+                  "name": "renderer.ts"
+                },
+                {
+                  "name": "rendererTemplateRef.ts"
+                },
+                {
+                  "name": "scheduler.ts"
+                },
+                {
+                  "name": "vnode.ts"
+                },
+                {
+                  "name": "warning.ts"
+                }
+              ]
+            },
+            {
+              "name": "types",
+              "children": [
+                {
+                  "name": "scriptSetupHelpers.d.ts"
+                }
+              ]
+            },
+            {
+              "name": "index.js"
+            },
+            {
+              "name": "LICENSE"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            }
+          ]
+        },
+        {
+          "name": "runtime-dom",
+          "children": [
+            {
+              "name": "__tests__",
+              "children": [
+                {
+                  "name": "directives",
+                  "children": [
+                    {
+                      "name": "vCloak.spec.ts"
+                    },
+                    {
+                      "name": "vModel.spec.ts"
+                    },
+                    {
+                      "name": "vOn.spec.ts"
+                    },
+                    {
+                      "name": "vShow.spec.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "helpers",
+                  "children": [
+                    {
+                      "name": "useCssModule.spec.ts"
+                    },
+                    {
+                      "name": "useCssVars.spec.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "createApp.spec.ts"
+                },
+                {
+                  "name": "customElement.spec.ts"
+                },
+                {
+                  "name": "customizedBuiltIn.spec.ts"
+                },
+                {
+                  "name": "nodeOps.spec.ts"
+                },
+                {
+                  "name": "patchAttrs.spec.ts"
+                },
+                {
+                  "name": "patchClass.spec.ts"
+                },
+                {
+                  "name": "patchEvents.spec.ts"
+                },
+                {
+                  "name": "patchProps.spec.ts"
+                },
+                {
+                  "name": "patchStyle.spec.ts"
+                },
+                {
+                  "name": "rendererStaticNode.spec.ts"
+                }
+              ]
+            },
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "components",
+                  "children": [
+                    {
+                      "name": "Transition.ts"
+                    },
+                    {
+                      "name": "TransitionGroup.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "directives",
+                  "children": [
+                    {
+                      "name": "vModel.ts"
+                    },
+                    {
+                      "name": "vOn.ts"
+                    },
+                    {
+                      "name": "vShow.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "helpers",
+                  "children": [
+                    {
+                      "name": "useCssModule.ts"
+                    },
+                    {
+                      "name": "useCssVars.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "modules",
+                  "children": [
+                    {
+                      "name": "attrs.ts"
+                    },
+                    {
+                      "name": "class.ts"
+                    },
+                    {
+                      "name": "events.ts"
+                    },
+                    {
+                      "name": "props.ts"
+                    },
+                    {
+                      "name": "style.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "apiCustomElement.ts"
+                },
+                {
+                  "name": "index.ts"
+                },
+                {
+                  "name": "jsx.ts"
+                },
+                {
+                  "name": "nodeOps.ts"
+                },
+                {
+                  "name": "patchProp.ts"
+                }
+              ]
+            },
+            {
+              "name": "index.js"
+            },
+            {
+              "name": "LICENSE"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            }
+          ]
+        },
+        {
+          "name": "runtime-test",
+          "children": [
+            {
+              "name": "__tests__",
+              "children": [
+                {
+                  "name": "testRuntime.spec.ts"
+                }
+              ]
+            },
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "index.ts"
+                },
+                {
+                  "name": "nodeOps.ts"
+                },
+                {
+                  "name": "patchProp.ts"
+                },
+                {
+                  "name": "serialize.ts"
+                },
+                {
+                  "name": "triggerEvent.ts"
+                }
+              ]
+            },
+            {
+              "name": "index.js"
+            },
+            {
+              "name": "LICENSE"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            }
+          ]
+        },
+        {
+          "name": "server-renderer",
+          "children": [
+            {
+              "name": "__tests__",
+              "children": [
+                {
+                  "name": "render.spec.ts"
+                },
+                {
+                  "name": "ssrAttrFallthrough.spec.ts"
+                },
+                {
+                  "name": "ssrCompilerOptions.spec.ts"
+                },
+                {
+                  "name": "ssrComputed.spec.ts"
+                },
+                {
+                  "name": "ssrDirectives.spec.ts"
+                },
+                {
+                  "name": "ssrDynamicComponent.spec.ts"
+                },
+                {
+                  "name": "ssrInterpolate.spec.ts"
+                },
+                {
+                  "name": "ssrRenderAttrs.spec.ts"
+                },
+                {
+                  "name": "ssrRenderList.spec.ts"
+                },
+                {
+                  "name": "ssrScopeId.spec.ts"
+                },
+                {
+                  "name": "ssrSlot.spec.ts"
+                },
+                {
+                  "name": "ssrSuspense.spec.ts"
+                },
+                {
+                  "name": "ssrTeleport.spec.ts"
+                },
+                {
+                  "name": "ssrVModelHelpers.spec.ts"
+                },
+                {
+                  "name": "ssrWatch.spec.ts"
+                },
+                {
+                  "name": "webStream.spec.ts"
+                }
+              ]
+            },
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "helpers",
+                  "children": [
+                    {
+                      "name": "ssrCompile.ts"
+                    },
+                    {
+                      "name": "ssrGetDirectiveProps.ts"
+                    },
+                    {
+                      "name": "ssrInterpolate.ts"
+                    },
+                    {
+                      "name": "ssrRenderAttrs.ts"
+                    },
+                    {
+                      "name": "ssrRenderComponent.ts"
+                    },
+                    {
+                      "name": "ssrRenderList.ts"
+                    },
+                    {
+                      "name": "ssrRenderSlot.ts"
+                    },
+                    {
+                      "name": "ssrRenderSuspense.ts"
+                    },
+                    {
+                      "name": "ssrRenderTeleport.ts"
+                    },
+                    {
+                      "name": "ssrVModelHelpers.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "index.ts"
+                },
+                {
+                  "name": "internal.ts"
+                },
+                {
+                  "name": "render.ts"
+                },
+                {
+                  "name": "renderToStream.ts"
+                },
+                {
+                  "name": "renderToString.ts"
+                }
+              ]
+            },
+            {
+              "name": "index.js"
+            },
+            {
+              "name": "LICENSE"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            }
+          ]
+        },
+        {
+          "name": "sfc-playground",
+          "children": [
+            {
+              "name": "public",
+              "children": [
+                {
+                  "name": "logo.svg"
+                }
+              ]
+            },
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "download",
+                  "children": [
+                    {
+                      "name": "template",
+                      "children": [
+                        {
+                          "name": "index.html"
+                        },
+                        {
+                          "name": "main.js"
+                        },
+                        {
+                          "name": "package.json"
+                        },
+                        {
+                          "name": "README.md"
+                        },
+                        {
+                          "name": "vite.config.js"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "download.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "icons",
+                  "children": [
+                    {
+                      "name": "Download.vue"
+                    },
+                    {
+                      "name": "GitHub.vue"
+                    },
+                    {
+                      "name": "Moon.vue"
+                    },
+                    {
+                      "name": "Reload.vue"
+                    },
+                    {
+                      "name": "Share.vue"
+                    },
+                    {
+                      "name": "Sun.vue"
+                    }
+                  ]
+                },
+                {
+                  "name": "App.vue"
+                },
+                {
+                  "name": "Header.vue"
+                },
+                {
+                  "name": "main.ts"
+                },
+                {
+                  "name": "VersionSelect.vue"
+                },
+                {
+                  "name": "vue-dev-proxy-prod.ts"
+                },
+                {
+                  "name": "vue-dev-proxy.ts"
+                },
+                {
+                  "name": "vue-server-renderer-dev-proxy.ts"
+                }
+              ]
+            },
+            {
+              "name": "index.html"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            },
+            {
+              "name": "vercel.json"
+            },
+            {
+              "name": "vite.config.ts"
+            }
+          ]
+        },
+        {
+          "name": "shared",
+          "children": [
+            {
+              "name": "__tests__",
+              "children": [
+                {
+                  "name": "__snapshots__",
+                  "children": [
+                    {
+                      "name": "codeframe.spec.ts.snap"
+                    }
+                  ]
+                },
+                {
+                  "name": "codeframe.spec.ts"
+                },
+                {
+                  "name": "escapeHtml.spec.ts"
+                },
+                {
+                  "name": "looseEqual.spec.ts"
+                },
+                {
+                  "name": "normalizeProp.spec.ts"
+                },
+                {
+                  "name": "toDisplayString.spec.ts"
+                }
+              ]
+            },
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "codeframe.ts"
+                },
+                {
+                  "name": "domAttrConfig.ts"
+                },
+                {
+                  "name": "domTagConfig.ts"
+                },
+                {
+                  "name": "escapeHtml.ts"
+                },
+                {
+                  "name": "general.ts"
+                },
+                {
+                  "name": "globalsAllowList.ts"
+                },
+                {
+                  "name": "index.ts"
+                },
+                {
+                  "name": "looseEqual.ts"
+                },
+                {
+                  "name": "makeMap.ts"
+                },
+                {
+                  "name": "normalizeProp.ts"
+                },
+                {
+                  "name": "patchFlags.ts"
+                },
+                {
+                  "name": "shapeFlags.ts"
+                },
+                {
+                  "name": "slotFlags.ts"
+                },
+                {
+                  "name": "toDisplayString.ts"
+                },
+                {
+                  "name": "typeUtils.ts"
+                }
+              ]
+            },
+            {
+              "name": "index.js"
+            },
+            {
+              "name": "LICENSE"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            }
+          ]
+        },
+        {
+          "name": "template-explorer",
+          "children": [
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "index.ts"
+                },
+                {
+                  "name": "options.ts"
+                },
+                {
+                  "name": "theme.ts"
+                }
+              ]
+            },
+            {
+              "name": "_redirects"
+            },
+            {
+              "name": "index.html"
+            },
+            {
+              "name": "local.html"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            },
+            {
+              "name": "style.css"
+            }
+          ]
+        },
+        {
+          "name": "vue",
+          "children": [
+            {
+              "name": "__tests__",
+              "children": [
+                {
+                  "name": "e2e",
+                  "children": [
+                    {
+                      "name": "commits.mock.ts"
+                    },
+                    {
+                      "name": "commits.spec.ts"
+                    },
+                    {
+                      "name": "e2eUtils.ts"
+                    },
+                    {
+                      "name": "grid.spec.ts"
+                    },
+                    {
+                      "name": "markdown.spec.ts"
+                    },
+                    {
+                      "name": "svg.spec.ts"
+                    },
+                    {
+                      "name": "todomvc.spec.ts"
+                    },
+                    {
+                      "name": "transition.html"
+                    },
+                    {
+                      "name": "Transition.spec.ts"
+                    },
+                    {
+                      "name": "TransitionGroup.spec.ts"
+                    },
+                    {
+                      "name": "tree.spec.ts"
+                    }
+                  ]
+                },
+                {
+                  "name": "customElementCasing.spec.ts"
+                },
+                {
+                  "name": "index.spec.ts"
+                },
+                {
+                  "name": "mathmlNamespace.spec.ts"
+                },
+                {
+                  "name": "runtimeCompilerOptions.spec.ts"
+                },
+                {
+                  "name": "svgNamespace.spec.ts"
+                }
+              ]
+            },
+            {
+              "name": "compiler-sfc",
+              "children": [
+                {
+                  "name": "index.browser.js"
+                },
+                {
+                  "name": "index.browser.mjs"
+                },
+                {
+                  "name": "index.d.mts"
+                },
+                {
+                  "name": "index.d.ts"
+                },
+                {
+                  "name": "index.js"
+                },
+                {
+                  "name": "index.mjs"
+                },
+                {
+                  "name": "package.json"
+                },
+                {
+                  "name": "register-ts.js"
+                }
+              ]
+            },
+            {
+              "name": "examples",
+              "children": [
+                {
+                  "name": "classic",
+                  "children": [
+                    {
+                      "name": "commits.html"
+                    },
+                    {
+                      "name": "grid.html"
+                    },
+                    {
+                      "name": "markdown.html"
+                    },
+                    {
+                      "name": "svg.html"
+                    },
+                    {
+                      "name": "todomvc.html"
+                    },
+                    {
+                      "name": "tree.html"
+                    }
+                  ]
+                },
+                {
+                  "name": "composition",
+                  "children": [
+                    {
+                      "name": "commits.html"
+                    },
+                    {
+                      "name": "grid.html"
+                    },
+                    {
+                      "name": "markdown.html"
+                    },
+                    {
+                      "name": "svg.html"
+                    },
+                    {
+                      "name": "todomvc.html"
+                    },
+                    {
+                      "name": "tree.html"
+                    }
+                  ]
+                },
+                {
+                  "name": "transition",
+                  "children": [
+                    {
+                      "name": "list.html"
+                    },
+                    {
+                      "name": "modal.html"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "jsx-runtime",
+              "children": [
+                {
+                  "name": "index.d.ts"
+                },
+                {
+                  "name": "index.js"
+                },
+                {
+                  "name": "index.mjs"
+                },
+                {
+                  "name": "package.json"
+                }
+              ]
+            },
+            {
+              "name": "server-renderer",
+              "children": [
+                {
+                  "name": "index.d.mts"
+                },
+                {
+                  "name": "index.d.ts"
+                },
+                {
+                  "name": "index.js"
+                },
+                {
+                  "name": "index.mjs"
+                },
+                {
+                  "name": "package.json"
+                }
+              ]
+            },
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "dev.ts"
+                },
+                {
+                  "name": "index.ts"
+                },
+                {
+                  "name": "runtime.ts"
+                }
+              ]
+            },
+            {
+              "name": "index.js"
+            },
+            {
+              "name": "index.mjs"
+            },
+            {
+              "name": "jsx.d.ts"
+            },
+            {
+              "name": "LICENSE"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            }
+          ]
+        },
+        {
+          "name": "vue-compat",
+          "children": [
+            {
+              "name": "__tests__",
+              "children": [
+                {
+                  "name": "compiler.spec.ts"
+                },
+                {
+                  "name": "componentAsync.spec.ts"
+                },
+                {
+                  "name": "componentFunctional.spec.ts"
+                },
+                {
+                  "name": "componentVModel.spec.ts"
+                },
+                {
+                  "name": "filters.spec.ts"
+                },
+                {
+                  "name": "global.spec.ts"
+                },
+                {
+                  "name": "globalConfig.spec.ts"
+                },
+                {
+                  "name": "instance.spec.ts"
+                },
+                {
+                  "name": "misc.spec.ts"
+                },
+                {
+                  "name": "options.spec.ts"
+                },
+                {
+                  "name": "renderFn.spec.ts"
+                },
+                {
+                  "name": "utils.ts"
+                }
+              ]
+            },
+            {
+              "name": "src",
+              "children": [
+                {
+                  "name": "createCompatVue.ts"
+                },
+                {
+                  "name": "dev.ts"
+                },
+                {
+                  "name": "esm-index.ts"
+                },
+                {
+                  "name": "esm-runtime.ts"
+                },
+                {
+                  "name": "index.ts"
+                },
+                {
+                  "name": "runtime.ts"
+                }
+              ]
+            },
+            {
+              "name": "index.js"
+            },
+            {
+              "name": "LICENSE"
+            },
+            {
+              "name": "package.json"
+            },
+            {
+              "name": "README.md"
+            }
+          ]
+        },
+        {
+          "name": "global.d.ts"
+        }
+      ]
+    },
+    {
+      "name": "scripts",
+      "children": [
+        {
+          "name": "aliases.js"
+        },
+        {
+          "name": "build.js"
+        },
+        {
+          "name": "dev.js"
+        },
+        {
+          "name": "inline-enums.js"
+        },
+        {
+          "name": "pre-dev-sfc.js"
+        },
+        {
+          "name": "release.js"
+        },
+        {
+          "name": "setup-vitest.ts"
+        },
+        {
+          "name": "size-report.ts"
+        },
+        {
+          "name": "usage-size.ts"
+        },
+        {
+          "name": "utils.js"
+        },
+        {
+          "name": "verify-commit.js"
+        },
+        {
+          "name": "verify-treeshaking.js"
+        }
+      ]
+    },
+    {
+      "name": ".git-blame-ignore-revs"
+    },
+    {
+      "name": ".gitignore"
+    },
+    {
+      "name": ".node-version"
+    },
+    {
+      "name": ".prettierignore"
+    },
+    {
+      "name": ".prettierrc"
+    },
+    {
+      "name": "BACKERS.md"
+    },
+    {
+      "name": "CHANGELOG.md"
+    },
+    {
+      "name": "eslint.config.js"
+    },
+    {
+      "name": "FUNDING.json"
+    },
+    {
+      "name": "LICENSE"
+    },
+    {
+      "name": "netlify.toml"
+    },
+    {
+      "name": "output.json"
+    },
+    {
+      "name": "package.json"
+    },
+    {
+      "name": "pnpm-lock.yaml"
+    },
+    {
+      "name": "pnpm-workspace.yaml"
+    },
+    {
+      "name": "README.md"
+    },
+    {
+      "name": "rollup.config.js"
+    },
+    {
+      "name": "rollup.dts.config.js"
+    },
+    {
+      "name": "SECURITY.md"
+    },
+    {
+      "name": "tsconfig.build-browser.json"
+    },
+    {
+      "name": "tsconfig.build-node.json"
+    },
+    {
+      "name": "tsconfig.json"
+    },
+    {
+      "name": "vitest.config.ts"
+    },
+    {
+      "name": "vitest.e2e.config.ts"
+    },
+    {
+      "name": "vitest.unit.config.ts"
+    }
+  ]
+}

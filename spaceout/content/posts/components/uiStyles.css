@@ -77,3 +77,43 @@
   top: 0;
   left: 5px;
 }
+
+/* Tree changer  */
+
+.tree-changer {
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  margin: 20px 2rem;
+  flex-direction: column;
+}
+
+.tree-changer-select {
+  margin: 0.5rem auto;
+  border: 0;
+  padding: 20px;
+  padding-right: 0;
+  width: 100%;
+  font-size: 16px;
+  background: #242322;
+  color: white;
+  border-radius: 0.4em;
+  max-width: 1150px;
+  border-right: 16px solid transparent;
+}
+
+.tree-changer-select select {
+  display: none; /*hide original SELECT element: */
+}
+
+.tree-changer-select:after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  border-bottom-right-radius: 0.4em;
+  border-top-right-radius: 0.4em;
+  background: white;
+  display: block;
+}
