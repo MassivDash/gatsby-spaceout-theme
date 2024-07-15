@@ -8,6 +8,7 @@ import mediaqueries from '@styles/media';
 import * as THREE from 'three';
 import OrbitControls from './three/orbitControls';
 import planetTexture from './2k_haumea.jpg';
+import planetDisplacement from './2k_haumea_displacement.jpg';
 
 import { useEffect, useRef } from 'react';
 
@@ -32,7 +33,6 @@ function MyThree() {
 
     const objects: any[] = [];
 
-    // === THREE.JS CODE START ===
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(isDark ? 0x111216 : 0xfafafa);
     const camera = new THREE.PerspectiveCamera(
@@ -41,6 +41,7 @@ function MyThree() {
       0.1,
       1000,
     );
+    camera.position.z = 5;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -55,15 +56,24 @@ function MyThree() {
     const loader = new THREE.TextureLoader(loadManager);
     const texture = loader.load(planetTexture);
     texture.colorSpace = THREE.SRGBColorSpace;
-    const material = new THREE.MeshBasicMaterial({
+    const displacement = loader.load(planetDisplacement);
+    displacement.colorSpace = THREE.SRGBColorSpace;
+    const material = new THREE.MeshStandardMaterial({
       map: texture,
-      overdraw: 0.1,
+      displacementMap: displacement,
+      displacementScale: 0.05,
+      bumpMap: displacement,
     });
+    const color = 0xffffff;
+    const intensity = 5;
+    const light = new THREE.AmbientLight(color, intensity);
+
     const sphere = new THREE.Mesh(geometry, material);
 
     loadManager.onLoad = () => {
       scene.add(sphere);
       objects.push(sphere);
+      scene.add(light);
       camera.position.z = 2.2;
       camera.position.y = 0;
 
@@ -97,6 +107,10 @@ function MyThree() {
 
     loadManager.onError = (e) => {
       console.error('There was an error loading ' + e);
+    };
+
+    return () => {
+      renderer.dispose();
     };
   }, [isDark]);
   return <div ref={refContainer}></div>;
