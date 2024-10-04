@@ -1,0 +1,72 @@
+---
+title: Flipper Time Tracker
+excerpt: Time tracking app for Flipperzero
+date: 2024-06-06
+hero: foldersCover.jpg
+author: Luke Celitan
+appDescription: Productivity
+category: Project
+tech:
+  - C
+---
+
+## Introduction
+
+As a security and app developer enthusiast, I've been using Flipper Zero for
+some time now. For those who don't know, Flipper Zero is a versatile multitool
+device designed for hardware and RF enthusiasts, security researchers, and
+hobbyists. It's a portable gadget that can interact with various digital systems
+and wireless protocols.
+
+Flipper Zero has a range of capabilities, including reading and emulating RFID
+cards, interacting with NFC devices, transmitting and receiving radio signals,
+and communicating with infrared devices. It features a compact design with a
+monochrome display, navigation buttons, and an SD card slot for expandable
+storage. The device runs on open-source firmware, which is one of its most
+exciting aspects.
+
+The cool thing about Flipper Zero is that you can write custom applications for
+it, which is exactly what I've been trying to do. Recently, Flipper allowed Rust
+language execution, and I jumped into the possibility of writing an application
+in Rust for Flipper. However, I faced some challenges. The unsafe clusters and
+the way Rust is built made it difficult for me to write the apps the way I
+wanted.
+
+That's why I decided to implement the same idea directly in C programming
+language, often referred to as the father of all languages. These endeavors
+ended up with the creation of Flipper Time Tracker.
+
+Flipper Time Tracker is an application for the Flipper Zero device that allows
+the user to track multiple tasks simultaneously. The application uses a CSV file
+to store and handle task data, which can be easily exported to Excel or similar
+software for further analysis. This approach also allows for tracking task time
+in the background or even when the device is switched off!
+
+![Demo](./demo.gif)
+
+## Features
+
+- track multiple tasks at the same
+- start / stop the task at will, resume tracking when needed.
+- mark task as complete
+- edit task details (name, description, price per hour)
+- quick continue last used task
+- task running with timer counter view
+- you can download your csv file from `apps_data/trackerflipx/data.csv`
+
+This project showcases the potential of Flipper Zero as a platform for custom
+application development. The active community of developers and users who create
+and share applications and modifications for Flipper Zero has been a great
+source of inspiration and support throughout this project. It's exciting to see
+how this compact device can be transformed into a practical tool for time
+management and productivity.
+
+Checkout this
+[document](https://github.com/MassivDash/flipper-tracker/blob/main/docs/development.md)
+on how to prepare your environment and development for Flipper Zero device.
+
+## Installation
+
+To install the Flipper Time Tracker on your Flipper Zero device, you can use the
+official Flipper Zero App store or download the .fap file directly from the
+[github release page](https://github.com/MassivDash/flipper-tracker/releases/tag/v1.0.3)

@@ -60,8 +60,10 @@ import { ReactComponent as TS } from './devIcons/ts.svg';
 import { ReactComponent as Wordpress } from './devIcons/wordpress.svg';
 import { ReactComponent as Yml } from './devIcons/yml.svg';
 import { FaRust as Rust } from 'react-icons/fa';
+import { ReactComponent as C } from './devIcons/c.svg';
 
 export default {
+  C,
   Behance,
   Dribbble,
   Facebook,
