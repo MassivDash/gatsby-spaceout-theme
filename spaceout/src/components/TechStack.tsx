@@ -27,7 +27,7 @@ const stack = [
   'Nodejs',
   'Rust',
   'Astro',
-  'Actix'
+  'Actix',
 ];
 
 const TechStack: FC = () => (

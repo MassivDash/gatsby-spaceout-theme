@@ -61,8 +61,8 @@ import { ReactComponent as Wordpress } from './devIcons/wordpress.svg';
 import { ReactComponent as Yml } from './devIcons/yml.svg';
 import { ReactComponent as Rust } from './devIcons/rust.svg';
 import { ReactComponent as C } from './devIcons/c.svg';
-import { ReactComponent as Astro } from './devIcons/astro.svg'
-import { ReactComponent as Actix } from './devIcons/actix.svg'
+import { ReactComponent as Astro } from './devIcons/astro.svg';
+import { ReactComponent as Actix } from './devIcons/actix.svg';
 
 export default {
   C,
