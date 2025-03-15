@@ -122,7 +122,7 @@ const plugins = [
     resolve: `gatsby-plugin-react-helmet`,
   },
   'gatsby-plugin-offline',
-  'gatsby-plugin-sitemap'
+  'gatsby-plugin-sitemap',
 ];
 
 /**

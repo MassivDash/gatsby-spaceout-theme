@@ -59,11 +59,15 @@ import { ReactComponent as Tailwind } from './devIcons/tailwind.svg';
 import { ReactComponent as TS } from './devIcons/ts.svg';
 import { ReactComponent as Wordpress } from './devIcons/wordpress.svg';
 import { ReactComponent as Yml } from './devIcons/yml.svg';
-import { FaRust as Rust } from 'react-icons/fa';
+import { ReactComponent as Rust } from './devIcons/rust.svg';
 import { ReactComponent as C } from './devIcons/c.svg';
+import { ReactComponent as Astro } from './devIcons/astro.svg'
+import { ReactComponent as Actix } from './devIcons/actix.svg'
 
 export default {
   C,
+  Actix,
+  Astro,
   Behance,
   Dribbble,
   Facebook,

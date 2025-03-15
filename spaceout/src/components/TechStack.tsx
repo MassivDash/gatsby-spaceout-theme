@@ -26,6 +26,8 @@ const stack = [
   'Heroku',
   'Nodejs',
   'Rust',
+  'Astro',
+  'Actix'
 ];
 
 const TechStack: FC = () => (
