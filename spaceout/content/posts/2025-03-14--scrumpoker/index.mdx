@@ -1,6 +1,6 @@
 ---
 title: Mastering Agile Estimation
-excerpt: A Deep Dive into Scrum Poker estimation method 
+excerpt: A Deep Dive into Scrum Poker estimation method
 date: 2025-03-14
 hero: scrumpoker.jpg
 author: Luke Celitan
@@ -14,51 +14,79 @@ tech:
   - TS
 ---
 
-## A Deep Dive into Scrum Poker estimation method 
+## A Deep Dive into Scrum Poker estimation method
 
 ### Introduction
 
-Hey there, fellow Agile practitioners! I'm an engineering manager who's constantly juggling the demands of development teams and business stakeholders. One of my key responsibilities is providing accurate estimates to the "business" - you know, those folks who always want to know "how long will it take?" and "how much will it cost?"
+Hey there, fellow Agile practitioners! I'm an engineering manager who's
+constantly juggling the demands of development teams and business stakeholders.
+One of my key responsibilities is providing accurate estimates to the
+"business" - you know, those folks who always want to know "how long will it
+take?" and "how much will it cost?"
 
-Here's the thing: I never make these estimates alone. It's always a team effort, and for good reason. That's where Scrum Poker comes in - it's been my go-to method for validating how much time and work a project really needs. Let me walk you through how I use this powerful technique and introduce you to my open-source app that's making the process even smoother.
+Here's the thing: I never make these estimates alone. It's always a team effort,
+and for good reason. That's where Scrum Poker comes in - it's been my go-to
+method for validating how much time and work a project really needs. Let me walk
+you through how I use this powerful technique and introduce you to my
+open-source app that's making the process even smoother.
 
 ### 1. Understanding Scrum Poker
 
-Scrum Poker, also known as Planning Poker, is a consensus-based estimation technique that I've found invaluable in my role. It's not just about throwing numbers around; it's about fostering collaboration, reducing bias, and tackling complex tasks with confidence.
+Scrum Poker, also known as Planning Poker, is a consensus-based estimation
+technique that I've found invaluable in my role. It's not just about throwing
+numbers around; it's about fostering collaboration, reducing bias, and tackling
+complex tasks with confidence.
 
 Why is it crucial? Simple:
+
 - It enhances sprint planning accuracy
 - It improves team communication
 - It boosts overall project predictability
 
-By tapping into the team's collective expertise, we're able to overcome individual biases and get a more holistic view of the work ahead.
+By tapping into the team's collective expertise, we're able to overcome
+individual biases and get a more holistic view of the work ahead.
 
-For a deeper understanding, check out [Mike Cohn's original concept](https://www.mountaingoatsoftware.com/agile/planning-poker) - he's the brains behind this brilliant idea.
+For a deeper understanding, check out
+[Mike Cohn's original concept](https://www.mountaingoatsoftware.com/agile/planning-poker) -
+he's the brains behind this brilliant idea.
 
 ### 2. The Benefits of Scrum Poker
 
 Let me break down why Scrum Poker is my MVP of estimation techniques:
 
-#### Promoting Team Collaboration and Consensus 
-It's like a team-building exercise disguised as work. Everyone gets a say, fostering a sense of shared ownership and responsibility. This open dialogue often uncovers hidden insights and concerns.
+#### Promoting Team Collaboration and Consensus
+
+It's like a team-building exercise disguised as work. Everyone gets a say,
+fostering a sense of shared ownership and responsibility. This open dialogue
+often uncovers hidden insights and concerns.
 
 #### Reducing Bias and Improving Accuracy
-By revealing estimates simultaneously, we kick the anchoring bias to the curb. No more piggybacking on the tech lead's estimate - this approach promotes independent thinking and often leads to more accurate estimations.
+
+By revealing estimates simultaneously, we kick the anchoring bias to the curb.
+No more piggybacking on the tech lead's estimate - this approach promotes
+independent thinking and often leads to more accurate estimations.
 
 #### Handling Complex or Uncertain Tasks
-Got a story that's as clear as mud? Perfect. Scrum Poker thrives on uncertainty. The discussions arising from differing estimates often uncover hidden complexities or risks, leading to more realistic planning.
 
-For more on these benefits, check out [Agile Alliance's deep dive into Planning Poker](https://www.agilealliance.org/glossary/planning-poker/).
+Got a story that's as clear as mud? Perfect. Scrum Poker thrives on uncertainty.
+The discussions arising from differing estimates often uncover hidden
+complexities or risks, leading to more realistic planning.
+
+For more on these benefits, check out
+[Agile Alliance's deep dive into Planning Poker](https://www.agilealliance.org/glossary/planning-poker/).
 
 ### 3. My Approach to Scrum Poker Sessions
 
 Here's how I run my Scrum Poker sessions:
 
 #### Preparation Phase:
-- I use a custom deck with values: 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 40, 100. These represent hours needed to complete a task.
+
+- I use a custom deck with values: 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 40, 100.
+  These represent hours needed to complete a task.
 - We align on what each value means in terms of effort and complexity.
 
 #### Estimation Process:
+
 1. I present a user story to the team.
 2. Team members silently select their estimate.
 3. Everyone reveals their cards simultaneously.
@@ -66,30 +94,44 @@ Here's how I run my Scrum Poker sessions:
 5. Re-estimate if necessary, aiming for consensus.
 6. Record the final estimate and move to the next item.
 
-This process helps me validate the time and work needed for each client request, ensuring I'm providing accurate estimates to the business.
+This process helps me validate the time and work needed for each client request,
+ensuring I'm providing accurate estimates to the business.
 
 ### 4. Best Practices and Common Pitfalls
 
 #### Effective Facilitation Tips:
+
 - Keep discussions time-boxed to maintain momentum.
 - Encourage participation from all team members, especially the quiet ones.
 - Use a reference story to calibrate the team's understanding of story points.
 
 #### Handling Outliers and Disagreements:
+
 - Focus on understanding the reasoning behind divergent estimates.
 - Avoid averaging; instead, work towards a shared understanding.
-- Consider breaking down stories that consistently lead to wide estimation ranges.
+- Consider breaking down stories that consistently lead to wide estimation
+  ranges.
 
 #### Potential Challenges and Solutions:
-- Dominant personalities influencing estimates: Use silent voting and enforce equal speaking time.
+
+- Dominant personalities influencing estimates: Use silent voting and enforce
+  equal speaking time.
 - Estimation fatigue: Take regular breaks and limit session duration.
-- Lack of domain knowledge: Involve subject matter experts or defer estimation when necessary.
+- Lack of domain knowledge: Involve subject matter experts or defer estimation
+  when necessary.
 
 ### 5. Digital Implementation: My Open-Source Scrum Poker Project
 
-To facilitate remote estimations, I've developed an open-source Scrum Poker application that bridges the gap between traditional methods and modern, distributed teams.
+![Scrum Poker app main screen](./scrumpoker-1.png)
+![Scrum Poker app room screen](./scrumpoker-2.png)
+![Scrum Poker app room screen  card revealed ](./scrumpoker-3.png)
+
+To facilitate remote estimations, I've developed an open-source Scrum Poker
+application that bridges the gap between traditional methods and modern,
+distributed teams.
 
 #### Key Features:
+
 - Real-time WebSocket communication for instant updates
 - Create custom estimation rooms
 - Invite team members via simple links
@@ -98,39 +140,57 @@ To facilitate remote estimations, I've developed an open-source Scrum Poker appl
 - Cross-device compatibility
 
 #### Why My App is Perfect for Scrum Poker:
-1. **Remote-Friendly**: Brings distributed teams together in a virtual estimation space.
+
+1. **Remote-Friendly**: Brings distributed teams together in a virtual
+   estimation space.
 2. **Real-time Collaboration**: WebSocket technology ensures everyone's in sync.
 3. **Flexibility**: Create rooms on the fly for impromptu estimation sessions.
-4. **Transparency**: Simultaneous result viewing maintains Scrum Poker principles.
+4. **Transparency**: Simultaneous result viewing maintains Scrum Poker
+   principles.
 5. **Ease of Use**: No physical cards needed - just click and estimate.
 
 #### Tech Stack:
-Built on the AstroX template, my app combines Rust's Actix framework with Astro's frontend capabilities, delivering a powerhouse of performance and usability.
 
-Check out the demo at [scrum-poker.spaceout.pl](https://scrum-poker.spaceout.pl).
+Built on the AstroX template, my app combines Rust's Actix framework with
+Astro's frontend capabilities, delivering a powerhouse of performance and
+usability.
+
+Check out the demo at
+[scrum-poker.spaceout.pl](https://scrum-poker.spaceout.pl).
 
 For developers looking to contribute or self-host:
+
 1. Ensure you have Rust (rustc > 1.74) and Node.js (> 18.14) installed.
-2. Clone the project from my [GitHub repo](https://github.com/yourusername/scrum-poker-app).
+2. Clone the project from my
+   [GitHub repo](https://github.com/yourusername/scrum-poker-app).
 3. Run `cargo run` and follow the interactive CLI for setup.
 
 ### Wrapping Up
 
-As an engineering manager, I've found Scrum Poker to be an invaluable tool for providing accurate estimates to the business. Whether used with physical cards or my digital app, it remains a cornerstone of effective Agile estimation. It's about more than just numbers - it's about fostering collaboration, leveraging collective wisdom, and continuously improving our estimation skills.
+As an engineering manager, I've found Scrum Poker to be an invaluable tool for
+providing accurate estimates to the business. Whether used with physical cards
+or my digital app, it remains a cornerstone of effective Agile estimation. It's
+about more than just numbers - it's about fostering collaboration, leveraging
+collective wisdom, and continuously improving our estimation skills.
 
 Remember, the key principles remain constant:
+
 - Always estimate as a team, never alone
 - Encourage open discussion
 - Respect diverse perspectives
 - Aim for consensus, not compromise
 
-By combining time-tested Scrum Poker methods with modern technology, we're setting the stage for more accurate, efficient, and enjoyable estimation sessions. Give my app a try, and let's make those sprint plannings smoother than ever!
+By combining time-tested Scrum Poker methods with modern technology, we're
+setting the stage for more accurate, efficient, and enjoyable estimation
+sessions. Give my app a try, and let's make those sprint plannings smoother than
+ever!
 
 Happy estimating, folks!
 
 ---
 
 Sources:
+
 1. [Mountain Goat Software - Planning Poker](https://www.mountaingoatsoftware.com/agile/planning-poker)
 2. [Atlassian - Agile Estimation](https://www.atlassian.com/agile/project-management/estimation)
 3. [Scrum.org - What is Planning Poker?](https://www.scrum.org/resources/blog/what-planning-poker)
