@@ -1,0 +1,377 @@
+---
+title: LangChain, LangGraph, and Agentic AI Patterns
+excerpt: A guide to LangChain and LangGraph
+date: 2025-06-30
+hero: cover.png
+author: Luke Celitan
+category: Post
+tech:
+  - TS
+  - JS
+---
+
+## LangChain, LangGraph, and Agentic AI Patterns
+
+### Introduction
+
+The world of AI is rapidly evolving, and with the rise of large language models (LLMs), the need for robust, flexible, and controllable agentic systems has never been greater. Two of the most exciting frameworks in this space are **LangChain** and **LangGraph**. These libraries empower developers to build advanced, agentic AI applications that can reason, plan, use tools, collaborate, and even reflect on their own actions.
+
+In this post, I’ll take you on a comprehensive journey through LangChain and LangGraph, exploring their architectures, the agentic AI patterns they enable, and how to use them in practice. We’ll cover everything from the basics to advanced multi-agent workflows, with plenty of code, diagrams, best practices, and real-world use cases. Whether you’re building a knowledge assistant, a data analysis pipeline, or a fully autonomous agentic system, this guide will serve as your definitive technical reference.
+
+
+
+## LangChain Overview
+
+### What is LangChain?
+
+LangChain is a powerful open-source framework designed to make it easy to build applications with LLMs. It provides abstractions for chains, agents, tools, memory, and more, allowing you to compose complex workflows that leverage the reasoning and generative capabilities of modern language models.
+
+**Key Concepts:**
+- **Chains:** Sequences of calls (to LLMs, APIs, or other functions) that form a deterministic workflow.
+- **Agents:** Systems that use an LLM to decide their own control flow, enabling dynamic, tool-using, and autonomous behaviors.
+- **Tools:** External functions or APIs that agents can call (e.g., web search, calculators, databases).
+- **Memory:** Mechanisms for storing and recalling information across interactions (short-term, long-term, or custom).
+
+LangChain is available in both Python and TypeScript/JavaScript, and is widely used for building chatbots, RAG systems, tool-using agents, and more.
+
+### Chains vs. Agents
+
+- **Chains** are like scripts: they execute a fixed sequence of steps every time.
+- **Agents** are like autonomous workers: they use an LLM to decide what to do next, which tool to use, or when to stop.
+
+
+
+LangChain’s agent abstractions make it easy to build systems that can reason, use tools, and adapt to new tasks.
+
+---
+
+## LangGraph Overview
+
+### What is LangGraph?
+
+LangGraph is a next-generation framework for building **graph-based agentic workflows**. While LangChain introduced the world to chains and agents, LangGraph takes things further by letting you define your application as a **graph of nodes and edges**, where each node is a function (often an LLM call or tool) and edges define the control flow.
+
+**Why LangGraph?**
+- **Controllability:** Explicitly define the flow of your application as a graph.
+- **Persistence:** Built-in support for checkpointing, state management, and time travel.
+- **Streaming:** First-class support for streaming outputs and events.
+- **Debugging:** Visualize and debug your agentic workflows with LangGraph Studio.
+- **Modularity:** Compose complex systems from reusable subgraphs and nodes.
+
+LangGraph is especially powerful for building advanced agentic systems: multi-agent collaboration, self-reflective RAG, planning and execution, human-in-the-loop, and more.
+
+### Core Concepts
+
+- **State:** A shared data structure representing the current snapshot of your application (e.g., messages, memory, documents).
+- **Nodes:** Functions that perform work (LLM calls, tool invocations, grading, etc.).
+- **Edges:** Define which node(s) to execute next, based on the current state (can be conditional or fixed).
+- **Reducers:** Functions that specify how updates from nodes are applied to the state.
+
+**Example: Minimal LangGraph Workflow (TypeScript)**
+
+```typescript
+import { StateGraph, Annotation, START, END } from "@langchain/langgraph";
+
+const State = Annotation.Root({
+  input: Annotation<string>,
+  output: Annotation<string>,
+});
+
+const nodeA = async (state: typeof State.State) => {
+  return { output: `Hello, ${state.input}!` };
+};
+
+const graph = new StateGraph(State)
+  .addNode("nodeA", nodeA)
+  .addEdge(START, "nodeA")
+  .addEdge("nodeA", END)
+  .compile();
+
+await graph.invoke({ input: "World" }); // { output: "Hello, World!" }
+```
+
+LangGraph’s explicit graph structure makes it easy to build, debug, and extend complex agentic workflows.
+
+---
+
+## Agentic AI Patterns
+
+### What is an Agent in AI?
+
+An **agent** is a system that uses an LLM to decide the control flow of an application. Unlike a chain (which always runs the same steps), an agent can choose which tools to use, when to stop, and how to adapt to new situations. This autonomy enables more flexible, powerful, and intelligent applications.
+
+### Why Agentic Patterns?
+
+- **Dynamic Control Flow:** Agents can make decisions, branch, and adapt.
+- **Tool Use:** Agents can call external APIs, search engines, databases, and more.
+- **Collaboration:** Multiple agents can work together, each specializing in different tasks.
+- **Reflection:** Agents can grade, critique, and improve their own outputs.
+- **Human-in-the-Loop:** Agents can pause for human feedback or approval.
+
+### Common Agentic Patterns
+
+#### 1. ReAct (Reasoning and Acting)
+- The agent alternates between reasoning (LLM) and acting (tool use).
+- Example: "To answer this, I need to search the web. [calls search tool] Now, based on the results..."
+
+#### 2. Plan-and-Execute
+- The agent first plans a sequence of steps, then executes them (possibly using tools).
+- Example: "Plan: 1) Find the winner of the 2023 Australian Open. 2) Find their hometown."
+
+#### 3. Tool-Using Agents
+- The agent decides which tool to use at each step (search, calculator, database, etc.).
+
+#### 4. Router Agents
+- The agent routes tasks to specialized sub-agents or workflows.
+
+#### 5. Multi-Agent Collaboration
+- Multiple agents (or agent types) work together, often in a supervisor/worker or divide-and-conquer pattern.
+
+#### 6. Reflection and Self-Correction (CRAG, Self-RAG)
+- The agent grades or critiques its own outputs, possibly re-running steps if needed.
+
+#### 7. Human-in-the-Loop
+- The agent pauses for human input, approval, or correction at key steps.
+
+**Diagram: Agentic Patterns**
+
+```
+[User] -> [Agent] -> [Tool/LLM] -> [Reflection/Grader] -> [Output]
+                   |-> [Sub-Agent/Worker]
+                   |-> [Human-in-the-Loop]
+```
+
+---
+
+## Practical Usage: LangChain and LangGraph in Practice
+
+Let’s dive into how to use these frameworks to build real-world agentic AI systems. I’ll walk through several patterns, with code and explanations.
+
+### 1. Retrieval-Augmented Generation (RAG) with LangGraph
+
+**RAG** is a foundational pattern for knowledge assistants: retrieve relevant documents, then generate an answer grounded in those documents.
+
+#### Step-by-Step: Building a RAG Agent in LangGraph
+
+- **Load Documents:** Use loaders (e.g., CheerioWebBaseLoader) to fetch and parse web pages.
+- **Split Documents:** Use text splitters to chunk documents for retrieval.
+- **Vector Store:** Embed and index chunks for similarity search.
+- **Retriever:** Query the vector store for relevant chunks.
+- **Agent State:** Track messages, retrieved docs, and conversation history.
+- **Nodes:** Define functions for retrieval, grading, rewriting, and generation.
+- **Edges:** Control flow: retrieve -> grade -> generate or rewrite -> ...
+
+**Example: Minimal RAG Graph (TypeScript)**
+
+```typescript
+import { CheerioWebBaseLoader } from "@langchain/community/document_loaders/web/cheerio";
+import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
+import { MemoryVectorStore } from "langchain/vectorstores/memory";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { StateGraph, Annotation, START, END } from "@langchain/langgraph";
+
+// 1. Load and split documents
+const urls = ["https://lilianweng.github.io/posts/2023-06-23-agent/"];
+const docs = await Promise.all(urls.map(url => new CheerioWebBaseLoader(url).load()));
+const docsList = docs.flat();
+const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 500, chunkOverlap: 50 });
+const docSplits = await textSplitter.splitDocuments(docsList);
+
+// 2. Create vector store and retriever
+const vectorStore = await MemoryVectorStore.fromDocuments(docSplits, new OpenAIEmbeddings());
+const retriever = vectorStore.asRetriever();
+
+// 3. Define state and nodes
+const GraphState = Annotation.Root({
+  question: Annotation<string>(),
+  documents: Annotation<any[]>({ reducer: (x, y) => y ?? x ?? [] }),
+  answer: Annotation<string>(),
+});
+
+const retrieve = async (state) => ({ documents: await retriever.invoke(state.question) });
+const generate = async (state) => ({ answer: `Answer based on: ${state.documents.map(d => d.pageContent).join(" ")}` });
+
+// 4. Build the graph
+const workflow = new StateGraph(GraphState)
+  .addNode("retrieve", retrieve)
+  .addNode("generate", generate)
+  .addEdge(START, "retrieve")
+  .addEdge("retrieve", "generate")
+  .addEdge("generate", END)
+  .compile();
+
+const result = await workflow.invoke({ question: "What are agentic patterns?" });
+console.log(result.answer);
+```
+
+#### Advanced: Corrective RAG (CRAG), Self-RAG
+
+- **CRAG:** Grade retrieved docs for relevance; if not relevant, rewrite query or use web search.
+- **Self-RAG:** Reflect on the answer; if not grounded or useful, re-run steps.
+
+**Key Nodes:**
+- `gradeDocuments`: LLM grades each doc for relevance.
+- `transformQuery`: LLM rewrites the query for better retrieval.
+- `webSearch`: Fallback to web search if retrieval fails.
+- `generateGenerationVDocumentsGrade`: Grade if answer is grounded in docs.
+- `generateGenerationVQuestionGrade`: Grade if answer is useful for the question.
+
+**Edge Logic:** Use conditional edges to decide next steps based on grades.
+
+### 2. Multi-Agent Collaboration
+
+**Pattern:** Divide-and-conquer with specialized agents (e.g., Researcher + Chart Generator).
+
+#### Example: Researcher + Chart Generator
+
+- **Researcher Agent:** Uses web search to gather data.
+- **Chart Generator Agent:** Uses D3.js (via a tool) to generate charts from data.
+- **State:** Tracks messages and sender.
+- **Edge Logic:** Route between agents based on task completion.
+
+**Code Sketch:**
+
+```typescript
+import { StateGraph, Annotation, START, END } from "@langchain/langgraph";
+// ... (define agents, tools, and nodes as in the context)
+
+const AgentState = Annotation.Root({
+  messages: Annotation<any[]>({ reducer: (x, y) => x.concat(y) }),
+  sender: Annotation<string>({ reducer: (x, y) => y ?? x ?? "user" }),
+});
+
+// Define nodes for Researcher, ChartGenerator, and tool calls
+// ...
+
+const workflow = new StateGraph(AgentState)
+  .addNode("Researcher", researchNode)
+  .addNode("ChartGenerator", chartNode)
+  .addNode("call_tool", toolNode)
+  // ... (add conditional edges for routing)
+  .addEdge(START, "Researcher")
+  .compile();
+```
+
+#### Advanced: Hierarchical Agent Teams
+
+- Compose subgraphs for teams (e.g., research team, writing team).
+- Use a supervisor agent to delegate tasks.
+- Enables scalable, modular multi-agent systems.
+
+### 3. Planning and Reasoning Patterns
+
+**Pattern:** ReWOO (plan, execute, solve)
+
+- **Planner Node:** LLM generates a plan (sequence of tool calls).
+- **Tool Executor Node:** Executes each step, with variable substitution.
+- **Solver Node:** LLM generates the final answer based on evidence.
+
+**Code Sketch:**
+
+```typescript
+// ... (define state, planner, tool executor, solver as in context)
+const workflow = new StateGraph(GraphState)
+  .addNode("plan", getPlan)
+  .addNode("tool", toolExecution)
+  .addNode("solve", solve)
+  .addEdge(START, "plan")
+  .addEdge("plan", "tool")
+  .addConditionalEdges("tool", routeFn)
+  .addEdge("solve", END)
+  .compile();
+```
+
+### 4. Human-in-the-Loop and Evaluation
+
+**Pattern:** Interrupts, breakpoints, simulation
+
+- **Simulated User:** LLM acts as a user for chatbot evaluation.
+- **Chatbot Node:** LLM acts as the bot.
+- **Edge Logic:** Continue or end based on conversation length or special tokens.
+
+**Code Sketch:**
+
+```typescript
+// ... (define simulatedUserNode, chatBotNode, shouldContinue)
+const workflow = new StateGraph(MessagesAnnotation)
+  .addNode('user', simulatedUserNode)
+  .addNode('chatbot', chatBotNode)
+  .addEdge('chatbot', 'user')
+  .addConditionalEdges('user', shouldContinue, { [END]: END, continue: 'chatbot' })
+  .addEdge(START, 'chatbot')
+  .compile();
+```
+
+---
+
+## Advanced Concepts and Best Practices
+
+### Memory in Agentic Systems
+- **Short-term memory:** In-context (conversation history)
+- **Long-term memory:** External vector stores, databases
+- **Sensory memory:** Embeddings for raw inputs (text, images)
+
+### State Management and Reducers
+- Use reducers to control how state updates are applied (e.g., append, overwrite, merge).
+- For message histories, use `messagesStateReducer` for robust handling.
+
+### Persistence, Checkpointing, and Time Travel
+- Use built-in checkpointers to save and resume graph state.
+- Enables human-in-the-loop, debugging, and fault-tolerance.
+
+### Streaming, Debugging, and Visualization
+- Stream outputs and events for responsive UX.
+- Use LangGraph Studio for graph visualization and step-by-step debugging.
+
+### Subgraphs and Modularity
+- Compose complex systems from reusable subgraphs.
+- Enables hierarchical agent teams and scalable architectures.
+
+### Performance Considerations
+- Minimize unnecessary LLM/tool calls.
+- Use conditional edges to avoid redundant steps.
+- Profile and monitor token usage and latency.
+
+### Troubleshooting
+- Use graph visualization to debug control flow.
+- Add logging to nodes for step-by-step tracing.
+- Handle edge cases (e.g., empty retrieval, tool failures) with fallback logic.
+
+---
+
+## Real-World Use Cases
+
+### Knowledge Assistants
+- RAG, CRAG, Self-RAG for document Q&A, research, and summarization.
+
+### Data Analysis and Visualization
+- Multi-agent workflows for data gathering, analysis, and chart generation.
+
+### Automated Research and Report Generation
+- Planning, tool use, and multi-agent collaboration for end-to-end research pipelines.
+
+### Customer Support Bots
+- Simulation and evaluation with human-in-the-loop for robust, user-friendly bots.
+
+### Workflow Automation
+- Planning, execution, and tool use for automating business processes and decision-making.
+
+---
+
+<video width="1150px" height="100%" autoplay muted style={{ margin: 'auto' }}>
+  <source src="intro.mp4" type="video/mp4" />
+  Your browser does not support the video tag
+</video>
+
+
+
+## Conclusion
+
+
+LangChain and LangGraph represent the cutting edge of agentic AI development. LangChain makes it easy to build chains and agents, while LangGraph empowers you to design, debug, and deploy complex, controllable agentic workflows as graphs. By mastering these frameworks and the agentic patterns they enable, you can build AI systems that are not only powerful and flexible, but also reliable, debuggable, and ready for real-world deployment.
+
+**When to use which?**
+- Use **LangChain** for simple chains, basic agents, and rapid prototyping.
+- Use **LangGraph** for advanced agentic systems: multi-agent, self-reflective, human-in-the-loop, or production-grade workflows.
+
+The future of AI is agentic, and with LangChain and LangGraph, you have the tools to build it. Happy hacking!
