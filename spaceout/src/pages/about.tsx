@@ -9,7 +9,7 @@ import Spaceman, { FlexHolder } from '../components/Spaceman';
 import Spaceship from '../components/Spaceship';
 import TechStack from '../components/TechStack';
 import { MagnetLines, SectionContainer } from '../components/MagnetLines';
-import { DesktopOnlyVideo } from 'src/components/LazyVideo/LazyVideo';
+import { DesktopOnlyVideo } from '../components/LazyVideo';
 import CSSFadeIn from 'gatsby-theme-spaceout/src/components/Transitions/Transitions.CSS.FadeIn';
 import ExternalLink from '../components/ExternalLink';
 

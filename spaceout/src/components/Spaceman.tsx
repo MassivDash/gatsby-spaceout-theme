@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
-import aboutme from '../assets/aboutme.mp4';
+import aboutme from '../assets/aboutme2.mp4';
 import LazyVideo from './LazyVideo';
 
 const SpacemanTitle: React.FC = () => {
@@ -10,10 +10,10 @@ const SpacemanTitle: React.FC = () => {
       <ShadowParent>
         <LazyVideo
           src={aboutme}
-          height="100%"
+          height="800px"
           muted
           loop
-          style={{ margin: 'auto', maxHeight: '800px' }}
+          style={{ margin: 'auto' }}
         />
       </ShadowParent>
     </SpacemanHolder>

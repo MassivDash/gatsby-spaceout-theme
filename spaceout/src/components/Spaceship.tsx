@@ -1,23 +1,23 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
-import aboutme from '../assets/spaceship.mp4';
+import aboutme from '../assets/spaceship2.mp4';
 import LazyVideo from './LazyVideo';
 
 const Spaceship: React.FC = () => {
-  return (
-    <SpacemanHolder>
-      <ShadowParent>
-        <LazyVideo
-          src={aboutme}
-          height="100%"
-          muted
-          loop
-          style={{ margin: 'auto', maxHeight: '800px', maxWidth: '640px' }}
-        />
-      </ShadowParent>
-    </SpacemanHolder>
-  );
+    return (
+        <SpacemanHolder>
+            <ShadowParent>
+                <LazyVideo
+                    src={aboutme}
+                    height="800px"
+                    muted
+                    loop
+                    style={{ margin: 'auto', maxWidth: '640px' }}
+                />
+            </ShadowParent>
+        </SpacemanHolder>
+    );
 };
 
 export default Spaceship;
