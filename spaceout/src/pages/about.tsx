@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import Scroller from 'gatsby-theme-spaceout/src/components/Scroller';
 import Section from 'gatsby-theme-spaceout/src/components/Section';
 import SEO from 'gatsby-theme-spaceout/src/components/SEO';
@@ -8,7 +9,7 @@ import Spaceman, { FlexHolder } from '../components/Spaceman';
 import Spaceship from '../components/Spaceship';
 import TechStack from '../components/TechStack';
 import { MagnetLines, SectionContainer } from '../components/MagnetLines';
-
+import { DesktopOnlyVideo } from 'src/components/LazyVideo/LazyVideo';
 import CSSFadeIn from 'gatsby-theme-spaceout/src/components/Transitions/Transitions.CSS.FadeIn';
 import ExternalLink from '../components/ExternalLink';
 
@@ -21,7 +22,9 @@ const About: FC = () => {
           <Section>
             <div style={{ height: '50px', width: '100%' }}></div>
             <MagnetLines />
-            <Spaceman />
+            <DesktopOnlyVideo>
+              <Spaceman />
+            </DesktopOnlyVideo>
             <Headings.H1>Hi there 👋, I'm Luke</Headings.H1>
             <Headings.H2>Professional Summary</Headings.H2>
             <Paragraph>
@@ -85,7 +88,9 @@ const About: FC = () => {
           </Section>
           <Section>
             <MagnetLines />
-            <Spaceship />
+            <DesktopOnlyVideo>
+              <Spaceship />
+            </DesktopOnlyVideo>
             <Headings.H2>Projects & Achievements</Headings.H2>
 
             <Paragraph>

@@ -39,12 +39,12 @@ const SpacemanHolder = styled.div`
   align-items: flex-end;
   justify-content: flex-end;
   animation: ${moveBlack} 65s linear infinite;
-  clip-path: circle(40% at 60% 40%);
-  transform: translate(25px, 40px);
+  clip-path: circle(70% at 50% 50%);
+  transform: translate(0, 0);
   transition: clip-path 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   &:hover {
-    clip-path: circle(50% at 60% 40%);
+    clip-path: circle(80% at 50% 50%);
   }
 
   @media (min-width: 1024px) {

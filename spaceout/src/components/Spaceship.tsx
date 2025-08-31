@@ -5,19 +5,19 @@ import aboutme from '../assets/spaceship.mp4';
 import LazyVideo from './LazyVideo';
 
 const Spaceship: React.FC = () => {
-  return (
-    <SpacemanHolder>
-      <ShadowParent>
-        <LazyVideo
-          src={aboutme}
-          height="100%"
-          muted
-          loop
-          style={{ margin: 'auto', maxHeight: '800px', maxWidth: '640px' }}
-        />
-      </ShadowParent>
-    </SpacemanHolder>
-  );
+    return (
+        <SpacemanHolder>
+            <ShadowParent>
+                <LazyVideo
+                    src={aboutme}
+                    height="100%"
+                    muted
+                    loop
+                    style={{ margin: 'auto', maxHeight: '800px', maxWidth: '640px' }}
+                />
+            </ShadowParent>
+        </SpacemanHolder>
+    );
 };
 
 export default Spaceship;
@@ -39,18 +39,18 @@ const SpacemanHolder = styled.div`
   align-items: flex-end;
   justify-content: flex-end;
   animation: ${moveBlack} 65s linear infinite;
-  clip-path: circle(40% at 60% 40%);
-  transform: translate(25px, 40px);
+  clip-path: circle(70% at 50% 50%);
+  transform: translate(0, 0);
   transition: clip-path 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   &:hover {
-    clip-path: circle(50% at 60% 40%);
+    clip-path: circle(80% at 50% 50%);
   }
 
   @media (min-width: 1024px) {
     clip-path: circle(25% at 70% 45%);
     transform: translate(0);
-
+    
     &:hover {
       clip-path: circle(30% at 70% 45%);
     }
