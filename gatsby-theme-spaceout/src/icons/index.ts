@@ -63,6 +63,11 @@ import { ReactComponent as Rust } from './devIcons/rust.svg';
 import { ReactComponent as C } from './devIcons/c.svg';
 import { ReactComponent as Astro } from './devIcons/astro.svg';
 import { ReactComponent as Actix } from './devIcons/actix.svg';
+import { DiLinux as Linux } from 'react-icons/di';
+import { DiGithubBadge as Github2 } from 'react-icons/di';
+import { DiNpm as Npm } from 'react-icons/di';
+import { DiMarkdown as Markdown } from 'react-icons/di';
+import { DiDatabase as SQL } from 'react-icons/di';
 
 export default {
   C,
@@ -88,6 +93,7 @@ export default {
   Copy,
   Ex,
   Link,
+  Linux,
   ToggleClose,
   ToggleOpen,
   Rows,
@@ -124,4 +130,8 @@ export default {
   Owasp,
   Nodejs,
   Rust,
+  Github2,
+  SQL,
+  Npm,
+  Markdown,
 };

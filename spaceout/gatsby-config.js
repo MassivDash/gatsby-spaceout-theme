@@ -18,7 +18,7 @@ const siteMetadata = {
     },
     {
       title: "How it's done",
-      slug: 'howitsdone',
+      slug: '',
     },
     {
       title: 'Contact',
