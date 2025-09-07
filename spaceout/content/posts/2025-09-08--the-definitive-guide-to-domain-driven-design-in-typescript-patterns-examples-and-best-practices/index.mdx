@@ -1,0 +1,561 @@
+---
+title:  Domain-Driven Design in TypeScript
+excerpt: A comprehensive deep-dive into Domain-Driven Design (DDD) with TypeScript, covering theory, practical implementation, advanced patterns, and real-world scenarios.
+date: 2025-09-08
+hero: ddd.png
+author: Luke Celitan
+category: Post
+tech:
+  - TS
+  - Nodejs
+---
+
+# The Definitive Guide to Domain-Driven Design in TypeScript: Patterns, Examples, and Best Practices
+
+## 1. Introduction
+
+Domain-Driven Design (DDD) is more than a set of patterns—it's a philosophy and a collaborative approach to building complex software. In TypeScript, DDD can help you create robust, maintainable, and expressive systems that truly reflect your business's core logic. In this guide, I’ll take you on a deep technical journey through DDD, showing not just the theory, but how to implement it in TypeScript, with real-world scenarios, advanced patterns, and practical advice from the trenches.
+
+## 2. What is Domain-Driven Design?
+
+At its heart, DDD is about focusing on the domain—the sphere of knowledge and activity around which your business revolves. DDD is a way of thinking, a set of priorities, and a collection of patterns and practices that help teams tackle complexity by modeling software after the real-world problems it’s meant to solve.
+
+Key tenets of DDD include:
+- **Knowledge Crunching:** Iteratively refining the domain model in close collaboration with domain experts.
+- **Ubiquitous Language:** Building a shared language that permeates code, tests, and conversations.
+- **Model-Driven Design:** Ensuring the code and the domain model evolve together, avoiding the analysis/design divide.
+
+DDD is not just for large enterprises. Even in smaller TypeScript projects, the principles of DDD can help you avoid anemic models, clarify intent, and build systems that are easier to change and reason about.
+
+## 3. The Building Blocks of DDD
+
+Let’s start with the core building blocks. Each of these is both a conceptual tool and a practical pattern you’ll use in your TypeScript code.
+
+### Entities
+
+Entities are objects with a distinct identity that persists over time. Their identity matters more than their attributes.
+
+```typescript
+class Customer {
+  constructor(
+    public readonly id: string,
+    public name: string,
+    public email: string
+  ) {}
+}
+```
+
+**Best Practices:**
+- Use immutable IDs (UUIDs, database-generated, etc.).
+- Equality is based on identity, not attributes.
+- Entities can change state, but their identity remains constant.
+
+### Value Objects
+
+Value Objects are defined only by their attributes. They are immutable and interchangeable if their values are equal.
+
+```typescript
+class Address {
+  constructor(
+    public readonly street: string,
+    public readonly city: string,
+    public readonly zip: string
+  ) {}
+
+  equals(other: Address): boolean {
+    return (
+      this.street === other.street &&
+      this.city === other.city &&
+      this.zip === other.zip
+    );
+  }
+}
+```
+
+**Best Practices:**
+- Make value objects immutable.
+- Implement equality checks.
+- Use value objects to encapsulate concepts like Money, DateRange, or EmailAddress.
+
+### Aggregates
+
+Aggregates are clusters of associated objects (entities and value objects) treated as a unit for data changes. Each aggregate has a root entity (the Aggregate Root) that enforces invariants and controls access.
+
+```typescript
+class Order {
+  private items: OrderItem[] = [];
+
+  constructor(public readonly id: string, public customer: Customer) {}
+
+  addItem(item: OrderItem) {
+    this.items.push(item);
+  }
+
+  get total(): number {
+    return this.items.reduce((sum, item) => sum + item.price, 0);
+  }
+}
+```
+
+**Best Practices:**
+- Only allow external access through the aggregate root.
+- Enforce invariants at the aggregate level.
+- Keep aggregates small and focused.
+
+### Repositories
+
+Repositories abstract away the details of data storage and retrieval for aggregates.
+
+```typescript
+interface OrderRepository {
+  findById(id: string): Promise<Order | null>;
+  save(order: Order): Promise<void>;
+}
+```
+
+**Best Practices:**
+- Repositories work with aggregates, not entities or value objects directly.
+- Keep repository interfaces simple and intention-revealing.
+- Use dependency injection for testability.
+
+### Services
+
+Services encapsulate domain operations that don’t naturally fit on an entity or value object.
+
+```typescript
+class PaymentService {
+  processPayment(order: Order, paymentDetails: PaymentDetails): PaymentResult {
+    // ...
+  }
+}
+```
+
+**Best Practices:**
+- Use domain services for operations involving multiple aggregates or domain concepts.
+- Keep services stateless when possible.
+
+### Modules
+
+Modules group related concepts to reduce cognitive load and clarify boundaries. In TypeScript, use folders, namespaces, or ES modules.
+
+---
+
+## 4. Modeling the Domain in TypeScript
+
+TypeScript’s type system is a powerful ally for DDD. You can use interfaces, classes, and type guards to model the domain, enforce invariants, and prevent invalid states.
+
+### Example: Shipping Domain
+
+Let’s model a simplified shipping domain: Cargo, Voyage, Booking, and Location.
+
+```typescript
+// Value Object
+class Location {
+  constructor(
+    public readonly code: string, // e.g., 'NYC', 'LON'
+    public readonly name: string
+  ) {}
+}
+
+// Entity
+class Cargo {
+  private bookings: Booking[] = [];
+
+  constructor(
+    public readonly id: string,
+    public origin: Location,
+    public destination: Location
+  ) {}
+
+  book(voyage: Voyage) {
+    this.bookings.push(new Booking(this, voyage));
+  }
+}
+
+// Entity
+class Voyage {
+  constructor(
+    public readonly id: string,
+    public readonly schedule: VoyageSchedule
+  ) {}
+}
+
+// Value Object
+class VoyageSchedule {
+  constructor(
+    public readonly departure: Location,
+    public readonly arrival: Location,
+    public readonly departureDate: Date,
+    public readonly arrivalDate: Date
+  ) {}
+}
+
+// Aggregate Root
+class Booking {
+  constructor(
+    public readonly cargo: Cargo,
+    public readonly voyage: Voyage
+  ) {}
+}
+```
+
+**TypeScript Patterns for DDD:**
+- Use `readonly` for immutability.
+- Use interfaces for contracts (e.g., repositories, services).
+- Use type guards to enforce invariants at runtime.
+
+---
+
+## 5. Ubiquitous Language and Knowledge Crunching
+
+A Ubiquitous Language is a shared vocabulary that connects code, tests, and conversations. It’s the backbone of DDD. In TypeScript, this means naming classes, methods, and variables after domain concepts, and refactoring relentlessly to keep the language consistent.
+
+**Example:**
+
+```typescript
+// Instead of ambiguous names:
+const x = new Booking(y, z);
+
+// Use domain terms:
+const booking = new Booking(cargo, voyage);
+```
+
+**Knowledge Crunching:**
+- Work closely with domain experts.
+- Use code, diagrams, and conversations to refine the model.
+- Expect the model to evolve as you learn more.
+
+---
+
+## 6. Layered Architecture in TypeScript
+
+A layered architecture separates concerns and keeps the domain model isolated from infrastructure and UI. A typical structure:
+
+- **UI Layer:** Handles user interaction.
+- **Application Layer:** Orchestrates use cases, coordinates aggregates.
+- **Domain Layer:** Contains entities, value objects, aggregates, services.
+- **Infrastructure Layer:** Handles persistence, messaging, external APIs.
+
+**Example Folder Structure:**
+
+```
+src/
+  domain/
+    entities/
+    value-objects/
+    services/
+    repositories/
+  application/
+    use-cases/
+  infrastructure/
+    orm/
+    api/
+  ui/
+    web/
+```
+
+**Dependency Rule:**
+- Domain layer depends on nothing.
+- Application depends on domain.
+- Infrastructure depends on domain and application.
+- UI depends on application.
+
+---
+
+## 7. Aggregates, Factories, and Repositories: Advanced Implementation
+
+### Aggregates
+
+Aggregates enforce invariants and transactional consistency. In TypeScript, you can use private fields and methods to encapsulate rules.
+
+```typescript
+class BankAccount {
+  private balance: number;
+  private transactions: Transaction[] = [];
+
+  constructor(public readonly id: string, initialBalance: number) {
+    this.balance = initialBalance;
+  }
+
+  deposit(amount: number) {
+    if (amount <= 0) throw new Error('Amount must be positive');
+    this.balance += amount;
+    this.transactions.push(new Transaction('deposit', amount));
+  }
+
+  withdraw(amount: number) {
+    if (amount <= 0) throw new Error('Amount must be positive');
+    if (amount > this.balance) throw new Error('Insufficient funds');
+    this.balance -= amount;
+    this.transactions.push(new Transaction('withdraw', amount));
+  }
+}
+```
+
+### Factories
+
+Factories encapsulate complex creation logic, especially for aggregates.
+
+```typescript
+class BankAccountFactory {
+  static openAccount(id: string, initialBalance: number): BankAccount {
+    if (initialBalance < 0) throw new Error('Initial balance must be non-negative');
+    return new BankAccount(id, initialBalance);
+  }
+}
+```
+
+### Repositories
+
+Repositories abstract persistence. In TypeScript, use interfaces and dependency injection.
+
+```typescript
+interface BankAccountRepository {
+  findById(id: string): Promise<BankAccount | null>;
+  save(account: BankAccount): Promise<void>;
+}
+```
+
+---
+
+## 8. Strategic Design
+
+Strategic design is about managing complexity at scale. It’s where DDD really shines in large systems.
+
+### Bounded Contexts
+
+A Bounded Context is an explicit boundary within which a particular domain model applies. Different teams or subsystems may have different models for the same concept.
+
+**Example:**
+- In a shipping company, the term "Customer" might mean a paying client in the booking context, but a recipient in the delivery context.
+
+**Best Practices:**
+- Make context boundaries explicit in code and documentation.
+- Integrate contexts via translation layers, APIs, or events.
+
+### Context Maps
+
+A Context Map documents the relationships between bounded contexts: shared kernel, customer/supplier, conformist, anticorruption layer, etc.
+
+### Shared Kernel
+
+A shared subset of the model/codebase used by multiple contexts. Requires close collaboration.
+
+### Anticorruption Layer
+
+A translation layer that protects your model from external or legacy models.
+
+**TypeScript Example:**
+
+```typescript
+// External API model
+type ExternalOrder = { order_id: string; total: number };
+
+// Internal model
+class Order {
+  constructor(public readonly id: string, public readonly total: number) {}
+}
+
+// Anticorruption Layer
+function mapExternalOrder(external: ExternalOrder): Order {
+  return new Order(external.order_id, external.total);
+}
+```
+
+### Open Host Service & Published Language
+
+Expose your model via a stable API or protocol, using a well-documented language (e.g., OpenAPI, GraphQL schema, or industry XML standard).
+
+### Distillation
+
+Focus on the core domain, separate generic subdomains, and keep the model as simple as possible.
+
+---
+
+## 9. Supple Design: Making Models Easy to Use and Change
+
+Supple design is about making your models expressive, intention-revealing, and easy to evolve.
+
+### Intention-Revealing Interfaces
+
+Name methods and classes after domain concepts, not technical details.
+
+### Side-Effect-Free Functions
+
+Prefer pure functions for calculations and queries.
+
+### Assertions and Invariants
+
+Use TypeScript’s type system and runtime checks to enforce invariants.
+
+### Specification Pattern
+
+Encapsulate business rules as reusable, composable objects.
+
+```typescript
+interface Specification<T> {
+  isSatisfiedBy(candidate: T): boolean;
+}
+
+class OverdraftAllowed implements Specification<BankAccount> {
+  isSatisfiedBy(account: BankAccount): boolean {
+    return account.balance >= 0;
+  }
+}
+```
+
+---
+
+## 10. Refactoring Toward Deeper Insight
+
+DDD is an iterative process. As you learn more, refactor your model to reflect deeper understanding.
+
+### Example: Evolving a Naive Model
+
+**Before:**
+
+```typescript
+class Invoice {
+  constructor(public amount: number, public paid: boolean) {}
+}
+```
+
+**After:**
+
+```typescript
+class Invoice {
+  private payments: Payment[] = [];
+  constructor(public readonly id: string, public readonly total: number) {}
+
+  addPayment(payment: Payment) {
+    this.payments.push(payment);
+  }
+
+  get paid(): boolean {
+    return this.payments.reduce((sum, p) => sum + p.amount, 0) >= this.total;
+  }
+}
+```
+
+---
+
+## 11. Testing and Evolving Your Domain Model
+
+Testing is essential for evolving your domain model safely.
+
+**Example with Jest:**
+
+```typescript
+test('BankAccount deposit increases balance', () => {
+  const account = new BankAccount('id', 100);
+  account.deposit(50);
+  expect(account.balance).toBe(150);
+});
+```
+
+- Test aggregates, value objects, and business rules.
+- Use mocks for repositories and services.
+
+---
+
+## 12. Real-World Case Study: From Naive Model to Deep Model
+
+Let’s walk through a shipping scenario, from a naive model to a deep, expressive domain model.
+
+### Step 1: Naive Model
+
+```typescript
+class Shipment {
+  constructor(
+    public id: string,
+    public origin: string,
+    public destination: string,
+    public status: string
+  ) {}
+}
+```
+
+### Step 2: Introducing Value Objects and Entities
+
+```typescript
+class Location {
+  constructor(public readonly code: string, public readonly name: string) {}
+}
+
+class Shipment {
+  private status: ShipmentStatus;
+  constructor(
+    public readonly id: string,
+    public readonly origin: Location,
+    public readonly destination: Location
+  ) {
+    this.status = ShipmentStatus.Pending;
+  }
+
+  markInTransit() {
+    if (this.status !== ShipmentStatus.Pending) throw new Error('Invalid state');
+    this.status = ShipmentStatus.InTransit;
+  }
+}
+
+enum ShipmentStatus {
+  Pending,
+  InTransit,
+  Delivered,
+}
+```
+
+### Step 3: Aggregates and Invariants
+
+```typescript
+class Shipment {
+  private events: ShipmentEvent[] = [];
+  // ...
+  addEvent(event: ShipmentEvent) {
+    // Enforce business rules here
+    this.events.push(event);
+  }
+}
+```
+
+### Step 4: Bounded Contexts and Integration
+
+- Booking, Tracking, and Billing contexts each have their own models for Shipment.
+- Integrate via APIs or events, using anticorruption layers.
+
+---
+
+## 13. Best Practices and Common Pitfalls
+
+### Best Practices
+- Collaborate closely with domain experts.
+- Build and maintain a ubiquitous language.
+- Keep aggregates small and focused.
+- Use value objects liberally.
+- Isolate the domain model from infrastructure.
+- Test business rules thoroughly.
+- Refactor toward deeper insight.
+
+### Common Pitfalls
+- Anemic domain models (entities with only getters/setters).
+- Overly large aggregates.
+- Leaking infrastructure concerns into the domain.
+- Ignoring bounded contexts and integration challenges.
+- Failing to evolve the model as understanding grows.
+
+---
+
+## 14. Conclusion and Further Resources
+
+Domain-Driven Design is a journey, not a destination. In TypeScript, DDD can help you build systems that are robust, expressive, and a joy to work with. By focusing on the domain, collaborating with experts, and relentlessly refining your model, you can tackle even the most complex business problems.
+
+**Further Reading:**
+- Eric Evans, _Domain-Driven Design: Tackling Complexity in the Heart of Software_
+- Vaughn Vernon, _Implementing Domain-Driven Design_
+- Patterns of Enterprise Application Architecture (Martin Fowler)
+- Domain-Driven Design Community: https://dddcommunity.org/
+- Awesome DDD: https://github.com/heynickc/awesome-ddd
+
+---
+
+*This guide is intended as a living reference. As the TypeScript ecosystem and DDD practices evolve, so too should your models and your approach. Happy modeling!*
