@@ -16,10 +16,7 @@ const siteMetadata = {
       title: 'about me',
       slug: 'about',
     },
-    {
-      title: "posts",
-      slug: '',
-    },
+
     {
       title: 'Contact',
       slug: 'contact',
