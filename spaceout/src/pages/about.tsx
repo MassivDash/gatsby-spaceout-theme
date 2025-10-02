@@ -1,15 +1,17 @@
 import React, { FC } from 'react';
+
 import Scroller from 'gatsby-theme-spaceout/src/components/Scroller';
 import Section from 'gatsby-theme-spaceout/src/components/Section';
 import SEO from 'gatsby-theme-spaceout/src/components/SEO';
 import Headings from 'gatsby-theme-spaceout/src/components/Headings';
 import Paragraph from 'gatsby-theme-spaceout/src/components/Paragraph';
 import Spaceman, { FlexHolder } from '../components/Spaceman';
+import Spaceship from '../components/Spaceship';
 import TechStack from '../components/TechStack';
-import { TechIcons } from 'gatsby-theme-spaceout/src/sections/articles/Articles.List';
+import { MagnetLines, SectionContainer } from '../components/MagnetLines';
+import { DesktopOnlyVideo } from '../components/LazyVideo';
 import CSSFadeIn from 'gatsby-theme-spaceout/src/components/Transitions/Transitions.CSS.FadeIn';
 import ExternalLink from '../components/ExternalLink';
-import bwSpaceman from '../assets/bwSpaceman.png';
 
 const About: FC = () => {
   return (
@@ -19,74 +21,139 @@ const About: FC = () => {
         <CSSFadeIn>
           <Section>
             <div style={{ height: '50px', width: '100%' }}></div>
-            <Spaceman />
-            <Headings.H1>Hi there 👋</Headings.H1>
-            <Headings.H2>
-              My name is Luke and I am full stack javascript developer.
-            </Headings.H2>
+            <MagnetLines />
+            <DesktopOnlyVideo>
+              <Spaceman />
+            </DesktopOnlyVideo>
+            <Headings.H1>Hi there 👋, I'm Luke</Headings.H1>
+            <Headings.H2>Professional Summary</Headings.H2>
             <Paragraph>
-              I have built my first website way back in highschool (2004), and
-              since then I have been perfecting my skills in both design, (UX,
-              UI) and web/app development.
+              <strong>
+                Experienced software engineer, full-stack developer, and
+                engineering manager at JLL Technologies (Business Intelligence
+                Division), specializing in data-intensive applications, AI/ML,
+                and cloud integrations. Passionate about system architecture,
+                developer experience, and delivering robust solutions in
+                competitive markets.
+              </strong>
+              <br />• Systems Architect for cross-platform solutions
+              <br />• UI/UX Consultant ensuring seamless
+              design-to-implementation workflows
+            </Paragraph>
+            <Headings.H2>Experience</Headings.H2>
+            <Paragraph>
+              Currently leading a team at JLL Technologies, building and
+              maintaining full-stack solutions for workplace dynamics research
+              and monitoring using sensors and big data. Over 5 years of product
+              ownership and technical leadership, driving innovation and
+              compliance in enterprise environments.
             </Paragraph>
             <Paragraph>
-              For many years now, I have been involved in various projects as a
-              systems architect and UI/UX consultant. I make sure that various
-              designs and ideas can be implemented swiftly and without headache
-              to all major platforms (such as AWS services, Azure, custom
-              Virtual and dedicated servers,). My area of expertise is React.js
-              and React Native, Node.js, which I use to develop Apps for all the
-              major platforms (Web, iOS and Android).
+              <strong>Long-Term Product Stewardship:</strong> I take pride in
+              owning and evolving products over the long haul, ensuring
+              stability, scalability, and continuous improvement.
             </Paragraph>
-
+          </Section>
+          <Section>
+            <SectionContainer>
+              <MagnetLines columns={10} rows={10} />
+            </SectionContainer>
+            <Headings.H2>Technical Expertise</Headings.H2>
             <Paragraph>
-              Currently i am full time employed as an engineering manager in JLL
-              technologies, business intelligence division, were me and the team
-              work together to build full stack solutions, supporting workplace
-              dynamics research and monitoring using sensors and big data.
+              <strong>Languages:</strong> JavaScript, TypeScript, Rust, C, C++,
+              Php, Asp.net
+              <br />
+              <strong>Frameworks & Libraries:</strong> React, React Native,
+              Svelte, Astro.js, Next,js, Node.js
+              <br />
+              <strong>Cloud Platforms:</strong> AWS, Azure
+              <br />
+              <strong>DevOps & Infrastructure:</strong> Docker, CI/CD, GitHub
+              Actions, DevSecOps, Cypress, Playwright ...
+              <br />
+              <strong>Big Data & AI:</strong> Data pipelines, AI agents,
+              distributed systems
+              <br />
+              <strong>System Architecture:</strong> Scalable, modular design;
+              performance optimization; security/compliance
+              <br />
+              <strong>UI/UX:</strong> Design systems, accessibility,
+              cross-platform consistency
             </Paragraph>
-            <Paragraph>My stack:</Paragraph>
             <div style={{ maxWidth: '1150px', margin: '20px auto' }}>
               <TechStack />
             </div>
-            <Paragraph>
-              I am open for collaboration on open source and ngo projects. If
-              you are looking for a high quality custom solutions, that are not
-              based on themes or 3rd party paid modules. Contact me for more
-              info at{' '}
-              <ExternalLink href="mailto:luke@spaceout.pl">
-                luke@spaceout.pl
-              </ExternalLink>
-            </Paragraph>
+
             <div style={{ height: '50px', width: '100%' }}></div>
-            <img src={bwSpaceman}></img>
-            <Headings.H2>I’m currently working on ... </Headings.H2>
+          </Section>
+          <Section>
+            <MagnetLines />
+            <DesktopOnlyVideo>
+              <Spaceship />
+            </DesktopOnlyVideo>
+            <Headings.H2>Projects & Achievements</Headings.H2>
+
             <Paragraph>
-              <TechIcons tech={['Owasp']} /> Implementing compliance and
-              security protocols using the DevSecOps (#OWASP) principles
+              <br />• Architected and launched enterprise-grade products for
+              workplace analytics
+              <br />• Led migration and integration projects across cloud and
+              on-prem platforms
+              <br />• Maintained and evolved a data-intensive product for over 5
+              years with my team
+              <br />• Implemented compliance and security protocols using
+              DevSecOps principles
+              <br />• Mastered Docker and node orchestration, including
+              distributed systems and simulations of cloud app services
+              <br />• Developed advanced GitHub Actions pipelines and CI/CD
+              strategies
+              <br />• Active contributor to open source and NGO initiatives,
+              providing pro-bono design and development
+            </Paragraph>
+            <Headings.H2>Approach & Philosophy</Headings.H2>
+            <Paragraph>
+              <strong>Passion for Engineering:</strong> I believe in the power
+              of software to transform businesses and lives. My approach centers
+              on thoughtful system architecture, rigorous testing, and
+              continuous learning.
             </Paragraph>
             <Paragraph>
-              <TechIcons tech={['Docker']} /> Docker mastery and node
-              orchestration, Node.js clusters and distributed systems
+              <strong>Developer Experience:</strong> I strive to create
+              environments where developers can do their best work—through clear
+              documentation, automated workflows, and supportive team culture.
             </Paragraph>
             <Paragraph>
-              <TechIcons tech={['Cypress']} /> Mastering intergration testing
-              using cypress.io
+              <strong>Professional Excellence:</strong> In a highly competitive
+              market, I'm committed to delivering solutions that are not only
+              functional but also elegant, secure, and future-proof.
             </Paragraph>
             <Paragraph>
-              <TechIcons tech={['Azure']} />
-              Azure dev ops advanced yaml pipeline configuration
+              <strong>Continuous Learning:</strong> Whether it's mastering new
+              technologies or exploring creative design, I'm always seeking to
+              expand my horizons and share knowledge with the community.
             </Paragraph>
-            <div style={{ height: '50px', width: '100%' }}></div>
-            <div style={{ height: '50px', width: '100%' }}></div>
-            <Headings.H2>some personal info ... </Headings.H2>
+            <SectionContainer>
+              <MagnetLines columns={10} rows={10} />
+            </SectionContainer>
+            <Headings.H2>Personal Passions & Inspiration</Headings.H2>
             <Paragraph>
-              I am a big geek with huge love for Star Wars, Marvel and DC comic
-              books, Funk and 80s music. I take most of my design inspiration
-              from offline experiences like going to art museums, galleries and
-              working with other creative people on various projects. I also
-              work with various Activist and NGO groups as a pro-bono designer
-              and developer.
+              <strong>Geek Culture:</strong> Lifelong fan of Star Wars, Marvel,
+              and DC comics
+            </Paragraph>
+            <Paragraph>
+              <strong>Music:</strong> Funk and 80s music enthusiast; I curate
+              official Spaceout music collections
+            </Paragraph>
+            <Paragraph>
+              <strong>Art & Design:</strong> Draw inspiration from art museums,
+              galleries, and creative collaborations
+            </Paragraph>
+            <Paragraph>
+              <strong>Pro-Bono Work:</strong> Active contributor to NGO and
+              activist groups as a designer and developer
+            </Paragraph>
+            <Paragraph>
+              <strong>Community:</strong> I love working with creative people on
+              projects that make a difference
             </Paragraph>
 
             <Paragraph>
@@ -109,16 +176,21 @@ const About: FC = () => {
               ></iframe>
             </FlexHolder>
             <div style={{ height: '50px', width: '100%' }}></div>
-            <Headings.H2>spaceout.pl info: </Headings.H2>
+            <Headings.H2>Let's Collaborate!</Headings.H2>
             <Paragraph>
-              This website is designed with ❤ by Spaceout.pl, using gatsby.js
-              v2, react framework and typescript, I am trying to make it a
-              gatsby template for others to using yarn workspaces, however still
-              very at very early stage. Repo can be found{' '}
-              <ExternalLink href="https://github.com/MassivDash/gatsby-spaceout-theme">
-                {' '}
-                here
+              I'm open to open-source and NGO projects—if you have an
+              interesting idea that helps others, let's connect! Reach me at{' '}
+              <ExternalLink href="mailto:luke@spaceout.pl">
+                luke@spaceout.pl
               </ExternalLink>
+            </Paragraph>
+
+            <div style={{ height: '50px', width: '100%' }}></div>
+
+            <Paragraph>
+              Want to dive deeper into my technical work? Check out my{' '}
+              <ExternalLink href="/posts">blog posts</ExternalLink> for
+              comprehensive guides on AI, system architecture, React, and more.
             </Paragraph>
             <div style={{ height: '200px', width: '100%' }}></div>
           </Section>

@@ -4,28 +4,34 @@ import { TechIcons } from 'gatsby-theme-spaceout/src/sections/articles/Articles.
 
 const stack = [
   'ReactIcon',
-  'JS',
-  'Css',
-  'Express',
-  'HandleBars',
-  'Gatsby',
+  'Astro',
   'Svelte',
   'Nextjs',
+  'Express',
   'TS',
+  'JS',
+  'Css',
+  'HandleBars',
   'Tailwind',
-  'Ghostjs',
+  'Gatsby',
   'Apollo',
-  'Wordpress',
   'MySQL',
   'Postgre',
   'Mongo',
+  'SQL',
   'Docker',
   'Aws',
   'Azure',
-  'Netlify',
-  'Heroku',
   'Nodejs',
   'Rust',
+  'C',
+  'Actix',
+  'Markdown',
+  'Npm',
+  'Ghostjs',
+  'Wordpress',
+  'Github2',
+  'Linux',
 ];
 
 const TechStack: FC = () => (
@@ -39,6 +45,7 @@ const StackGrid = styled.div`
   max-width: 1150px;
   grid-gap: 15px;
   margin: 20px auto;
+  font-size: 45px;
   grid-template-columns: repeat(4, 1fr);
   @media (min-width: 1024px) {
     grid-template-columns: repeat(10, 1fr);

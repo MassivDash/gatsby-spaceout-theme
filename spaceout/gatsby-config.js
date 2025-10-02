@@ -16,10 +16,7 @@ const siteMetadata = {
       title: 'about me',
       slug: 'about',
     },
-    {
-      title: "How it's done",
-      slug: 'howitsdone',
-    },
+
     {
       title: 'Contact',
       slug: 'contact',
@@ -122,7 +119,7 @@ const plugins = [
     resolve: `gatsby-plugin-react-helmet`,
   },
   'gatsby-plugin-offline',
-  'gatsby-plugin-sitemap'
+  'gatsby-plugin-sitemap',
 ];
 
 /**
