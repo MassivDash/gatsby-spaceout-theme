@@ -1,0 +1,385 @@
+---
+title: Domain-Driven Design with TypeScript
+excerpt:
+  A deep-dive into Domain-Driven Design (DDD) principles, patterns, and best
+  practices, illustrated with TypeScript examples. Learn how to model complex
+  domains, structure your code, and build maintainable, scalable systems.
+date: 2025-10-07
+hero: ddd-typescript-cover.png
+author: Luke Celitan
+category: Post
+tech:
+  - TS
+  - Nodejs
+---
+
+## Introduction
+
+Domain-Driven Design (DDD) is more than a set of patterns—it's a philosophy for
+tackling complexity in the heart of software. Eric Evans' seminal work,
+"Domain-Driven Design: Tackling Complexity in the Heart of Software," laid the
+foundation for a way of thinking that puts the domain and its logic at the
+center of your system. In this guide, we'll explore DDD from first principles,
+using TypeScript as our language of choice, and draw heavily on the technical
+context and best practices that have emerged from decades of real-world
+experience.
+
+This is not a quick overview. Instead, it's a comprehensive, technical
+deep-dive—aimed at developers and architects who want to build robust,
+maintainable, and scalable systems. We'll go beyond the usual bullet points,
+weaving together narrative, code, and practical advice, all in a style that
+reflects the clarity and enthusiasm of the best technical writing.
+
+## 1. Why Domain-Driven Design?
+
+Software is at its most valuable when it solves real, complex problems for its
+users. But as systems grow, complexity can spiral out of control. DDD is a
+response to this challenge: it provides a set of priorities, practices, and
+patterns that help teams model the domain deeply, communicate effectively, and
+build systems that can evolve.
+
+**Key Principles:**
+
+- The primary focus should be on the domain and domain logic.
+- Complex domain designs should be based on a model.
+- The model should drive both the language of the team and the structure of the
+  code.
+
+**TypeScript and DDD:** TypeScript's type system, interfaces, and support for
+object-oriented and functional paradigms make it an excellent fit for DDD. We'll
+use TypeScript throughout this guide to illustrate concepts and patterns.
+
+## 2. Ubiquitous Language: The Foundation of DDD
+
+A Ubiquitous Language is a shared vocabulary that is used by both developers and
+domain experts. It is derived from the domain model and is used in code,
+documentation, and conversation.
+
+**Why it matters:**
+
+- Reduces translation errors between business and tech.
+- Makes code more readable and maintainable.
+- Surfaces ambiguities and contradictions early.
+
+**Example:**
+
+```typescript
+// Instead of generic names:
+class DataManager {
+  /* ... */
+}
+
+// Use domain terms:
+class CargoBookingService {
+  /* ... */
+}
+```
+
+**Best Practices:**
+
+- Use domain terms in class, method, and variable names.
+- Refactor code and documentation as the language evolves.
+- Encourage domain experts to participate in model discussions.
+
+## 3. Layered Architecture: Isolating the Domain
+
+A well-structured system separates concerns into layers. The classic DDD
+architecture includes:
+
+- **User Interface (Presentation) Layer**
+- **Application Layer**
+- **Domain Layer**
+- **Infrastructure Layer**
+
+**TypeScript Example:**
+
+```typescript
+// domain/cargo.ts
+export class Cargo {
+  /* ... */
+}
+
+// application/bookingService.ts
+import { Cargo } from '../domain/cargo';
+export class BookingService {
+  /* ... */
+}
+
+// infrastructure/cargoRepository.ts
+import { Cargo } from '../domain/cargo';
+export class CargoRepository {
+  /* ... */
+}
+```
+
+**Why Layering?**
+
+- Keeps domain logic free from technical concerns.
+- Makes testing and maintenance easier.
+- Supports scalability and flexibility.
+
+## 4. Building Blocks: Entities, Value Objects, Services, Modules
+
+### Entities
+
+Objects defined by their identity, not just their attributes.
+
+```typescript
+class Customer {
+  constructor(public readonly id: string, public name: string) {}
+  // ... business logic
+}
+```
+
+### Value Objects
+
+Objects defined only by their attributes, immutable, no identity.
+
+```typescript
+class Address {
+  constructor(
+    public readonly street: string,
+    public readonly city: string,
+    public readonly zip: string,
+  ) {}
+
+  equals(other: Address): boolean {
+    return (
+      this.street === other.street &&
+      this.city === other.city &&
+      this.zip === other.zip
+    );
+  }
+}
+```
+
+### Services
+
+Domain operations that don't naturally fit on an Entity or Value Object.
+
+```typescript
+class OverbookingPolicy {
+  isAllowed(cargo: Cargo, voyage: Voyage): boolean {
+    return cargo.size + voyage.bookedCargoSize <= voyage.capacity * 1.1;
+  }
+}
+```
+
+### Modules
+
+Organize related concepts for clarity and maintainability.
+
+```typescript
+// domain/shipping/index.ts
+export * from './cargo';
+export * from './voyage';
+export * from './overbookingPolicy';
+```
+
+---
+
+## 5. Aggregates, Factories, and Repositories
+
+### Aggregates
+
+A cluster of associated objects treated as a unit for data changes. Each
+Aggregate has a root Entity.
+
+```typescript
+class Order {
+  private items: OrderItem[] = [];
+  // Order is the Aggregate Root
+  addItem(product: Product, quantity: number) {
+    /* ... */
+  }
+}
+```
+
+**Aggregate Rules:**
+
+- Only the root is referenced from outside.
+- Invariants are enforced within the Aggregate boundary.
+
+### Factories
+
+Encapsulate complex creation logic.
+
+```typescript
+class OrderFactory {
+  static createNew(customer: Customer, items: OrderItem[]): Order {
+    // ... enforce invariants, set up relationships
+    return new Order(/* ... */);
+  }
+}
+```
+
+### Repositories
+
+Provide access to Aggregates, abstracting persistence.
+
+```typescript
+interface OrderRepository {
+  findById(id: string): Promise<Order | null>;
+  save(order: Order): Promise<void>;
+}
+```
+
+## 6. Supple Design: Making Models Work for You
+
+Supple design is about making your model easy to use, extend, and reason about.
+
+**Techniques:**
+
+- Intention-revealing interfaces
+- Side-effect-free functions
+- Assertions and invariants
+- Conceptual contours (aligning code structure with domain concepts)
+- Standalone classes (low coupling)
+- Closure of operations (operations return the same type as their input)
+
+**Example:**
+
+```typescript
+class Money {
+  constructor(private amount: number, private currency: string) {}
+
+  add(other: Money): Money {
+    if (this.currency !== other.currency) throw new Error('Currency mismatch');
+    return new Money(this.amount + other.amount, this.currency);
+  }
+}
+```
+
+## 7. Strategic Design: Bounded Contexts and Context Maps
+
+As systems grow, a single unified model becomes impractical. DDD introduces the
+concept of Bounded Contexts—explicit boundaries within which a particular model
+applies.
+
+**Context Map:**
+
+- Visualizes the relationships between Bounded Contexts.
+- Defines integration patterns (Shared Kernel, Customer/Supplier, Conformist,
+  Anticorruption Layer, etc.)
+
+**Example:**
+
+- Booking Context vs. Shipping Context, each with its own model and language.
+
+**Integration Patterns:**
+
+- **Anticorruption Layer:** Protects your model from external influences.
+- **Shared Kernel:** Shared subset of the model between teams.
+- **Published Language:** Agreed-upon data interchange format.
+
+## 8. Distillation: Focusing on the Core Domain
+
+Not all code is equally important. Distillation is about identifying and
+focusing on the Core Domain—the part of the model that gives your system its
+unique value.
+
+**Patterns:**
+
+- Core Domain
+- Generic Subdomains
+- Cohesive Mechanisms
+- Segregated Core
+
+**Best Practices:**
+
+- Assign your best developers to the Core Domain.
+- Keep supporting code generic or off-the-shelf.
+- Use documentation and code structure to highlight the Core.
+
+## 9. Advanced Patterns: Specifications, Policies, and More
+
+### Specification Pattern
+
+Encapsulates business rules as composable objects.
+
+```typescript
+interface Specification<T> {
+  isSatisfiedBy(candidate: T): boolean;
+}
+
+class OverbookingSpecification implements Specification<Booking> {
+  isSatisfiedBy(booking: Booking): boolean {
+    // ... business rule
+  }
+}
+```
+
+### Policy/Strategy
+
+Encapsulate algorithms or business policies.
+
+```typescript
+interface RoutingPolicy {
+  selectRoute(routes: Route[]): Route;
+}
+
+class CheapestRoutePolicy implements RoutingPolicy {
+  selectRoute(routes: Route[]): Route {
+    // ... select cheapest
+  }
+}
+```
+
+## 10. Best Practices, Pitfalls, and Real-World Advice
+
+### Best Practices
+
+- Start with the domain, not the technology.
+- Collaborate closely with domain experts.
+- Let the model drive the code and the language.
+- Refactor relentlessly as understanding deepens.
+- Isolate the domain from infrastructure and UI.
+- Use TypeScript's type system to enforce invariants and clarify intent.
+
+### Common Pitfalls
+
+- Anemic domain models (all data, no behavior).
+- Overengineering (too many patterns, not enough value).
+- Ignoring the Ubiquitous Language.
+- Letting technical concerns pollute the domain layer.
+- Failing to define clear Bounded Contexts.
+
+### Real-World Advice
+
+- DDD is a journey, not a destination. Expect to iterate.
+- Not every part of your system needs deep modeling—focus on the Core.
+- Use tests to document and enforce business rules.
+- Be pragmatic: sometimes a "Smart UI" is enough for simple cases, but know when
+  to invest in a rich domain model.
+
+## 11. Conclusion and Further Reading
+
+Domain-Driven Design is a powerful approach for building complex,
+business-critical systems. By focusing on the domain, cultivating a Ubiquitous
+Language, and structuring your code around the model, you can build software
+that is robust, maintainable, and a true asset to your organization.
+
+**Recommended Reading:**
+
+- "Domain-Driven Design: Tackling Complexity in the Heart of Software" by Eric
+  Evans
+- "Implementing Domain-Driven Design" by Vaughn Vernon
+- "Patterns, Principles, and Practices of Domain-Driven Design" by Scott Millett
+  & Nick Tune
+
+**TypeScript Resources:**
+
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
+- [Advanced TypeScript Patterns and Architecture](/advanced-typescript-patterns-and-architectures) (see previous posts)
+
+## Final Thoughts
+
+Domain-Driven Design is not a silver bullet, but it is a set of tools and a
+mindset that, when applied with discipline and creativity, can transform the way
+you build software. Use the patterns, but more importantly, use the principles.
+Let the domain lead, and let your code tell the story.
+
+**If you found this guide helpful, share it with your team, and let me know what
+deep-dive you'd like to see next.**
+
+---
