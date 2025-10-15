@@ -189,8 +189,8 @@ const About: FC = () => {
 
             <Paragraph>
               Want to dive deeper into my technical work? Check out my{' '}
-              <ExternalLink href="/posts">blog posts</ExternalLink> for
-              comprehensive guides on AI, system architecture, React, and more.
+              <ExternalLink href="/">blog posts</ExternalLink> for comprehensive
+              guides on AI, system architecture, React, and more.
             </Paragraph>
             <div style={{ height: '200px', width: '100%' }}></div>
           </Section>

@@ -2,8 +2,8 @@
 title: IndexedDB The Definitive Deep-Dive Guide for Modern Web Applications
 excerpt:
   A comprehensive, hands-on guide to IndexedDB for offline-first web apps,
-  large-scale client-side storage, and advanced browser data management. 
-date: 20250-10-09
+  large-scale client-side storage, and advanced browser data management.
+date: 2025-10-09
 hero: indexeddb-cover.png
 author: Luke Celitan
 category: Post
@@ -14,10 +14,10 @@ tech:
 
 ## Introduction
 
-Welcome to the definitive deep-dive on IndexedDB! If youre building modern web
+Welcome to the definitive deep-dive on IndexedDB! If you're building modern web
 applications that need robust offline capabilities, large-scale client-side
 storage, or advanced querying, IndexedDB is your go-to browser API. In this
-guide, Ill walk you through everything you need to knowfrom the architectural
+guide, I'll walk you through everything you need to knowfrom the architectural
 foundations to advanced performance tricks, real-world use cases, and
 integration with popular libraries like Dexie.js and RxDB.
 
@@ -26,7 +26,7 @@ integration with popular libraries like Dexie.js and RxDB.
 IndexedDB is a low-level, transactional, NoSQL database built into all major
 browsers. Unlike localStorage or cookies, IndexedDB lets you store vast amounts
 of structured data, perform rich queries, and build offline-first apps that
-rival native experiences. Its asynchronous, event-driven, and designed for
+rival native experiences. It's asynchronous, event-driven, and designed for
 scale.
 
 ### Why Use IndexedDB?
@@ -49,7 +49,7 @@ scale.
 
 ## IndexedDB Architecture & Concepts
 
-Lets start with the core building blocks of IndexedDB.
+Let's start with the core building blocks of IndexedDB.
 
 ### Object Stores vs Tables
 
@@ -280,7 +280,7 @@ index.get('alice@example.com').onsuccess = (event) => {
 
 ### Compound Indexes and Multi-Property Searches
 
-IndexedDB doesnt support compound indexes natively, but you can store a
+IndexedDB doesn't support compound indexes natively, but you can store a
 composite key:
 
 ```js
@@ -434,7 +434,8 @@ const db = await createRxDatabase({ name: 'mydb', adapter: 'idb' });
 
 ## Full Example Application
 
-Lets build a simple offline-first customer manager using IndexedDB and Dexie.js.
+Let's build a simple offline-first customer manager using IndexedDB and
+Dexie.js.
 
 ```js
 import Dexie from 'dexie';
@@ -460,7 +461,7 @@ await db.customers.delete(1);
 
 - **Schema evolution:** Use version upgrades for changes.
 - **Transaction management:** Keep transactions short and focused.
-- **Avoid data loss:** Dont rely on `unload` events for saving.
+- **Avoid data loss:** Don't rely on `unload` events for saving.
 - **Browser quirks:** Test on all target browsers, especially mobile Safari.
 - **Error handling:** Always handle `onerror` and transaction aborts.
 

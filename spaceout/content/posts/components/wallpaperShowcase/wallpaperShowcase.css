@@ -1,0 +1,183 @@
+/* Wallpaper Showcase
+   - React 16 compatible
+   - Desktop / Tablet / Mobile frames
+   - 3-column layout on wide screens, stacked on small screens
+   - Uses purely CSS for the "device" illusion: shadows, bezels, stands
+*/
+
+.ws-root {
+  padding: 24px;
+  box-sizing: border-box;
+  color: inherit;
+  max-width: 1150px;
+  margin: 0 auto;
+}
+
+.ws-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+  justify-items: center;
+}
+
+/* 3 columns on wide screens */
+@media (min-width: 900px) {
+  .ws-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.ws-device {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Specific device sizing tweaks */
+.ws-desktop {
+  /* scale for a preview of a 4K (16:9) desktop; limit to page width */
+  margin: 0 auto;
+}
+.ws-tablet {
+  max-width: 320px;
+}
+.ws-mobile {
+  max-width: 200px;
+}
+
+.ws-frame {
+  width: 100%;
+  padding: 12px; /* bezel thickness */
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #f7f7f7, #eaeaea);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  position: relative;
+}
+
+.ws-screen {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 -8px 30px rgba(0, 0, 0, 0.08);
+  display: block;
+  /* default aspect ratio (desktop-like) */
+  aspect-ratio: 16 / 9;
+}
+
+.ws-screen--bg {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+/* interactive button that fills the screen area */
+.ws-screen-button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent center center / cover no-repeat;
+  cursor: pointer;
+}
+
+/* ensure button background comes from inline style for desktop */
+.ws-screen--bg .ws-screen-button {
+  background-color: transparent;
+}
+
+/* images inside interactive buttons are decorative; ensure they don't receive pointer events */
+.ws-screen-button img {
+  pointer-events: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* device-specific screen aspect tweaks using aspect-ratio */
+.ws-desktop .ws-screen {
+  /* 4K ratio (3840x2160) - keeps 16:9 but expresses intent for high-res desktop */
+  aspect-ratio: 3840 / 2160;
+}
+.ws-tablet .ws-screen {
+  aspect-ratio: 4 / 3; /* tablet-ish */
+}
+.ws-mobile .ws-screen {
+  aspect-ratio: 9 / 16; /* portrait mobile */
+}
+
+/* images inside screens: responsive, fill container */
+.ws-screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* top notch / camera */
+.ws-frame::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 6px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.12);
+  opacity: 0.35;
+}
+
+/* small camera for mobile */
+.ws-mobile .ws-frame::before {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  top: 12px;
+}
+
+.ws-caption {
+  /* removed: captions use regular paragraph styling now */
+}
+
+/* subtle stand / base for desktop */
+.ws-desktop .ws-frame::after {
+  content: '';
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 12px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.12));
+  filter: blur(4px);
+  opacity: 0.75;
+}
+
+/* thin bezel line */
+.ws-frame {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* responsive tweaks */
+@media (max-width: 600px) {
+  .ws-root {
+    padding: 12px;
+  }
+  .ws-device {
+    max-width: 100%;
+  }
+  .ws-caption {
+    font-size: 12px;
+  }
+}
