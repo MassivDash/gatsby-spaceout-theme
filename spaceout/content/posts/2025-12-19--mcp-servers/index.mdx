@@ -1,0 +1,332 @@
+---
+title: MCP Servers
+excerpt: Uncover everything about MCP servers—from USB-C analogies for AI to advanced protocol, practical code, and real-world enterprise workflows. Beginner-friendly, expert-depth, packed with examples and best practices.
+date: 2025-12-19
+hero: mcp-cover.png
+author: Luke Celitan
+category: Post
+tech:
+- TS
+---
+## The Architect’s Manifesto on Model Context Protocol: From USB-C Simplicity to Enterprise Survival
+
+The software that we design and implement has to be reliable, maintainable and scalable. If a software is not designed with these qualities in mind, it can turn into a mess. This article discusses the importance of practicing clean code and architecture in the emerging world of AI agents, specifically focusing on the Model Context Protocol (MCP), to avoid the pitfalls of not applying them.
+
+### The Paradigm Shift: From Chatbots to Agentic Integration
+
+The software industry is currently hitting a massive inflection point. For years, we’ve been obsessed with the models themselves—parameter counts, reasoning benchmarks, and context windows. But integration remained a "messy affair" of bespoke API connectors and fragile scripts. We faced a classic N×M problem: every AI assistant needed a unique connector for every data source.
+
+The **Model Context Protocol (MCP)**, open-sourced by Anthropic and adopted by giants like OpenAI and Microsoft, is the "USB-C moment" for AI. It collapses that complexity into a universal standard. But as any senior architect knows, with great connectivity comes great risk. This isn't just about making "chatbots talk"; it's about making "agents act."
+
+When in need of good architecture patterns look out for existing platforms and solutions. Open source projects that survived the harsh reality of software engineering will be a great source for anyone who is looking for good patterns. With time and experience a software engineer will be able to tell apart the anti-patterns and patterns one should follow in this new agentic landscape.
+
+#### MCP Architecture
+
+```mermaid
+graph L
+B[Prompt argument entry] --> C[Client invokes MCP tool: searchFlights]
+C --> D[Server queries external APIs]
+D --> E[Tools response: suggested flights]
+E --> F[Client invokes calendar check]
+F --> G[Server returns availability]
+G --> H[Booking tools, notifications]
+```
+
+## What does a Clean MCP Architecture look like?
+
+When it comes to MCP, there are three core primitives you must understand. Misunderstanding the boundaries between these is the fastest way to turn your project into an unmaintainable tangle.
+
+To secure and architect for MCP, one must first understand its internal mechanics. It is not a REST API. It is not a simple webhook. It is a stateful, bidirectional session protocol built on top of JSON-RPC 2.0. This choice of foundation is critical: unlike stateless HTTP requests, an MCP session assumes a persistent context where capabilities are negotiated, and state is maintained.
+
+The protocol abstracts all interactions into three distinct primitives. Understanding the boundaries between these is essential for enforcing the Single Responsibility Principle in server design.Resources are the passive read layer of the protocol. They represent data that exists in the system—files, database rows, log streams, or API responses.
+
+### 1. Resources (The Read Layer)
+
+These are passive data sources—files, logs, or database rows. They are addressed via standard URIs (e.g., `file:///logs/app.log` or `postgres://db/users/123`). Unlike tools, they are generally "safe" but require careful handling of permissions.
+
+**Advanced Concepts:**
+
+- **Complex Resource Templates & Dynamic Discovery:** Support parameter completion for dynamic URIs.
+- **Resource Change Subscriptions:** Instead of having the LLM poll for changes (wasting tokens and increasing latency), let the server push updates to the model via JSON-RPC. It keeps the "view" synchronized efficiently.
+
+### 2. Tools (The Action Layer)
+
+These are executable functions. Unlike resources, tools have **side effects**. They change the state of the world. This is where you must implement **Human-in-the-Loop (HITL)** approvals. Never let an agent delete a production database row without a UI confirmation.
+
+**TypeScript Server Definition Example:**
+
+```typescript
+import { createServer, Tool } from "@modelcontextprotocol/server";
+
+const searchFlights: Tool = {
+  name: "searchFlights",
+  description: "Search for flights",
+  inputSchema: {
+    type: "object",
+    properties: {
+      origin: { type: "string" },
+      destination: { type: "string" },
+      date: { type: "string" }
+    },
+    required: ["origin", "destination", "date"]
+  },
+  execute: async ({ origin, destination, date }) => {
+    // Call airline APIs, return the results
+    return [{ type: "text", text: "Flight: NYC to Barcelona, June 15" }];
+  },
+};
+
+const mcpServer = createServer({ tools: [searchFlights] });
+mcpServer.listen();
+```
+
+**Idiomatic Python Example:**
+
+```python
+from mcp_sdk.server import MCPServer, Tool
+
+def search_flights_handler(origin, destination, date):
+    # Connect to airline APIs, process the response
+    return [{ 'type': 'text', 'text': f'Flight: {origin} to {destination}, {date}' }]
+
+server = MCPServer(tools=[Tool('searchFlights', search_flights_handler)])
+server.run()
+```
+
+### 3. Prompts (The Workflow Layer)
+
+Prompts are pre-defined templates that encapsulate "expert knowledge." Instead of forcing the user to type a perfect prompt, the server exposes a "Debug Error" prompt that automatically packages the relevant logs and tools for the LLM.
+
+## MCP Architecture Essentials
+
+### Security First: The "Lethal Trifecta"
+
+The best present any software architect can do for himself is to start the design from security first perspective. We are witnessing the emergence of the **"Lethal Trifecta"**:
+
+1. **Autonomous Tool Use** (Execution)
+2. **Private Data Access** (Sensitive Info)
+3. **Probabilistic Decision Making** (The LLM)
+
+When these three combine, traditional firewalls fail. You are handing a non-deterministic engine direct access to your enterprise nervous system. Even if your code is squeaky clean but you did not plan for Indirect Prompt Injection, you may end up losing reputation or feel wrath of your client when their agent executes a malicious instruction buried in a support ticket.
+
+### Security Boundaries & Enforcement
+
+- **Roots:** Clients specify folders/files for server focus. The server *should* respect roots, and the OS/sandbox enforces them.
+  - Example Root:
+
+    ```json
+    {
+      "uri": "file:///Users/agent/travel",
+      "name": "Travel Planning Workspace"
+    }
+    ```
+
+### The Transport Layer Reality
+
+Do not be fooled by the simplicity of local development.
+
+- **Stdio (Standard Input/Output):** Great for local debugging, but a massive blind spot. It creates a "Confused Deputy" where the server inherits the full permissions of the local user.
+- **SSE (Server-Sent Events):** The mandatory standard for production. It allows you to run the MCP server as an isolated microservice (e.g., on Kubernetes), decoupled from the client, enabling proper network segmentation and logging.
+
+### Real-Time Notification Patterns
+
+Servers send notifications (list changes, resource updates) via JSON-RPC. Clients refresh tool/resource registries and notify models.
+
+**Error Handling Example:**
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 99,
+  "error": {
+    "code": -32602,
+    "message": "Invalid params",
+    "data": { "missing": "destination" }
+  }
+}
+```
+
+## Defense in Depth: The Zero Trust Architecture
+
+To deploy MCP in an enterprise environment, we must abandon the assumption that "local is safe" or "internal is trusted." We require a Zero Trust architecture specifically designed for agentic workflows.
+
+### The Gateway Pattern
+
+No Client (agent) should ever connect directly to a backend MCP Service. All traffic must be mediated by a Gateway that enforces essential controls:
+
+- **Centralized Authentication:** The Gateway terminates OAuth 2.1 flows and verifies identity. It ensures that the requesting user or agent is authorized to speak to the downstream service.
+- **Protocol Inspection:** Serving as a Layer 7 firewall for JSON-RPC, the Gateway logs every method call, argument, and response — providing a full audit trail of “what the agent did.”
+- **Policy Enforcement:** Implements granular, role-based rules. Example: “Marketing Agents can read customer data but cannot delete it.” These policies live in the Gateway, decoupling security from individual servers.
+
+### Identity and Authentication: OAuth 2.1 + RFC 8707
+
+A simple API key is insufficient for MCP. Robust implementations must adopt OAuth 2.1 with **RFC 8707 (Resource Indicators)** to prevent Token Replay attacks within a service mesh.
+
+**The Authentication Flow:**
+
+1. **Discovery:** Client connects to the server’s public endpoint; receives a `401 Unauthorized` with authorization metadata.
+2. **Authorization:** User grants consent via the Authorization Server (e.g., Okta, Auth0).
+3. **Token Issuance:** Auth server issues a JWT with an `aud` (audience) claim matching the MCP server’s ID.
+4. **Access:** Client presents the token in the `Authorization: Bearer` header.
+5. **Validation:** The MCP server validates signature and audience — rejecting tokens issued for other servers.
+
+Tokens are scoped per resource. A credential valid for the Weather Server cannot access the Bank Server.
+
+### Human-in-the-Loop (HITL) and Consent
+
+Security cannot be fully automated. When agents initiate sensitive actions (payments, deletions, public posts), the protocol requires human confirmation.
+
+The Client must pause execution and request consent:
+
+> “The agent wants to execute delete_database(id=prod-db). Do you approve?”
+
+This design transforms the agent from *autonomous* to *co-pilot* for high-risk operations. Annotating tools as sensitive is the server’s duty; enforcing confirmation is the client’s. Backend RBAC remains the final safeguard if a malicious client bypasses HITL controls.
+
+### Network Isolation and Binding
+
+For local servers: **bind only to loopback interfaces** (`127.0.0.1` or `::1`). Never use `0.0.0.0`.
+
+For remote deployments: host MCP servers within a private subnet accessible only via the Gateway. Use **mutual TLS (mTLS)** between Gateway and servers to block unauthorized lateral movement within clusters.
+
+## Enterprise Architecture: Patterns and Implementation
+
+### The Monolith Anti-Pattern
+
+A common early mistake: building a “Company Unified Server” connecting Slack, SQL, Jira, and more — a single Python or Node.js process performing all roles.
+
+**The Risks:**
+
+- **Security:** A vulnerability in one module exposes all credentials.
+- **Dependency Hell:** Conflicting SDKs balloon container complexity.
+- **Scalability:** Cannot scale wiki search independently from database queries.
+
+### Domain-Driven Mesh
+
+The recommended pattern: deploy domain-focused, single-purpose MCP servers.
+
+| Domain | Server Name | Responsibility | Example Tools |
+|--|--|-|-|
+| Data | `mcp-server-sales-db` | Read-only access to sales data | `query_sales_by_region`, `get_customer_ltv` |
+| Knowledge | `mcp-server-confluence` | Semantic search of internal docs | `search_wiki`, `get_page_content` |
+| DevOps | `mcp-server-k8s-ops` | Cluster maintenance | `list_pods`, `restart_deployment`, `get_logs` |
+| Identity | `mcp-server-directory` | User lookup and org chart | `find_user_email`, `get_manager` |
+
+The Gateway aggregates these services, while the LLM orchestrates logic across them. Access is tightly scoped — e.g., HR agents can query directory data but not deployment logs.
+
+### Clean Architecture for Server Code
+
+MCP servers are production-grade applications, not scripts.  
+A Python implementation might follow:
+
+```bash
+project_root/
+├── src/
+│   ├── infrastructure/   # Frameworks & Drivers
+│   ├── domain/           # Enterprise Logic (models, exceptions)
+│   ├── services/         # Use Cases (e.g., weather_service.py)
+│   ├── mcp_layer/        # MCP controller: tools, resources, server
+│   └── main.py           # Bootstrap
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── contract/
+└── Dockerfile
+```
+
+**Key Practices:**
+
+- **Separation of Concerns:** Business logic decoupled from MCP libraries.
+- **Dependency Injection:** Enables testable tool layers.
+- **Multi-Level Validation:** JSON schema + domain rule validation (e.g., “City name cannot contain numbers”).
+
+### Platform-Specific Integrations
+
+**AWS Bedrock:**  
+Use Bedrock’s *AgentCore* runtime. Configure Auth0 for dynamic client registration; ensure JWT audience parameter alignment. Deploy via the `agentcore launch` workflow (ECR + runtime registration).
+
+**Google ADK:**  
+Define `LlmAgent` and `McpToolset` in Python. When bridging Node.js tools via `StdioServerParameters`, use **absolute paths** for stability within ADK contexts.
+
+## The Context Economy: Optimizing Token Usage
+
+Context is currency in MCP design. Bloated prompts waste tokens and degrade performance.
+
+### The Bloat Problem
+
+Wrapping broad APIs (like AWS CLI) floods context with needless schemas.  
+**Cost:** Increased token usage.  
+**Performance:** Reasoning degradation (“The Paradox of Choice”).
+
+### Progressive Disclosure
+
+Expose a single tool like `list_available_tools(category)` to reveal domain-specific tools dynamically.  
+This minimizes irrelevant context and optimizes focus.
+
+### Code Mode: Execute, Don’t Transmit
+
+Instead of returning bulky data via tool calls, enable safe code execution:
+
+```bash
+LLM writes: “Filter rows where column A > 10.”
+Server executes locally and returns "42" instead of 10MB of CSV.
+```
+
+**Benefit:** Dramatic token reduction.  
+**Risk:** Must use hardened sandboxes (e.g., gVisor, Firecracker).
+
+### The Art of Tool Descriptions
+
+Tool descriptions are prompts in disguise. Write prescriptive guidance (e.g., “Use before refunding to verify customer eligibility.”)  
+Avoid implementation details and audit descriptions for prompt injection risks.
+
+## Operational Excellence
+
+### Configuration Management
+
+Prevent drift via schema-validation frameworks (Pydantic, Zod).  
+Crash fast on missing or malformed configs. Inject secrets at runtime through Vaults, not Docker images.
+
+### Logging and Tracing
+
+Each request must carry a **trace_id** propagated through all logs.  
+Use fully structured JSON and redact sensitive data:
+
+```json
+{
+  "event": "tool_execution_start",
+  "tool_name": "query_db",
+  "trace_id": "a1b2-c3d4",
+  "user_id": "user_123"
+}
+```
+
+### Chaos Engineering for Agents
+
+Test resilience under failure:
+
+- Latency injection (tool stalls).
+- Malformed responses.
+- Context flooding (>5MB).
+
+### Deployment Checklist
+
+| Category | Requirement |
+|--|--|
+| Transport | Use SSE (HTTP) only; no Stdio tunnels. |
+| Network | Bind localhost for dev; restrict ingress in containers. |
+| Identity/Auth | OAuth 2.1 with audience validation. |
+| Security | Least privilege IAM; enforce input validation. |
+| Operations | Enable per-user/tool rate limits. |
+| Compliance | HITL required for destructive tools. |
+
+## Conclusion: The Future of Agentic Identity
+
+The Model Context Protocol is more than a technical standard — it’s the infrastructure for a new digital workforce.  
+Today, agents act under *User Identity*. Tomorrow, they will hold *Service Identity*: distinct permissions, audit trails, and governance via an **Agent Control Plane**.
+
+> Until then, the lesson remains:
+> Build with Zero Trust.  
+> Validate every input.  
+> Assume every agent is compromised.  
+> Never trust a tool description blindly.
+> MCP is high-voltage infrastructure — powerful enough to energize your enterprise, but dangerous enough to burn it down without insulation.

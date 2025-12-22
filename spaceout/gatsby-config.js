@@ -56,6 +56,9 @@ const siteMetadata = {
 
 const plugins = [
   {
+    resolve: 'gatsby-plugin-remove-serviceworker',
+  },
+  {
     resolve: 'gatsby-theme-spaceout',
     options: {
       contentPosts: 'content/posts',
@@ -118,7 +121,6 @@ const plugins = [
   {
     resolve: `gatsby-plugin-react-helmet`,
   },
-  'gatsby-plugin-offline',
   'gatsby-plugin-sitemap',
 ];
 
