@@ -114,7 +114,7 @@ export const TechIcons: FC<{ tech: string[] }> = ({ tech }) => {
         width="48"
         height="48"
         {...(isDark && { fill: '#FFF' })}
-        style={{ margin: '5px' }}
+        style={{ margin: '5px', width: '48px', height: '48px' }}
       />
     );
   });

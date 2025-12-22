@@ -68,8 +68,9 @@ import { DiGithubBadge as Github2 } from 'react-icons/di';
 import { DiNpm as Npm } from 'react-icons/di';
 import { DiMarkdown as Markdown } from 'react-icons/di';
 import { DiDatabase as SQL } from 'react-icons/di';
+import { DiRedhat as Redhat } from "react-icons/di";
 import { ReactComponent as Ubuntu } from './devIcons/ubuntu.svg';
-
+import { SiPodman as Podman } from "react-icons/si";
 export default {
   C,
   Actix,
@@ -136,4 +137,6 @@ export default {
   Npm,
   Markdown,
   Ubuntu,
+  Redhat,
+  Podman,
 };
