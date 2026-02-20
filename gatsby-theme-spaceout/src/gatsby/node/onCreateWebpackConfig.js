@@ -13,5 +13,20 @@ module.exports = ({ actions }) => {
       },
       extensions: ['.js', '.json', '.ts', '.tsx'],
     },
+    module: {
+      rules: [
+        {
+          test: /\.glb$/,
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                limit: 10000,
+              },
+            },
+          ],
+        },
+      ],
+    },
   });
 };

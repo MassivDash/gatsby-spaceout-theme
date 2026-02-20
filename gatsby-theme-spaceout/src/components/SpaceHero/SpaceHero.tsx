@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import logo from './logo.png';
 import { useColorMode } from 'theme-ui';
 import { keyframes } from '@emotion/core';
@@ -7,10 +7,86 @@ import { Theme } from 'src/gatsby-plugin-theme-ui';
 import mediaqueries from '@styles/media';
 import * as THREE from 'three';
 import OrbitControls from './three/orbitControls';
-import planetTexture from './2k_haumea.jpg';
-import planetDisplacement from './2k_haumea_displacement.jpg';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import lambdaShuttleGlb from './LambdaShuttle.glb';
+import imperialStarGlb from './imperialStar.glb';
+import tieGlb from './tie.glb';
+import snowspeaderGlb from './snowspeader.glb';
 
-import { useEffect, useRef } from 'react';
+/** Per-model settings for hero 3D scene. Add entries here to support more models. */
+export interface HeroModelConfig {
+  id: string;
+  /** Bundled GLB URL (from static import) */
+  url: string;
+  scale: number;
+  /** Model position offset [x, y, z]. Negative x = left. */
+  modelPosition?: [number, number, number];
+  /** Camera distance on Z axis */
+  cameraDistance: number;
+  /** Camera height (positive = more from top). */
+  cameraY?: number;
+  /** Camera horizontal offset (negative = camera more to the left). */
+  cameraX?: number;
+  /** Ambient light: color (hex) and intensity */
+  ambient: { color: number; intensity: number };
+  /** Directional light: position [x,y,z] and intensity */
+  directional: { position: [number, number, number]; intensity: number; color?: number };
+  /** OrbitControls min zoom distance */
+  minDistance: number;
+}
+
+const HERO_MODELS: HeroModelConfig[] = [
+  {
+    id: 'lambdaShuttle',
+    url: lambdaShuttleGlb,
+    scale: 0.1,
+    cameraDistance: 2.2,
+    cameraY: 0,
+    ambient: { color: 0xffffff, intensity: 0.5 },
+    directional: { position: [5, 5, 5], intensity: 2 },
+    minDistance: 1.2,
+  },
+  {
+    id: 'imperialStar',
+    url: imperialStarGlb,
+    scale: 0.1,
+    modelPosition: [-0.55, 0, 0],
+    cameraDistance: 80.5,
+    cameraY: 15,
+    cameraX: -9,
+    ambient: { color: 0xffffff, intensity: 0.6 },
+    directional: { position: [5, 5, 5], intensity: 2.2 },
+    minDistance: 30.2,
+  },
+  {
+    id: "tie",
+    url: tieGlb,
+    scale: 1,
+    modelPosition: [0, 0, 0],
+    cameraDistance: 1.5,
+    cameraY: 0.5,
+    cameraX: 0,
+    ambient: { color: 0xffffff, intensity: 0.6 },
+    directional: { position: [5, 5, 5], intensity: 2.2 },
+    minDistance: 1.2,
+  },
+  {
+    id: "snowspeader",
+    url: snowspeaderGlb,
+    scale: 0.01,
+    modelPosition: [0, 0, 0],
+    cameraDistance: 50.5,
+    cameraY: 15.5,
+    cameraX: 0,
+    ambient: { color: 0xffffff, intensity: 0.6 },
+    directional: { position: [5, 5, 5], intensity: 2.2 },
+    minDistance: 1.2,
+  },
+];
+
+function pickRandomModel(): HeroModelConfig {
+  return HERO_MODELS[Math.floor(Math.random() * HERO_MODELS.length)];
+}
 
 function MyThree() {
   const refContainer = useRef(null);
@@ -20,18 +96,15 @@ function MyThree() {
   const OrControls = OrbitControls(THREE);
 
   useEffect(() => {
-    // we need to restart the scene if the color mode changes
     if (initialized) {
-      // destroy the scene
-      // remove the event listener
-
-      // remove the canvas
       (refContainer?.current as unknown as HTMLElement)?.removeChild(
         (refContainer?.current as unknown as HTMLElement).childNodes[0],
       );
     }
 
-    const objects: any[] = [];
+    const modelConfig = pickRandomModel();
+    const objects: THREE.Object3D[] = [];
+    let model: THREE.Group | null = null;
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(isDark ? 0x111216 : 0xfafafa);
@@ -45,71 +118,71 @@ function MyThree() {
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    // document.body.appendChild( renderer.domElement );
-    // use ref as a mount point of the Three.js scene instead of the document.body
     (refContainer.current as unknown as HTMLElement) &&
       (refContainer.current as unknown as HTMLElement).appendChild(
         renderer.domElement,
       );
-    const geometry = new THREE.SphereGeometry(0.9, 100, 100);
-    const loadManager = new THREE.LoadingManager();
-    const loader = new THREE.TextureLoader(loadManager);
-    const texture = loader.load(planetTexture);
-    texture.colorSpace = THREE.SRGBColorSpace;
-    const displacement = loader.load(planetDisplacement);
-    displacement.colorSpace = THREE.SRGBColorSpace;
-    const material = new THREE.MeshStandardMaterial({
-      map: texture,
-      displacementMap: displacement,
-      displacementScale: 0.05,
-      bumpMap: displacement,
-    });
-    const color = 0xffffff;
-    const intensity = 5;
-    const light = new THREE.AmbientLight(color, intensity);
 
-    const sphere = new THREE.Mesh(geometry, material);
+    const { ambient, directional } = modelConfig;
+    const ambientLight = new THREE.AmbientLight(ambient.color, ambient.intensity);
+    const directionalLight = new THREE.DirectionalLight(
+      directional.color ?? 0xffffff,
+      directional.intensity,
+    );
+    directionalLight.position.set(...directional.position);
+    scene.add(ambientLight);
+    scene.add(directionalLight);
 
-    loadManager.onLoad = () => {
-      scene.add(sphere);
-      objects.push(sphere);
-      scene.add(light);
-      camera.position.z = 2.2;
-      camera.position.y = 0;
+    camera.position.z = modelConfig.cameraDistance;
+    camera.position.y = modelConfig.cameraY ?? 0;
+    camera.position.x = modelConfig.cameraX ?? 0;
 
-      const animate = function () {
-        requestAnimationFrame(animate);
-        sphere.rotation.x += 0.001;
-        sphere.rotation.y += 0.001;
-        render();
-      };
-      animate();
+    const loader = new GLTFLoader();
+    loader.load(
+      modelConfig.url,
+      (gltf) => {
+        model = gltf.scene;
+        model.scale.setScalar(modelConfig.scale);
+        const pos = modelConfig.modelPosition;
+        if (pos) {
+          model.position.set(pos[0], pos[1], pos[2]);
+        }
+        scene.add(model);
+        objects.push(model);
+      },
+      undefined,
+      (err) => console.error('Hero GLB load error:', err),
+    );
 
-      const controls = new OrControls(camera, renderer.domElement);
-      controls.minDistance = 1.2; // how far you can zoom in
+    function render() {
+      renderer.render(scene, camera);
+    }
 
-      window.addEventListener('resize', onWindowResize, false);
-      onWindowResize();
-
-      function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        render();
+    const animate = function () {
+      requestAnimationFrame(animate);
+      if (model) {
+        model.rotation.y += 0.001;
       }
-
-      function render() {
-        renderer.render(scene, camera);
-      }
-
-      setInitialised(true);
+      render();
     };
+    animate();
 
-    loadManager.onError = (e) => {
-      console.error('There was an error loading ' + e);
-    };
+    const controls = new OrControls(camera, renderer.domElement);
+    controls.minDistance = modelConfig.minDistance;
+
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      render();
+    }
+    window.addEventListener('resize', onWindowResize, false);
+    onWindowResize();
+
+    setInitialised(true);
 
     return () => {
+      window.removeEventListener('resize', onWindowResize, false);
       renderer.dispose();
     };
   }, [isDark]);
