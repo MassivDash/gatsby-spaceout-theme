@@ -30,7 +30,11 @@ export interface HeroModelConfig {
   /** Ambient light: color (hex) and intensity */
   ambient: { color: number; intensity: number };
   /** Directional light: position [x,y,z] and intensity */
-  directional: { position: [number, number, number]; intensity: number; color?: number };
+  directional: {
+    position: [number, number, number];
+    intensity: number;
+    color?: number;
+  };
   /** OrbitControls min zoom distance */
   minDistance: number;
 }
@@ -59,7 +63,7 @@ const HERO_MODELS: HeroModelConfig[] = [
     minDistance: 30.2,
   },
   {
-    id: "tie",
+    id: 'tie',
     url: tieGlb,
     scale: 1,
     modelPosition: [0, 0, 0],
@@ -71,7 +75,7 @@ const HERO_MODELS: HeroModelConfig[] = [
     minDistance: 1.2,
   },
   {
-    id: "snowspeader",
+    id: 'snowspeader',
     url: snowspeaderGlb,
     scale: 0.01,
     modelPosition: [0, 0, 0],
@@ -102,89 +106,112 @@ function MyThree() {
       );
     }
 
-    const modelConfig = pickRandomModel();
-    const objects: THREE.Object3D[] = [];
-    let model: THREE.Group | null = null;
+    try {
+      const modelConfig = pickRandomModel();
+      const objects: THREE.Object3D[] = [];
+      let model: THREE.Group | null = null;
+      let lightFadeProgress = 0;
+      const FADE_DURATION = 0.9;
 
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(isDark ? 0x111216 : 0xfafafa);
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000,
-    );
-    camera.position.z = 5;
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(isDark ? 0x111216 : 0xfafafa);
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000,
+      );
+      camera.position.z = 5;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    (refContainer.current as unknown as HTMLElement) &&
-      (refContainer.current as unknown as HTMLElement).appendChild(
-        renderer.domElement,
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      (refContainer.current as unknown as HTMLElement) &&
+        (refContainer.current as unknown as HTMLElement).appendChild(
+          renderer.domElement,
+        );
+
+      const { ambient, directional } = modelConfig;
+      const ambientLight = new THREE.AmbientLight(ambient.color, 0);
+      const directionalLight = new THREE.DirectionalLight(
+        directional.color ?? 0xffffff,
+        0,
+      );
+      directionalLight.position.set(...directional.position);
+      scene.add(ambientLight);
+      scene.add(directionalLight);
+
+      camera.position.z = modelConfig.cameraDistance;
+      camera.position.y = modelConfig.cameraY ?? 0;
+      camera.position.x = modelConfig.cameraX ?? 0;
+
+      const loader = new GLTFLoader();
+      loader.load(
+        modelConfig.url,
+        (gltf) => {
+          model = gltf.scene;
+          model.scale.setScalar(modelConfig.scale);
+          const pos = modelConfig.modelPosition;
+          if (pos) {
+            model.position.set(pos[0], pos[1], pos[2]);
+          }
+          lightFadeProgress = 0;
+          scene.add(model);
+          objects.push(model);
+        },
+        undefined,
+        (err) => console.error('Hero GLB load error:', err),
       );
 
-    const { ambient, directional } = modelConfig;
-    const ambientLight = new THREE.AmbientLight(ambient.color, ambient.intensity);
-    const directionalLight = new THREE.DirectionalLight(
-      directional.color ?? 0xffffff,
-      directional.intensity,
-    );
-    directionalLight.position.set(...directional.position);
-    scene.add(ambientLight);
-    scene.add(directionalLight);
+      const render = () => {
+        renderer.render(scene, camera);
+      };
 
-    camera.position.z = modelConfig.cameraDistance;
-    camera.position.y = modelConfig.cameraY ?? 0;
-    camera.position.x = modelConfig.cameraX ?? 0;
-
-    const loader = new GLTFLoader();
-    loader.load(
-      modelConfig.url,
-      (gltf) => {
-        model = gltf.scene;
-        model.scale.setScalar(modelConfig.scale);
-        const pos = modelConfig.modelPosition;
-        if (pos) {
-          model.position.set(pos[0], pos[1], pos[2]);
+      let lastTime = performance.now() / 1000;
+      let reqId: number;
+      const animate = function () {
+        reqId = requestAnimationFrame(animate);
+        const now = performance.now() / 1000;
+        const dt = now - lastTime;
+        lastTime = now;
+        if (model) {
+          model.rotation.y += 0.001;
+          if (lightFadeProgress < 1) {
+            lightFadeProgress = Math.min(
+              1,
+              lightFadeProgress + dt / FADE_DURATION,
+            );
+            const t = lightFadeProgress;
+            ambientLight.intensity = modelConfig.ambient.intensity * t;
+            directionalLight.intensity = modelConfig.directional.intensity * t;
+          }
         }
-        scene.add(model);
-        objects.push(model);
-      },
-      undefined,
-      (err) => console.error('Hero GLB load error:', err),
-    );
+        render();
+      };
+      animate();
 
-    function render() {
-      renderer.render(scene, camera);
+      const controls = new OrControls(camera, renderer.domElement);
+      controls.minDistance = modelConfig.minDistance;
+
+      const onWindowResize = () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        render();
+      };
+      window.addEventListener('resize', onWindowResize, false);
+      onWindowResize();
+
+      setInitialised(true);
+
+      return () => {
+        cancelAnimationFrame(reqId);
+        window.removeEventListener('resize', onWindowResize, false);
+        renderer.dispose();
+      };
+    } catch (e) {
+      console.warn('WebGL setup failed, falling back:', e);
+      return undefined;
     }
-
-    const animate = function () {
-      requestAnimationFrame(animate);
-      if (model) {
-        model.rotation.y += 0.001;
-      }
-      render();
-    };
-    animate();
-
-    const controls = new OrControls(camera, renderer.domElement);
-    controls.minDistance = modelConfig.minDistance;
-
-    function onWindowResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      render();
-    }
-    window.addEventListener('resize', onWindowResize, false);
-    onWindowResize();
-
-    setInitialised(true);
-
-    return () => {
-      window.removeEventListener('resize', onWindowResize, false);
-      renderer.dispose();
-    };
   }, [isDark]);
   return <div ref={refContainer}></div>;
 }
