@@ -79,7 +79,7 @@ const ArticleSEO: React.FC<{
       image={article.hero.seo.src}
       timeToRead={`${article.timeToRead}`}
       published={article.date}
-      pathname={location.href}
+      pathname={location.pathname}
       slug={article.slug}
     >
       <script type="application/ld+json">{microdata}</script>

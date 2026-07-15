@@ -68,6 +68,10 @@ function SEO({
   const fullURL = (path: string) =>
     path ? `${site.siteUrl}${path}` : site.siteUrl;
 
+  const canonicalURL = pathname
+    ? `${site.siteUrl}${pathname.endsWith('/') ? pathname : `${pathname}/`}`
+    : site.siteUrl;
+
   // If no image is provided lets looks for a default spaceout static image
   image = image ? image : '/spaceout.jpg';
 
@@ -84,10 +88,6 @@ function SEO({
     {
       name: 'theme-color',
       content: '#fff',
-    },
-    {
-      rel: 'canonical',
-      href: `${fullURL(pathname)}/`,
     },
     { itemprop: 'name', content: title || site.title },
     { itemprop: 'description', content: description || site.description },
@@ -137,6 +137,7 @@ function SEO({
       htmlAttributes={{ lang: 'en' }}
       script={themeUIDarkModeWorkaroundScript}
       meta={metaTags}
+      link={[{ rel: 'canonical', href: canonicalURL }]}
     >
       {children}
     </Helmet>
