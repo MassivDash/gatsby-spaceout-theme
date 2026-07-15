@@ -1,0 +1,241 @@
+---
+title: Building Evolutionary Architectures
+excerpt:
+  Fitness Functions, Architectural Quanta, and How an Architect Finally Wins the
+  Quality Argument Without Having It
+date: 2026-07-15
+hero: evolutionaryArchitecture_cover.png
+author: Luke Celitan
+category: Post
+tech:
+  - TS
+---
+
+import { FitnessPipeline } from '../components/evolutionary-architecture/FitnessPipeline.jsx';
+import { CouplingGraph } from '../components/evolutionary-architecture/CouplingGraph.jsx';
+import { ConnascenceLadder } from '../components/evolutionary-architecture/ConnascenceLadder.jsx';
+
+# Building Evolutionary Architectures: How Do You Defend Quality Nobody Can See?
+
+## Introduction
+
+Every architecture diagram I have ever drawn was wrong within six months. Not
+because the diagram was bad, but because I drew it as if the system would hold
+still. It never does. New requirements land, a team gets reorged out from under
+me, a vendor deprecates the API three services quietly depend on, and the
+"final" architecture turns out to have been the first draft of something that
+has to keep moving.
+
+As an engineering manager I've made peace with that part. The part I've spent
+years actually losing sleep over is different: **architecture quality is
+invisible to the people who fund it.** The business doesn't see coupling. It
+sees features. It sees velocity. So when the pressure comes on — and it always
+comes on — the invisible stuff is the first thing sacrificed, because nobody in
+the room can point to a number that says it mattered. I've written before about
+the [crucible of collaboration](/the-rise-of-the-solo-dev-army) and about the
+tug-of-war between [clean code and the business](/mastering-agile-estimation)
+that only wants the next feature. This post is about the missing tool in both of
+those fights.
+
+I found the name for that tool in _Building Evolutionary Architectures_ by Neal
+Ford, Rebecca Parsons, Patrick Kua, and Pramod Sadalage — now in a second
+edition that's aged noticeably better than the 2017 original, because the
+tooling finally caught up to the idea. But I don't want to write you a book
+report. I want to tell you what the book unlocked for an argument I'd already
+been having for years.
+
+## The Real Problem Isn't Change — It's That Quality Can't Defend Itself
+
+Here's the thing nobody tells you in the architecture course. Architectures
+don't calcify because architects are lazy or stupid. They calcify because there
+is no forcing function keeping them honest.
+
+Think about how the rest of the pipeline evolved. We stopped hand-testing and
+let CI run on every commit. We stopped deploying on terrifying Saturday nights
+and made it a Tuesday afternoon non-event. Code and deployment both learned to
+move fast and prove themselves automatically. Architecture never got that
+treatment. It stayed a PDF someone drew, a decision made once, and a "review"
+you scheduled — a meeting, not a check.
+
+So you get the split I see on almost every troubled project:
+
+> The pipeline ships in minutes, but every third release still needs a two-week
+> architecture review, because the structure underneath it was never designed to
+> absorb change — and worse, nobody can _measure_ whether it's absorbing change
+> or slowly rotting.
+
+That gap — fast code, slow architecture — is the whole game. And it's the same
+gap I keep circling in the
+[technical-debt conversation](/mastering-agile-estimation): your business
+overlords don't care about code, they care about features, and your mighty
+velocity is the only dial they watch. Technical debt is invisible until velocity
+drops off a cliff, and by then it's a rewrite, not a fix. Architectural drift is
+the exact same trap, one level up.
+
+## Fitness Functions: Making the Invisible Go Red in CI
+
+This is the idea I'd trade the rest of the book for.
+
+Ford and co. borrow the term _fitness function_ from evolutionary computing and
+define an architectural one as "any mechanism that provides an objective
+integrity assessment of some architecture characteristic or combination of
+characteristics." Read past the phrasing and here's what it actually is: **a
+check that makes an invisible quality visible enough to fail a build.**
+
+If you've ever set a [SonarQube quality gate](/mastering-agile-estimation) —
+say, "fail the pipeline if code smells exceed 100 or duplication tops 5%" — you
+have already written a fitness function. You just didn't have the word for it.
+The book's contribution is generalizing that instinct from code hygiene to
+_architecture_: response-time budgets asserted in CI, ArchUnit tests that break
+the build when a module reaches into a layer it has no business touching, a
+[chaos-engineering experiment](/chaos-engineering) that proves resilience under
+failure instead of hoping for it, a security scan that gates the deploy.
+
+Why does this matter so much to me as an EM? Because it ends the argument I
+always lose. I no longer have to walk into a room and _persuade_ someone that
+coupling matters, that we shouldn't let the reporting service call straight into
+the orders database. I don't win that argument on charisma. The build goes red.
+The characteristic the team agreed mattered is now enforced by a machine that
+doesn't attend the sprint review and can't be talked out of it. That's not a
+technical upgrade — it's a political one.
+
+One nuance the book is right to hammer: measure the **outcome**, not the
+implementation. A fitness function is allowed to live in a monitoring dashboard,
+a DevOps tool, or a throwaway script in a language your app doesn't even use.
+You're asserting a property of the system, not writing production code.
+
+| Dimension               | Question It Answers                                         | Example                                                         |
+| ----------------------- | ----------------------------------------------------------- | --------------------------------------------------------------- |
+| Atomic vs. Holistic     | One characteristic, or several fighting each other at once? | A single load test vs. a combined performance-and-security gate |
+| Triggered vs. Continual | On demand, or always running?                               | A manual pen test vs. a live monitoring alert                   |
+| Static vs. Dynamic      | Does the pass/fail line ever move?                          | A fixed uptime SLA vs. a threshold that adapts to load          |
+| Automated vs. Manual    | Can a machine decide without me?                            | A CI suite vs. an architecture review board                     |
+
+The categories aren't academic. The moment your team can say out loud "this gate
+protects coupling, that one protects latency," you're negotiating tradeoffs with
+names on the table instead of arguing from vibes. And I'll take a named tradeoff
+over a vibe every day of the week.
+
+<FitnessPipeline />
+
+## What Are You Actually Protecting? Quanta and Coupling
+
+You can't defend everything, so the book gives you units to defend.
+
+The first is the **architectural quantum** — the smallest thing you can
+independently deploy that still hangs together as a coherent whole, dependencies
+and all (formally: independently deployable, highly cohesive, with its static
+and synchronous runtime coupling bundled in). A monolith is, by definition,
+_one_ quantum: touch anything and you've put everything's deployment and test
+surface at risk. Break it into well-drawn
+[bounded contexts](/advanced-typescript-patterns-and-architectures) and you get
+many small quanta, each free to evolve on its own clock — the price being that
+you now have to manage contracts between them like an adult.
+
+The second is **coupling**, and the book's most useful move is splitting it in
+two. **Static coupling** is how the pieces are wired at rest — dependencies,
+libraries, contracts, the stuff your build graph already draws for you.
+**Dynamic coupling** is how they actually talk at runtime, synchronously or
+asynchronously — the stuff your build graph never shows. This is exactly why a
+service can look pristine in a dependency diagram and still fall over in
+production, because three services all silently assume the same undocumented
+ordering of synchronous calls that nothing anywhere declares.
+
+<CouplingGraph />
+
+To talk about that precisely, the authors dust off **connascence**, a term
+Meilir Page-Jones coined back in 1996: two components are connascent if changing
+one forces you to change the other to keep the system correct. The part I
+actually put to work is the ranking. Prefer _static_ connascence over _dynamic_,
+because you can find static coupling by reading source and kill it with
+automated refactoring, while dynamic coupling only introduces itself to you
+during an incident. When you find the strong stuff, refactor toward a weaker
+form — swap a magic value shared across modules for a single named constant and
+you've just traded connascence of meaning for connascence of name. That's
+coupling made a decision instead of a surprise.
+
+<ConnascenceLadder />
+
+## Conway's Law Is Not Optional (Ask Any Manager)
+
+No book on evolvability escapes Conway's Law, and as someone who spends half his
+week on team topology rather than code, I think it's the most under-respected
+force in the whole discipline: **your system will end up shaped like your org
+chart whether you designed it that way or not.**
+
+The naive read is "reorg the teams to match the architecture." The real lesson
+is humbler. Any evolutionary-architecture effort that ignores who talks to whom
+is fighting a structural force it cannot out-design. I've watched a beautiful
+service boundary quietly dissolve because the two teams owning either side sat
+in the same standup and just... started reaching across it. The diagram didn't
+lose. The org chart won. It always does.
+
+## The Solo Dev Army Needs This More Than Anyone
+
+I argued in [The Rise of the Solo Dev Army](/the-rise-of-the-solo-dev-army) that
+AI tooling lets one developer do what used to take a team — and that the thing
+quietly lost in that trade is _constructive friction_. Peer review, the raised
+eyebrow in the PR, the colleague who asks "wait, why does this reach into that?"
+That friction is where a lot of architectural quality actually gets defended,
+and a solo developer with an eager AICopilot generates code far faster than any
+human reviewer can push back on it.
+
+Fitness functions are the most convincing answer I've found to my own argument.
+A test that fails the build because a change violated a coupling rule doesn't
+care whether a human or an agent wrote the change. It doesn't get tired at 2
+a.m., it doesn't defer to the person who seems confident, and it can't be
+charmed. It's automated, unglamorous friction — and for AI-assisted development
+it may be one of the only guardrails that scales as fast as the code generation
+does. If AI removes the human who used to catch the bad architectural call, a
+red build is how you put a facsimile of that human back into the loop.
+
+## Is This Just Another Hype Train?
+
+I'm constitutionally suspicious of methodology books, and regular readers know
+I'll happily [drag a hype train off its rails](/beware-of-the-hype-train).
+"Evolutionary architecture" has exactly the shape of a term that could become
+conference-slide filler.
+
+What saves it is that its central idea is _testable_, which is the precise
+opposite of hype. A fitness function either goes green or it doesn't. You can't
+fake it in a keynote. The failure modes I've lived through are just as concrete
+— here are the smells and their fixes, most of which I've had to apply the hard
+way:
+
+| Symptom                                          | What It Signals                     | Fix                                            |
+| ------------------------------------------------ | ----------------------------------- | ---------------------------------------------- |
+| Every change needs a full manual regression pass | No automated fitness functions      | Turn the manual checks into pipeline gates     |
+| One team must approve all cross-service changes  | Architecture and org are misaligned | Revisit team topology against Conway's Law     |
+| "We don't know what breaks if we change this"    | Undocumented connascence            | Map it, name it, refactor toward a weaker form |
+| Every migration is a big-bang cutover night      | No incremental change path          | Split it into independently deployable quanta  |
+| Nobody wrote the important characteristics down  | No shared definition of "important" | Run a workshop and rank them, out loud         |
+
+That last row is the one I'd tattoo on a wall. **You cannot build a fitness
+function for a quality nobody agreed mattered.** Naming the characteristics is
+the unglamorous prerequisite to protecting any of them — and it's the step every
+calcified architecture I've inherited skipped.
+
+## Final Thoughts
+
+Architecture that can't change gracefully isn't architecture. It's the shape
+your system happened to have on the day everyone stopped paying attention. What
+_Building Evolutionary Architectures_ gave me wasn't a new philosophy — I
+already believed change was the default and quality was worth fighting for. It
+gave me a way to stop _arguing_ for quality and start _enforcing_ it: pick your
+quanta, name your coupling, agree on what matters, and wire each of those
+beliefs to a check that turns red when reality drifts away from them.
+
+The tools have only gotten sharper since 2017. Actually pointing them at the
+qualities you claim to care about — that's still the hard part, and it's still
+on us.
+
+This post was heavily inspired by
+[_Building Evolutionary Architectures_, 2nd Edition](https://www.oreilly.com/library/view/building-evolutionary-architectures/9781492097532/)
+by Neal Ford, Rebecca Parsons, Patrick Kua, and Pramod Sadalage. I've stripped
+it down to the argument I actually use, but the book has a lot more nuance and
+a lot more war stories than I could fit here. If any of this resonated, you
+should definitely read it.
+
+_If this landed for you, share it with your team and tell me which fitness
+function you'd write first. And if you've read the second edition, I want to
+know whether the coupling chapter changed your mind the way it changed mine._

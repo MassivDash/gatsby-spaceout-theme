@@ -1,0 +1,163 @@
+.cl-widget {
+  --cl-ink: #0e0e0d;
+  --cl-bone: #e9e4d6;
+  --cl-ash: #8f897b;
+  --cl-hairline: #3a352c;
+  --cl-blood: #c23b22;
+  --cl-ochre: #c9902b;
+
+  background: var(--cl-ink);
+  color: var(--cl-bone);
+  border: 1px solid var(--cl-hairline);
+  border-radius: 8px;
+  padding: 36px;
+  margin: 40px auto;
+  max-width: 1150px;
+  font-family: inherit;
+  transition: 0.2s background-color ease, 0.2s color ease;
+}
+
+.cl-widget[data-mode='light'] {
+  --cl-ink: #e9e4d6;
+  --cl-bone: #17150f;
+  --cl-ash: #6b6558;
+  --cl-hairline: #c9c3b0;
+}
+
+.cl-caption {
+  color: var(--cl-ash);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 0 0 24px;
+  max-width: 900px;
+}
+
+.cl-ladder {
+  display: flex;
+  gap: 16px;
+}
+
+.cl-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 110px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.cl-rail-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cl-ash);
+}
+
+.cl-rail-label-top {
+  margin-bottom: 12px;
+}
+
+.cl-rail-label-bottom {
+  margin-top: 12px;
+}
+
+.cl-rail-gradient {
+  position: relative;
+  flex: 1;
+  width: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to bottom, var(--cl-ash), var(--cl-blood));
+}
+
+.cl-rail-boundary {
+  position: absolute;
+  left: -3px;
+  top: calc(5 / 9 * 100%);
+  width: 12px;
+  height: 2px;
+  background: var(--cl-ochre);
+}
+
+.cl-rungs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cl-divider {
+  font-size: 0.85rem;
+  color: var(--cl-ochre);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 6px 0;
+  border-top: 1px dashed var(--cl-ochre);
+  border-bottom: 1px dashed var(--cl-ochre);
+}
+
+.cl-rung {
+  border: 1px solid var(--cl-hairline);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.cl-rung-static {
+  border-left: 3px solid var(--cl-ash);
+}
+
+.cl-rung-dynamic {
+  border-left: 3px solid var(--cl-blood);
+}
+
+.cl-rung-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border: none;
+  color: var(--cl-bone);
+  font-family: inherit;
+  font-size: 1.05rem;
+  padding: 16px 20px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.cl-rung-header:hover {
+  background: rgba(233, 228, 214, 0.05);
+}
+
+.cl-rung-caret {
+  color: var(--cl-ash);
+  font-size: 1.2rem;
+}
+
+.cl-rung-body {
+  padding: 0 20px 18px;
+}
+
+.cl-rung-desc {
+  margin: 0 0 10px;
+  color: var(--cl-bone);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.cl-rung-example {
+  margin: 0;
+  color: var(--cl-ash);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 520px) {
+  .cl-rail {
+    display: none;
+  }
+}

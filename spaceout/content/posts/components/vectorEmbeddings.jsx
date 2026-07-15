@@ -1,8 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useColorMode } from 'theme-ui';
 
 const WordEmbeddingCanvas = () => {
   const containerRef = useRef(null);
   const [threeLoaded, setThreeLoaded] = useState(false);
+  const [colorMode] = useColorMode();
+  const isDark = colorMode === 'dark';
 
   useEffect(() => {
     // Load Three.js from Cloudflare CDN
@@ -62,7 +65,7 @@ const WordEmbeddingCanvas = () => {
 
     // Scene setup
     const scene = new window.THREE.Scene();
-    scene.background = new window.THREE.Color(0xf5f5f5);
+    scene.background = new window.THREE.Color(isDark ? 0x111216 : 0xf5f5f5);
 
     // Camera setup
     const camera = new window.THREE.PerspectiveCamera(
@@ -174,11 +177,12 @@ const WordEmbeddingCanvas = () => {
       return sprite;
     };
 
-    // Draw base axes with black arrows
+    // Draw base axes
     const axisLength = 1.5;
-    const axisColor = 0x000000; // Black
+    const axisColor = isDark ? 0xe9e4d6 : 0x000000;
+    const axisColorHex = isDark ? '#e9e4d6' : '#000000';
 
-    // X-axis (red in standard, but user wants black)
+    // X-axis (red in standard, but user wants black/bone)
     const xAxisArrow = new window.THREE.ArrowHelper(
       new window.THREE.Vector3(1, 0, 0),
       new window.THREE.Vector3(0, 0, 0),
@@ -212,15 +216,15 @@ const WordEmbeddingCanvas = () => {
     scene.add(zAxisArrow);
 
     // Add axis labels
-    const xLabel = createTextSprite('X', '#000000');
+    const xLabel = createTextSprite('X', axisColorHex);
     xLabel.position.set(axisLength * 1.2, 0, 0);
     scene.add(xLabel);
 
-    const yLabel = createTextSprite('Y', '#000000');
+    const yLabel = createTextSprite('Y', axisColorHex);
     yLabel.position.set(0, axisLength * 1.2, 0);
     scene.add(yLabel);
 
-    const zLabel = createTextSprite('Z', '#000000');
+    const zLabel = createTextSprite('Z', axisColorHex);
     zLabel.position.set(0, 0, axisLength * 1.2);
     scene.add(zLabel);
 
@@ -254,12 +258,18 @@ const WordEmbeddingCanvas = () => {
     });
 
     // Grid helper
-    const gridHelper = new window.THREE.GridHelper(3, 10, 0x888888, 0xcccccc);
+    const gridHelper = new window.THREE.GridHelper(
+      3,
+      10,
+      isDark ? 0x8f897b : 0x888888,
+      isDark ? 0x3a352c : 0xcccccc,
+    );
     scene.add(gridHelper);
 
     // Animation loop
+    let animationFrameId;
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
       controls.update();
       renderer.render(scene, camera);
     };
@@ -276,6 +286,7 @@ const WordEmbeddingCanvas = () => {
 
     // Cleanup
     return () => {
+      cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
       if (controls && controls.dispose) {
         controls.dispose();
@@ -307,7 +318,7 @@ const WordEmbeddingCanvas = () => {
         if (label.geometry) label.geometry.dispose();
       });
     };
-  }, [threeLoaded]);
+  }, [threeLoaded, isDark]);
 
   return (
     <div
@@ -317,7 +328,7 @@ const WordEmbeddingCanvas = () => {
         width: '100%',
         height: '600px',
         margin: '0 auto',
-        border: '1px solid #ccc',
+        border: `1px solid ${isDark ? '#3a352c' : '#ccc'}`,
         borderRadius: '4px',
         overflow: 'hidden',
       }}
