@@ -28,6 +28,9 @@ const icons = {
   paypal: Icons.Paypal,
   digitalocean: Icons.DigitalOcean,
   spaceout: Icons.Spaceout,
+  huggingface: Icons.HuggingFace,
+  bluesky: Icons.Bluesky,
+  bsky: Icons.Bluesky,
 };
 
 const getHostname = (url) => {

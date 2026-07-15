@@ -8,6 +8,7 @@ import Paragraph from 'gatsby-theme-spaceout/src/components/Paragraph';
 import Spaceman, { FlexHolder } from '../components/Spaceman';
 import Spaceship from '../components/Spaceship';
 import TechStack from '../components/TechStack';
+import HuggingFaceModels from '../components/HuggingFaceModels';
 import { MagnetLines, SectionContainer } from '../components/MagnetLines';
 import { DesktopOnlyVideo } from '../components/LazyVideo';
 import CSSFadeIn from 'gatsby-theme-spaceout/src/components/Transitions/Transitions.CSS.FadeIn';
@@ -85,6 +86,23 @@ const About: FC = () => {
             </div>
 
             <div style={{ height: '50px', width: '100%' }}></div>
+
+            <Headings.H2>Hugging Face Models</Headings.H2>
+            <Paragraph>
+              I fine-tune small coding-focused language models as a way to
+              explore AI/ML hands-on—experimenting with Unsloth Studio,
+              GGUF quantization, and vision-language capabilities for
+              day-to-day development. Check out my profile on{' '}
+              <ExternalLink
+                href="https://huggingface.co/MassivDash"
+                target="_blank"
+                rel="noopener nofollow noreferrer"
+              >
+                Hugging Face
+              </ExternalLink>{' '}
+              for the full list of models.
+            </Paragraph>
+            <HuggingFaceModels />
           </Section>
           <Section>
             <MagnetLines />

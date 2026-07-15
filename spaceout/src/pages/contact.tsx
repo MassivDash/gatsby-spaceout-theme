@@ -38,6 +38,14 @@ const links = [
     name: `github`,
     url: `https://github.com/massivDash/`,
   },
+  {
+    name: `huggingface`,
+    url: `https://huggingface.co/MassivDash`,
+  },
+  {
+    name: `bluesky`,
+    url: `https://bsky.app/profile/lukecelitan.bsky.social`,
+  },
 ];
 
 const HowItsDone: FC = () => {

@@ -14,6 +14,8 @@ import Patreon from './social/Patreon.Icon';
 import Paypal from './social/Paypal.Icon';
 import DigitalOcean from './social/DigitalOcean.Icon';
 import Spaceout from './social/Spaceout.Icon';
+import HuggingFace from './social/HuggingFace.Icon';
+import { SiBluesky as Bluesky } from 'react-icons/si';
 
 // UI
 import ChevronLeft from './ui/ChevronLeft.Icon';
@@ -90,6 +92,8 @@ export default {
   Paypal,
   DigitalOcean,
   Spaceout,
+  HuggingFace,
+  Bluesky,
   ChevronLeft,
   Copied,
   Copy,
