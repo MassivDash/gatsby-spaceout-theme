@@ -32,6 +32,10 @@ const stack = [
   'Wordpress',
   'Github2',
   'Linux',
+  'DevOps',
+  'SoftwareEngineering',
+  'AI',
+  'VectorDatabase',
 ];
 
 const TechStack: FC = () => (

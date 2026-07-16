@@ -105,19 +105,22 @@ export default ArticlesList;
 export const TechIcons: FC<{ tech: string[] }> = ({ tech }) => {
   const [colorMode, _] = useColorMode();
   const isDark = colorMode === `dark`;
-  const techItems = tech.map((tech) => {
-    const IconComponent = Icons[tech];
+  const techItems = tech
+    .map((tech) => {
+      const IconComponent = Icons[tech];
+      if (!IconComponent) return null;
 
-    return (
-      <IconComponent
-        key={tech}
-        width="48"
-        height="48"
-        {...(isDark && { fill: '#FFF' })}
-        style={{ margin: '5px', width: '48px', height: '48px' }}
-      />
-    );
-  });
+      return (
+        <IconComponent
+          key={tech}
+          width="48"
+          height="48"
+          {...(isDark && { fill: '#FFF' })}
+          style={{ margin: '5px', width: '48px', height: '48px' }}
+        />
+      );
+    })
+    .filter(Boolean);
   return <>{techItems}</>;
 };
 

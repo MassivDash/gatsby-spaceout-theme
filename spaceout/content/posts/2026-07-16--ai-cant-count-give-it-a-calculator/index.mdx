@@ -9,7 +9,8 @@ hero: aicount_cover.png
 author: Luke Celitan
 category: Post
 tech:
-  - TS
+  - AI
+  - SoftwareEngineering
 slug: ai-cant-count-give-it-a-calculator
 ---
 
@@ -191,12 +192,12 @@ money, time, and energy.
 
 Look at what separates a right answer from a wrong one:
 
-| Metric                | Gets it RIGHT              | Gets it WRONG    |
-| --------------------- | --------------------------- | ---------------- |
-| Output tokens per sum | 6,000–9,000                 | ~4                |
-| Time per answer       | 40–130s                     | ~1s               |
-| Method                | Full step-by-step working   | Single blurted guess |
-| Result                | Correct                     | Wrong, every time |
+| Metric                | Gets it RIGHT             | Gets it WRONG        |
+| --------------------- | ------------------------- | -------------------- |
+| Output tokens per sum | 6,000–9,000               | ~4                   |
+| Time per answer       | 40–130s                   | ~1s                  |
+| Method                | Full step-by-step working | Single blurted guess |
+| Result                | Correct                   | Wrong, every time    |
 
 The wrong models are cheap and fast because they're guessing. The right models
 are slow and expensive because they're doing the equivalent of long addition on
@@ -243,11 +244,11 @@ opposite.
 
 ## Claude vs OpenAI: a closer look
 
-One question I kept getting when I shared early results internally: is this
-just an OpenAI-favours-OpenAI story? Not quite. Restricting the comparison to
+One question I kept getting when I shared early results internally: is this just
+an OpenAI-favours-OpenAI story? Not quite. Restricting the comparison to
 OpenAI's and Anthropic's standard models (Gemini set aside for this one, and
-Claude's extended-thinking variant wasn't available through our gateway, so
-this is standard Claude vs the full GPT lineup including its reasoning models):
+Claude's extended-thinking variant wasn't available through our gateway, so this
+is standard Claude vs the full GPT lineup including its reasoning models):
 
 <ClaudeVsOpenAIChart data={claudeVsOpenAIData} />
 
@@ -279,13 +280,13 @@ passed one of them.
 The fix is refreshingly unglamorous, and I like it all the more for that. Don't
 let the model be the calculator.
 
-| Do                                     | Don't                              |
-| --------------------------------------- | ------------------------------------ |
-| Compute numbers in code or a tool call | Ship a raw model total to a user   |
-| Use models to read, route, explain     | Assume a bigger model fixes maths   |
-| Reserve reasoning models for high stakes | Use a chat model where exactness matters |
-| Validate against deterministic ground truth | Trust a confident, formatted number |
-| Log tokens and cost                    | Ignore the compute spend           |
+| Do                                          | Don't                                    |
+| ------------------------------------------- | ---------------------------------------- |
+| Compute numbers in code or a tool call      | Ship a raw model total to a user         |
+| Use models to read, route, explain          | Assume a bigger model fixes maths        |
+| Reserve reasoning models for high stakes    | Use a chat model where exactness matters |
+| Validate against deterministic ground truth | Trust a confident, formatted number      |
+| Log tokens and cost                         | Ignore the compute spend                 |
 
 That last row matters more than it looks. Because correctness is bought with
 output tokens, and tokens are compute, and compute is energy, "get it right" and

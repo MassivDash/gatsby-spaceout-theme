@@ -1,6 +1,8 @@
 ---
 title: Docker vs Podman, 2025 field guide with community insights
-excerpt: Docker, known for portability, competes with daemon-less Podman, which emphasizes security and simplicity, in the evolving containerization field
+excerpt:
+  Docker, known for portability, competes with daemon-less Podman, which
+  emphasizes security and simplicity, in the evolving containerization field
 date: 2025-11-23
 hero: dockervspodman-cov.png
 author: Luke Celitan
@@ -11,73 +13,131 @@ tech:
   - Redhat
   - Ubuntu
   - Podman
+  - DevOps
 ---
 
-# Should I Finally Move from Docker to Podman? 
+# Should I Finally Move from Docker to Podman?
+
 ## A 2025 Field Guide with Community Insights
 
-Containers are table stakes now, but your choice of engine impacts security, operability, and developer velocity. Docker remains the de facto standard; Podman has matured rapidly with a daemonless, rootless-by-default model that aligns closely with Linux. If you’ve been asking “Should I finally move from Docker to Podman?”—this guide lays out the trade-offs, community sentiment, and a practical migration path.
+Containers are table stakes now, but your choice of engine impacts security,
+operability, and developer velocity. Docker remains the de facto standard;
+Podman has matured rapidly with a daemonless, rootless-by-default model that
+aligns closely with Linux. If you’ve been asking “Should I finally move from
+Docker to Podman?”—this guide lays out the trade-offs, community sentiment, and
+a practical migration path.
 
-| Switch Now if:                                                                 | Stay on Docker if:                                                          | Hybrid Approach:                                                                 |
-|---------------------------------------------------------------------------------|------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| - You run Linux servers where security-by-default matters (rootless containers, SELinux, auditing). | - Your team relies heavily on Docker Compose or Swarm and needs the least friction. | Use Podman on hardened Linux servers; keep Docker on developer laptops. |
-| - You’re in RHEL/Fedora ecosystems (Podman is the default and deeply integrated). | - You’re macOS/Windows-first and benefit from Docker Desktop’s polished experience and extensions. | Migrate one stack at a time, starting with services that benefit from rootless/systemd. |
-| - You prefer systemd-native lifecycle management and want clean firewall behavior.| - Your GPU-heavy workloads already “just work” on Docker and migration risk is high. |                                                                                   |
+| Switch Now if:                                                                                      | Stay on Docker if:                                                                                 | Hybrid Approach:                                                                        |
+| --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| - You run Linux servers where security-by-default matters (rootless containers, SELinux, auditing). | - Your team relies heavily on Docker Compose or Swarm and needs the least friction.                | Use Podman on hardened Linux servers; keep Docker on developer laptops.                 |
+| - You’re in RHEL/Fedora ecosystems (Podman is the default and deeply integrated).                   | - You’re macOS/Windows-first and benefit from Docker Desktop’s polished experience and extensions. | Migrate one stack at a time, starting with services that benefit from rootless/systemd. |
+| - You prefer systemd-native lifecycle management and want clean firewall behavior.                  | - Your GPU-heavy workloads already “just work” on Docker and migration risk is high.               |                                                                                         |
 
 ## Docker and Podman in 2025
+
 ### Overview
-Docker and Podman are two leading containerization platforms, each with its own architecture and features. Docker, with its client+daemon architecture, is known for its mature CLI, robust ecosystem, and efficient builds using BuildKit. It also offers orchestration tools like Docker Compose and Swarm, and a rich extension marketplace via Docker Desktop. Podman, on the other hand, is a daemonless engine that is rootless by default, supports Kubernetes-style pods, and pairs with Buildah for builds and Skopeo for image management. Podman Desktop is open-source and improving, and it generates Kubernetes YAML and systemd units out of the box.
+
+Docker and Podman are two leading containerization platforms, each with its own
+architecture and features. Docker, with its client+daemon architecture, is known
+for its mature CLI, robust ecosystem, and efficient builds using BuildKit. It
+also offers orchestration tools like Docker Compose and Swarm, and a rich
+extension marketplace via Docker Desktop. Podman, on the other hand, is a
+daemonless engine that is rootless by default, supports Kubernetes-style pods,
+and pairs with Buildah for builds and Skopeo for image management. Podman
+Desktop is open-source and improving, and it generates Kubernetes YAML and
+systemd units out of the box.
 
 ### Interoperability
-Both Docker and Podman produce OCI images, allowing you to run the same images across both platforms. You can pull images from Docker Hub and private registries without any issues.
+
+Both Docker and Podman produce OCI images, allowing you to run the same images
+across both platforms. You can pull images from Docker Hub and private
+registries without any issues.
 
 ### Recent Developments
-Podman has seen significant advancements with the stabilization of quadlets in version 5+, which includes systemd unit generation and management. Netavark/aardvark has improved rootless networking and DNS, and auto-update labels have been added, along with an improved Desktop experience. Debian 13 ships Podman 5.4.x, and RHEL/Fedora default to Podman.
+
+Podman has seen significant advancements with the stabilization of quadlets in
+version 5+, which includes systemd unit generation and management.
+Netavark/aardvark has improved rootless networking and DNS, and auto-update
+labels have been added, along with an improved Desktop experience. Debian 13
+ships Podman 5.4.x, and RHEL/Fedora default to Podman.
 
 ### Architecture and Security
+
 The core difference between Docker and Podman lies in their architecture.
 
-Docker: Uses a privileged daemon (dockerd) with a local REST API. Access to the docker group effectively grants root privileges, which can lead to security risks.
-Podman: Is daemonless, with commands forking and executing directly. Containers are per-user by default (rootless), and lifecycle management is tied into systemd, reducing the attack surface and improving auditability.
-### Rootless Mode and Implications
-Podman: Defaults to rootless mode, where user namespaces map "root-in-container" to a non-root host user, limiting the blast radius. SELinux and other LSMs apply cleanly.
-Docker: Offers a rootless mode, but it's more complex to configure and has caveats, such as AppArmor profiles and certain network modes.
-### SELinux and AppArmor
-Podman: Integrates with SELinux. Use :Z on bind mounts to apply correct labels for container separation, and SELinux categories help isolate containers from each other.
-Docker: Defaults to AppArmor on compatible distributions, which is suitable for many cases but doesn't mesh as seamlessly with rootless and SELinux enforcement.
-### Lifecycle Management
-Docker: Uses "restart: always" (and friends) in Compose, which is simple and effective.
-Podman: Leans on systemd (quadlets). You can express restart behavior, dependencies, and order with native unit directives, offering more flexibility and auditability.
-### Firewall Behavior
-Docker: Modifies iptables/nftables in ways that can surprise users, potentially bypassing UFW rules, which is a common complaint in self-hosting circles.
-Podman: Respects existing firewall rules by default, allowing users to decide what gets exposed externally.
+Docker: Uses a privileged daemon (dockerd) with a local REST API. Access to the
+docker group effectively grants root privileges, which can lead to security
+risks. Podman: Is daemonless, with commands forking and executing directly.
+Containers are per-user by default (rootless), and lifecycle management is tied
+into systemd, reducing the attack surface and improving auditability.
 
-> Key takeaway: Podman’s daemonless, rootless-by-default model with SELinux and systemd gives you a tighter, Linux-native security posture. Docker’s architecture remains convenient but expands the attack surface unless carefully hardened.
+### Rootless Mode and Implications
+
+Podman: Defaults to rootless mode, where user namespaces map "root-in-container"
+to a non-root host user, limiting the blast radius. SELinux and other LSMs apply
+cleanly. Docker: Offers a rootless mode, but it's more complex to configure and
+has caveats, such as AppArmor profiles and certain network modes.
+
+### SELinux and AppArmor
+
+Podman: Integrates with SELinux. Use :Z on bind mounts to apply correct labels
+for container separation, and SELinux categories help isolate containers from
+each other. Docker: Defaults to AppArmor on compatible distributions, which is
+suitable for many cases but doesn't mesh as seamlessly with rootless and SELinux
+enforcement.
+
+### Lifecycle Management
+
+Docker: Uses "restart: always" (and friends) in Compose, which is simple and
+effective. Podman: Leans on systemd (quadlets). You can express restart
+behavior, dependencies, and order with native unit directives, offering more
+flexibility and auditability.
+
+### Firewall Behavior
+
+Docker: Modifies iptables/nftables in ways that can surprise users, potentially
+bypassing UFW rules, which is a common complaint in self-hosting circles.
+Podman: Respects existing firewall rules by default, allowing users to decide
+what gets exposed externally.
+
+> Key takeaway: Podman’s daemonless, rootless-by-default model with SELinux and
+> systemd gives you a tighter, Linux-native security posture. Docker’s
+> architecture remains convenient but expands the attack surface unless
+> carefully hardened.
 
 ## Developer Experience and Tooling
 
-| Feature                                             | Docker                                                                                                      | Podman                                                                                                  |
-|-----------------------------------------------------|-------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| CLI compatibility                                    | Most commands are direct translations: docker run → podman run; docker build → podman build; docker ps → podman ps. | Podman prefers “Containerfile” for builds but will fall back to “Dockerfile.” You don’t need to rename. |
-| Image builds                                        | Docker uses BuildKit                                                                                         | Podman uses Buildah. Both output OCI images; interoperability isn’t an issue.                           |
-| Desktop experience and licensing                     | Docker Desktop is polished and includes security scanning, dev environments, and a strong extension ecosystem. Licensing may apply for larger orgs. | Podman Desktop is open-source, improving quickly, and suitable for managing images and containers. You can bring external scanners via extensions. |
-| Compose and equivalents                              | Docker Compose is mature and ubiquitous.                                                                     | podman-compose exists but is community-driven and not fully feature-complete for complex stacks. For production-like lifecycle management, quadlets (systemd) are recommended. |
-| Ecosystem highlights                                | Many Docker-first tools work via the Podman socket for compatibility.                                         | Several users report Portainer works with Podman. For auto-updates, Podman supports an “auto-update” label instead of Watchtower. Cockpit (on Fedora Server and friends) includes a Podman management UI. Komodo is another GUI option that supports both. |
+| Feature                          | Docker                                                                                                                                              | Podman                                                                                                                                                                                                                                                     |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CLI compatibility                | Most commands are direct translations: docker run → podman run; docker build → podman build; docker ps → podman ps.                                 | Podman prefers “Containerfile” for builds but will fall back to “Dockerfile.” You don’t need to rename.                                                                                                                                                    |
+| Image builds                     | Docker uses BuildKit                                                                                                                                | Podman uses Buildah. Both output OCI images; interoperability isn’t an issue.                                                                                                                                                                              |
+| Desktop experience and licensing | Docker Desktop is polished and includes security scanning, dev environments, and a strong extension ecosystem. Licensing may apply for larger orgs. | Podman Desktop is open-source, improving quickly, and suitable for managing images and containers. You can bring external scanners via extensions.                                                                                                         |
+| Compose and equivalents          | Docker Compose is mature and ubiquitous.                                                                                                            | podman-compose exists but is community-driven and not fully feature-complete for complex stacks. For production-like lifecycle management, quadlets (systemd) are recommended.                                                                             |
+| Ecosystem highlights             | Many Docker-first tools work via the Podman socket for compatibility.                                                                               | Several users report Portainer works with Podman. For auto-updates, Podman supports an “auto-update” label instead of Watchtower. Cockpit (on Fedora Server and friends) includes a Podman management UI. Komodo is another GUI option that supports both. |
 
 ## Orchestration and Pods
 
-- Docker includes Swarm for built-in, simple cluster orchestration. Many teams still rely on it.
-- Podman has no Swarm equivalent. For HA and multi-node deployments, use Kubernetes or Nomad.
-- Podman pods mirror Kubernetes pods: multiple containers share namespaces, ideal for sidecars (e.g., log processing) and closely coupled services.
-- You can generate Kubernetes manifests directly from Podman with `podman generate kube`, creating a bridge from dev to K8s without hand-authoring YAML.
+- Docker includes Swarm for built-in, simple cluster orchestration. Many teams
+  still rely on it.
+- Podman has no Swarm equivalent. For HA and multi-node deployments, use
+  Kubernetes or Nomad.
+- Podman pods mirror Kubernetes pods: multiple containers share namespaces,
+  ideal for sidecars (e.g., log processing) and closely coupled services.
+- You can generate Kubernetes manifests directly from Podman with
+  `podman generate kube`, creating a bridge from dev to K8s without
+  hand-authoring YAML.
 
 ## Networking and Devices
 
 Rootless networking:
-- Podman’s netavark and aardvark-dns handle rootless networks cleanly; each user’s containers are isolated.
+
+- Podman’s netavark and aardvark-dns handle rootless networks cleanly; each
+  user’s containers are isolated.
 
 Binding privileged ports in rootless mode:
-- You can redirect privileged ports (80/443) to high ports and keep containers rootless.
+
+- You can redirect privileged ports (80/443) to high ports and keep containers
+  rootless.
 
 ```bash
 # Redirect 80 to 8080 and 443 to 8443 using firewalld
@@ -86,7 +146,8 @@ sudo firewall-cmd --permanent --add-forward-port=port=443:proto=tcp:toport=8443
 sudo firewall-cmd --reload
 ```
 
-- Alternatively, lower the unprivileged port threshold (system-wide), but this changes host behavior.
+- Alternatively, lower the unprivileged port threshold (system-wide), but this
+  changes host behavior.
 
 ```bash
 # Allow binding to low ports without root (system-wide)
@@ -95,9 +156,12 @@ sudo sysctl -w net.ipv4.ip_unprivileged_port_start=0
 ```
 
 Macvlan and host networking:
-- Rootless mode has caveats with macvlan/host networking. Test your specific topology; you might prefer rootful containers for advanced network setups.
+
+- Rootless mode has caveats with macvlan/host networking. Test your specific
+  topology; you might prefer rootful containers for advanced network setups.
 
 GPU access (NVIDIA CDI):
+
 - CDI simplifies GPU pass-through for containers. Generate CDI config at boot.
 
 ```bash
@@ -129,44 +193,73 @@ WantedBy=default.target
 ```
 
 Storage and permissions:
-- Rootless pods/containers use user namespaces; host file ownership might appear as high UID/GIDs. The PUID/PGID pattern helps align application permissions.
-- With SELinux enforcing, remember :Z on bind mounts to label volumes correctly for container isolation.
+
+- Rootless pods/containers use user namespaces; host file ownership might appear
+  as high UID/GIDs. The PUID/PGID pattern helps align application permissions.
+- With SELinux enforcing, remember :Z on bind mounts to label volumes correctly
+  for container isolation.
 
 ## Performance and Resource Usage
 
-Runtime performance is broadly equivalent because both engines rely on OCI runtimes (e.g., runc). You may see slightly faster container setup/teardown in CI with Podman’s daemonless model; long-running services won’t show major differences. Docker’s daemon can be a bottleneck in rare cases; Podman spreads work across processes.
+Runtime performance is broadly equivalent because both engines rely on OCI
+runtimes (e.g., runc). You may see slightly faster container setup/teardown in
+CI with Podman’s daemonless model; long-running services won’t show major
+differences. Docker’s daemon can be a bottleneck in rare cases; Podman spreads
+work across processes.
 
 ## Platform Support and Distribution Defaults
 
-- Linux: RHEL/Fedora default to Podman. Debian 13 includes Podman 5.4.x. Ubuntu offers Podman via official packages and PPAs.
-- macOS/Windows: Both Docker Desktop and Podman use a managed VM under the hood. Docker’s cross-platform dev experience is still more mature.
-- Licensing: Docker Desktop may require paid plans in larger orgs. Podman Desktop is Apache-2.0—fully open-source.
+- Linux: RHEL/Fedora default to Podman. Debian 13 includes Podman 5.4.x. Ubuntu
+  offers Podman via official packages and PPAs.
+- macOS/Windows: Both Docker Desktop and Podman use a managed VM under the hood.
+  Docker’s cross-platform dev experience is still more mature.
+- Licensing: Docker Desktop may require paid plans in larger orgs. Podman
+  Desktop is Apache-2.0—fully open-source.
 
 ## Community Pulse: What Reddit Says (r/selfhosted)
 
-A recent r/selfhosted poll showed the majority still on Docker, with a significant minority using Podman. Themes from the discussion:
-- Pro-Podman: Rootless mode “just works,” systemd quadlets made lifecycle reliable, and firewall behavior was sane. Several users said Podman helped them understand containers and systemd more deeply.
-- Friction points: podman-compose issues for complex stacks led some back to Docker; GPU access in rootless mode required extra setup; highly nuanced Compose features weren’t always smooth; online docs skew Docker-first.
-- Balanced views: Many run Podman on RHEL/Fedora and Docker on Debian/Ubuntu. Reports confirm Portainer works with Podman, and Podman’s auto-update label substitutes for Watchtower. Some households run both engines on the same machine.
+A recent r/selfhosted poll showed the majority still on Docker, with a
+significant minority using Podman. Themes from the discussion:
 
-> Community sentiment: Podman excels for secure, systemd-managed Linux services. Docker still wins on ubiquitous documentation, Compose maturity, and macOS/Windows workflows.
+- Pro-Podman: Rootless mode “just works,” systemd quadlets made lifecycle
+  reliable, and firewall behavior was sane. Several users said Podman helped
+  them understand containers and systemd more deeply.
+- Friction points: podman-compose issues for complex stacks led some back to
+  Docker; GPU access in rootless mode required extra setup; highly nuanced
+  Compose features weren’t always smooth; online docs skew Docker-first.
+- Balanced views: Many run Podman on RHEL/Fedora and Docker on Debian/Ubuntu.
+  Reports confirm Portainer works with Podman, and Podman’s auto-update label
+  substitutes for Watchtower. Some households run both engines on the same
+  machine.
+
+> Community sentiment: Podman excels for secure, systemd-managed Linux services.
+> Docker still wins on ubiquitous documentation, Compose maturity, and
+> macOS/Windows workflows.
 
 ## Migration Guide: From Docker to Podman
 
 Preparation checklist:
+
 - Inventory Compose stacks, volumes, networks, and plugins.
 - Identify privileged port bindings, macvlan/host networking, GPU needs.
 - Note SELinux/AppArmor status on your hosts.
 
 Installation paths:
-- Linux: Install Podman from your distro repository. On Debian/Ubuntu, ensure you’re on a recent Podman (v5+ if possible). On Fedora/RHEL, Podman is standard.
+
+- Linux: Install Podman from your distro repository. On Debian/Ubuntu, ensure
+  you’re on a recent Podman (v5+ if possible). On Fedora/RHEL, Podman is
+  standard.
 - macOS/Windows: Use `podman machine` or Podman Desktop to provision the VM.
 
 Running both side-by-side:
-- You can install `podman-docker` to make `docker` invoke Podman. Avoid aliasing `docker=podman` globally until you’ve tested compatibility.
+
+- You can install `podman-docker` to make `docker` invoke Podman. Avoid aliasing
+  `docker=podman` globally until you’ve tested compatibility.
 
 Compose strategies:
-- podman-compose works for many basic stacks. For production-like lifecycle management, prefer quadlets.
+
+- podman-compose works for many basic stacks. For production-like lifecycle
+  management, prefer quadlets.
 - Convert Compose to quadlets gradually—start with non-critical services.
 
 Example: Compose → quadlets for a web + Postgres stack
@@ -184,7 +277,7 @@ services:
   web:
     image: caddy:latest
     ports:
-      - "80:80"
+      - '80:80'
     volumes:
       - /srv/site:/srv/site
     depends_on:
@@ -269,6 +362,7 @@ AutoUpdate=registry
 ```
 
 Scheduling updates:
+
 - Use a systemd timer or a weekly cron to run `podman auto-update`.
 
 Kubernetes manifests:
@@ -281,61 +375,87 @@ kubectl apply -f mypod.yaml
 ```
 
 Troubleshooting playbook:
-- Permissions: Use :Z on volumes under SELinux; confirm UID/GID mapping matches app expectations (PUID/PGID).
-- Ports <1024: Prefer firewalld redirects; only adjust sysctl if you accept system-wide implications.
-- GPU: Ensure CDI YAML is generated at boot and devices are referenced in your unit.
-- Networking: Rootless macvlan/host networking may be limited—validate or switch specific containers to rootful.
-- Compose gaps: If podman-compose falls short, convert critical services to quadlets and retain Compose for simpler ones.
+
+- Permissions: Use :Z on volumes under SELinux; confirm UID/GID mapping matches
+  app expectations (PUID/PGID).
+- Ports <1024: Prefer firewalld redirects; only adjust sysctl if you accept
+  system-wide implications.
+- GPU: Ensure CDI YAML is generated at boot and devices are referenced in your
+  unit.
+- Networking: Rootless macvlan/host networking may be limited—validate or switch
+  specific containers to rootful.
+- Compose gaps: If podman-compose falls short, convert critical services to
+  quadlets and retain Compose for simpler ones.
 
 ## Case Studies
 
-- Hardened homelab reverse proxy + DB: Moving Caddy and Postgres to quadlets with rootless ports via firewalld simplified auditing and removed Docker’s firewall surprises. AutoUpdate keeps images fresh.
-- Multi-user shared server: Each user runs their own rootless containers managed via systemd user services. Isolation and accountability improved—process ownership maps to the correct user.
-- CI pipeline: Podman+Buildah reduced build startup overhead in ephemeral jobs, removing the daemon as a potential failure point.
+- Hardened homelab reverse proxy + DB: Moving Caddy and Postgres to quadlets
+  with rootless ports via firewalld simplified auditing and removed Docker’s
+  firewall surprises. AutoUpdate keeps images fresh.
+- Multi-user shared server: Each user runs their own rootless containers managed
+  via systemd user services. Isolation and accountability improved—process
+  ownership maps to the correct user.
+- CI pipeline: Podman+Buildah reduced build startup overhead in ephemeral jobs,
+  removing the daemon as a potential failure point.
 
 ## Alternatives and Related Tools
 
-- nerdctl + containerd: Docker-like CLI that talks to containerd. Good if you already standardized on containerd.
-- CRI-O: Kubernetes-focused runtime (used by OpenShift). Pair with Podman for local dev; use CRI-O in clusters.
-- VMs/LXC: For strong isolation and traditional service management, consider VMs or LXC/LXD where containers’ shared kernel isn’t a fit.
+- nerdctl + containerd: Docker-like CLI that talks to containerd. Good if you
+  already standardized on containerd.
+- CRI-O: Kubernetes-focused runtime (used by OpenShift). Pair with Podman for
+  local dev; use CRI-O in clusters.
+- VMs/LXC: For strong isolation and traditional service management, consider VMs
+  or LXC/LXD where containers’ shared kernel isn’t a fit.
 
 ## Recommendations by Persona
 
-- Security-conscious enterprise ops (Linux): Prefer Podman for rootless, SELinux, and systemd integration. Generate K8s manifests as a pathway to clusters.
-- Self-hosters relying on Portainer/Compose/Watchtower flows: Docker remains the smoothest. If you switch, plan to replace Watchtower with Podman’s auto-update and move key services to quadlets.
-- macOS/Windows developers: Docker Desktop still provides the easiest cross-platform experience. Use Podman on servers where it adds value.
-- Teams on Docker Swarm: Swarm has no direct equivalent in Podman. Either stay on Docker or plan a move to Kubernetes/Nomad.
-- GPU-heavy workloads (media, ML): If Docker already works reliably, test Podman carefully. CDI helps, but you’ll need to validate device pass-through and permissions.
+- Security-conscious enterprise ops (Linux): Prefer Podman for rootless,
+  SELinux, and systemd integration. Generate K8s manifests as a pathway to
+  clusters.
+- Self-hosters relying on Portainer/Compose/Watchtower flows: Docker remains the
+  smoothest. If you switch, plan to replace Watchtower with Podman’s auto-update
+  and move key services to quadlets.
+- macOS/Windows developers: Docker Desktop still provides the easiest
+  cross-platform experience. Use Podman on servers where it adds value.
+- Teams on Docker Swarm: Swarm has no direct equivalent in Podman. Either stay
+  on Docker or plan a move to Kubernetes/Nomad.
+- GPU-heavy workloads (media, ML): If Docker already works reliably, test Podman
+  carefully. CDI helps, but you’ll need to validate device pass-through and
+  permissions.
 
 ## FAQ
 
-- Can Podman run Docker images?
-  Yes. OCI-compliant images work across Docker, Podman, and Kubernetes.
+- Can Podman run Docker images? Yes. OCI-compliant images work across Docker,
+  Podman, and Kubernetes.
 
-- Do I need to rename Dockerfile to Containerfile?
-  No. Podman reads Containerfile first and falls back to Dockerfile.
+- Do I need to rename Dockerfile to Containerfile? No. Podman reads
+  Containerfile first and falls back to Dockerfile.
 
-- Does Portainer work with Podman?
-  Many users report success. Alternatively, try Cockpit’s Podman UI or Komodo.
+- Does Portainer work with Podman? Many users report success. Alternatively, try
+  Cockpit’s Podman UI or Komodo.
 
-- How do I handle updates without Watchtower?
-  Use Podman’s AutoUpdate=registry label and schedule `podman auto-update` via systemd timers.
+- How do I handle updates without Watchtower? Use Podman’s AutoUpdate=registry
+  label and schedule `podman auto-update` via systemd timers.
 
-- Does Podman work with nftables/UFW differently than Docker?
-  Podman respects existing firewall rules by default, avoiding Docker’s common iptables surprises.
+- Does Podman work with nftables/UFW differently than Docker? Podman respects
+  existing firewall rules by default, avoiding Docker’s common iptables
+  surprises.
 
-- Is Podman replacing Docker?
-  Not universally. Podman is a drop-in alternative that’s compelling on Linux servers; Docker still dominates desktop dev workflows and Compose-based setups.
+- Is Podman replacing Docker? Not universally. Podman is a drop-in alternative
+  that’s compelling on Linux servers; Docker still dominates desktop dev
+  workflows and Compose-based setups.
 
 ## Checklist and Resources
 
 Pre-migration checklist:
+
 - Confirm distro versions (Podman v5+ preferred) and SELinux/AppArmor status.
 - Identify services needing privileged ports, macvlan, or GPUs.
 - Plan quadlet conversion for services that benefit from systemd management.
 - Test rootless mode with volumes labeled :Z and validate permissions.
 
 Command mapping cheat sheet:
+
 - docker build → podman build
 - docker run → podman run
 - docker ps → podman ps
@@ -344,13 +464,23 @@ Command mapping cheat sheet:
 - docker pull/push → podman pull/push
 
 Documentation pointers:
+
 - Podman systemd/quadlets: search “Podman quadlet” in official docs.
 - Podman generate kube/systemd: `podman generate kube|systemd` usage guides.
-- Debian 13 Podman details: Debian repositories and release notes for Podman 5.4.x.
+- Debian 13 Podman details: Debian repositories and release notes for Podman
+  5.4.x.
 - NVIDIA CDI: `nvidia-ctk cdi generate` docs.
 
 ## Closing Thoughts
 
-If you value Linux-native security and lifecycle management, Podman is ready. Rootless by default, tight SELinux integration, clean firewall behavior, and systemd-backed operations make it a strong fit for servers. If your organization lives inside Docker Compose, Swarm, and macOS/Windows developer workflows, Docker remains the path of least resistance.
+If you value Linux-native security and lifecycle management, Podman is ready.
+Rootless by default, tight SELinux integration, clean firewall behavior, and
+systemd-backed operations make it a strong fit for servers. If your organization
+lives inside Docker Compose, Swarm, and macOS/Windows developer workflows,
+Docker remains the path of least resistance.
 
-Personally, I advocate a pragmatic hybrid: adopt Podman where it brings clear security and operability value (Linux servers), keep Docker where it accelerates developer productivity (laptops, mixed OS teams), and migrate incrementally with quadlets. That way, you gain Podman’s strengths without disrupting what Docker already does well.
+Personally, I advocate a pragmatic hybrid: adopt Podman where it brings clear
+security and operability value (Linux servers), keep Docker where it accelerates
+developer productivity (laptops, mixed OS teams), and migrate incrementally with
+quadlets. That way, you gain Podman’s strengths without disrupting what Docker
+already does well.
