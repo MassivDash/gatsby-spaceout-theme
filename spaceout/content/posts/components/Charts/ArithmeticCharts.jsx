@@ -42,13 +42,32 @@ export const TaskFamilyAccuracyChart = ({ data }) => {
         </button>
       </div>
       {showTable ? (
-        <table style={{ width: '100%', maxWidth: 1150, margin: '0 auto', borderCollapse: 'collapse' }}>
+        <table
+          style={{
+            width: '100%',
+            maxWidth: 1150,
+            margin: '0 auto',
+            borderCollapse: 'collapse',
+          }}
+        >
           <thead>
             <tr>
-              <th style={{ textAlign: 'left', padding: '8px 12px', borderBottom: '2px solid currentColor' }}>
+              <th
+                style={{
+                  textAlign: 'left',
+                  padding: '8px 12px',
+                  borderBottom: '2px solid currentColor',
+                }}
+              >
                 Task family
               </th>
-              <th style={{ textAlign: 'left', padding: '8px 12px', borderBottom: '2px solid currentColor' }}>
+              <th
+                style={{
+                  textAlign: 'left',
+                  padding: '8px 12px',
+                  borderBottom: '2px solid currentColor',
+                }}
+              >
                 Best accuracy
               </th>
             </tr>
@@ -56,10 +75,20 @@ export const TaskFamilyAccuracyChart = ({ data }) => {
           <tbody>
             {data.map((row) => (
               <tr key={row.task}>
-                <td style={{ padding: '8px 12px', borderBottom: '1px solid rgba(128,128,128,0.25)' }}>
+                <td
+                  style={{
+                    padding: '8px 12px',
+                    borderBottom: '1px solid rgba(128,128,128,0.25)',
+                  }}
+                >
                   {row.task}
                 </td>
-                <td style={{ padding: '8px 12px', borderBottom: '1px solid rgba(128,128,128,0.25)' }}>
+                <td
+                  style={{
+                    padding: '8px 12px',
+                    borderBottom: '1px solid rgba(128,128,128,0.25)',
+                  }}
+                >
                   {row.accuracy}%
                 </td>
               </tr>
@@ -79,7 +108,11 @@ export const TaskFamilyAccuracyChart = ({ data }) => {
                 <XAxis type="number" domain={[0, 100]} unit="%" />
                 <YAxis dataKey="task" type="category" width={140} />
                 <Tooltip formatter={(value) => `${value}%`} />
-                <Bar dataKey="accuracy" name="Best accuracy" fill={SEQUENTIAL_BLUE} />
+                <Bar
+                  dataKey="accuracy"
+                  name="Best accuracy"
+                  fill={SEQUENTIAL_BLUE}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -103,19 +136,32 @@ export const ReasoningVsChatChart = ({ data }) => {
             <XAxis type="number" domain={[0, 9]} allowDecimals={false} />
             <YAxis dataKey="model" type="category" width={130} />
             <Tooltip
-              formatter={(value, name, props) => [`${props.payload.score} / 9`, 'Sum accuracy']}
+              formatter={(value, name, props) => [
+                `${props.payload.score} / 9`,
+                'Sum accuracy',
+              ]}
             />
             <Legend
               payload={[
-                { value: 'Reasoning models', type: 'square', color: STATUS_GOOD },
-                { value: 'Non-reasoning (chat) models', type: 'square', color: STATUS_CRITICAL },
+                {
+                  value: 'Reasoning models',
+                  type: 'square',
+                  color: STATUS_GOOD,
+                },
+                {
+                  value: 'Non-reasoning (chat) models',
+                  type: 'square',
+                  color: STATUS_CRITICAL,
+                },
               ]}
             />
             <Bar dataKey="score" name="Sum-benchmark score">
               {data.map((entry) => (
                 <Cell
                   key={entry.model}
-                  fill={entry.group === 'Reasoning' ? STATUS_GOOD : STATUS_CRITICAL}
+                  fill={
+                    entry.group === 'Reasoning' ? STATUS_GOOD : STATUS_CRITICAL
+                  }
                 />
               ))}
             </Bar>
@@ -131,7 +177,10 @@ export const AccuracyDecayChart = ({ data }) => {
     <ChartStyleWrapper height={320}>
       <div style={{ width: '100%', height: 320 }}>
         <ResponsiveContainer>
-          <LineChart data={data} margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
+          <LineChart
+            data={data}
+            margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
+          >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="config" />
             <YAxis domain={[0, 50]} unit="%" />
@@ -220,15 +269,25 @@ export const PriceVsAccuracyChart = ({ data }) => {
             />
             <Legend
               payload={[
-                { value: 'Reasoning models', type: 'circle', color: STATUS_GOOD },
-                { value: 'Non-reasoning (chat) models', type: 'circle', color: STATUS_CRITICAL },
+                {
+                  value: 'Reasoning models',
+                  type: 'circle',
+                  color: STATUS_GOOD,
+                },
+                {
+                  value: 'Non-reasoning (chat) models',
+                  type: 'circle',
+                  color: STATUS_CRITICAL,
+                },
               ]}
             />
             <Scatter name="Models" data={data}>
               {data.map((entry) => (
                 <Cell
                   key={entry.model}
-                  fill={entry.group === 'Reasoning' ? STATUS_GOOD : STATUS_CRITICAL}
+                  fill={
+                    entry.group === 'Reasoning' ? STATUS_GOOD : STATUS_CRITICAL
+                  }
                 />
               ))}
             </Scatter>
@@ -244,7 +303,10 @@ export const ClaudeVsOpenAIChart = ({ data }) => {
     <ChartStyleWrapper height={340}>
       <div style={{ width: '100%', height: 340 }}>
         <ResponsiveContainer>
-          <BarChart data={data} margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
+          <BarChart
+            data={data}
+            margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
+          >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="task" />
             <YAxis domain={[0, 100]} unit="%" />
@@ -264,14 +326,21 @@ export const KpiTierChart = ({ data }) => {
     <ChartStyleWrapper height={320}>
       <div style={{ width: '100%', height: 320 }}>
         <ResponsiveContainer>
-          <BarChart data={data} margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
+          <BarChart
+            data={data}
+            margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
+          >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="tier" />
             <YAxis domain={[0, 100]} unit="%" />
             <Tooltip formatter={(value) => `${value}%`} />
             <Legend />
             <Bar dataKey="Property" name="Property KPIs" fill={CATEGORICAL_1} />
-            <Bar dataKey="Fund" name="Fund financial KPIs" fill={CATEGORICAL_2} />
+            <Bar
+              dataKey="Fund"
+              name="Fund financial KPIs"
+              fill={CATEGORICAL_2}
+            />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -299,10 +368,22 @@ export const KeyFindingsStats = ({ data }) => {
             textAlign: 'center',
           }}
         >
-          <div style={{ fontSize: '2rem', fontWeight: 700, color: SEQUENTIAL_BLUE }}>
+          <div
+            style={{
+              fontSize: '2rem',
+              fontWeight: 700,
+              color: SEQUENTIAL_BLUE,
+            }}
+          >
             {stat.value}
           </div>
-          <div style={{ fontSize: '0.95rem', fontWeight: 600, margin: '8px 0 4px' }}>
+          <div
+            style={{
+              fontSize: '0.95rem',
+              fontWeight: 600,
+              margin: '8px 0 4px',
+            }}
+          >
             {stat.label}
           </div>
           <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>{stat.sub}</div>

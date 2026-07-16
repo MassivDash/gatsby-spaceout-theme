@@ -83,8 +83,24 @@ export const kpiTierData = [
 ];
 
 export const keyFindings = [
-  { value: '30%', label: 'of plain-addition tasks were correct', sub: '56 of 189 sum cases across 21 models' },
-  { value: '0/13', label: 'non-reasoning models could add at all', sub: 'GPT-4o, 4.1, 3.5, Claude, GPT-5 Chat → 0/9 each' },
-  { value: '100–700×', label: 'cost gap between right and wrong', sub: 'accuracy is bought with output tokens' },
-  { value: '$0.92', label: 'peak cost of one correct addition', sub: 'o1 summing 500 seven-digit numbers' },
+  {
+    value: '30%',
+    label: 'of plain-addition tasks were correct',
+    sub: '56 of 189 sum cases across 21 models',
+  },
+  {
+    value: '0/13',
+    label: 'non-reasoning models could add at all',
+    sub: 'GPT-4o, 4.1, 3.5, Claude, GPT-5 Chat → 0/9 each',
+  },
+  {
+    value: '100–700×',
+    label: 'cost gap between right and wrong',
+    sub: 'accuracy is bought with output tokens',
+  },
+  {
+    value: '$0.92',
+    label: 'peak cost of one correct addition',
+    sub: 'o1 summing 500 seven-digit numbers',
+  },
 ];
