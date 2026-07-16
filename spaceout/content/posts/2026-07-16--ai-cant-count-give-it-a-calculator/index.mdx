@@ -1,0 +1,317 @@
+---
+title: AI Can't Count
+excerpt:
+  I benchmarked 21 language models on plain arithmetic. Only the slow, expensive
+  ones could add a column of numbers — and here's why that should change how you
+  build
+date: 2026-07-16
+hero: aicount_cover.png
+author: Luke Celitan
+category: Post
+tech:
+  - TS
+slug: ai-cant-count-give-it-a-calculator
+---
+
+import {
+  TaskFamilyAccuracyChart,
+  ReasoningVsChatChart,
+  PriceVsAccuracyChart,
+  AccuracyDecayChart,
+  CostPerSumChart,
+  ClaudeVsOpenAIChart,
+  KpiTierChart,
+  KeyFindingsStats,
+} from '../components/Charts/ArithmeticCharts';
+import {
+  taskFamilyAccuracy,
+  sumAccuracyByModel,
+  costVsAccuracyData,
+  accuracyDecayData,
+  costPerSumData,
+  claudeVsOpenAIData,
+  kpiTierData,
+  keyFindings,
+} from './chartData';
+import '../components/Charts/charts.css';
+
+## Can AI actually count?
+
+### Introduction
+
+Here's the thing nobody tells you when they demo a shiny AI feature over a
+spreadsheet: the model reading your data and the model calculating your data are
+not the same skill, and one of them is a lie.
+
+I've spent the last few years watching business stakeholders fall in love with
+the idea of pointing a language model at a table of numbers and asking it a
+question. "What's the total?" "How many are overdue?" "Which one is under
+budget?" It feels like magic. It's fast, it's cheap, it talks back in a full
+sentence, and — this is the part that should terrify you — it never says "I
+don't know." It just returns a clean, confident, beautifully formatted number.
+
+The problem is that the number is frequently wrong. Not "rounding error" wrong.
+Wrong wrong.
+
+So I did what I always do when the hype and my gut disagree: I ran the
+experiment. I put 21 language models — the full spread of GPT, Claude and
+Gemini, from the GPT-3.5 era all the way up to the latest GPT-5 and Claude
+releases — through a benchmark whose only job was to answer one embarrassingly
+simple question:
+
+If I hand a model a list of numbers and ask for the total, how often is it right
+— and what does the right answer actually cost me?
+
+Over a thousand scored runs later, I have an answer. It is not the answer the
+demos promised.
+
+<KeyFindingsStats data={keyFindings} />
+
+## The failure mode is silent, and that's the whole problem
+
+Let me start with why I even bothered, because it connects to something I've
+been banging on about for years.
+
+In a normal engineering team, quality is defended by constructive friction — the
+pull request that gets a raised eyebrow, the reviewer who says "wait, are you
+sure about that?", the crucible of collaboration where a wrong answer gets
+caught before it ships. I wrote about how AI is quietly dissolving that friction
+in [The Rise of the Solo Dev Army](/the-rise-of-the-solo-dev-army). Well, an LLM
+doing arithmetic is that dissolution taken to its logical, horrifying
+conclusion.
+
+When a model can't add a column, it doesn't throw an error. A calculator that
+can't compute shows you `ERR`. A database returns null. A failing test goes red.
+The LLM does none of that — it hands you £4,182,940 in a tidy little sentence
+and moves on. There's no red flag, no raised eyebrow, no reviewer. The one
+moment where you most need someone to say "are you sure?" is the exact moment
+the machine is most confident and most alone.
+
+That's not a bug you can grep for. It's a category of failure that looks exactly
+like success.
+
+## The experiment
+
+I kept the setup deliberately boring so the results couldn't be argued with:
+
+- **21 models, three vendors** — OpenAI, Anthropic, Google — all called through
+  one identical, OpenAI-compatible interface so nobody got a home-field
+  advantage.
+- **Five task families**, from dead-simple counting to multi-step financial
+  reasoning.
+- **Deterministic ground truth.** Every "right answer" was computed in code — a
+  plain reduce over the array for sums, a code tally for counts. The model was
+  scored against math, not against a vibe.
+- **Strict scoring.** Exact match or it fails. "Close" is a fail. A wrong total
+  is a wrong total.
+- **Full cost telemetry** — every call logged its input/output tokens, latency,
+  and an estimated dollar cost.
+
+The five families ranged from a pure sum benchmark (add 25 to 500 numbers, up to
+seven digits each), through counting and grouping tasks (tally rows by status,
+bucket events into a timeline), up to genuine calculation and reasoning (derive
+ratios, compare one property's rent and value against a peer at easy/medium/hard
+difficulty).
+
+## Two regimes, and a cliff between them
+
+The headline finding is that models don't have a level of numeric ability. They
+have two, and there's a cliff in the middle.
+
+| Task family          | What the model must do                | Best result |
+| -------------------- | ------------------------------------- | ----------- |
+| Work-order timeline  | Group events by creation date         | 88%         |
+| Work-order counts    | Tally rows by status                  | 85%         |
+| Property KPIs (easy) | Compute a ratio when told the formula | 100%        |
+| Sum benchmark        | Add a list of numbers                 | 30%         |
+| Fund financial KPIs  | Derive ratios unaided                 | 5–24%       |
+| Property KPIs (hard) | Choose the method yourself            | 0%          |
+
+<TaskFamilyAccuracyChart data={taskFamilyAccuracy} />
+
+Read that top to bottom and you can see the personality of these things emerge:
+
+- **Counting and categorising holds up beautifully** — 85 to 100%. Ask a model
+  to find things, route things, group things, and it's genuinely excellent. This
+  is reading comprehension over structured data, and it's what transformers are
+  actually good at.
+- **Calculation collapses** — 0 to 30%. The moment the task requires arithmetic
+  that isn't in the text, the floor gives way.
+
+My favourite result in the whole study is the "hard" property KPI: every single
+model got the magnitude of the answer right and then flipped the sign. They all
+knew the two numbers were £200k apart. They just couldn't reliably decide
+whether the property was over or under the peer. Right maths, wrong direction,
+delivered with total confidence. If you want a one-line summary of where we are
+with AI and numbers, it's that.
+
+Give the model less hand-holding and the cliff gets steeper. Both KPI families
+fall apart the moment the prompt stops spelling out the formula:
+
+<KpiTierChart data={kpiTierData} />
+
+## "AI cannot count": the sum test
+
+The pure addition test is where it gets brutal. Across 21 models and 189 cases,
+only 30% were correct (56 out of 189). And the accuracy wasn't evenly spread —
+it decayed predictably as the task got bigger:
+
+- On short lists of 25 numbers, models managed 43%.
+- Scale that to 500 large numbers and it falls to 14%.
+
+More numbers means more carries to track. More digits means longer arithmetic.
+Both hurt, and the errors aren't random noise — models confidently round, drop,
+or straight-up invent digits to produce a plausible-looking total.
+
+<AccuracyDecayChart data={accuracyDecayData} />
+
+But here's the split that actually matters for anyone choosing a model:
+
+Zero of the 13 non-reasoning models could add at all. GPT-4o, GPT-4.1, GPT-3.5,
+the standard Claude models, GPT-5 Chat — 0 out of 9 each. The only models that
+could reliably add were the "reasoning" models (the GPT-5 and o-series), which
+scored 6 to 9 out of 9. Here's every model in the study, ranked:
+
+<ReasoningVsChatChart data={sumAccuracyByModel} />
+
+Let that sink in. The friendly, fast, cheap chat model that every product team
+reaches for first? It cannot add a column of numbers. Not "sometimes gets it
+wrong." Never gets it right.
+
+## Why being right is so expensive
+
+This is the part I find genuinely beautiful, in a bleak sort of way. It explains
+everything.
+
+An LLM has no calculator inside it. There is no arithmetic logic unit hiding in
+the weights. The only way a model can be right about a sum is to simulate the
+arithmetic in generated text — to literally write out "carry the one" step by
+step, one token at a time. And generating tokens is exactly the part that costs
+money, time, and energy.
+
+Look at what separates a right answer from a wrong one:
+
+| Metric                | Gets it RIGHT              | Gets it WRONG    |
+| --------------------- | --------------------------- | ---------------- |
+| Output tokens per sum | 6,000–9,000                 | ~4                |
+| Time per answer       | 40–130s                     | ~1s               |
+| Method                | Full step-by-step working   | Single blurted guess |
+| Result                | Correct                     | Wrong, every time |
+
+The wrong models are cheap and fast because they're guessing. The right models
+are slow and expensive because they're doing the equivalent of long addition on
+a whiteboard, out loud, and you're paying by the word. Correctness isn't a
+setting you toggle — it's compute you buy.
+
+Which leads to the numbers that made me sit up. The peak cost for a single
+correct sum in my run was $0.92 — one addition problem — from o1 grinding
+through 500 seven-digit numbers. That's roughly 360× more expensive than a fast,
+wrong answer at about a quarter of a cent. Across the study the gap between
+right and wrong ran from 100× to 700×.
+
+<CostPerSumChart data={costPerSumData} />
+
+You are, quite literally, paying two to three orders of magnitude extra for the
+privilege of a correct total that a for loop would have produced for free.
+
+## You don't get what you pay for
+
+If you think price signals quality — that the expensive flagship must be the
+smart one — the arithmetic results will disabuse you fast. I sorted every model
+by its output-token list price and lined it up against how many sums it got
+right:
+
+- The two most expensive models per output token (a top-tier Claude Sonnet at
+  $75/1M, GPT-4 at $60/1M) scored 0 out of 9.
+- The two cheapest (GPT-5 Nano at $0.40/1M, GPT-5 Mini at $2/1M) scored 8 and 9
+  out of 9.
+
+<PriceVsAccuracyChart data={costVsAccuracyData} />
+
+The price tag reflects the vendor's positioning, not the model's ability to
+count. The single best value in the entire study was GPT-5 Nano — the cheapest
+thing I tested — landing 8 of 9 at about $0.004 per sum. The premium tier's best
+effort, o1, managed 6 of 9 for up to $0.92 — beaten, badly, by a model costing a
+fraction of a penny.
+
+This is the AI equivalent of a lesson I keep having to relearn on the business
+side. Over in [Mastering Agile Estimation](/mastering-agile-estimation) I
+complain that your business overlords don't care about the code, only the
+features, and they'll happily equate "expensive" with "safe." Same trap here.
+Newer and pricier does not mean it can do the maths. Sometimes it means the
+opposite.
+
+## Claude vs OpenAI: a closer look
+
+One question I kept getting when I shared early results internally: is this
+just an OpenAI-favours-OpenAI story? Not quite. Restricting the comparison to
+OpenAI's and Anthropic's standard models (Gemini set aside for this one, and
+Claude's extended-thinking variant wasn't available through our gateway, so
+this is standard Claude vs the full GPT lineup including its reasoning models):
+
+<ClaudeVsOpenAIChart data={claudeVsOpenAIData} />
+
+OpenAI wins the overall pass rate — 54% vs 40% — and wins five of the seven
+benchmarks outright. But Claude isn't uniformly behind: it actually **beats**
+OpenAI on the work-order timeline task, 93% to 85%. The one place OpenAI's lead
+turns into a rout is arithmetic itself — 32% vs 13% on the sum benchmark —
+because OpenAI's reasoning models (GPT-5, o-series) were reachable through the
+gateway and Claude's equivalent extended-thinking mode wasn't part of this run.
+Best at counting, no contest: GPT-5 at 9/9 versus Claude 4.6's 5/9.
+
+## Isn't this just AI-hype-cycle whiplash?
+
+Fair challenge. I'm the one who wrote
+[Beware of the Hype Train](/beware-of-the-hype-train), so let me apply my own
+skepticism in both directions.
+
+No — this isn't me saying "AI is useless." It emphatically isn't. Reading,
+routing, summarising, grouping, explaining: models are genuinely, reliably good
+at all of it, and that's a real superpower. The hype I'm puncturing is narrower
+and more specific: the pervasive assumption that because a model can talk about
+numbers fluently, it can compute them correctly. Fluency is not accuracy. A
+model that describes your portfolio in flawless prose and then fumbles the total
+is not "almost there" — it's doing two completely different jobs, and it only
+passed one of them.
+
+## So what do you actually do about it?
+
+The fix is refreshingly unglamorous, and I like it all the more for that. Don't
+let the model be the calculator.
+
+| Do                                     | Don't                              |
+| --------------------------------------- | ------------------------------------ |
+| Compute numbers in code or a tool call | Ship a raw model total to a user   |
+| Use models to read, route, explain     | Assume a bigger model fixes maths   |
+| Reserve reasoning models for high stakes | Use a chat model where exactness matters |
+| Validate against deterministic ground truth | Trust a confident, formatted number |
+| Log tokens and cost                    | Ignore the compute spend           |
+
+That last row matters more than it looks. Because correctness is bought with
+output tokens, and tokens are compute, and compute is energy, "get it right" and
+"use less energy" pull in opposite directions when you make the model do the
+maths. Push the arithmetic down into code and you're not just more accurate and
+cheaper — you're greener. The deterministic path wins on every axis at once.
+It's the same instinct as wiring a SonarQube quality gate into CI: you don't
+hope the number is right, you make it impossible for a wrong one to get through.
+
+## Final Thoughts
+
+We spent decades building machines that were flawless at arithmetic and hopeless
+at language. Then we built one that's wonderful at language and, it turns out,
+hopeless at arithmetic. The mistake is asking the new machine to do the old
+machine's job.
+
+So the whole thing collapses to one sentence: AI can't count — so give it a
+calculator. Let the model do what it's brilliant at — reading, routing,
+explaining — and hand the actual maths to code that provably can't get it wrong.
+Reserve the slow, expensive reasoning models for the rare case where exactness
+is genuinely worth the cost, and verify every number before it reaches a human.
+
+Because the one thing this whole experiment confirmed is the thing I opened
+with: nobody in that loop is going to raise an eyebrow for you. You have to
+build the eyebrow in.
+
+Have you caught a model confidently returning a wrong number in production? I'd
+genuinely love to hear the war stories — reply and tell me how it slipped
+through.

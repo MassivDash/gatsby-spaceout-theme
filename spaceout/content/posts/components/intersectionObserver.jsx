@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Charts/charts.css';
 
-export const Observer = ({ children }) => {
+export const Observer = ({ children, style }) => {
   const [isInView, setIsInView] = useState(false);
   const chartRef = useRef();
 
@@ -32,7 +32,7 @@ export const Observer = ({ children }) => {
   }, []);
 
   return (
-    <div ref={chartRef} className="chartHolder">
+    <div ref={chartRef} className="chartHolder" style={style}>
       {isInView && children}
     </div>
   );

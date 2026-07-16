@@ -11,9 +11,9 @@ import {
 
 import React from 'react';
 import { Observer } from '../intersectionObserver';
-export const ChartStyleWrapper = ({ children }) => {
+export const ChartStyleWrapper = ({ children, height }) => {
   return (
-    <Observer>
+    <Observer style={height ? { height, minHeight: height } : undefined}>
       <div className="chartInnerHolder">
         <ResponsiveContainer width="100%" height="100%">
           {children}

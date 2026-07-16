@@ -25,15 +25,15 @@ const siteMetadata = {
   social: [
     {
       name: `facebook`,
-      url: `https://www.facebook.com/spaceout/`,
+      url: `https://www.facebook.com/spaceoutpl/`,
     },
     {
       name: `twitter`,
-      url: `https://twitter.com/spaceout`,
+      url: `https://twitter.com/spaceoutpl`,
     },
     {
       name: `instagram`,
-      url: `https://www.instagram.com/spaceout/`,
+      url: `https://www.instagram.com/spaceout.pl/`,
     },
     {
       name: `spaceout`,
