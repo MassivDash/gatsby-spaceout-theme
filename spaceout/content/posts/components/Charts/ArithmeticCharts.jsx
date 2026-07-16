@@ -14,6 +14,7 @@ import {
   Scatter,
   ResponsiveContainer,
 } from 'recharts';
+import { useColorMode } from 'theme-ui';
 import { ChartStyleWrapper } from './wrapper';
 
 const SEQUENTIAL_BLUE = '#2a78d6';
@@ -349,44 +350,15 @@ export const KpiTierChart = ({ data }) => {
 };
 
 export const KeyFindingsStats = ({ data }) => {
+  const [colorMode] = useColorMode();
+
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: 16,
-        margin: '40px 0',
-      }}
-    >
+    <div className="statTilesRow" data-mode={colorMode}>
       {data.map((stat) => (
-        <div
-          key={stat.label}
-          style={{
-            border: '1px solid rgba(128,128,128,0.25)',
-            borderRadius: 6,
-            padding: '20px 18px',
-            textAlign: 'center',
-          }}
-        >
-          <div
-            style={{
-              fontSize: '2rem',
-              fontWeight: 700,
-              color: SEQUENTIAL_BLUE,
-            }}
-          >
-            {stat.value}
-          </div>
-          <div
-            style={{
-              fontSize: '0.95rem',
-              fontWeight: 600,
-              margin: '8px 0 4px',
-            }}
-          >
-            {stat.label}
-          </div>
-          <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>{stat.sub}</div>
+        <div key={stat.label} className="statTile">
+          <div className="statTileValue">{stat.value}</div>
+          <div className="statTileLabel">{stat.label}</div>
+          <div className="statTileSub">{stat.sub}</div>
         </div>
       ))}
     </div>

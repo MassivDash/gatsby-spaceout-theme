@@ -207,4 +207,8 @@ const FooterNext = styled.h3`
 
 const FooterSpacer = styled.div`
   margin-bottom: 65px;
+
+  ${mediaqueries.tablet`
+    margin-bottom: 130px;
+  `}
 `;

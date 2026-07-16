@@ -62,3 +62,40 @@
   display: flex;
   flex-direction: column;
 }
+
+.statTilesRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  max-width: 1150px;
+  margin: 40px auto;
+  color: #333333;
+}
+
+.statTilesRow[data-mode='dark'] {
+  color: #fff;
+}
+
+.statTile {
+  border: 1px solid rgba(128, 128, 128, 0.25);
+  border-radius: 6px;
+  padding: 20px 18px;
+  text-align: center;
+}
+
+.statTileValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2a78d6;
+}
+
+.statTileLabel {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 8px 0 4px;
+}
+
+.statTileSub {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}

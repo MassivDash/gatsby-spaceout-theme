@@ -72,9 +72,24 @@ import { DiMarkdown as Markdown } from 'react-icons/di';
 import { DiDatabase as SQL } from 'react-icons/di';
 import { DiRedhat as Redhat } from 'react-icons/di';
 import { ReactComponent as Ubuntu } from './devIcons/ubuntu.svg';
-import { SiPodman as Podman, SiMilvus as VectorDatabase, SiMilvus as VectorDB, SiMilvus as vectordb, SiMilvus as Milvus } from 'react-icons/si';
-import { FaInfinity as DevOps, FaInfinity as Devops, FaBrain as AI, FaBrain as Ai, FaBrain as ai } from 'react-icons/fa';
-import { DiCode as SoftwareEngineering, DiCode as Software } from 'react-icons/di';
+import {
+  SiPodman as Podman,
+  SiMilvus as VectorDatabase,
+  SiMilvus as VectorDB,
+  SiMilvus as vectordb,
+  SiMilvus as Milvus,
+} from 'react-icons/si';
+import {
+  FaInfinity as DevOps,
+  FaInfinity as Devops,
+  FaBrain as AI,
+  FaBrain as Ai,
+  FaBrain as ai,
+} from 'react-icons/fa';
+import {
+  DiCode as SoftwareEngineering,
+  DiCode as Software,
+} from 'react-icons/di';
 export default {
   C,
   Actix,
