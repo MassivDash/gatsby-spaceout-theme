@@ -71,6 +71,8 @@ import { DiNpm as Npm } from 'react-icons/di';
 import { DiMarkdown as Markdown } from 'react-icons/di';
 import { DiDatabase as SQL } from 'react-icons/di';
 import { DiRedhat as Redhat } from 'react-icons/di';
+import { DiAndroid as Android, DiAndroid as android } from 'react-icons/di';
+import { GoBeaker as TDD, GoBeaker as tdd } from 'react-icons/go';
 import { ReactComponent as Ubuntu } from './devIcons/ubuntu.svg';
 import {
   SiPodman as Podman,
@@ -78,6 +80,8 @@ import {
   SiMilvus as VectorDB,
   SiMilvus as vectordb,
   SiMilvus as Milvus,
+  SiKotlin as Kotlin,
+  SiKotlin as kotlin,
 } from 'react-icons/si';
 import {
   FaInfinity as DevOps,
@@ -171,4 +175,10 @@ export default {
   VectorDB,
   vectordb,
   Milvus,
+  Android,
+  android,
+  TDD,
+  tdd,
+  Kotlin,
+  kotlin,
 };

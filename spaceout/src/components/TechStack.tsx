@@ -36,6 +36,9 @@ const stack = [
   'SoftwareEngineering',
   'AI',
   'VectorDatabase',
+  'Android',
+  'TDD',
+  'Kotlin',
 ];
 
 const TechStack: FC = () => (

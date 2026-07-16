@@ -209,6 +209,6 @@ const FooterSpacer = styled.div`
   margin-bottom: 65px;
 
   ${mediaqueries.tablet`
-    margin-bottom: 130px;
+    margin-bottom: 200px;
   `}
 `;

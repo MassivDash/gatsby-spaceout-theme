@@ -1,0 +1,192 @@
+---
+title: Vibe-coding kotlin into the play store
+excerpt:
+  Vibe-coding an Android app into the Play Store taught me the code was the easy
+  part
+date: 2026-06-22
+hero: vibedkotlin.png
+author: Luke Celitan
+category: Post
+tech:
+  - AI
+  - Kotlin
+  - Android
+  - TDD
+---
+
+# Can you ship an app in a language you don't know?
+
+## Introduction
+
+Here's the thing nobody tells you about family photos: they are a hostage
+situation. Apple wants a monthly ransom. Google wants a monthly ransom. And the
+moment you stop paying, the walls of the vault start closing in on the memories
+of your kids' first birthdays.
+
+A few years ago I got tired of paying rent on my own photographs. So I did the
+deeply unglamorous thing a certain kind of engineer does — I started dumping
+everything into an AWS S3 bucket. Every export, every download, every "I'll
+organise this later" folder, straight into cheap, boring, durable object storage
+that I actually own. To make that pile browsable I built a desktop app in Rust
+and Tauri — the [S3 Manager](/s3-manager) I wrote about a while back. Grid
+gallery, folder filtering, tagging, drag-and-drop uploads. On my laptop, it's
+lovely.
+
+The problem is that photos happen on a phone, and my tool lived on a desktop.
+What I actually wanted was the same thing in my pocket. The catch: that means
+Kotlin and the Android SDK, and I don't really _know_ Kotlin. A year ago that
+sentence would have been the end of the story.
+
+It wasn't. The app is
+[live on the Play Store](https://play.google.com/store/apps/details?id=com.spaceghost.s3manager),
+with a proper [landing page](https://s3manager.spaceout.pl/) and everything. I
+vibe-coded most of it. And the thing I want to write about isn't "look, AI wrote
+my app" — it's everything the AI got wrong, and the discipline I had to bring to
+stop it from quietly shipping garbage.
+
+## AI is an amplifier, not a substitute for judgement
+
+I've made this argument before in
+[The Rise of the Solo Dev Army](/the-rise-of-the-solo-dev-army): AI hands a
+single developer the leverage of a small team, but it strips out the
+_constructive friction_ — the peer review, the raised eyebrow, the colleague who
+asks "wait, why did you do it like that?" — that used to defend quality.
+Building this app was me living that thesis in the flesh.
+
+The model is a phenomenal typist and a mediocre engineer. It will happily
+produce four hundred lines of confident, plausible, subtly wrong Kotlin. In a
+language I know well, my instincts catch that. In a language I barely know, they
+don't. So I had to manufacture the guardrails myself, on purpose. Here's what
+actually worked.
+
+## TDD is how you keep the AI honest
+
+The single biggest lever was tests — written first, not last.
+
+When you don't know the language, you can't review the implementation line by
+line and trust your gut. What you _can_ do is pin down behaviour. Before asking
+the AI to build a feature, I'd have it write the failing test first: uploading a
+file to a prefix creates an object at that key; a listing with a folder filter
+returns only the assets under it; a cancelled upload leaves no orphaned parts.
+The test is a specification the AI can't argue with.
+
+> A test written first is an executable contract. It doesn't care how confident
+> the model sounds — it goes red or it goes green.
+
+This is the classic red-green-refactor loop, and it maps perfectly onto working
+with an LLM. Red: the behaviour I want doesn't exist yet. Green: make the AI
+produce just enough to pass. Refactor: clean it up with the safety net in place.
+Without that loop I was trusting a stranger's Kotlin. With it, I was trusting a
+contract I wrote in a language I _do_ speak — the language of behaviour. The
+number of times a "done" feature turned out to be red on the second test case
+cured me of ever taking the model's word for it.
+
+## You still have to do the boring research
+
+Vibe-coding tempts you to outsource the thinking as well as the typing. Don't.
+The AI will pick a library for you, and it will pick with total confidence, and
+it will often pick wrong — an abandoned wrapper, a heavyweight dependency for a
+five-line problem, or a package that pulls half of Maven Central into your APK.
+
+Choosing your dependencies is an architectural decision, and it's still yours. I
+spent real time deciding how the app should talk to S3, what the auth story was,
+and which libraries were actually maintained versus merely popular in a
+two-year-old blog post the model had memorised. Reaching for a well-established,
+widely-used library beats rolling your own — but _which_ well-established
+library is a judgement call the model can't make for you, because it doesn't
+have to live with the maintenance bill. You do.
+
+## The version problem: AI freezes your stack in the past
+
+This one bit me repeatedly, so consider it a public service announcement.
+
+**AI keeps your dependencies pinned to the past.** The model's knowledge was
+frozen at training time, so it reaches for the versions it saw most often —
+which are, by definition, old. It'll confidently hand you a Gradle coordinate
+from two years ago, deprecated APIs, and imports that were renamed three
+releases back. Everything _looks_ right, because it was right, once.
+
+In [The Rise of the Solo Dev Army](/the-rise-of-the-solo-dev-army) I put
+outdated dependencies in the table of "solo AI" traps, with the fix being
+lockfiles and testing upgrades in CI. Living it drove the point home. Stale
+libraries aren't just an aesthetic problem — they're where security
+vulnerabilities and technical debt quietly accumulate while you're not looking.
+My rule became simple: every dependency the AI suggests, I check the latest
+version myself and pin it deliberately. The model gets a vote on _what_ to use.
+It does not get a vote on _which version_ — that's on me.
+
+## The game-changer: make the AI review its own work, angrily
+
+This is the trick I'd tattoo on the wall if I could. When the AI has finished a
+chunk of work and everything is a little too pleased with itself, I give it this
+prompt:
+
+> Run a `git diff`. Now pretend you are a senior engineering manager who is _not
+> happy_ about this implementation. Do a proper code review. Then implement the
+> changes.
+
+The results are genuinely startling. The same model that wrote the code two
+minutes ago will turn around and tear it apart — spotting the missing error
+handling, the swallowed exception, the function doing three jobs, the magic
+number, the test that asserts nothing. It self-corrects, but _only if you give
+it the right attitude to correct from._
+
+That, I think, is the whole game. What I'm actually doing is re-introducing the
+constructive friction that solo AI development removes. I can't get a real
+colleague to raise an eyebrow at my Kotlin, so I make the model raise its own.
+It's not as good as a real reviewer who'll remember your bad habits — but a
+grumpy imaginary EM is a lot better than no reviewer at all. Attitude, it turns
+out, is a legitimate engineering tool.
+
+## The hardest part wasn't the code
+
+Here's the plot twist. I expected the code to be the wall. It wasn't. The wall
+was **finding fifteen human beings willing to buy and install my app on their
+actual phones.**
+
+Google, reasonably, doesn't let a solo developer just fling an app at billions
+of devices. Before you can go to production you need a closed testing track with
+real testers, running for a real stretch of time, on real hardware — and you
+have to document all of it. So there I was, an engineer who'd just wrestled a
+foreign language into a working app, reduced to sliding into group chats going
+"hey, would you install this photo thing and leave it on your phone for two
+weeks? For science?"
+
+Herding fifteen willing testers, walking non-technical friends through the
+opt-in link, waiting out the review windows, filling in the data-safety forms
+and the store listing and the content ratings — that was slower and more
+frustrating than any bug I hit. The AI could write me a multipart upload handler
+in thirty seconds. It could not convince my brother-in-law to keep a beta build
+installed. The last mile of shipping software is, and always has been, made of
+people and process, not code. AI moved the bottleneck; it didn't remove it.
+
+But I made it. The app is live. My family photos are in a bucket I own,
+browsable from the phone in my hand, and I'm not paying anyone rent for the
+privilege.
+
+<video
+  width="100%"
+  height="100%"
+  autoplay
+  muted
+  style={{ margin: 'auto', maxWidth: '300px' }}
+>
+  <source src="appVideo_opt.mp4" type="video/mp4" />
+  Your browser does not support the video tag
+</video>
+
+## Final Thoughts
+
+Vibe-coding is real and it's a superpower — but it's a superpower that amplifies
+your judgement, not one that replaces it. TDD to keep it honest, real research
+on your libraries, a hard rule about versions, and a grumpy imaginary code
+reviewer: those are the things that turned "confident, plausible, subtly wrong"
+into "actually shipped." And when you're done, the machine still can't do the
+human part for you. Someone still has to convince fifteen people to care.
+
+If you want to see the thing, it's
+[on the Play Store](https://play.google.com/store/apps/details?id=com.spaceghost.s3manager)
+and the [landing page](https://s3manager.spaceout.pl/) has the details — the
+mobile companion to the [desktop S3 Manager](/s3-manager). And if you've been
+telling yourself you can't ship in a language you don't know, this is your sign
+that the language was never the hard part.
