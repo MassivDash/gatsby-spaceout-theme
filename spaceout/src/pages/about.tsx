@@ -90,9 +90,9 @@ const About: FC = () => {
             <Headings.H2>Hugging Face Models</Headings.H2>
             <Paragraph>
               I fine-tune small coding-focused language models as a way to
-              explore AI/ML hands-on—experimenting with Unsloth Studio,
-              GGUF quantization, and vision-language capabilities for
-              day-to-day development. Check out my profile on{' '}
+              explore AI/ML hands-on—experimenting with Unsloth Studio, GGUF
+              quantization, and vision-language capabilities for day-to-day
+              development. Check out my profile on{' '}
               <ExternalLink
                 href="https://huggingface.co/MassivDash"
                 target="_blank"

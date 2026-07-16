@@ -21,10 +21,17 @@ const models: HFModel[] = [
     likes: 38,
     format: 'GGUF',
     dataset: 'Fortytwo-Network/Strandset-Rust-v1',
-    tags: ['gemma4', 'llama.cpp', 'unsloth', 'vision-language-model', 'rust', 'coding'],
+    tags: [
+      'gemma4',
+      'llama.cpp',
+      'unsloth',
+      'vision-language-model',
+      'rust',
+      'coding',
+    ],
     license: 'mit',
     description:
-      "A fine-tune of Gemma 4 specialized for Rust systems programming, memory safety, and high-performance development. Trained with Unsloth Studio for idiomatic Rust, Send/Sync concurrency with async runtimes like Tokio, and vision-to-code translation of architecture diagrams into working Rust.",
+      'A fine-tune of Gemma 4 specialized for Rust systems programming, memory safety, and high-performance development. Trained with Unsloth Studio for idiomatic Rust, Send/Sync concurrency with async runtimes like Tokio, and vision-to-code translation of architecture diagrams into working Rust.',
   },
   {
     name: 'Qwen3.5-4B-TypeScript-Coder',
@@ -32,7 +39,13 @@ const models: HFModel[] = [
     likes: 8,
     format: 'GGUF',
     dataset: 'mhhmm/typescript-instruct-20k',
-    tags: ['qwen3_5', 'llama.cpp', 'unsloth', 'vision-language-model', 'typescript'],
+    tags: [
+      'qwen3_5',
+      'llama.cpp',
+      'unsloth',
+      'vision-language-model',
+      'typescript',
+    ],
     license: 'mit',
     description:
       'A fine-tune of Qwen 3.5 4B built for TypeScript development, architectural reasoning, and full-stack engineering. Deeply tuned for strict type safety and generics across React, Next.js, and Node.js, with visual-to-code support for turning UI screenshots into type-safe logic.',
@@ -43,7 +56,13 @@ const models: HFModel[] = [
     likes: 5,
     format: 'GGUF',
     dataset: 'mhhmm/typescript-instruct-20k',
-    tags: ['gemma4', 'llama.cpp', 'unsloth', 'vision-language-model', 'typescript'],
+    tags: [
+      'gemma4',
+      'llama.cpp',
+      'unsloth',
+      'vision-language-model',
+      'typescript',
+    ],
     license: 'mit',
     description:
       'A fine-tune of Gemma 4 engineered for TypeScript-centric web development, strict type safety, and modern full-stack architectures. Focused on complex generics, utility types, and frameworks like Next.js, React, and Vue 3, with vision-language support for turning wireframes into type-safe components.',
