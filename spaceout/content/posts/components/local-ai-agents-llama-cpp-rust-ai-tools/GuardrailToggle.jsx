@@ -53,9 +53,7 @@ export const GuardrailToggle = () => {
   return (
     <div className="gt-widget" data-mode={colorMode}>
       <p className="gt-caption">
-        <em>
-          Try to make the agent run something reckless under each model.
-        </em>
+        <em>Try to make the agent run something reckless under each model.</em>
       </p>
 
       <div className="gt-segmented" role="group" aria-label="Guardrail model">

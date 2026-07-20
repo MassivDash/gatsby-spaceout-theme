@@ -1,8 +1,13 @@
 ---
-title: "The Sovereign Workstation Agent: Building a Native AI Platform with llama.cpp, Rust, and Linux"
-excerpt: The industry keeps selling you bigger cloud models. Here's why I built my daily agent to run entirely on my own machine — in Rust, on llama.cpp — and what that buys you that no API ever will
+title:
+  'The Sovereign Workstation Agent: Building a Native AI Platform with
+  llama.cpp, Rust, and Linux'
+excerpt:
+  The industry keeps selling you bigger cloud models. Here's why I built my
+  daily agent to run entirely on my own machine — in Rust, on llama.cpp — and
+  what that buys you that no API ever will
 date: 2026-07-20
-hero: local_agent_cover.png
+hero: local_agent_cover2.png
 author: Luke Celitan
 category: Post
 tech:
@@ -14,95 +19,160 @@ tech:
 import { AgentToolCallLoop } from '../components/local-ai-agents-llama-cpp-rust-ai-tools/AgentToolCallLoop.jsx';
 import { GuardrailToggle } from '../components/local-ai-agents-llama-cpp-rust-ai-tools/GuardrailToggle.jsx';
 import { CostMeter } from '../components/local-ai-agents-llama-cpp-rust-ai-tools/CostMeter.jsx';
+import { Mermaid } from '../components/Mermaid.jsx';
 
 # Who owns your agent's brain?
 
 ## Introduction
 
-A while back I sat in a room while a very confident vendor explained that our whole engineering workflow should route through their API. Every prompt, every file scan, every "just check the logs for me" — all of it, out over the wire to a server we didn't own, billed per thousand tokens, gated behind a rate limit written by someone whose incentives were not ours.
+A while back I sat in a room while a very confident vendor explained that our
+whole engineering workflow should route through their API. Every prompt, every
+file scan, every "just check the logs for me" — all of it, out over the wire to
+a server we didn't own, billed per thousand tokens, gated behind a rate limit
+written by someone whose incentives were not ours.
 
-Nobody in that room asked the question I've been asking my whole career, the one I keep coming back to in [The Rise of the Solo Dev Army](/the-rise-of-the-solo-dev-army): *who actually controls this thing, and what happens to us when the control isn't ours?* Because here's the pattern I've watched play out a dozen times. The business falls in love with a capability. It gets wired into everything. And the architectural cost — the dependency, the latency, the fact that your tool stops working the moment someone else's dashboard turns red — stays invisible right up until the day it isn't. Same story as technical debt: silent, compounding, then suddenly a rewrite.
+Nobody in that room asked the question I've been asking my whole career, the one
+I keep coming back to in
+[The Rise of the Solo Dev Army](/the-rise-of-the-solo-dev-army): _who actually
+controls this thing, and what happens to us when the control isn't ours?_
+Because here's the pattern I've watched play out a dozen times. The business
+falls in love with a capability. It gets wired into everything. And the
+architectural cost — the dependency, the latency, the fact that your tool stops
+working the moment someone else's dashboard turns red — stays invisible right up
+until the day it isn't. Same story as technical debt: silent, compounding, then
+suddenly a rewrite.
 
-So I did the unfashionable thing. I stopped pointing my agent at a cloud endpoint and built one that lives entirely on my own hardware. It's called **`ai_tools`** — a local agent platform written in **Rust (Actix-Web)** with an **Astro + Svelte** frontend, driving local GGUF models through **`llama.cpp`**. This is a field report on how it's built, why "local" turns out to be an *architectural* decision and not just a privacy nicety, and how I taught it to actually touch my Linux box safely.
+So I did the unfashionable thing. I stopped pointing my agent at a cloud
+endpoint and built one that lives entirely on my own hardware. It's called
+[**`ai_tools`**](https://github.com/MassivDash/ai_tools) — a local agent
+platform written in **Rust (Actix-Web)** with an **Astro + Svelte** frontend,
+driving local GGUF models through **`llama.cpp`**. This is a field report on how
+it's built, why "local" turns out to be an _architectural_ decision and not just
+a privacy nicety, and how I taught it to actually touch my Linux box safely.
 
 ## The bottleneck nobody puts in the architecture diagram
 
-Let me be precise about why cloud-bound agents hit a wall, because "privacy" is only the headline and it's not even the most interesting part.
+Let me be precise about why cloud-bound agents hit a wall, because "privacy" is
+only the headline and it's not even the most interesting part.
 
-1. **Privacy and security boundaries.** You cannot pipe internal infrastructure details, private keys, local file structures, or proprietary source into a third-party API without lighting up every compliance red flag in the building. Not "shouldn't" — *cannot*, if you work anywhere serious.
-2. **Latency and rate limits.** An agentic loop — model decides to call a tool, reads the result, decides the next step — pays an HTTP round trip on *every* hop. Multiply a few hundred milliseconds across a multi-step loop and the thing feels like it's thinking through molasses.
-3. **Cost anxiety on high-frequency work.** Polling, file scanning, background monitoring: exactly the boring, repetitive jobs an agent is best at are the ones that turn into a token meter you nervously watch tick upward.
-4. **No native OS context.** A cloud model operates in a vacuum. It has no idea what's eating your RAM, which ports are open, or where that config file is buried in your filesystem. It can *talk about* your machine; it cannot *see* it.
+1. **Privacy and security boundaries.** You cannot pipe internal infrastructure
+   details, private keys, local file structures, or proprietary source into a
+   third-party API without lighting up every compliance red flag in the
+   building. Not "shouldn't" — _cannot_, if you work anywhere serious.
+2. **Latency and rate limits.** An agentic loop — model decides to call a tool,
+   reads the result, decides the next step — pays an HTTP round trip on _every_
+   hop. Multiply a few hundred milliseconds across a multi-step loop and the
+   thing feels like it's thinking through molasses.
+3. **Cost anxiety on high-frequency work.** Polling, file scanning, background
+   monitoring: exactly the boring, repetitive jobs an agent is best at are the
+   ones that turn into a token meter you nervously watch tick upward.
+4. **No native OS context.** A cloud model operates in a vacuum. It has no idea
+   what's eating your RAM, which ports are open, or where that config file is
+   buried in your filesystem. It can _talk about_ your machine; it cannot _see_
+   it.
 
-> The business only ever watches one dial — velocity — and cloud APIs are sold as pure velocity. The costs above are the code smell you don't notice until the codebase can't move.
+> The business only ever watches one dial — velocity — and cloud APIs are sold
+> as pure velocity. The costs above are the code smell you don't notice until
+> the codebase can't move.
 
-*Run the same loop locally and in the cloud — watch the round trips stack up.*
+_Run the same loop locally and in the cloud — watch the round trips stack up._
 
 <AgentToolCallLoop />
 
-I've made this argument before in a different costume. Clean architecture, I wrote once, is not decoration — bad structure shows up as CPU, RAM, and server bills, and eventually as a client walking away over the running costs. Renting a remote brain for every keystroke is the same mistake at a new altitude. And if you've read [Beware of the Hype Train](/beware-of-the-hype-train), you already know my reflex: when the entire industry is shouting "bigger, more parameters, more cloud," that's exactly the moment to ask what problem you're actually trying to solve.
+I've made this argument before in a different costume. Clean architecture, I
+wrote once, is not decoration — bad structure shows up as CPU, RAM, and server
+bills, and eventually as a client walking away over the running costs. Renting a
+remote brain for every keystroke is the same mistake at a new altitude. And if
+you've read [Beware of the Hype Train](/beware-of-the-hype-train), you already
+know my reflex: when the entire industry is shouting "bigger, more parameters,
+more cloud," that's exactly the moment to ask what problem you're actually
+trying to solve.
 
 ## The `ai_tools` platform
 
-The philosophy is boring on purpose: **high performance, zero external dependencies for inference, strict type safety.**
+The philosophy is boring on purpose: **high performance, zero external
+dependencies for inference, strict type safety.**
 
-Instead of reaching for a heavy Python framework, the runtime is pure Rust. Rust handles concurrent tool execution, WebSocket streaming, SQLite persistence, and the `llama.cpp` server lifecycle with a memory footprint that lets the whole platform get out of the way of the model — which is the only thing that should be eating your GPU.
+Instead of reaching for a heavy Python framework, the runtime is pure Rust. Rust
+handles concurrent tool execution, WebSocket streaming, SQLite persistence, and
+the `llama.cpp` server lifecycle with a memory footprint that lets the whole
+platform get out of the way of the model — which is the only thing that should
+be eating your GPU.
 
-```mermaid
-graph TD
-    A[Astro / Svelte Web UI] <-->|WebSocket & REST API| B[Actix-Web Rust Server]
-
-    subgraph Agent Core Runtime
-        B --> C[Agent Orchestrator & Loop]
-        C --> D[SQLite Memory & History]
-        C --> E[ToolRegistry Dispatcher]
-    end
-
-    subgraph Local Infrastructure
-        C <-->|OpenAI-Compatible Spec| F[llama.cpp / llama-server]
-        E --> G[ChromaDB Vector Store]
-        E --> H[Google Suite & Web Tools]
-        E --> I[Linux System Tools]
-    end
-
-    I -->|Tokio Command| J[Native Linux Kernel & Utilities]
-    F -->|GGUF Quants| K[Apple Silicon / NVIDIA GPU]
-```
+<Mermaid
+  chart={`graph TD
+A[Astro / Svelte Web UI] <-->|WebSocket & REST API| B[Actix-Web Rust Server]
+subgraph Agent Core Runtime
+B --> C[Agent Orchestrator & Loop]
+C --> D[SQLite Memory & History]
+C --> E[ToolRegistry Dispatcher]
+end
+subgraph Local Infrastructure
+C <-->|OpenAI-Compatible Spec| F[llama.cpp / llama-server]
+E --> G[ChromaDB Vector Store]
+E --> H[Google Suite & Web Tools]
+E --> I[Linux System Tools]
+end
+I -->|Tokio Command| J[Native Linux Kernel & Utilities]
+F -->|GGUF Quants| K[Apple Silicon / NVIDIA GPU]`}
+/>
 
 Three pieces do the real work:
 
-- **`llama.cpp` engine control.** `ai_tools` is a full control plane over `llama.cpp`. It scans your GGUF cache (`~/.cache/llama.cpp/`), lets you tune threads, context size, flash attention, and GPU-layer offload, and babysits the `llama-server` process for you. You own the model *and* the knobs.
-- **Two-tier memory.** SQLite stores complete conversation turns, active context, and tool-call histories, durably. A local **ChromaDB** instance — the same kind of embeddings-on-your-own-hardware setup I keep arguing for — handles semantic retrieval and long-term recall. Nothing leaves the box.
-- **A dynamic tool registry.** Tools register themselves into a central `ToolRegistry`. The agent presents the available function definitions to the model and executes the calls it decides to make.
+- **`llama.cpp` engine control.**
+  [`ai_tools`](https://github.com/MassivDash/ai_tools) is a full control plane
+  over `llama.cpp`. It scans your GGUF cache (`~/.cache/llama.cpp/`), lets you
+  tune threads, context size, flash attention, and GPU-layer offload, and
+  babysits the `llama-server` process for you. You own the model _and_ the
+  knobs.
+- **Two-tier memory.** SQLite stores complete conversation turns, active
+  context, and tool-call histories, durably. A local **ChromaDB** instance — the
+  same kind of embeddings-on-your-own-hardware setup I keep arguing for —
+  handles semantic retrieval and long-term recall. Nothing leaves the box.
+- **A dynamic tool registry.** Tools register themselves into a central
+  `ToolRegistry`. The agent presents the available function definitions to the
+  model and executes the calls it decides to make.
 
 That last point is where an agent stops being a chatbot.
 
 ## The toolbelt
 
-An agent without tools is a very expensive autocomplete. Capabilities in `ai_tools` are organized into modules:
+An agent without tools is a very expensive autocomplete. Capabilities in
+`ai_tools` are organized into modules:
 
-| Tool category | Registered capabilities |
-| :--- | :--- |
-| **Database** | `chromadb` vector search & collection query |
-| **Development** | `github` repository & issue search |
-| **Financial & web** | Crypto prices, currency conversion, stock data, Google Books, uptime monitor |
-| **Utility & workspace** | Gmail (read/send), Google Docs, Drive, Sheets, Calendar, Tasks, YouTube, Weather, and a Human-in-the-Loop `ask_human` |
-| **System (Linux)** | Native OS control: `search_file`, `open_folder`, `list_top_processes`, `grep_search`, `system_status`, `network_ports` |
+| Tool category           | Registered capabilities                                                                                                |
+| :---------------------- | :--------------------------------------------------------------------------------------------------------------------- |
+| **Database**            | `chromadb` vector search & collection query                                                                            |
+| **Development**         | `github` repository & issue search                                                                                     |
+| **Financial & web**     | Crypto prices, currency conversion, stock data, Google Books, uptime monitor                                           |
+| **Utility & workspace** | Gmail (read/send), Google Docs, Drive, Sheets, Calendar, Tasks, YouTube, Weather, and a Human-in-the-Loop `ask_human`  |
+| **System (Linux)**      | Native OS control: `search_file`, `open_folder`, `list_top_processes`, `grep_search`, `system_status`, `network_ports` |
 
-Google APIs and vector search are useful. But the moment the whole thing clicked — the moment a local agent stopped being a novelty and became something I actually reach for at 2pm on a Tuesday — was when I let it touch the operating system.
+Google APIs and vector search are useful. But the moment the whole thing clicked
+— the moment a local agent stopped being a novelty and became something I
+actually reach for at 2pm on a Tuesday — was when I let it touch the operating
+system.
 
 ## Giving an agent hands (without giving it a knife)
 
 There are two ways to give an agent system access, and one of them is a mistake.
 
-1. **Unconstrained shell.** Hand the model `bash` and let it run whatever it dreams up. Fast to build. Also one hallucinated `rm -rf` or one malformed string away from wrecking your environment. This is the "we'll think about safety later" of agent design, and later never comes.
-2. **Structured native wrappers.** Expose discrete, safe commands with typed parameters, hard timeouts, and truncated output. More work up front. Sleeps at night.
+1. **Unconstrained shell.** Hand the model `bash` and let it run whatever it
+   dreams up. Fast to build. Also one hallucinated `rm -rf` or one malformed
+   string away from wrecking your environment. This is the "we'll think about
+   safety later" of agent design, and later never comes.
+2. **Structured native wrappers.** Expose discrete, safe commands with typed
+   parameters, hard timeouts, and truncated output. More work up front. Sleeps
+   at night.
 
-*Try to make the agent run something reckless under each model.*
+_Try to make the agent run something reckless under each model._
 
 <GuardrailToggle />
 
-I chose the second. Not because I'm cautious by temperament, but because I've spent enough years watching "move fast" become "explain to the client why prod is down" that I flinch at unbounded blast radius. Constraints *are* the feature here.
+I chose the second. Not because I'm cautious by temperament, but because I've
+spent enough years watching "move fast" become "explain to the client why prod
+is down" that I flinch at unbounded blast radius. Constraints _are_ the feature
+here.
 
 Every tool implements one contract:
 
@@ -121,11 +191,13 @@ pub trait AgentTool: Send + Sync {
 }
 ```
 
-The system tool exposes six actions behind an enum-backed JSON schema, so the model can only ever pick from a known menu:
+The system tool exposes six actions behind an enum-backed JSON schema, so the
+model can only ever pick from a known menu:
 
 1. `search_file` — `find` files by pattern under a directory.
 2. `open_folder` — `xdg-open` a folder in the desktop file manager.
-3. `list_top_processes` — `ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu`, sliced to the top 15 *in Rust*, not by shelling out to `head`.
+3. `list_top_processes` — `ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu`, sliced
+   to the top 15 _in Rust_, not by shelling out to `head`.
 4. `grep_search` — `grep -rn` through text files.
 5. `system_status` — `df -h` and `free -m` for instant disk and RAM numbers.
 6. `network_ports` — `ss -tuln` for listening TCP/UDP sockets.
@@ -213,35 +285,67 @@ impl AgentTool for SystemCommandTool {
 
 ## The three decisions that matter
 
-Skim past the boilerplate and there are exactly three choices doing the heavy lifting, and each one is really a decision about *failure*:
+Skim past the boilerplate and there are exactly three choices doing the heavy
+lifting, and each one is really a decision about _failure_:
 
-| Decision | What it prevents |
-| :--- | :--- |
-| **`tokio::process::Command`** (non-blocking) | A shelling-out tool never stalls the Actix event loop or the WebSocket stream to other connected clients. One user's `find` doesn't freeze everyone else's session. |
-| **`tokio::time::timeout` on every call** | A command that hangs — say, searching an unmounted network share — gets cancelled at 30s instead of deadlocking the whole agentic turn. |
-| **No shell pipes; args passed to binaries directly** | Nothing goes through `sh -c`. Arguments are handed straight to `find`, `ps`, `ss`, `grep`. Shell injection isn't mitigated, it's *absent*. |
+| Decision                                             | What it prevents                                                                                                                                                    |
+| :--------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **`tokio::process::Command`** (non-blocking)         | A shelling-out tool never stalls the Actix event loop or the WebSocket stream to other connected clients. One user's `find` doesn't freeze everyone else's session. |
+| **`tokio::time::timeout` on every call**             | A command that hangs — say, searching an unmounted network share — gets cancelled at 30s instead of deadlocking the whole agentic turn.                             |
+| **No shell pipes; args passed to binaries directly** | Nothing goes through `sh -c`. Arguments are handed straight to `find`, `ps`, `ss`, `grep`. Shell injection isn't mitigated, it's _absent_.                          |
 
-This is the constructive friction I keep banging on about, just moved into the type system. In a team, the raised eyebrow at code review is what stops the reckless one-liner. When you're a solo dev with an AI army — the exact scenario I worried about in the Solo Dev Army piece — that friction has to come from *somewhere*. Here it comes from an enum, a timeout, and a refusal to concatenate strings into a shell. The agent is fast because it's local; it's *trustworthy* because the guardrails are compiled in, not prompted in.
+This is the constructive friction I keep banging on about, just moved into the
+type system. In a team, the raised eyebrow at code review is what stops the
+reckless one-liner. When you're a solo dev with an AI army — the exact scenario
+I worried about in the Solo Dev Army piece — that friction has to come from
+_somewhere_. Here it comes from an enum, a timeout, and a refusal to concatenate
+strings into a shell. The agent is fast because it's local; it's _trustworthy_
+because the guardrails are compiled in, not prompted in.
 
 ## What this actually feels like
 
-Pair an open-weight model — **Qwen 2.5 14B/32B**, **Llama 3.1 8B**, a **DeepSeek R1 distill** — with local tool execution on Apple Silicon or a dedicated GPU, and the developer experience changes character:
+Pair an open-weight model — **Qwen 2.5 14B/32B**, **Llama 3.1 8B**, a **DeepSeek
+R1 distill** — with local tool execution on Apple Silicon or a dedicated GPU,
+and the developer experience changes character:
 
-- **Sub-second feedback.** An agent checking memory or finding a file answers in tens of milliseconds. The only real latency left is token generation, which is *your* silicon's problem to solve, not a queue in someone else's data center.
-- **Zero token-cost anxiety.** Let it run background loops all day. There is no billing dashboard climbing in the corner of your eye.
+- **Sub-second feedback.** An agent checking memory or finding a file answers in
+  tens of milliseconds. The only real latency left is token generation, which is
+  _your_ silicon's problem to solve, not a queue in someone else's data center.
+- **Zero token-cost anxiety.** Let it run background loops all day. There is no
+  billing dashboard climbing in the corner of your eye.
 
-*Let both agents idle in a background loop.*
+_Let both agents idle in a background loop._
 
 <CostMeter />
 
-- **Actual autonomy.** *"My machine's running hot — find the top process and open the project directory with the log file."* The agent runs `list_top_processes`, spots the runaway PID, calls `search_file`, and `xdg-open`s the folder on my desktop. Seconds. No wire.
+- **Actual autonomy.** _"My machine's running hot — find the top process and
+  open the project directory with the log file."_ The agent runs
+  `list_top_processes`, spots the runaway PID, calls `search_file`, and
+  `xdg-open`s the folder on my desktop. Seconds. No wire.
 
-None of these models is the biggest on the leaderboard, and that's the point. Same lesson I keep relearning: the boring, right-sized tool that runs where you need it beats the giant that lives somewhere you can't reach. Efficiency is the moat now, not parameter count.
+None of these models is the biggest on the leaderboard, and that's the point.
+Same lesson I keep relearning: the boring, right-sized tool that runs where you
+need it beats the giant that lives somewhere you can't reach. Efficiency is the
+moat now, not parameter count.
 
 ## Final thoughts
 
-Local models stopped being the budget alternative to cloud APIs a while ago. Bolt one to a compiled, high-concurrency language like Rust and a local runtime like `llama.cpp`, and you get something the API-first crowd can't ship you at any price: **a sovereign workstation agent.** Fast because there's no wire. Private because nothing leaves the box. Trustworthy because the safety is in the types, not in a hopeful system prompt.
+Local models stopped being the budget alternative to cloud APIs a while ago.
+Bolt one to a compiled, high-concurrency language like Rust and a local runtime
+like `llama.cpp`, and you get something the API-first crowd can't ship you at
+any price: **a sovereign workstation agent.** Fast because there's no wire.
+Private because nothing leaves the box. Trustworthy because the safety is in the
+types, not in a hopeful system prompt.
 
-The business will keep watching the velocity dial, and the vendors will keep selling more parameters. That's fine — let them. The quiet, unglamorous move is to own the thing that runs on your own machine, structure its powers deliberately, and stop renting a brain by the token. That's not a step down from the frontier. It's just refusing to build your whole workflow on a foundation you don't control.
+The business will keep watching the velocity dial, and the vendors will keep
+selling more parameters. That's fine — let them. The quiet, unglamorous move is
+to own the thing that runs on your own machine, structure its powers
+deliberately, and stop renting a brain by the token. That's not a step down from
+the frontier. It's just refusing to build your whole workflow on a foundation
+you don't control.
 
-*If you want to kick the tires on `ai_tools` or add a native tool of your own to the registry, clone it and give `cargo run` a spin — then tell me what you built. I read every reply.*
+\_If you want to kick the tires on
+[`ai_tools`](https://github.com/MassivDash/ai_tools) or add a native tool of
+your own to the registry, check out the
+[`ai_tools` GitHub repository](https://github.com/MassivDash/ai_tools), clone
+it, and give `cargo run`

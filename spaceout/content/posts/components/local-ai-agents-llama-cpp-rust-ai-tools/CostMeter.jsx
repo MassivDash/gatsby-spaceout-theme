@@ -27,7 +27,10 @@ export const CostMeter = () => {
     if (running) return;
     setRunning(true);
     intervalRef.current = setInterval(() => {
-      setTokens((prev) => prev + TOKENS_PER_TICK_BASE + Math.round(Math.random() * 80 - 40));
+      setTokens(
+        (prev) =>
+          prev + TOKENS_PER_TICK_BASE + Math.round(Math.random() * 80 - 40),
+      );
       setTicks((prev) => prev + 1);
     }, TICK_MS);
   };
@@ -88,10 +91,18 @@ export const CostMeter = () => {
       </div>
 
       <div className="cm-controls">
-        <button type="button" className="cm-button" onClick={running ? stop : start}>
+        <button
+          type="button"
+          className="cm-button"
+          onClick={running ? stop : start}
+        >
           {running ? 'Stop' : 'Start'}
         </button>
-        <button type="button" className="cm-button cm-button-ghost" onClick={reset}>
+        <button
+          type="button"
+          className="cm-button cm-button-ghost"
+          onClick={reset}
+        >
           Reset
         </button>
         <span className="cm-ticks">{ticks} ticks</span>

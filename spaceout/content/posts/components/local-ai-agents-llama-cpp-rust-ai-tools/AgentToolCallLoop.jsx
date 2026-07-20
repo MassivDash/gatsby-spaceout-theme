@@ -81,7 +81,11 @@ export const AgentToolCallLoop = () => {
       </p>
 
       <div className="atcl-controls">
-        <div className="atcl-segmented" role="group" aria-label="Execution target">
+        <div
+          className="atcl-segmented"
+          role="group"
+          aria-label="Execution target"
+        >
           <button
             type="button"
             className="atcl-segment"
