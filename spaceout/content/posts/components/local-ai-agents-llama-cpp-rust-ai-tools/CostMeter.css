@@ -1,0 +1,153 @@
+.cm-widget {
+  --cm-ink: #0e0e0d;
+  --cm-panel: #17150f;
+  --cm-bone: #e9e4d6;
+  --cm-ash: #8f897b;
+  --cm-line: #3a352c;
+  --cm-blood: #c23b22;
+  --cm-ochre: #c9902b;
+
+  background: var(--cm-ink);
+  color: var(--cm-bone);
+  border: 1px solid var(--cm-line);
+  border-radius: 4px;
+  padding: 32px;
+  margin: 40px auto;
+  width: 100%;
+  max-width: 1200px;
+  font-family: inherit;
+  transition: 0.2s background-color ease, 0.2s color ease;
+}
+
+.cm-widget[data-mode='light'] {
+  --cm-ink: #e9e4d6;
+  --cm-panel: #ded7c4;
+  --cm-bone: #17150f;
+  --cm-ash: #6b6558;
+  --cm-line: #c9c3b0;
+}
+
+.cm-caption {
+  color: var(--cm-ash);
+  font-size: 1.3rem;
+  margin: 0 0 24px;
+  line-height: 1.6;
+}
+
+.cm-meter {
+  margin-bottom: 18px;
+}
+
+.cm-meter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.cm-meter-label {
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cm-ash);
+}
+
+.cm-meter-readout {
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--cm-bone);
+}
+
+.cm-track {
+  height: 14px;
+  border: 1px solid var(--cm-line);
+  border-radius: 2px;
+  background: var(--cm-panel);
+  overflow: hidden;
+}
+
+.cm-fill {
+  display: block;
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.cm-fill-normal {
+  background: var(--cm-ash);
+}
+
+.cm-fill-ochre {
+  background: var(--cm-ochre);
+}
+
+.cm-fill-blood {
+  background: var(--cm-blood);
+}
+
+.cm-fill-steady {
+  background: var(--cm-ash);
+}
+
+.cm-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 16px;
+}
+
+.cm-button {
+  background: transparent;
+  border: 1px solid var(--cm-bone);
+  color: var(--cm-bone);
+  font-family: inherit;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.15s all ease;
+}
+
+.cm-button:hover {
+  background: var(--cm-bone);
+  color: var(--cm-ink);
+}
+
+.cm-button-ghost {
+  border-color: var(--cm-line);
+  color: var(--cm-ash);
+}
+
+.cm-button-ghost:hover {
+  background: transparent;
+  border-color: var(--cm-ash);
+  color: var(--cm-bone);
+}
+
+.cm-ticks {
+  font-size: 1rem;
+  color: var(--cm-ash);
+  font-variant-numeric: tabular-nums;
+}
+
+.cm-lesson {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--cm-ash);
+  line-height: 1.5;
+  border-top: 1px solid var(--cm-line);
+  padding-top: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-fill {
+    transition: none;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .cm-widget {
+    padding: 22px 16px;
+  }
+}
