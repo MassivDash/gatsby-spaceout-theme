@@ -75,8 +75,6 @@ only the headline and it's not even the most interesting part.
 > as pure velocity. The costs above are the code smell you don't notice until
 > the codebase can't move.
 
-_Run the same loop locally and in the cloud — watch the round trips stack up._
-
 <AgentToolCallLoop />
 
 I've made this argument before in a different costume. Clean architecture, I
@@ -164,8 +162,6 @@ There are two ways to give an agent system access, and one of them is a mistake.
 2. **Structured native wrappers.** Expose discrete, safe commands with typed
    parameters, hard timeouts, and truncated output. More work up front. Sleeps
    at night.
-
-_Try to make the agent run something reckless under each model._
 
 <GuardrailToggle />
 
@@ -314,8 +310,6 @@ and the developer experience changes character:
 - **Zero token-cost anxiety.** Let it run background loops all day. There is no
   billing dashboard climbing in the corner of your eye.
 
-_Let both agents idle in a background loop._
-
 <CostMeter />
 
 - **Actual autonomy.** _"My machine's running hot — find the top process and
@@ -344,8 +338,4 @@ deliberately, and stop renting a brain by the token. That's not a step down from
 the frontier. It's just refusing to build your whole workflow on a foundation
 you don't control.
 
-\_If you want to kick the tires on
-[`ai_tools`](https://github.com/MassivDash/ai_tools) or add a native tool of
-your own to the registry, check out the
-[`ai_tools` GitHub repository](https://github.com/MassivDash/ai_tools), clone
-it, and give `cargo run`
+*If you want to kick the tires on [`ai_tools`](https://github.com/MassivDash/ai_tools) or add a native tool of your own to the registry, check out the [`ai_tools` GitHub repository](https://github.com/MassivDash/ai_tools), clone it, and give `cargo run` a spin — then tell me what you built. I read every reply.*

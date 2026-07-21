@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useColorMode } from 'theme-ui';
 import './Mermaid.css';
 
-const MERMAID_SRC = 'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js';
+const MERMAID_SRC =
+  'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js';
 const LOAD_TIMEOUT_MS = 8000;
 
 let mermaidLoadPromise = null;
@@ -23,7 +24,8 @@ function loadMermaid() {
       script.src = MERMAID_SRC;
       script.async = true;
       script.onload = () => resolve(window.mermaid);
-      script.onerror = () => reject(new Error('Failed to load mermaid from CDN'));
+      script.onerror = () =>
+        reject(new Error('Failed to load mermaid from CDN'));
       document.head.appendChild(script);
     });
   }

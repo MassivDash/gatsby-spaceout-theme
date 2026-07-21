@@ -201,6 +201,23 @@
   border-color: var(--gt-bone);
 }
 
+.gt-chip-reckless {
+  border-color: var(--gt-blood);
+  color: var(--gt-blood);
+}
+
+.gt-chip-reckless:hover {
+  background: rgba(194, 59, 34, 0.12);
+  border-color: var(--gt-blood);
+  color: var(--gt-blood);
+}
+
+.gt-chip-reckless[aria-pressed='true'] {
+  background: var(--gt-blood);
+  color: #ffffff;
+  border-color: var(--gt-blood);
+}
+
 @media screen and (max-width: 560px) {
   .gt-widget {
     padding: 22px 16px;
