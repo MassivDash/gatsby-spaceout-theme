@@ -129,6 +129,14 @@ const plugins = [
   {
     resolve: `gatsby-plugin-react-helmet`,
   },
+  {
+    resolve: 'gatsby-plugin-robots-txt',
+    options: {
+      host: 'https://spaceout.pl',
+      sitemap: 'https://spaceout.pl/sitemap.xml',
+      policy: [{ userAgent: '*', allow: '/' }],
+    },
+  },
   'gatsby-plugin-sitemap',
 ];
 

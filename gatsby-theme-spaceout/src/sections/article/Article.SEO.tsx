@@ -38,39 +38,30 @@ const ArticleSEO: React.FC<{
    * For some reason `location.href` is undefined here when using `yarn build`.
    * That is why I am using static query `allSite` to get needed fields: name & siteUrl.
    */
-  const microdata = `{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "${siteUrl + location.pathname}"
+  const microdataObject = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': siteUrl + location.pathname,
     },
-    "headline": "${article.title}",
-    "image": "${siteUrl + article.hero.seo.src}",
-    "datePublished": "${article.dateForSEO}",
-    "dateModified": "${article.dateForSEO}",
-    "author": ${JSON.stringify(authorsData)},
-    "description": "${article.excerpt.replace(/"/g, '\\"')}",
-    "publisher": {
-      "@type": "Organization",
-      "name": "${name}",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "${siteUrl}/icons/icon-512x512.png"
-      }
-    }
-  }
-`.replace(/"[^"]+"|(\s)/gm, function (matched, group1) {
-    if (!group1) {
-      return matched;
-    } else {
-      return '';
-    }
-  });
-  /**
-   * See here for the explanation of the regex above:
-   * https://stackoverflow.com/a/23667311
-   */
+    headline: article.title,
+    image: siteUrl + article.hero.seo.src,
+    datePublished: article.dateForSEO,
+    dateModified: article.dateForSEO,
+    author: authorsData,
+    description: article.excerpt,
+    publisher: {
+      '@type': 'Organization',
+      name: name,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/icons/icon-512x512.png`,
+      },
+    },
+  };
+
+  const microdata = JSON.stringify(microdataObject);
 
   return (
     <SEO
