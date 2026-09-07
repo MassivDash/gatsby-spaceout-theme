@@ -100,6 +100,14 @@ export const GuardrailToggle = () => {
       <div className="gt-chips">
         <span className="gt-chips-label">Allowed enum actions</span>
         <div className="gt-chips-row">
+          <button
+            type="button"
+            className="gt-chip gt-chip-reckless"
+            aria-pressed={proposedCommand === DANGEROUS_COMMAND}
+            onClick={() => pickChip(DANGEROUS_COMMAND)}
+          >
+            Reckless (rm -rf)
+          </button>
           {ALLOWED_ACTIONS.map((action) => (
             <button
               key={action}

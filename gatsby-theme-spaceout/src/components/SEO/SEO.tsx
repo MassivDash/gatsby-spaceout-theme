@@ -99,7 +99,7 @@ function SEO({
     { name: 'twitter:title', content: title || site.title },
     {
       name: 'twitter:description',
-      content: description || 'UX/UI design, Web and Native App develeopement.',
+      content: description || site.description,
     },
     { name: 'twitter:creator', content: twitter.url || 'https://spaceout.pl' },
     {
@@ -111,10 +111,10 @@ function SEO({
     { property: 'og:url', content: url || 'https://spaceout.pl' },
     { property: 'og:image', content: fullURL(image) },
     { property: 'og:type', content: 'website' },
-    { property: 'fb:app_id', content: '1535178676578893' },
+    { property: 'og:locale', content: 'en_US' },
     {
       property: 'og:description',
-      content: description || 'UX/UI design, Web and Native App develeopement.',
+      content: description || site.description,
     },
     { property: 'og:site_name', content: site.name || 'Spaceout' },
   ];
@@ -131,6 +131,13 @@ function SEO({
     });
   }
 
+  const websiteMicrodata = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: site.title,
+    url: site.siteUrl,
+  });
+
   return (
     <Helmet
       title={title || site.title}
@@ -140,6 +147,7 @@ function SEO({
       link={[{ rel: 'canonical', href: canonicalURL }]}
     >
       {children}
+      <script type="application/ld+json">{websiteMicrodata}</script>
     </Helmet>
   );
 }
