@@ -1,0 +1,297 @@
+---
+title:
+  'The AGI Illusion: Why Scaling LLMs Won’t Get Us There (And What Actually
+  Will)'
+excerpt:
+  The industry keeps selling the idea that if we just add enough GPUs,
+  next-token prediction will wake up. Here is why the LLM route to AGI is
+  hitting a data wall, and what we actually need to build instead.
+date: 2026-09-07
+hero: agi_cover2.png
+author: Luke Celitan
+category: Post
+tech:
+  - AI
+  - Architecture
+  - LLMs
+slug: agi-and-the-llm-wall
+---
+
+import { Mermaid } from '../components/Mermaid.jsx';
+
+# The Billion-Dollar Echo Chamber
+
+## Introduction
+
+If you sit in enough vendor meetings right now—or browse the timeline of any
+heavily funded AI founder in 2026—you’ll hear the same underlying hum of
+religious certainty: _Artificial General Intelligence is just a matter of
+scale._
+
+The pitch goes like this: we take an autoregressive language model, feed it the
+entire internet, wire up a data centre the size of a small European country,
+spend a billion dollars on training compute, and somewhere around the
+hundred-trillion parameter mark, the model wakes up, stops hallucinating, and
+starts doing our jobs.
+
+I’ve been writing for a while about the gap between AI hype and engineering
+reality. Most recently, I ran a benchmark proving that
+[your shiny new model can't even add a column of numbers](/ai-cant-count-give-it-a-calculator)
+without simulating it like a child doing long division out loud. But the AGI
+conversation is different. It’s not just a debate over whether a model got the
+maths wrong; it’s an architectural fallacy masquerading as a roadmap.
+
+Right now, the industry is confusing the map for the territory. We are confusing
+the ability to _describe_ reasoning with the ability to _actually reason_.
+
+So let’s do what we always do here. Let’s strip away the marketing, look at the
+hard data from 2025 and 2026, examine the actual mechanics of Large Language
+Models, and ask the uncomfortable question: how far along the LLM route to AGI
+are we actually, and is it even the right road?
+
+## Defining the Goalpost
+
+Before we talk about whether we can get there, we have to define "there."
+
+The tech industry loves to define AGI as "passing the Turing test," or "scoring
+in the 99th percentile on the bar exam," or "passing the medical boards." But as
+I’ve learned from building
+[local, sovereign agents in Rust](/local-ai-agents-llama-cpp-rust-ai-tools),
+passing a static benchmark is a trick of memorisation and interpolation. If the
+answers exist in the latent space of the training data, the model will find
+them. That isn't intelligence; that's search compression.
+
+Real AGI isn't a test-taker. It’s an entity that can:
+
+1. **Operate in novel environments** where the rules aren't in its training
+   data.
+2. **Learn continuously** without needing a full, billion-dollar weight update.
+3. **Reason non-linearly**, backtracking, simulating outcomes, and altering
+   state before acting.
+4. **Maintain agency** over long horizons without requiring a prompt to push it
+   forward.
+
+If you look at that list, you realise the problem: the standard LLM architecture
+is fundamentally opposed to almost all of it.
+
+## The "Data Wall" Reality Check
+
+Let's start with the fuel that runs the entire operation: data.
+
+Back in 2024, researchers at Epoch AI and other institutions started sounding
+the alarm about the "data wall." The hypothesis was simple: we are going to run
+out of high-quality, human-generated text on the internet to train these
+increasingly massive models.
+
+Fast forward to late 2026. The data wall isn't a hypothesis anymore; it’s the
+defining constraint of the industry. The stock of high-quality public text is
+effectively exhausted. You cannot scrape Reddit, Wikipedia, and Stack Overflow
+again and expect a 10x capability leap.
+
+To circumvent this, the industry pivoted to two strategies:
+
+### 1. Synthetic Data (The Ouroboros)
+
+Labs are now using frontier models to generate training data for the next
+generation of models. On paper, it sounds elegant. In practice, it’s a
+statistical trap. Training a model heavily on AI-generated data leads to "model
+collapse" over multiple generations. The distribution tails shrink. The model
+becomes an amplified version of its own biases. It learns how to write perfect
+boilerplate code, but it loses the messy, human edge required to invent a
+completely novel architectural pattern. Synthetic data is great for fine-tuning
+specific tasks, but it does not expand the frontiers of general intelligence.
+
+### 2. Inference-Time Scaling (Thinking Out Loud)
+
+Because pre-training on raw data hit diminishing returns, the focus shifted to
+"inference-time compute." Models like the OpenAI o-series (and now GPT-6) are
+trained to spend more time "thinking" before they output a final answer. They
+use iterative reasoning, chain-of-thought, and self-correction.
+
+This is a massive improvement, and it's why these models are so much better at
+coding and math than the models of 2024. But let's be clear about what is
+actually happening: the model isn't gaining AGI. It is just being forced to
+generate thousands of hidden tokens—simulating a reasoning loop—because its
+underlying architecture still requires it to predict the next word to function.
+
+<Mermaid
+  chart={`graph TD
+A[Prompt Input] --> B[Generate Hidden Token]
+B --> C{Is task solved?}
+C -- No --> D[Generate Next Hidden Token]
+D --> B
+C -- Yes --> E[Output Final Answer]
+style B fill:#e6f3ff,stroke:#333,stroke-width:1px
+style D fill:#e6f3ff,stroke:#333,stroke-width:1px
+style E fill:#d4edda,stroke:#333,stroke-width:2px`}
+/>
+
+Inference-time scaling is an admission that raw next-token pre-training hit a
+wall. We are applying a brute-force patch to an architectural limitation.
+
+## The ARC-AGI Illusion
+
+To understand how deep the illusion goes, we need to look at François Chollet’s
+ARC-AGI benchmark.
+
+Unlike the Bar Exam or standard coding tests, ARC-AGI doesn't test memorisation.
+It tests fluid intelligence. It presents the model with novel visual-logic
+puzzles it has never seen before, requiring the model to deduce the underlying
+rule from a few examples and apply it to a test case. It is designed to be easy
+for humans and incredibly hard for AI.
+
+In 2025, the top scores were hovering around the 24% mark. By September 2026,
+the headlines exploded: OpenAI’s GPT-6 Astra achieved a **99.9% score** on
+ARC-AGI-3.
+
+AGI achieved, right?
+
+Not exactly. If you dig into the paper, that 99.9% score was achieved using a
+massive, highly complex "harness"—a specialized scaffolding of software wrapped
+around the model that forced it to generate code, test the code, verify the
+output against the puzzle, back-track, and try again, looping thousands of times
+per puzzle.
+
+When researchers stripped away the scaffolding and ran the same GPT-6 Astra
+model under a standard, minimal-interface harness, the score plummeted to
+**62.7%**.
+
+The LLM itself wasn't reasoning. The _scaffolding_ was simulating reasoning by
+wrapping the LLM in a brute-force search algorithm. The model was just
+generating code variations. Hitting a benchmark through exhaustive programmatic
+trial-and-error is not AGI. It is just better interpolation, wrapped in a
+`while` loop.
+
+## The Economics of the Plateau
+
+This brings us to the financial reality, which is usually where the hype train
+derails.
+
+The exponential cost of training these models is colliding violently with the
+logarithmic gains in capability. Let's look at the estimated training costs for
+flagship models over the last few years:
+
+| Year    | Era           | Estimated Training Cost | Notable Capability Leap                        |
+| :------ | :------------ | :---------------------- | :--------------------------------------------- |
+| 2020    | GPT-3         | ~$4 Million             | Few-shot prompting, basic code generation      |
+| 2023    | GPT-4         | ~$100 Million           | Advanced reasoning, passing standardized tests |
+| 2025    | GPT-5 / o1    | ~$300 Million           | Inference-time reasoning, advanced math/logic  |
+| 2026/27 | GPT-6 / Astra | >$1 Billion             | Saturated static benchmarks, agentic workflows |
+
+Training costs are climbing by roughly 2.5x to 3.5x per year. We are approaching
+the billion-dollar threshold for a single training run. But are we getting a
+billion dollars worth of new intelligence?
+
+The industry's own actions give us the answer. Notice how every major provider
+now ships "tiered" model families? We have the Frontier tier (GPT-6, Claude 4.5
+Opus), the Mid tier, and the Budget tier (Nano/Mini).
+
+Providers do this because the flagship models have become astronomically
+expensive to run, and for 95% of real-world enterprise tasks—routing data,
+summarising text, basic code autocomplete—the budget models from 2025 are
+already perfectly adequate. You don't need a billion-dollar supercomputer to
+parse a JSON payload.
+
+The performance at the very top of the leaderboard has converged. The massive
+capability leaps we saw from 2020 to 2023 have slowed into an expensive,
+incremental grind. The industry is spending exponential capital for fractional
+gains on edge-case reasoning, hoping that if they just push hard enough, the
+model will suddenly learn to think.
+
+## Why Next-Token Prediction Can't Reason (The Architecture)
+
+Let me be precise about what an LLM actually is, because the anthropomorphism is
+killing our ability to engineer properly.
+
+An LLM is a phenomenal, high-dimensional statistical map of human language. It
+predicts the most likely next token based on the context window. It doesn't
+"think." It interpolates. When it gives you a brilliant architectural design,
+it’s because a brilliant architectural design exists in the latent space it
+mapped from human data.
+
+But true AGI requires breaking free from the context window entirely. Here is
+why the architecture fails:
+
+1. **The compute asymmetry:** As I showed in the
+   [counting experiment](/ai-cant-count-give-it-a-calculator), LLMs have no
+   internal state memory that persists outside of the context window. They
+   cannot update their internal model of the world without emitting a token. If
+   an AGI needs to silently simulate a complex 10-year business strategy, an LLM
+   has to generate tokens for every single micro-step of that simulation. It is
+   computationally absurd.
+2. **The novelty cliff:** LLMs interpolate beautifully between known concepts.
+   They extrapolate terribly. Put an LLM in a genuinely novel situation with no
+   prior training data—like a newly invented programming language with zero
+   internet footprint—and it hallucinates confidently. AGI requires robust
+   extrapolation.
+3. **The static brain problem:** When an LLM learns something new in its context
+   window (e.g., you paste in documentation), that knowledge vanishes the moment
+   the session ends. You can bolt on RAG (Retrieval-Augmented Generation) and
+   vector databases—which I advocate for highly in local setups—but that is
+   external tooling, not internal learning. The core weights remain frozen in
+   time, unchanged until the next hundred-million-dollar training run.
+
+<Mermaid
+  chart={`graph LR
+subgraph "The LLM (Static)"
+    A[Context Window] --> B[Frozen Weights]
+    B --> C[Next Token]
+end
+subgraph "True AGI (Dynamic)"
+    D[Environment State] --> E[Active Reasoning]
+    E --> F[Weight Update / Learning]
+    F --> G[Action]
+    G --> D
+end
+style B fill:#ff9999,stroke:#333
+style F fill:#99ff99,stroke:#333`}
+/>
+
+## What Actually Gets Us There?
+
+If LLMs are just the language centre of the brain, what does the rest of the
+architecture look like? We aren't going to reach AGI by making the language
+centre bigger. We have to build the rest of the system.
+
+Here is the architectural shift I'm watching for over the next five years:
+
+1. **Neuro-symbolic systems:** We need to combine the fuzzy, probabilistic
+   brilliance of neural networks with the hard, deterministic logic of symbolic
+   systems. Give the AI a calculator; don't ask it to be one. Let the LLM handle
+   the semantic parsing, and hand the logic over to a deterministic solver.
+2. **Continuous local learning:** We need architectures where weights update
+   dynamically in real-time based on successful outcomes. An agent needs to
+   learn that a specific bash command fails on a specific server, and remember
+   it tomorrow, without needing a billion-dollar cluster to re-train its
+   weights.
+3. **True world models:** We must move beyond text prediction to predicting
+   physics, state changes, and causal relationships. Video models are a baby
+   step toward this, but they are still largely statistical. An AGI needs a
+   grounded understanding that if it deletes a database table, the application
+   crashes. Right now, it just knows that the word "delete" is often followed by
+   the word "error" in its training set.
+
+## Final Thoughts
+
+Are we close to AGI? No.
+
+Are we close to highly capable, hyper-competent narrow agents? Yes. We are
+already there. If you build them right—with strict boundaries, typed toolchains,
+and local control, exactly like we explored in the
+[Local AI Agents piece](/local-ai-agents-llama-cpp-rust-ai-tools)—they will
+absolutely change how software is built and businesses are run.
+
+But the idea that an LLM will magically transition into Artificial General
+Intelligence just by reading more synthetic data and running on a larger GPU
+cluster is an illusion. We haven't built a mechanical brain; we've built a
+mechanical parrot with an eidetic memory and a silver tongue.
+
+The next leap in intelligence isn't going to come from a bigger data centre.
+It’s going to come from an entirely new architecture that abandons next-token
+prediction as the core engine of thought. Until then, stop waiting for the API
+to wake up, and start building the guardrails.
+
+_The AI industry might be stuck on the data wall, but your engineering doesn't
+have to be. If you want to see how to actually wire up bounded, reliable agents
+today, check out my deep dive on
+[building a native AI platform in Rust](/local-ai-agents-llama-cpp-rust-ai-tools)._
