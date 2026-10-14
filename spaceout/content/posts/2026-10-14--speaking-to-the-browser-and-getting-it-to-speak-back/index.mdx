@@ -1,0 +1,207 @@
+---
+title: Speaking to the Browser (and Getting It to Speak Back)
+excerpt: Brief description of Speaking to the Browser (and Getting It to Speak Back)
+date: 2026-10-14
+hero: cover2.png
+author: Luke Celitan
+appDescription: Tech
+category: Post
+tech:
+  - TypeScript
+---
+
+import SpeechPlayground from '../components/Interactive/SpeechPlayground';
+
+# Speaking to the Browser (and Getting It to Speak Back)
+
+Your browser can turn text into speech, and some browsers can turn speech back into text. That sounds like a loop you could close in an afternoon — write one, pipe it into the other, ship it. In practice the web treats these as two unrelated APIs with their own support matrices, their own failure modes, and no interest in talking to each other. Let's build a small demo of both, and make sure it doesn't fall over the moment one half decides not to show up.
+
+## Try your browser's speech APIs
+
+<SpeechPlayground />
+
+Try typing something, changing the rate, and hitting **Speak**. If your browser offers speech recognition, try **Start listening** too — a small row of bars should twitch along with your voice, which is a surprisingly satisfying way to confirm the browser is actually listening and not just pretending politely. Expect a microphone permission prompt; please don't dictate passwords, secrets, or anything you wouldn't want read back to you at double speed.
+
+## Two APIs, not one conversation
+
+The Web Speech API has two useful pieces here:
+
+- **Speech synthesis** takes a string and plays it through the device's audio output using `speechSynthesis` and `SpeechSynthesisUtterance`.
+- **Speech recognition** takes microphone input and returns candidate transcripts through `SpeechRecognition`. Some browsers expose it as `webkitSpeechRecognition` instead.
+
+Support is not symmetrical. Synthesis is more widely available than recognition; recognition may depend on a particular browser, network service, language, and microphone permission. A browser supporting playback doesn't mean it can transcribe. Feature-detect each one separately, and don't make a text input unusable just because dictation isn't supported.
+
+```js
+const canSpeak =
+  'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const canListen = Boolean(SpeechRecognition);
+```
+
+Run browser checks in client-side code. If your site server-renders React, `window` won't exist while the server renders. A component can guard with `typeof window !== 'undefined'`, and should render a useful fallback when an API is missing. Think of detection as a first check, not a promise: a supported API may still fail at runtime.
+
+## Getting the browser to talk
+
+Start with an utterance. It holds both the words and the settings for a single request to speak:
+
+```js
+function speak(text, rate = 1) {
+  if (!('speechSynthesis' in window) ||
+      !('SpeechSynthesisUtterance' in window)) {
+    return false;
+  }
+
+  window.speechSynthesis.cancel(); // Replace anything already queued.
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-US';
+  utterance.rate = rate;
+  utterance.onend = () => console.log('Finished speaking');
+  utterance.onerror = (event) => console.error('Speech failed', event);
+
+  window.speechSynthesis.speak(utterance);
+  return true;
+}
+```
+
+`cancel()` here is a product choice, not a requirement: without it, successive clicks can queue multiple utterances. If you're building a reader that should queue paragraphs, keep the queue instead. You can also use `pause()` and `resume()` to control playback. In a tiny playground, replacing the last request makes repeated clicks predictable. For a longer article reader, you might instead track which paragraph is playing and preserve the reader's position.
+
+The default voice is enough to get started. If you want a voice picker, call `speechSynthesis.getVoices()` and let the reader choose from the returned voices. Be prepared for the list to be empty initially: some browsers populate it asynchronously and fire `voiceschanged` later. A selected voice can disappear when the environment changes, so the default should remain a valid fallback. `lang` and `voice` are related, but requesting a particular language doesn't guarantee that a matching voice is installed.
+
+Rate is worth exposing because it has an immediate, audible effect; `1` is the normal rate. Other utterance controls include pitch and volume. Resist adding every possible slider to the first version: a rate slider and a text field tell you enough to see whether the feature is useful. If you do add voice selection, label voices clearly and remember that the voice list reflects a reader's device, not a stable collection you can test against on your own computer.
+
+Also, don't assume calling `speak()` guarantees audible output. Playback can fail or be affected by platform audio settings and browser behavior. Put it behind an explicit button, report errors, and provide a Stop button. The text should remain visible whether the audio works or not. Don't trigger speech automatically when a page loads: surprising someone with sound is a fairly reliable way to make them close the tab.
+
+## Getting words back from a microphone
+
+Recognition is event-driven. Create an instance, configure it, listen for results, and start it in response to a user action:
+
+```js
+const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (Recognition) {
+  const recognition = new Recognition();
+  recognition.lang = 'en-US';
+  recognition.interimResults = true;
+  recognition.continuous = false;
+
+  recognition.onresult = (event) => {
+    const transcript = Array.from(event.results, (result) =>
+      result[0].transcript
+    ).join(' ');
+    console.log(transcript);
+  };
+
+  recognition.onerror = (event) => {
+    console.error('Recognition failed:', event.error);
+  };
+
+  recognition.onend = () => {
+    console.log('No longer listening');
+  };
+
+  recognition.start();
+}
+```
+
+An `onresult` event contains a list of results; each result can contain alternative guesses. `result[0]` is the top candidate, not a promise of perfect transcription. With `interimResults` enabled, the browser can revise the words while you're speaking. Treat interim text as a preview, and distinguish final results (`result.isFinal`) before saving a transcript or submitting a form. If you accumulate final text across several events, don't append the entire result list on every callback or you'll duplicate earlier words.
+
+Here's one way to separate confirmed words from the current preview inside `onresult`:
+
+```js
+const final = [];
+const interim = [];
+
+for (const result of event.results) {
+  const words = result[0].transcript;
+  (result.isFinal ? final : interim).push(words);
+}
+
+setConfirmedText(final.join(' '));
+setPreviewText(interim.join(' '));
+```
+
+That example rebuilds the displayed words from the results in the current session. If you're implementing multiple separate dictation sessions in a single text box, preserve previously confirmed text separately and add new sessions deliberately. Otherwise, pressing Start again can overwrite what the person already dictated. For a form, never auto-submit because a recognizer thought it heard the final word: give the person a chance to read and edit it.
+
+`continuous = false` asks for a single recognition session; it does **not** mean the mic will stay on until you decide to stop. Sessions can end on silence, errors, or browser-specific conditions. Update your button when `onend` fires rather than assuming that pressing Start means you're still recording. Call `stop()` to finish an active session, or `abort()` when leaving the page and you want to discard pending recognition.
+
+Permission can be denied, there may be no microphone, or the browser may not support the selected language. Surface those errors in the UI rather than silently failing. And be careful with the word “local”: depending on browser implementation, audio may be sent to a service to perform recognition. Don't promise offline or private transcription merely because the API lives on `window`. Recognition can also depend on a secure context or a browser's permission policies, especially when a demo is embedded elsewhere. Test on the deployed site, not just in your local development tab.
+
+One failure mode is almost comically mundane: the browser grants permission, opens a perfectly healthy audio stream, and still reports `no-speech` because the operating system's default input device is pointed at a microphone that isn't plugged in, is muted, or is a Bluetooth headset that disconnected an hour ago. The API isn't lying to you; it heard exactly what you gave it, which was nothing. If a demo stays stubbornly silent no matter how firmly you enunciate, check the OS sound settings before you start rewriting the recognition code.
+
+## Giving the microphone something to show for itself
+
+`SpeechRecognition` is a black box: audio goes in, words eventually come out, and you get no feedback in between except waiting. That's a bad experience when the API is silently struggling with your microphone, your network, or the eleven seconds of throat-clearing before you actually said anything. A live level meter fixes that instantly — if the bars move, the mic is capturing you; if they don't, stop blaming the transcript and go check your hardware.
+
+The trick is that `SpeechRecognition` doesn't expose the raw audio it's using, so you have to open a second, independent stream with `getUserMedia` purely to look at it, and run that through a Web Audio `AnalyserNode`:
+
+```js
+const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+const source = audioContext.createMediaStreamSource(stream);
+const analyser = audioContext.createAnalyser();
+analyser.fftSize = 64;
+source.connect(analyser);
+
+const data = new Uint8Array(analyser.frequencyBinCount);
+
+function draw() {
+  analyser.getByteFrequencyData(data);
+  // data[i] is 0–255 per frequency bin — map a handful of them to bar heights
+  requestAnimationFrame(draw);
+}
+draw();
+```
+
+A few things worth not getting wrong: don't connect the analyser to `audioContext.destination` — that would route the microphone straight back out of the speakers, which is both useless and a fast way to summon feedback. Drive the animation with `requestAnimationFrame`, not React state; updating two dozen bars sixty times a second through `setState` will make the rest of the page stutter for no benefit, when directly writing to each bar's `style.height` via a ref is both simpler and free. And treat the extra `getUserMedia` stream as a second piece of hardware you now own: stop every track and close the `AudioContext` the moment listening ends, whether that's a manual Stop click or `SpeechRecognition` ending the session on its own — an `AudioContext` you forget to close keeps the microphone indicator lit and the audio graph alive long after anyone cares.
+
+A bouncing equalizer looks delightful and proves nothing about transcription quality. Treat it as reassurance that the pipe is open, not confirmation that the words on the way out are correct — the transcript text is still the thing that actually matters.
+
+## Put the two halves together
+
+The playground above intentionally keeps them independent. Dictation fills a transcript; **Use transcript as text** copies it into an editable text area; **Speak** reads that text aloud. This gives the reader a chance to fix recognition mistakes before speaking them back. It also means the text-to-speech half works perfectly well when recognition isn't available or microphone access is refused.
+
+There's a subtle trap if you try to make the two halves fully automatic: speech from your own speakers might be picked up by your microphone and transcribed again. Headphones may help, but a simpler interaction is to avoid listening and speaking simultaneously. Explicit controls make it much clearer when the microphone is active and when the page is producing audio.
+
+A production version should keep the same separation of concerns:
+
+1. Check synthesis and recognition independently, then render a useful message for each unsupported feature.
+2. Start recognition from an explicit user gesture, handle `result`, `error`, and `end`, and offer a visible Stop control.
+3. Let people edit the transcript before treating it as final content.
+4. Start speech from an explicit action, offer cancellation, and clean up active speech and recognition when the component unmounts.
+5. Keep text on screen and controls labelled; audio is an enhancement, not the only way to access the result.
+6. Treat any extra visual flourish, like a live level meter, as a second consumer of the microphone: close its own stream and audio graph the moment listening stops, independently of whatever `SpeechRecognition` is doing.
+
+In React, attach browser API listeners while the instance belongs to the component and tidy up on unmount:
+
+```jsx
+useEffect(() => {
+  return () => {
+    recognitionRef.current?.abort();
+    window.speechSynthesis?.cancel();
+  };
+}, []);
+```
+
+Only run that cleanup in the browser. Avoid keeping a recognition instance in ordinary render-local variables: every render would replace them, and your Stop button might no longer refer to the running session. A ref is a better fit. Update React state from `onresult` and `onend` so the UI follows the actual session, not what you hoped would happen. Keep the browser-specific object out of serialised state, while storing values such as the transcript and whether listening is active in state for rendering.
+
+## Why isn't everyone talking to their browser already?
+
+Voice is not a novelty for everyone. Dictation and voice control are core assistive technology for people with motor impairments or repetitive strain injuries who can't reliably use a keyboard or mouse, and tools like Dragon NaturallySpeaking and the voice control built into iOS, macOS, and Windows predate the Web Speech API entirely and are still more capable than anything a browser gives you for free. Screen reader users, meanwhile, are already fluent in spoken interfaces — but through a completely different pipeline than `speechSynthesis`: a screen reader like VoiceOver, NVDA, or JAWS reads the accessibility tree, not literal page text, and most of them ignore whatever a page does with the Web Speech API. Don't build a "read this page aloud" button assuming it helps a screen reader user; it's redundant at best. The real accessibility win here is narrower: an optional dictation shortcut for people who find typing painful, slow, or impossible, sitting *alongside* the keyboard and visible text, never replacing them.
+
+Dictation also has a genuine, well-earned reputation for being annoying. Correcting a misheard word is often slower than retyping the whole sentence, there's no visual affordance telling a first-time user what they're allowed to say, and a bit of background noise or a regional accent can turn a confident sentence into word soup with no warning until it's too late. Voice interfaces do best in narrow, bounded domains — set a timer, play a song, answer yes or no — where the system only has to disambiguate between a handful of likely intents. Open-ended dictation into a text field is a much harder problem, and it's as much a trust problem as an accuracy one: the system has to get the words right *and* you have to feel safe enough to stop watching the screen while it works. Most people never quite make that second leap, which makes voice a fast way to produce a rough draft and a slow way to produce a finished one.
+
+Browser support for the recognition half has also been stubbornly inconsistent, and it's worth knowing why. Chrome shipped `webkitSpeechRecognition` back in the early 2010s, but it has historically worked by streaming your audio to a Google speech-recognition service over the network — effective, but offline is a no, and audio leaves the device by default. Firefox never shipped the recognition interface at all, largely over that same objection: Mozilla wasn't willing to wire a core web API to one vendor's cloud service, and no on-device alternative was good enough to ship instead for a long time. Safari added `SpeechRecognition` later than Chrome and routes it through Apple's on-device dictation engine instead of a cloud service — better for privacy, but it arrived with its own rough edges and platform quirks. The practical result is the feature-detection dance this post keeps doing: assume nothing, check both pieces independently, and expect the recognition half in particular to simply not exist for a meaningful slice of your visitors.
+
+The underlying models have improved dramatically even where the browser API hasn't changed shape. Speech recognition moved from older statistical pipelines to end-to-end deep learning models over the 2010s, and that shift plus a decade of additional training data made recognition meaningfully more robust to accents and background noise. On-device models got small and fast enough to run locally on phones and laptops, cutting the network round-trip out of some platform-level dictation features entirely. Open models like OpenAI's Whisper, released in 2022, showed that strong general-purpose transcription doesn't have to live behind one vendor's API — though that progress mostly hasn't reached `window.SpeechRecognition` itself, since the browser API is just a thin wrapper around whatever engine each browser maker chooses to wire up behind it. It's also worth saying plainly that accuracy has never been evenly distributed: research, including a widely cited 2020 study led by Stanford researchers, found that commercial speech recognition systems performed consistently worse on African American Vernacular English than on the other dialects tested — a reminder that "speech recognition is good now" is doing a lot of averaging over whose speech it was trained on.
+
+Before shipping any of this, try a browser without recognition, refuse the microphone permission, start and stop quickly, and switch away from the page while audio is playing. Check that the transcript is readable without sound and that every control works with a keyboard. These are far more useful tests than getting the demo to recognize one perfectly pronounced sentence on your own machine, in your own accent, on your own hardware.
+
+## So when do we get "Computer, do the thing"?
+
+Picture the Star Trek version: no wake word, no narrow command list, you just talk to the room and it understands what you meant, does the right thing, and tells you when it's done. We're closer to pieces of that than we've ever been — just not assembled the way the show implied. The transcription half, turning speech into text reliably, is in genuinely good shape now, including on-device. The part that was always missing wasn't better ears; it was a brain behind them — something that could take a loose, conversational sentence and figure out what you actually meant, rather than matching it against a fixed list of commands. That's the part large language models are now bolted onto the front of, which is why voice assistants built in the last couple of years feel qualitatively different from "Hey Siri, set a timer": they can finally handle the sentence you'd actually say, not the sentence you learned to say *to* a computer.
+
+What's still missing isn't accuracy, it's trust. Letting something that occasionally mishears you also take real actions — send the email, delete the file, spend the money — needs a level of confirmation, reversibility, and context-awareness that a hallway conversation on the bridge never needed, because Starfleet's computer was never wrong. Ours still is, often enough that "are you sure?" remains a permanent fixture of the UI. So: not never, and probably sooner than it feels like from inside a decade of "set a timer for ten minutes" — but the last mile was never really about the microphone.
