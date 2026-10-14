@@ -1,0 +1,222 @@
+---
+title: 'Decision models: when you need an answer, not another paragraph'
+excerpt: 'A practical look at probabilistic decisions, the new Decisions API, and where a small, constrained model belongs in an application.'
+date: 2026-10-15
+author: Luke Celitan
+hero: cover.png
+category: Post
+tech:
+  - AI
+---
+
+import DecisionModelPlayground from '../components/Interactive/DecisionModelPlayground';
+import ScoreWeightedAverage from '../components/Interactive/ScoreWeightedAverage';
+import RoutingBatchSimulator from '../components/Interactive/RoutingBatchSimulator';
+import LaneChangeDecision from '../components/Interactive/LaneChangeDecision';
+
+An LLM can write a beautifully worded response to “Which team should handle this complaint?” But if you are building a ticket router, you probably do not want a beautifully worded response. You want `billing`, `technical`, `shipping`, or `other`. And you want to know when the decision is uncertain enough to put a person in the loop.
+
+That is the pitch behind *decision models*: instead of asking a model to generate prose and parsing the answer afterward, you give it a bounded set of possible answers and get a probability estimate back. Jev’s September 2026 launch has made this approach difficult to ignore. OpenAI’s newer Decisions API brings a similar interface into focus: predicates, choices and scores over text and images. The interesting question is not whether these models will replace LLMs. It is where an application needs a decision rather than a conversation.
+
+## What is actually different?
+
+In a conventional chat workflow, you ask a language model to classify a message, perhaps requesting JSON. The model generates tokens that spell out a label. Sampling settings can make that generation more or less variable, but even at a low temperature the model is still performing a generation task. You can constrain the output format; that does not automatically give you a useful estimate of uncertainty.
+
+A decision interface asks the model to evaluate supplied alternatives. A predicate returns a probability for a true/false condition; a choice returns one of your supplied categories and a distribution across them; a score evaluates ordered rubric levels. The output is shaped for application logic, not for reading as a paragraph.
+
+There is a subtle but important distinction here. *Probabilistic* does not mean *guaranteed deterministic*. The returned number is an estimate from a model, not an objective fact about the world. Identical requests might not be identical in every deployment, and model updates, input changes and unclear criteria can alter results. The practical advantage is a bounded output with a visible uncertainty signal—not a promise that evaluation becomes infallible.
+
+Thoughtworks Principal AI Engineer Ben O’Mahony describes Jev as a model that does not have the same injection of randomness used to nudge generative models toward novel responses. He describes three modes: a true/false judgment, a choice among options, and a numerical rating. The appeal is easy to see if the application needs a fast judgment many times over: there is no benefit in generating ten paragraphs to put one issue in a queue.
+
+## Three kinds of decision
+
+OpenAI’s Decisions API calls these question types `predicate`, `choice` and `score`. Jev uses different terminology, but the broad shape of the workflow is familiar: define the question and possible answers before asking the model to evaluate the input.
+
+- **Predicate:** “Does this product photo show visible damage?” The result is an estimated probability that the condition is true. Your application decides whether that warrants review.
+- **Choice:** “Which team should handle this complaint?” The result is a category you supplied, alongside probabilities over the available categories. Include an `other` option when the categories cannot cover every case.
+- **Score:** “How severe is this issue?” Define ordered levels, such as cosmetic, workaround available and fully blocked. The numeric result can sit *between* levels because it is the probability-weighted average of their zero-based indices.
+
+Predicate decisions are the easiest to see end to end, because the question has only two sides. Here's the classic one — the example OpenAI itself uses to demonstrate the Decisions API: *should this car change lanes right now?* Adjust the gaps and the closing speed below and watch the probability, and the car, respond.
+
+<LaneChangeDecision />
+
+The scoring point above is worth dwelling on. Suppose a severity question produces probabilities of `0.1`, `0.7` and `0.2` over levels `0`, `1` and `2`. Its score is `0 × 0.1 + 1 × 0.7 + 2 × 0.2 = 1.1`. It is not saying there is a hidden severity category named “1.1”. It is summarizing a distribution. If you need to make a safety-critical decision, look at the level probabilities and your actual risk policy, not just the average.
+
+Drag the sliders below and watch the score move. It's the same arithmetic every time — only where the probability mass sits changes.
+
+<ScoreWeightedAverage />
+
+## Try a confidence gate
+
+A model output is only half a routing system. The other half is what *you* do with it. Pick a customer message below, then move the threshold. Notice that a higher threshold sends more cases for human review, even though the illustrative distribution does not change.
+
+<DecisionModelPlayground />
+
+This is a toy visualization: its probabilities are preset, not produced by Jev or the Decisions API. A real threshold should come from labeled examples, measured error rates and the cost of getting a particular decision wrong. Automatically routing a low-stakes support ticket and rejecting a potentially legitimate insurance claim should not share a threshold just because both APIs return numbers between zero and one.
+
+One message at a time makes the mechanism clear, but the actual decision you're making when you set a threshold is about a whole queue, not a single ticket. Here's the same gate applied to eighteen tickets at once:
+
+<RoutingBatchSimulator />
+
+Notice that raising the threshold doesn't change the underlying distribution for any ticket — the confidence numbers above are fixed. It only changes how many of those tickets you've decided are safe to route without a person looking, and that's a policy choice, not a fact the model handed you.
+
+## Calling the Decisions API
+
+Here is a small, concrete example using the documented OpenAI endpoint. The API is in public beta at the time of writing, and its documentation currently lists `gpt-6-luna` as the supported model. Verify the endpoint, model availability and current pricing before deploying: those details can change.
+
+```bash
+curl https://api.openai.com/v1/decisions \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-6-luna",
+    "input": "I was charged twice for my order.",
+    "questions": [{
+      "type": "choice",
+      "name": "department",
+      "instructions": "Which department should handle this complaint?",
+      "choices": [
+        {"value": "billing", "description": "Payments, invoices, and refunds."},
+        {"value": "technical", "description": "Problems using the product."},
+        {"value": "shipping", "description": "Delivery and tracking."},
+        {"value": "other", "description": "Requests outside these categories."}
+      ]
+    }]
+  }'
+```
+
+The documented illustrative response chooses `billing` and includes a `probabilities` array with `0.95` assigned to billing. It also includes a separate `confidence` field. Do not treat that field as interchangeable with the winning category’s probability; they are distinct fields in the response. Use the named answer to match a result to a question, especially when you send several independent questions with the same input.
+
+In application code, keep the gate explicit:
+
+```js
+function routeComplaint(answer, minimumProbability = 0.9) {
+  if (answer?.type !== 'choice' || answer.name !== 'department') {
+    return 'human-review';
+  }
+
+  const winningOption = answer.probabilities?.find(
+    (option) => option.value === answer.choice
+  );
+
+  if (
+    answer.choice === 'other' ||
+    !winningOption ||
+    winningOption.probability < minimumProbability
+  ) {
+    return 'human-review';
+  }
+
+  return answer.choice;
+}
+```
+
+This is deliberately an example policy, not a universal threshold. It routes the supplied winning category only if its estimated probability clears `0.9`; otherwise it sends the item to a person. A production implementation should validate allowed category values too, handle request failures, log the model and decision version, and monitor cases the gate routes incorrectly. Keep the API key on the server, not in the browser component above.
+
+You can ask several *independent* questions about shared input in one request—for instance, a product category and a damage predicate for the same image. If the second decision depends on the first, make separate requests or apply that dependency in your application. For images, this endpoint’s documented input format requires inline base64 data URLs rather than hosted image URLs or `file_id` values.
+
+## Where the smaller answer wins
+
+Ben showed me a useful example: inspect a codebase with a parser, find potential refactoring candidates based on known code smells, and have a decision model evaluate them. A coding agent can produce a large list of possible changes and detailed explanations. That is useful when you actually want it to investigate and write code. It is less useful when the immediate job is to rank candidates for a narrow review queue.
+
+The same pattern appears elsewhere: route support tickets, flag product photos for inspection, decide whether a retrieved passage is relevant, or score an issue against a carefully defined severity rubric. The model is one piece of a larger pipeline. A parser, a set of rules or an existing application produces candidate evidence; a decision model helps prioritize; a person or a more capable agent handles the cases that warrant investigation.
+
+This is also where decision models could sit around a coding agent. Instead of asking a generative model to be an all-purpose judge of another generative model, use a constrained evaluation for a question you can actually define: “Does this patch touch a file outside the allowed directory?” or “Does this change match one of these review-risk categories?” For a property you can verify with a deterministic check, though, use the check. A decision model should not replace a test suite, a type checker or a security rule it cannot outperform.
+
+## What they do not solve
+
+Fixed answers are a feature until the right answer is missing. If your categories overlap, your rubric is vague or your input omits crucial context, a neat-looking distribution can conceal a badly posed question. Include a fallback where appropriate, describe categories in terms that distinguish them, and use observable criteria rather than broad impressions.
+
+Nor is a model-generated probability automatically a calibrated probability of correctness. If you want to route automatically above `0.9`, collect representative labeled examples and check what actually happens above that threshold. Inspect performance by category, by changing data and by the relative cost of false positives and false negatives. Revisit the threshold as the input mix changes. For consequential uses, a human-review path is a design requirement, not an embarrassing exception.
+
+The economic argument matters, but it needs the same care. The Decisions API documentation currently advertises responses around 10× faster than the Responses API and lists input-only pricing for `gpt-6-luna` at $0.10 per million tokens, with applicable regional and long-context adjustments. Those are product claims and current published rates, not a benchmark for your particular workload. Measure end-to-end latency, cost and decision quality against a baseline you already use.
+
+## Train your own decision model
+
+You don't have to wait on Jev or the Decisions API if you want this shape of model in your own pipeline. Unsloth now documents a path for fine-tuning open models — Qwen and Gemma among them — into decision models that read an input, score the options you give them, and return a choice with a calibrated probability, instead of generating text. They publish three guides covering this:
+
+- A **training guide**, for fine-tuning Qwen and Gemma for this task.
+- A **dataset guide**, for designing an effective dataset format.
+- A **Decisions API + serving guide**, for serving the fine-tuned model behind a Decisions-API-shaped interface.
+
+The recipe: fine-tune with a Clef head using LoRA (r=64) for a single epoch. That's a small amount of training, and the lift is the headline — downstream accuracy on typed-decision benchmarks moves from roughly chance level (30–37%) up to as high as 78%:
+
+| Model | typed-decisions | BANKING77 | CLINC150 | Holdout acc |
+| --- | --- | --- | --- | --- |
+| Qwen3.5-0.8B | 36% → 73% | 7% → 74% | 19% → 76% | 78% |
+| Qwen3.5-2B | 33% → 78% | 1% → 58% | 1% → 62% | 81% |
+
+Test sets were decontaminated against the training data. The dataset mix behind this is wider than just typed-decisions: twelve additional sources — `ag_news`, `arc`, `banking77`, `boolq`, `clinc150`, `commonsense_qa`, `mmlu`, `mnli`, `prompt_injections`, `snli`, `sst5`, and `wanli` — folded into the same training format. The held-out test set has 3,000 rows: 2,000 from typed-decisions, 500 from BANKING77, and 500 from CLINC150.
+
+Several base models work, at noticeably different cost:
+
+| Model | Test accuracy | VRAM | Training time |
+| --- | --- | --- | --- |
+| Qwen3.5-0.8B | 78% | 4GB | 42 min |
+| Qwen3.5-2B | 81% | 8GB | 40 min |
+| Llama 3.2 3B | 79% | 4.1GB | 30 min |
+| Gemma 4 E4B | 77% | 14.4GB | 49 min |
+| Laya (fine-tuned) | 77% | 2.5GB | 10 min |
+
+Laya and Clef — decision models in their own right — are themselves fine-tunable further, using the same dataset format as the from-scratch recipe above. That's the more interesting detail here: the barrier to having your own narrow, calibrated decision model isn't a frontier lab's training budget. It's a LoRA adapter, one epoch, and a dataset shaped like the thing you actually want decided.
+
+Treat this the same way you'd treat any other vendor's benchmark: useful signal, not a verdict on your workload. "Holdout acc" above is a test set Unsloth constructed; it tells you the recipe works, not that it'll hit 78% on your ticket queue or your damage-photo classifier. Measure against your own labeled examples before trusting a number you didn't produce yourself — the same advice as the confidence gate earlier in this post, just pointed at a model you trained rather than one you called over an API.
+
+## Can a typed decision be talked out of its answer?
+
+Jev's whole pitch is that it isn't a chatbot: feed it a question and the evidence, and it hands back a typed verdict instead of a paragraph. That also means there's no sentence left over for anyone to double-check — the verdict goes straight into whatever the application does next. Shortly after Jev's launch, the Check Point Research team asked the adversarial question that pitch invites: does a different output shape mean a different set of weaknesses, or does Jev fail the same way a language model does, just faster and cheaper? They published their findings as [“Jev is not a language model, but it breaks like one: prompt injection against a typed decision model”](https://blog.checkpoint.com/ai-security/jev-is-not-a-language-model-but-it-breaks-like-one-prompt-injection-against-a-typed-decision-model/).
+
+Their setup: a due-diligence assistant reads an uploaded report about a fictional company, PonziCorp Financial Services, and returns a verdict — a risk level and whether to recommend investing. The report is deliberately damning (15–20% monthly returns, payouts funded by new investor money, open regulatory inquiries, delayed withdrawals), and with no attack present, every model they tested got it right every time. They then gave an attacker control of one section of the document and asked it to flip the verdict to low risk, recommend investing — handing Jev the document three different ways (inline with the instructions, as a separate message as if fetched by a tool, and as a separate message explicitly marked untrusted), at three difficulty levels, with three agentic attackers running ten turns each, three independent runs per configuration.
+
+Their headline findings:
+
+- Every one of the nine attacker/difficulty combinations produced at least one complete break: risk downgraded to low, investment advised, on a document that flags every warning sign.
+- It was cheap. Their strongest attacker broke through in 25 of 27 runs, landing the break on the fourth turn on average, at roughly 50 cents in API cost per successful break — counting the cost of the failed attempts too.
+- Typed, structured input didn't meaningfully help. The same document delivered three different ways, including one explicitly labeled untrusted, made no meaningful difference to success rate or speed.
+- An explicit anti-injection instruction barely mattered: telling the model to ignore instructions embedded in documents it reads moved successful breaks from 18 to 17 out of 27 — noise.
+- Reasoning was the strongest defense they measured, and Jev has no reasoning setting to turn on.
+
+Read the per-attacker table as a price list — the right-hand numbers are what it cost to buy one flipped verdict:
+
+| Attacker | Level 0 (basic) | Level 1 (+ warning) | Level 2 (+ long report) | Overall |
+| --- | --- | --- | --- | --- |
+| Attacker A (strongest) | 8/9 broken · $0.39/break | 9/9 · $0.48 | 8/9 · $0.64 | 25/27 · $0.50 |
+| Attacker B (medium) | 7/9 · $0.54 | 7/9 · $0.55 | 1/9 · $5.08 | 15/27 · $0.85 |
+| Attacker C (weakest) | 3/9 · $0.63 | 1/9 · $2.00 | 1/9 · $2.00 | 5/27 · $1.18 |
+
+Delivery method mattered less than you'd hope. The middle row below — a document explicitly marked untrusted — changed nothing about whether Jev believed it:
+
+| How the document was delivered | Broken (of 27) | Average turns to break |
+| --- | --- | --- |
+| One message | 16 | 4.6 |
+| Separate message, marked untrusted | 16 | 5.8 |
+| Separate message, no marker | 13 | 5.6 |
+
+Check Point also ran the same attacks against two mainstream low-cost models that have a control Jev doesn't: a reasoning-effort toggle. Turning reasoning on was the single largest security difference anywhere in their study:
+
+| Target | Successful attack attempts | Average turns to break | Cost per break |
+| --- | --- | --- | --- |
+| Model I, no reasoning | 100% | 4.0 | $0.16 |
+| Model I, with reasoning | 70% | 6.2 | $0.66 |
+| Model II, no reasoning | 67% | 4.9 | $0.56 |
+| Jev | 59% | 4.6 | $0.54 |
+| Model II, with reasoning | 19% | 8.2 | $4.39 |
+
+Their conclusion cuts against the instinct that a constrained output format is itself a safety boundary: the output shape constrains what a model can say, not what it can be convinced of. None of their attacks ever told the model what to output — the ones that worked appended what looked like a legitimate addendum to the report (a clean audit opinion, a regulatory file number, a revised risk table), and the model then did its job correctly, on false evidence. What actually made a model harder to crack was more evidence to weigh and, where available, reasoning — neither of which is a property of a typed output format.
+
+Their practical takeaways, if you're deploying something like this:
+
+- Test your whole system, not just the model. Off-the-shelf attack lists told them nothing useful; adaptive attackers that adjust across turns are what actually probes a real deployment.
+- Give the decision as much evidence as you reasonably can — the longer, richer report was significantly harder to break.
+- Don't mistake an output format for a security boundary. Typed output and input validation are good engineering; they constrain what a model can say, not what it can be talked into.
+- Screen what goes in, not just what comes out. The manipulation arrived inside a document the application was built to read — screening inputs before they reach a decision model addresses that directly.
+
+Check Point is upfront that this is a focused, directional study rather than a full benchmark — one application, one manipulation objective, and an attacker that could see Jev's probabilities as it worked. But it's enough to support their actual conclusion: Jev suffers the same category of vulnerability as the language models it's positioned against, just measured in cents rather than a jailbreak thread. A typed decision is still something you can talk out of its answer — there just isn't a sentence left over for anyone to notice.
+
+## A different job for a model
+
+The “system one” label used around Jev borrows from Daniel Kahneman’s distinction between fast, intuitive thinking and slower, analytical thinking. It is a useful metaphor for fast evaluations, not an explanation of a model’s architecture. Similarly, the attention around Jev should not be mistaken for proof that constrained decision models suddenly appeared in September 2026. Related approaches predate the launch; the timing and packaging have made an existing technical direction newly legible.
+
+The takeaway is not to swap every LLM call for a decision model. Use an LLM when you need to write, explain, investigate or produce a rich object; OpenAI’s documentation points to Structured Outputs for custom generated schemas and function calling when you need a model to request a tool action. Use a decision interface when the question is narrow, the answer space is known and the application has a sensible way to act on uncertainty.
+
+Before choosing either, ask what output the software actually needs. If the answer is “one of four queues, unless we are not sure,” generating another paragraph is probably solving the wrong problem.

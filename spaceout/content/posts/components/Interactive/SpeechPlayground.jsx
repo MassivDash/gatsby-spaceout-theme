@@ -17,7 +17,8 @@ export default function SpeechPlayground() {
   const micStreamRef = useRef(null);
   const animationFrameRef = useRef(null);
   const recognitionAvailable =
-    mounted && Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
+    mounted &&
+    Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
   const synthesisAvailable =
     mounted &&
     'speechSynthesis' in window &&
@@ -49,7 +50,8 @@ export default function SpeechPlayground() {
         audio: true,
       });
       micStreamRef.current = stream;
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
       const audioContext = new AudioContextClass();
       audioContextRef.current = audioContext;
       const source = audioContext.createMediaStreamSource(stream);
@@ -65,10 +67,7 @@ export default function SpeechPlayground() {
         barRefs.current.forEach((bar, index) => {
           if (!bar) return;
           const value = data[index * step] || 0;
-          const percent = Math.max(
-            MIN_BAR_PERCENT,
-            (value / 255) * 100,
-          );
+          const percent = Math.max(MIN_BAR_PERCENT, (value / 255) * 100);
           bar.style.height = `${percent}%`;
         });
         animationFrameRef.current = requestAnimationFrame(draw);
@@ -80,7 +79,8 @@ export default function SpeechPlayground() {
   }
 
   function stopVisualizer() {
-    if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+    if (animationFrameRef.current)
+      cancelAnimationFrame(animationFrameRef.current);
     animationFrameRef.current = null;
     if (micStreamRef.current) {
       micStreamRef.current.getTracks().forEach((track) => track.stop());

@@ -259,7 +259,9 @@ const NavigationHeader: React.FC<Props> = ({
                         navigatorPosition={ArticleNavigator}
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <Image fluid={item.node.hero.childImageSharp.fluid} />
+                        {item.node.hero?.childImageSharp?.fluid && (
+                          <Image fluid={item.node.hero.childImageSharp.fluid} />
+                        )}
                         <ArticleHover theme={theme}>
                           <AppDescription>
                             {item.node.appDescription}

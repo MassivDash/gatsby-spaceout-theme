@@ -1,0 +1,124 @@
+.sc-widget {
+  background: var(--theme-ui-colors-card, #fff);
+  color: var(--theme-ui-colors-articleText, #333);
+  border: 1px solid var(--theme-ui-colors-horizontalRule, rgba(8, 8, 11, 0.15));
+  border-radius: 4px;
+  padding: 32px;
+  margin: 40px auto;
+  width: 100%;
+  max-width: 1200px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.sc-caption {
+  color: var(--theme-ui-colors-grey, #373737);
+  font-size: 1.1rem;
+  margin: 0 0 24px;
+  line-height: 1.6;
+}
+
+.sc-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.sc-preset {
+  background: transparent;
+  border: 1px solid var(--theme-ui-colors-horizontalRule, rgba(8, 8, 11, 0.15));
+  color: var(--theme-ui-colors-grey, #373737);
+  font-family: inherit;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.15s all ease;
+}
+
+.sc-preset:hover {
+  border-color: var(--theme-ui-colors-grey, #373737);
+  color: var(--theme-ui-colors-primary, #000);
+}
+
+.sc-levels {
+  margin-bottom: 24px;
+}
+
+.sc-level-row {
+  display: grid;
+  grid-template-columns: 170px 1fr 56px;
+  align-items: center;
+  gap: 14px;
+  margin: 14px 0;
+}
+
+.sc-level-label {
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.sc-level-index {
+  color: var(--theme-ui-colors-grey, #373737);
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  margin-right: 6px;
+}
+
+.sc-range {
+  width: 100%;
+  accent-color: var(--theme-ui-colors-accent, #27262d);
+}
+
+.sc-level-value {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.95rem;
+  text-align: right;
+}
+
+.sc-score-readout {
+  background: var(--theme-ui-colors-inputBackground, rgba(0, 0, 0, 0.05));
+  border: 1px solid var(--theme-ui-colors-accent, #27262d);
+  border-radius: 4px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+}
+
+.sc-score-value {
+  font-size: 2rem;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  color: var(--theme-ui-colors-accent, #27262d);
+  display: block;
+  line-height: 1.2;
+}
+
+.sc-score-formula {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.9rem;
+  color: var(--theme-ui-colors-grey, #373737);
+  margin-top: 6px;
+  word-break: break-word;
+}
+
+.sc-hint {
+  color: var(--theme-ui-colors-grey, #373737);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media screen and (max-width: 560px) {
+  .sc-widget {
+    padding: 22px 16px;
+  }
+
+  .sc-level-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .sc-level-value {
+    text-align: left;
+  }
+}

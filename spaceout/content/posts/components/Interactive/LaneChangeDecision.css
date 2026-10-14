@@ -1,0 +1,210 @@
+.lc-widget {
+  background: var(--theme-ui-colors-card, #fff);
+  color: var(--theme-ui-colors-articleText, #333);
+  border: 1px solid var(--theme-ui-colors-horizontalRule, rgba(8, 8, 11, 0.15));
+  border-radius: 4px;
+  padding: 32px;
+  margin: 40px auto;
+  width: 100%;
+  max-width: 1200px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.lc-caption {
+  color: var(--theme-ui-colors-grey, #373737);
+  font-size: 1.1rem;
+  margin: 0 0 24px;
+  line-height: 1.6;
+}
+
+.lc-road {
+  position: relative;
+  height: 160px;
+  border-radius: 4px;
+  background: var(--theme-ui-colors-inputBackground, rgba(0, 0, 0, 0.05));
+  border: 1px solid var(--theme-ui-colors-horizontalRule, rgba(8, 8, 11, 0.15));
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.lc-lane-divider {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+  border-top: 3px dashed var(--theme-ui-colors-horizontalRule, rgba(8, 8, 11, 0.25));
+}
+
+.lc-lane-tag {
+  position: absolute;
+  left: 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--theme-ui-colors-grey, #373737);
+}
+
+.lc-lane-tag-top {
+  top: 8px;
+}
+
+.lc-lane-tag-bottom {
+  top: 88px;
+}
+
+.lc-car {
+  position: absolute;
+  width: 60px;
+  height: 28px;
+  border-radius: 4px;
+  top: 26px;
+  transform: translateX(-50%);
+  transition: left 0.3s ease, top 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+.lc-car-ego {
+  background: var(--theme-ui-colors-accent, #27262d);
+  color: var(--theme-ui-colors-background, #fafafa);
+  z-index: 2;
+}
+
+.lc-car-ego-bottom {
+  top: 106px;
+}
+
+.lc-car-ahead {
+  background: var(--theme-ui-colors-grey, #373737);
+  color: var(--theme-ui-colors-background, #fafafa);
+  opacity: 0.8;
+}
+
+.lc-car-behind {
+  top: 106px;
+  background: var(--theme-ui-colors-grey, #373737);
+  color: var(--theme-ui-colors-background, #fafafa);
+  opacity: 0.8;
+}
+
+.lc-car-behind-fast {
+  animation: lc-pulse 0.7s ease-in-out infinite;
+}
+
+@keyframes lc-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(194, 59, 34, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(194, 59, 34, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lc-car-behind-fast {
+    animation: none;
+  }
+}
+
+.lc-controls {
+  margin-bottom: 20px;
+}
+
+.lc-rate-row {
+  margin-bottom: 16px;
+}
+
+.lc-rate-label {
+  display: block;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  color: var(--theme-ui-colors-grey, #373737);
+  margin-bottom: 8px;
+}
+
+.lc-range {
+  width: 100%;
+  accent-color: var(--theme-ui-colors-accent, #27262d);
+}
+
+.lc-signal-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+
+.lc-signal-row input {
+  accent-color: var(--theme-ui-colors-accent, #27262d);
+}
+
+.lc-threshold-row {
+  padding-top: 16px;
+  border-top: 1px solid var(--theme-ui-colors-horizontalRule, rgba(8, 8, 11, 0.15));
+  margin-bottom: 20px;
+}
+
+.lc-readout {
+  background: var(--theme-ui-colors-inputBackground, rgba(0, 0, 0, 0.05));
+  border: 1px solid var(--theme-ui-colors-accent, #27262d);
+  border-radius: 4px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+}
+
+.lc-decision {
+  font-size: 1.3rem;
+  display: block;
+  color: var(--theme-ui-colors-accent, #27262d);
+}
+
+.lc-formula {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.85rem;
+  color: var(--theme-ui-colors-grey, #373737);
+  margin-top: 6px;
+  word-break: break-word;
+}
+
+.lc-hint {
+  color: var(--theme-ui-colors-grey, #373737);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media screen and (max-width: 560px) {
+  .lc-widget {
+    padding: 22px 16px;
+  }
+
+  .lc-road {
+    height: 130px;
+  }
+
+  .lc-car {
+    width: 36px;
+    height: 22px;
+    font-size: 0.55rem;
+    top: 22px;
+  }
+
+  .lc-car-ego-bottom,
+  .lc-car-behind {
+    top: 86px;
+  }
+
+  .lc-lane-divider {
+    top: 65px;
+  }
+
+  .lc-lane-tag-bottom {
+    top: 73px;
+  }
+}
