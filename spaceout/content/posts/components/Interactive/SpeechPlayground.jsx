@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useColorMode } from 'theme-ui';
 import './SpeechPlayground.css';
 
 const BAR_COUNT = 24;
 const MIN_BAR_PERCENT = 6;
 
 export default function SpeechPlayground() {
+  const [colorMode] = useColorMode();
   const [text, setText] = useState('Hello! This is your browser speaking.');
   const [transcript, setTranscript] = useState('');
   const [listening, setListening] = useState(false);
@@ -144,7 +146,11 @@ export default function SpeechPlayground() {
   }
 
   return (
-    <section className="sp-widget" aria-label="Browser speech playground">
+    <section
+      className="sp-widget"
+      data-mode={colorMode}
+      aria-label="Browser speech playground"
+    >
       <p className="sp-caption">
         Speech recognition may ask for microphone permission. Its availability
         and processing depend on your browser; avoid dictating sensitive

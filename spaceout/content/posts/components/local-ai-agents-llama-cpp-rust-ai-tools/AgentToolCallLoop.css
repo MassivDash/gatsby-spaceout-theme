@@ -1,14 +1,14 @@
 .atcl-widget {
-  --atcl-ink: #0e0e0d;
-  --atcl-panel: #17150f;
-  --atcl-bone: #e9e4d6;
-  --atcl-ash: #8f897b;
-  --atcl-line: #3a352c;
-  --atcl-blood: #c23b22;
-  --atcl-ochre: #c9902b;
+  --atcl-card: #1d2128;
+  --atcl-input: rgba(255, 255, 255, 0.07);
+  --atcl-text: #fff;
+  --atcl-grey: #fafafa;
+  --atcl-line: rgba(255, 255, 255, 0.15);
+  --atcl-accent: #e9daac;
+  --atcl-bg: #111216;
 
-  background: var(--atcl-ink);
-  color: var(--atcl-bone);
+  background: var(--atcl-card);
+  color: var(--atcl-text);
   border: 1px solid var(--atcl-line);
   border-radius: 4px;
   padding: 32px;
@@ -20,16 +20,18 @@
 }
 
 .atcl-widget[data-mode='light'] {
-  --atcl-ink: #e9e4d6;
-  --atcl-panel: #ded7c4;
-  --atcl-bone: #17150f;
-  --atcl-ash: #6b6558;
-  --atcl-line: #c9c3b0;
+  --atcl-card: #fff;
+  --atcl-input: rgba(0, 0, 0, 0.05);
+  --atcl-text: #000;
+  --atcl-grey: #373737;
+  --atcl-line: rgba(8, 8, 11, 0.15);
+  --atcl-accent: #27262d;
+  --atcl-bg: #fafafa;
 }
 
 .atcl-caption {
-  color: var(--atcl-ash);
-  font-size: 1.3rem;
+  color: var(--atcl-grey);
+  font-size: 1.1rem;
   margin: 0 0 24px;
   line-height: 1.6;
 }
@@ -51,7 +53,7 @@
 
 .atcl-segment {
   background: transparent;
-  color: var(--atcl-ash);
+  color: var(--atcl-grey);
   border: none;
   font-family: inherit;
   font-size: 1rem;
@@ -67,8 +69,8 @@
 }
 
 .atcl-segment[aria-pressed='true'] {
-  background: var(--atcl-bone);
-  color: var(--atcl-ink);
+  background: var(--atcl-accent);
+  color: var(--atcl-bg);
 }
 
 .atcl-segment:disabled {
@@ -77,8 +79,8 @@
 
 .atcl-run {
   background: transparent;
-  border: 1px solid var(--atcl-blood);
-  color: var(--atcl-blood);
+  border: 1px solid var(--atcl-accent);
+  color: var(--atcl-accent);
   font-family: inherit;
   font-size: 1rem;
   letter-spacing: 0.08em;
@@ -90,7 +92,8 @@
 }
 
 .atcl-run:hover:not(:disabled) {
-  background: rgba(194, 59, 34, 0.12);
+  background: var(--atcl-accent);
+  color: var(--atcl-bg);
 }
 
 .atcl-run:disabled {
@@ -115,22 +118,22 @@
   padding: 14px 18px;
   border: 1px solid var(--atcl-line);
   border-radius: 4px;
-  background: var(--atcl-panel);
+  background: var(--atcl-input);
   transition: 0.15s border-color ease;
 }
 
 .atcl-step-active {
-  border-color: var(--atcl-ochre);
+  border-color: var(--atcl-accent);
 }
 
 .atcl-step-index {
-  color: var(--atcl-ash);
+  color: var(--atcl-grey);
   font-size: 1rem;
 }
 
 .atcl-step-label {
   font-size: 1.1rem;
-  color: var(--atcl-bone);
+  color: var(--atcl-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -146,30 +149,30 @@
 .atcl-step-fill {
   display: block;
   height: 100%;
-  background: var(--atcl-ash);
+  background: var(--atcl-grey);
   transition: width 0.4s ease;
 }
 
 .atcl-step-fired .atcl-step-fill {
-  background: var(--atcl-bone);
+  background: var(--atcl-text);
 }
 
 .atcl-step-ms {
   text-align: right;
   font-size: 1.05rem;
-  color: var(--atcl-ash);
+  color: var(--atcl-grey);
   font-variant-numeric: tabular-nums;
 }
 
 .atcl-step-fired .atcl-step-ms {
-  color: var(--atcl-bone);
+  color: var(--atcl-text);
 }
 
 .atcl-total {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  background: var(--atcl-panel);
+  background: var(--atcl-input);
   border: 1px solid var(--atcl-line);
   border-radius: 4px;
   padding: 16px 18px;
@@ -179,20 +182,20 @@
   font-size: 0.95rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--atcl-ash);
+  color: var(--atcl-grey);
 }
 
 .atcl-total-value {
   font-size: 1.7rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  color: var(--atcl-bone);
+  color: var(--atcl-text);
 }
 
 .atcl-lesson {
   margin: 16px 0 0;
   font-size: 1.1rem;
-  color: var(--atcl-ash);
+  color: var(--atcl-grey);
   line-height: 1.5;
 }
 

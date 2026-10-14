@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useColorMode } from 'theme-ui';
 import './ScoreWeightedAverage.css';
 
 const LEVELS = ['Cosmetic', 'Workaround available', 'Fully blocked'];
@@ -11,6 +12,7 @@ const PRESETS = {
 };
 
 export default function ScoreWeightedAverage() {
+  const [colorMode] = useColorMode();
   const [weights, setWeights] = useState(PRESETS['Post example']);
 
   const total = weights.reduce((sum, value) => sum + value, 0) || 1;
@@ -34,7 +36,11 @@ export default function ScoreWeightedAverage() {
   }
 
   return (
-    <section className="sc-widget" aria-label="Severity score calculator">
+    <section
+      className="sc-widget"
+      data-mode={colorMode}
+      aria-label="Severity score calculator"
+    >
       <p className="sc-caption">
         Drag the sliders to change how much probability mass sits on each level.
         The sliders don't need to sum to 100 — they're normalized automatically,

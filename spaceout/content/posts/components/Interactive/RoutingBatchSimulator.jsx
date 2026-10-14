@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useColorMode } from 'theme-ui';
 import './RoutingBatchSimulator.css';
 
 const TICKET_CONFIDENCES = [
@@ -6,6 +7,7 @@ const TICKET_CONFIDENCES = [
 ];
 
 export default function RoutingBatchSimulator() {
+  const [colorMode] = useColorMode();
   const [threshold, setThreshold] = useState(85);
 
   const autoCount = useMemo(
@@ -19,6 +21,7 @@ export default function RoutingBatchSimulator() {
   return (
     <section
       className="rb-widget"
+      data-mode={colorMode}
       aria-label="Batch routing threshold simulator"
     >
       <p className="rb-caption">

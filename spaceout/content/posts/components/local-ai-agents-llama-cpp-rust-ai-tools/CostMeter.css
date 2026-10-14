@@ -1,14 +1,16 @@
 .cm-widget {
-  --cm-ink: #0e0e0d;
-  --cm-panel: #17150f;
-  --cm-bone: #e9e4d6;
-  --cm-ash: #8f897b;
-  --cm-line: #3a352c;
+  --cm-card: #1d2128;
+  --cm-input: rgba(255, 255, 255, 0.07);
+  --cm-text: #fff;
+  --cm-grey: #fafafa;
+  --cm-line: rgba(255, 255, 255, 0.15);
+  --cm-accent: #e9daac;
+  --cm-bg: #111216;
   --cm-blood: #c23b22;
   --cm-ochre: #c9902b;
 
-  background: var(--cm-ink);
-  color: var(--cm-bone);
+  background: var(--cm-card);
+  color: var(--cm-text);
   border: 1px solid var(--cm-line);
   border-radius: 4px;
   padding: 32px;
@@ -20,16 +22,18 @@
 }
 
 .cm-widget[data-mode='light'] {
-  --cm-ink: #e9e4d6;
-  --cm-panel: #ded7c4;
-  --cm-bone: #17150f;
-  --cm-ash: #6b6558;
-  --cm-line: #c9c3b0;
+  --cm-card: #fff;
+  --cm-input: rgba(0, 0, 0, 0.05);
+  --cm-text: #000;
+  --cm-grey: #373737;
+  --cm-line: rgba(8, 8, 11, 0.15);
+  --cm-accent: #27262d;
+  --cm-bg: #fafafa;
 }
 
 .cm-caption {
-  color: var(--cm-ash);
-  font-size: 1.3rem;
+  color: var(--cm-grey);
+  font-size: 1.1rem;
   margin: 0 0 24px;
   line-height: 1.6;
 }
@@ -49,20 +53,20 @@
   font-size: 0.95rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--cm-ash);
+  color: var(--cm-grey);
 }
 
 .cm-meter-readout {
   font-size: 1.15rem;
   font-variant-numeric: tabular-nums;
-  color: var(--cm-bone);
+  color: var(--cm-text);
 }
 
 .cm-track {
   height: 14px;
   border: 1px solid var(--cm-line);
   border-radius: 2px;
-  background: var(--cm-panel);
+  background: var(--cm-input);
   overflow: hidden;
 }
 
@@ -73,7 +77,7 @@
 }
 
 .cm-fill-normal {
-  background: var(--cm-ash);
+  background: var(--cm-grey);
 }
 
 .cm-fill-ochre {
@@ -85,7 +89,7 @@
 }
 
 .cm-fill-steady {
-  background: var(--cm-ash);
+  background: var(--cm-grey);
 }
 
 .cm-controls {
@@ -97,8 +101,8 @@
 
 .cm-button {
   background: transparent;
-  border: 1px solid var(--cm-bone);
-  color: var(--cm-bone);
+  border: 1px solid var(--cm-accent);
+  color: var(--cm-accent);
   font-family: inherit;
   font-size: 1rem;
   letter-spacing: 0.08em;
@@ -110,31 +114,31 @@
 }
 
 .cm-button:hover {
-  background: var(--cm-bone);
-  color: var(--cm-ink);
+  background: var(--cm-accent);
+  color: var(--cm-bg);
 }
 
 .cm-button-ghost {
   border-color: var(--cm-line);
-  color: var(--cm-ash);
+  color: var(--cm-grey);
 }
 
 .cm-button-ghost:hover {
   background: transparent;
-  border-color: var(--cm-ash);
-  color: var(--cm-bone);
+  border-color: var(--cm-grey);
+  color: var(--cm-text);
 }
 
 .cm-ticks {
   font-size: 1rem;
-  color: var(--cm-ash);
+  color: var(--cm-grey);
   font-variant-numeric: tabular-nums;
 }
 
 .cm-lesson {
   margin: 0;
   font-size: 1.1rem;
-  color: var(--cm-ash);
+  color: var(--cm-grey);
   line-height: 1.5;
   border-top: 1px solid var(--cm-line);
   padding-top: 16px;

@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useColorMode } from 'theme-ui';
 import './LaneChangeDecision.css';
 
 function clamp(value, min, max) {
@@ -6,6 +7,7 @@ function clamp(value, min, max) {
 }
 
 export default function LaneChangeDecision() {
+  const [colorMode] = useColorMode();
   const [gapAhead, setGapAhead] = useState(15);
   const [gapTarget, setGapTarget] = useState(45);
   const [closingSpeed, setClosingSpeed] = useState(15);
@@ -28,7 +30,11 @@ export default function LaneChangeDecision() {
   const behindPercent = Math.max(2, 18 - ((gapTarget - 5) / 75) * 16);
 
   return (
-    <section className="lc-widget" aria-label="Lane change predicate demo">
+    <section
+      className="lc-widget"
+      data-mode={colorMode}
+      aria-label="Lane change predicate demo"
+    >
       <p className="lc-caption">
         A predicate decision in motion:{' '}
         <strong>should this car change lanes right now?</strong> This is a toy

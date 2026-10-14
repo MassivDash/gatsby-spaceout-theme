@@ -1,14 +1,15 @@
 .gt-widget {
-  --gt-ink: #0e0e0d;
-  --gt-panel: #17150f;
-  --gt-bone: #e9e4d6;
-  --gt-ash: #8f897b;
-  --gt-line: #3a352c;
+  --gt-card: #1d2128;
+  --gt-input: rgba(255, 255, 255, 0.07);
+  --gt-text: #fff;
+  --gt-grey: #fafafa;
+  --gt-line: rgba(255, 255, 255, 0.15);
+  --gt-accent: #e9daac;
+  --gt-bg: #111216;
   --gt-blood: #c23b22;
-  --gt-ochre: #c9902b;
 
-  background: var(--gt-ink);
-  color: var(--gt-bone);
+  background: var(--gt-card);
+  color: var(--gt-text);
   border: 1px solid var(--gt-line);
   border-radius: 4px;
   padding: 32px;
@@ -20,16 +21,18 @@
 }
 
 .gt-widget[data-mode='light'] {
-  --gt-ink: #e9e4d6;
-  --gt-panel: #ded7c4;
-  --gt-bone: #17150f;
-  --gt-ash: #6b6558;
-  --gt-line: #c9c3b0;
+  --gt-card: #fff;
+  --gt-input: rgba(0, 0, 0, 0.05);
+  --gt-text: #000;
+  --gt-grey: #373737;
+  --gt-line: rgba(8, 8, 11, 0.15);
+  --gt-accent: #27262d;
+  --gt-bg: #fafafa;
 }
 
 .gt-caption {
-  color: var(--gt-ash);
-  font-size: 1.3rem;
+  color: var(--gt-grey);
+  font-size: 1.1rem;
   margin: 0 0 24px;
   line-height: 1.6;
 }
@@ -44,7 +47,7 @@
 
 .gt-segment {
   background: transparent;
-  color: var(--gt-ash);
+  color: var(--gt-grey);
   border: none;
   font-family: inherit;
   font-size: 0.95rem;
@@ -60,8 +63,8 @@
 }
 
 .gt-segment[aria-pressed='true'] {
-  background: var(--gt-bone);
-  color: var(--gt-ink);
+  background: var(--gt-accent);
+  color: var(--gt-bg);
 }
 
 .gt-proposed {
@@ -69,7 +72,7 @@
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  background: var(--gt-panel);
+  background: var(--gt-input);
   border: 1px solid var(--gt-line);
   border-radius: 4px;
   padding: 14px 16px;
@@ -80,13 +83,13 @@
   font-size: 0.9rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--gt-ash);
+  color: var(--gt-grey);
 }
 
 .gt-proposed-command {
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   font-size: 1.1rem;
-  color: var(--gt-bone);
+  color: var(--gt-text);
 }
 
 .gt-run {
@@ -114,7 +117,7 @@
   padding: 16px 18px;
   font-size: 1.1rem;
   line-height: 1.5;
-  color: var(--gt-ash);
+  color: var(--gt-grey);
   margin-bottom: 24px;
 }
 
@@ -127,13 +130,13 @@
 }
 
 .gt-readout-rejected {
-  border-color: var(--gt-ash);
-  color: var(--gt-bone);
+  border-color: var(--gt-grey);
+  color: var(--gt-text);
 }
 
 .gt-readout-ran {
-  border-color: var(--gt-ash);
-  color: var(--gt-bone);
+  border-color: var(--gt-grey);
+  color: var(--gt-text);
 }
 
 @keyframes gt-shake {
@@ -166,7 +169,7 @@
   font-size: 0.9rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--gt-ash);
+  color: var(--gt-grey);
   margin-bottom: 10px;
 }
 
@@ -179,7 +182,7 @@
 .gt-chip {
   background: transparent;
   border: 1px solid var(--gt-line);
-  color: var(--gt-ash);
+  color: var(--gt-grey);
   font-family: inherit;
   font-size: 0.9rem;
   letter-spacing: 0.05em;
@@ -191,14 +194,14 @@
 }
 
 .gt-chip:hover {
-  border-color: var(--gt-ash);
-  color: var(--gt-bone);
+  border-color: var(--gt-grey);
+  color: var(--gt-text);
 }
 
 .gt-chip[aria-pressed='true'] {
-  background: var(--gt-bone);
-  color: var(--gt-ink);
-  border-color: var(--gt-bone);
+  background: var(--gt-accent);
+  color: var(--gt-bg);
+  border-color: var(--gt-accent);
 }
 
 .gt-chip-reckless {

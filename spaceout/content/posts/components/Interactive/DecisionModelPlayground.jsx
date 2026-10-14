@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useColorMode } from 'theme-ui';
 import './DecisionModelPlayground.css';
 
 const examples = [
@@ -13,6 +14,7 @@ const examples = [
 const categories = ['billing', 'technical', 'shipping', 'other'];
 
 export default function DecisionModelPlayground() {
+  const [colorMode] = useColorMode();
   const [example, setExample] = useState(0);
   const [threshold, setThreshold] = useState(80);
   const [show, setShow] = useState(true);
@@ -27,7 +29,11 @@ export default function DecisionModelPlayground() {
       : 'human review';
 
   return (
-    <section className="dm-widget" aria-label="Decision routing playground">
+    <section
+      className="dm-widget"
+      data-mode={colorMode}
+      aria-label="Decision routing playground"
+    >
       <p className="dm-caption">
         This is an illustrative simulation with fixed example probabilities,{' '}
         <strong>not</strong> a call to a model. Watch what changes when you

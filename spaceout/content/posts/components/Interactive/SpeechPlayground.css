@@ -1,7 +1,17 @@
 .sp-widget {
-  background: var(--theme-ui-colors-card, #fff);
-  color: var(--theme-ui-colors-articleText, #333);
-  border: 1px solid var(--theme-ui-colors-horizontalRule, rgba(8, 8, 11, 0.15));
+  --sp-card: #fff;
+  --sp-text: #333;
+  --sp-primary: #000;
+  --sp-grey: #373737;
+  --sp-accent: #27262d;
+  --sp-line: rgba(8, 8, 11, 0.15);
+  --sp-input: rgba(0, 0, 0, 0.05);
+  --sp-hover: rgba(0, 0, 0, 0.07);
+  --sp-bg: #fafafa;
+
+  background: var(--sp-card);
+  color: var(--sp-text);
+  border: 1px solid var(--sp-line);
   border-radius: 4px;
   padding: 32px;
   margin: 40px auto;
@@ -9,11 +19,25 @@
   max-width: 1200px;
   font-family: inherit;
   box-sizing: border-box;
+  transition: background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.sp-widget[data-mode='dark'] {
+  --sp-card: #1d2128;
+  --sp-text: #fff;
+  --sp-primary: #fff;
+  --sp-grey: #fafafa;
+  --sp-accent: #e9daac;
+  --sp-line: rgba(255, 255, 255, 0.15);
+  --sp-input: rgba(255, 255, 255, 0.07);
+  --sp-hover: rgba(255, 255, 255, 0.07);
+  --sp-bg: #111216;
 }
 
 .sp-caption {
-  color: var(--theme-ui-colors-grey, #373737);
-  font-size: 1.3rem;
+  color: var(--sp-grey);
+  font-size: 1.1rem;
   margin: 0 0 24px;
   line-height: 1.6;
 }
@@ -27,14 +51,14 @@
   font-size: 0.9rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--theme-ui-colors-grey, #373737);
+  color: var(--sp-grey);
   margin-bottom: 10px;
 }
 
 .sp-button {
   background: transparent;
-  border: 1px solid var(--theme-ui-colors-primary, #000);
-  color: var(--theme-ui-colors-primary, #000);
+  border: 1px solid var(--sp-primary);
+  color: var(--sp-primary);
   font-family: inherit;
   font-size: 1rem;
   letter-spacing: 0.08em;
@@ -46,13 +70,13 @@
 }
 
 .sp-button:hover {
-  background: var(--theme-ui-colors-hover, rgba(0, 0, 0, 0.07));
+  background: var(--sp-hover);
 }
 
 .sp-button[aria-pressed='true'] {
-  background: var(--theme-ui-colors-accent, #27262d);
-  border-color: var(--theme-ui-colors-accent, #27262d);
-  color: var(--theme-ui-colors-background, #fafafa);
+  background: var(--sp-accent);
+  border-color: var(--sp-accent);
+  color: var(--sp-bg);
 }
 
 .sp-button:disabled {
@@ -61,8 +85,8 @@
 }
 
 .sp-hint {
-  color: var(--theme-ui-colors-grey, #373737);
-  font-size: 0.95rem;
+  color: var(--sp-grey);
+  font-size: 0.9rem;
   line-height: 1.6;
   margin: 0;
 }
@@ -74,22 +98,22 @@
   height: 64px;
   margin-bottom: 20px;
   padding: 10px 14px;
-  background: var(--theme-ui-colors-inputBackground, rgba(0, 0, 0, 0.05));
-  border: 1px solid var(--theme-ui-colors-horizontalRule, rgba(8, 8, 11, 0.15));
+  background: var(--sp-input);
+  border: 1px solid var(--sp-line);
   border-radius: 4px;
   box-sizing: border-box;
   transition: border-color 0.2s ease;
 }
 
 .sp-visualizer-live {
-  border-color: var(--theme-ui-colors-accent, #27262d);
+  border-color: var(--sp-accent);
 }
 
 .sp-bar {
   flex: 1;
   min-width: 2px;
   height: 6%;
-  background: var(--theme-ui-colors-accent, #27262d);
+  background: var(--sp-accent);
   border-radius: 1px;
   transition: height 0.06s linear;
 }
@@ -99,8 +123,8 @@
   align-items: flex-start;
   gap: 12px;
   flex-wrap: wrap;
-  background: var(--theme-ui-colors-inputBackground, rgba(0, 0, 0, 0.05));
-  border: 1px solid var(--theme-ui-colors-horizontalRule, rgba(8, 8, 11, 0.15));
+  background: var(--sp-input);
+  border: 1px solid var(--sp-line);
   border-radius: 4px;
   padding: 14px 16px;
   margin-bottom: 12px;
@@ -111,14 +135,14 @@
   font-size: 0.9rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--theme-ui-colors-grey, #373737);
+  color: var(--sp-grey);
   white-space: nowrap;
 }
 
 .sp-transcript-text {
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   font-size: 1rem;
-  color: var(--theme-ui-colors-primary, #000);
+  color: var(--sp-primary);
   flex: 1;
   word-break: break-word;
 }
@@ -129,9 +153,9 @@
 
 .sp-textarea {
   width: 100%;
-  background: var(--theme-ui-colors-inputBackground, rgba(0, 0, 0, 0.05));
-  color: var(--theme-ui-colors-primary, #000);
-  border: 1px solid var(--theme-ui-colors-horizontalRule, rgba(8, 8, 11, 0.15));
+  background: var(--sp-input);
+  color: var(--sp-primary);
+  border: 1px solid var(--sp-line);
   border-radius: 4px;
   padding: 14px 16px;
   font-family: inherit;
@@ -143,7 +167,7 @@
 
 .sp-textarea:focus {
   outline: none;
-  border-color: var(--theme-ui-colors-accent, #27262d);
+  border-color: var(--sp-accent);
 }
 
 .sp-rate-row {
@@ -157,13 +181,13 @@
   font-size: 0.9rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--theme-ui-colors-grey, #373737);
+  color: var(--sp-grey);
   white-space: nowrap;
 }
 
 .sp-range {
   flex: 1;
-  accent-color: var(--theme-ui-colors-accent, #27262d);
+  accent-color: var(--sp-accent);
 }
 
 .sp-controls {
@@ -175,32 +199,32 @@
 }
 
 .sp-controls .sp-button {
-  border-color: var(--theme-ui-colors-accent, #27262d);
-  color: var(--theme-ui-colors-accent, #27262d);
+  border-color: var(--sp-accent);
+  color: var(--sp-accent);
 }
 
 .sp-controls .sp-button:hover {
-  background: var(--theme-ui-colors-hover, rgba(0, 0, 0, 0.07));
+  background: var(--sp-hover);
 }
 
 .sp-button-ghost {
-  border-color: var(--theme-ui-colors-horizontalRule, rgba(8, 8, 11, 0.15)) !important;
-  color: var(--theme-ui-colors-grey, #373737) !important;
+  border-color: var(--sp-line) !important;
+  color: var(--sp-grey) !important;
 }
 
 .sp-button-ghost:hover {
-  border-color: var(--theme-ui-colors-grey, #373737) !important;
-  color: var(--theme-ui-colors-primary, #000) !important;
-  background: var(--theme-ui-colors-hover, rgba(0, 0, 0, 0.07)) !important;
+  border-color: var(--sp-grey) !important;
+  color: var(--sp-primary) !important;
+  background: var(--sp-hover) !important;
 }
 
 .sp-status {
-  border: 1px solid var(--theme-ui-colors-horizontalRule, rgba(8, 8, 11, 0.15));
+  border: 1px solid var(--sp-line);
   border-radius: 4px;
   padding: 14px 16px;
   font-size: 1rem;
   line-height: 1.5;
-  color: var(--theme-ui-colors-grey, #373737);
+  color: var(--sp-grey);
   min-height: 1.5em;
   margin: 0;
 }
